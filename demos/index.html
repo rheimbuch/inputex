@@ -1,0 +1,91 @@
+<html>
+
+  <head>
+	 <title>inputEx demo page</title>
+	 <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+	
+	  <!-- YUI Dependencies -->
+	  <script type="text/javascript" src="http://yui.yahooapis.com/2.2.2/build/yahoo/yahoo-min.js"></script> 
+	  <script type="text/javascript" src="http://yui.yahooapis.com/2.2.2/build/dom/dom-min.js"></script> 
+	  <script type="text/javascript" src="http://yui.yahooapis.com/2.2.2/build/event/event-min.js"></script> 
+	  <script type="text/javascript" src="http://yui.yahooapis.com/2.2.2/build/container/container-min.js"></script> 
+	  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.2.2/build/reset/reset-min.css">
+	  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.2.2/build/container/assets/container.css"> 
+	
+	  <!-- InputEx -->
+	  <script src="../js/field.js"  type='text/javascript'></script> 
+	  <script src="../js/form.js"  type='text/javascript'></script> 
+	  <script src="../js/inputs.js"  type='text/javascript'></script> 
+     <link type='text/css' rel='stylesheet' href='../css/inputEx.css' />
+	
+	  <!-- Demo Javascript -->
+	  <script>
+	
+YAHOO.inputEx.UserForm = function() {
+	
+	var formOptions = {
+			inputs: [ 
+				{label: "Title", type: YAHOO.inputEx.SelectField, inputParams: {name: "title", selectValues: ['Mr','Mrs','Mme'] } },
+				{label: "Firstname", inputParams: {name: "firstname", required: true, messages: {required: "Ce champ est obligatoire"}, value:'test' } },
+				{label: "Lastname", inputParams: {name: "lastname", required: true, messages: {required: "Ce champ est obligatoire"}} },
+				{label: "Birthdate",  type: YAHOO.inputEx.DateField, inputParams: 
+						{name: "birthdate", required: true, 
+						messages: {required: "Ce champ est obligatoire", invalid: "Date non valide, ex: 25/01/2007"}, value: '10/01/1984' } },
+				{label: "Email", type: YAHOO.inputEx.EmailField, inputParams: 
+						{ name: "email",  required: true, 
+						messages: {required: "Ce champ est obligatoire", invalid: "Email non valide, ex: michel.dupont@fai.fr"} } },
+				{label: "Phone",type: YAHOO.inputEx.FrenchPhone, inputParams: { name: "phone", messages: {invalid: "Numéro non valide."}}},
+				{label: "IP Adress", type: YAHOO.inputEx.IpadressField, inputParams: { name: "ipadress" } },
+				{label: "ZipCode", inputParams: { name: "zipcode", numbers: true } }
+			],
+			buttons: [
+				{value: "Valider", type: "submit"}
+			],
+			label: "User informations",
+			method: 'POST',
+			action: ''
+		};
+	
+	YAHOO.inputEx.UserForm.superclass.constructor.call(this,formOptions);
+};
+YAHOO.lang.extend(YAHOO.inputEx.UserForm, YAHOO.inputEx.Form);
+	
+	
+	
+YAHOO.util.Event.onAvailable('container', function() {
+		
+		// Create the form
+		var form = new YAHOO.inputEx.UserForm();
+		
+		// Append it to the 'container' div
+		YAHOO.util.Dom.get('container').appendChild( form.getEl() );
+});
+
+	  </script> 
+  </head>
+
+<body>
+	
+<div id='container' style='margin-top: 50px;'>
+</div>
+
+	
+<b>Future features: </b>
+<ul>
+<li><s>Plugin architecture</s></li>	
+<li><s>Regex validator</s></li>
+<li><s>CSS Based themes/CSS icon/message display rules</s></li>
+<li><s>A great lot of Built-in validators</s></li>
+<li><s>Limit key used</s></li>
+<li><s>Error messages handling + Tooltips</s></li>
+<li><s>CSS styling</s></li>
+<li><s>Nbr format</s></li>
+<li>Event Handling (desactivate the submit button when does not validate)</li>
+<li>Ajax communication</li>
+<li>Form Wizards</li>
+<li>Assistants</li>
+</ul>
+
+</body>
+</html>
+
