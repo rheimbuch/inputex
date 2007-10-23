@@ -43,12 +43,12 @@ div.inputEx-valid span.inputEx-field-img {
 }*/
 
 div.inputEx-invalid span.inputEx-field-img {
-	background-image: url('exclamation.gif');
+	background-image: url('../images/exclamation.gif');
 	visibility: visible;
 }
 
 div.inputEx-required span.inputEx-field-img {
-	background-image: url('required.gif');
+	background-image: url('../images/required.gif');
 	visibility: visible;
 }
 
