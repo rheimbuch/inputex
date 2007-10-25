@@ -266,7 +266,7 @@ YAHOO.inputEx.FormattedField.prototype.validate = function() {
 };
 
 // Alias for getValue() here, but to getValue will be overriden in Datefield (where formatted value like 10/04/2003 and value is a datetime like 2003-10-4 00:00:00).
-YAHOO.inputEx.Field.prototype.getFormattedValue = function() {
+YAHOO.inputEx.FormattedField.prototype.getFormattedValue = function() {
 	return this.el.value;
 };
 
@@ -374,11 +374,14 @@ YAHOO.inputEx.DateField.prototype.render = function() {
 
 // Return value in DATETIME format (use getFormattedValue() to have 04/10/2002-like format)
 YAHOO.inputEx.DateField.prototype.getValue = function() {
+   // Hack to validate if field not required and empty
+   if (this.el.value === '') { return '';}
    var ladate = this.getFormattedValue().split("/");
    var formatSplit = this.options.dateFormat.split('/');
    var d = parseInt(ladate[ formatSplit.indexOf('d') ],10);
    var Y = parseInt(ladate[ formatSplit.indexOf('Y') ],10);
    var m = parseInt(ladate[ formatSplit.indexOf('m') ],10)-1;
+   console.log('value ', new Date(Y,m,d));
    return (new Date(Y,m,d));
 };
 
