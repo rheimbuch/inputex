@@ -136,10 +136,10 @@ YAHOO.inputEx.Field.prototype.setClassFromState = function() {
 YAHOO.inputEx.Field.prototype.setToolTipMessage = function() { 
 	if(this.tooltip) {
 		if( this.previousState == 'required') {
-			this.tooltip.setBody('<img src="/javascripts/lib/inputEx/css/required.gif" /> '+this.options.messages.required);
+			this.tooltip.setBody('<img src="images/required.gif" /> '+this.options.messages.required);
 		}
 		else if( this.previousState == 'invalid') {
-			this.tooltip.setBody('<img src="/javascripts/lib/inputEx/css/exclamation.gif" /> '+this.options.messages.invalid);
+			this.tooltip.setBody('<img src="images/exclamation.gif" /> '+this.options.messages.invalid);
 		}
 	}
 };  
