@@ -381,7 +381,6 @@ YAHOO.inputEx.DateField.prototype.getValue = function() {
    var d = parseInt(ladate[ formatSplit.indexOf('d') ],10);
    var Y = parseInt(ladate[ formatSplit.indexOf('Y') ],10);
    var m = parseInt(ladate[ formatSplit.indexOf('m') ],10)-1;
-   console.log('value ', new Date(Y,m,d));
    return (new Date(Y,m,d));
 };
 
@@ -445,7 +444,7 @@ YAHOO.inputEx.ColorField.prototype.render = function() {
 	YAHOO.util.Dom.setStyle(this.colorEl, 'background-color', this.el.value);
 
 	// Render the popup
-	this.renderPopUp();				
+	this.renderPopUp();
 
 	// Elements are bound to divEl
 	this.divEl.appendChild(this.el);
@@ -480,15 +479,19 @@ YAHOO.inputEx.ColorField.prototype.renderPopUp = function() {
 	this.visible = false;
 	
 	// create the popup
-	this.colorPopUp = cn('div', null, {width: width+'px', display: 'none'});
+	this.colorPopUp = document.createElement('div');
+   YAHOO.util.Dom.setStyle(this.colorPopUp, "width", width+'px');
+   YAHOO.util.Dom.setStyle(this.colorPopUp, "display", 'none');
 	YAHOO.util.Dom.addClass(this.colorPopUp, 'inputEx-color-popup');
 	
 	// create the title
 	if (this.displayTitle) {
-      this.colorPopUp.appendChild( cn('div',null,null,YAHOO.inputEx.messages.selectColor) );
+      var div = document.createElement('div');
+      div.innerHTML = YAHOO.inputEx.messages.selectColor;
+      this.colorPopUp.appendChild( div );
    }
 
-   var body = cn('div');
+   var body = document.createElement('div');
    body.appendChild( this.renderColorGrid() );
    this.colorPopUp.appendChild(body);
    
@@ -507,8 +510,8 @@ YAHOO.inputEx.ColorField.prototype.initEvents = function() {
 };
 
 YAHOO.inputEx.ColorField.prototype.toggleColorPopUp = function() {
-	if( this.visible ) {	this.colorPopUp.hide(); }
-	else { this.colorPopUp.show(); }
+	if( this.visible ) {	this.colorPopUp.style.display = 'none'; /*this.colorPopUp.hide(); */}
+	else { this.colorPopUp.style.display = 'block'; /*this.colorPopUp.show(); */}
 	this.visible = !this.visible;
 };
 
@@ -517,7 +520,7 @@ YAHOO.inputEx.ColorField.prototype.close = function() {
 };
 
 YAHOO.inputEx.ColorField.prototype.closeColorPopUp = function() {
-	this.colorPopUp.hide();
+	this.colorPopUp.style.display = 'none'; /*this.colorPopUp.hide(); */
 	this.visible = false;
 };
 
@@ -608,7 +611,7 @@ YAHOO.inputEx.ColorField.prototype.onColorClick = function(e) {
 	
 	// Overlay closure
 	this.visible = !this.visible;
-	this.colorPopUp.hide();
+	this.colorPopUp.style.display = 'none'; /*this.colorPopUp.hide(); */
 };
 
 YAHOO.inputEx.ColorField.prototype.setDefaultColors = function(index) {

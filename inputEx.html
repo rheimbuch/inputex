@@ -34,9 +34,12 @@ YAHOO.inputEx.UserForm = function() {
 				{label: "Email", type: YAHOO.inputEx.EmailField, inputParams: 
 						{ name: "email",  required: true, 
 						messages: {required: "Ce champ est obligatoire", invalid: "Email non valide, ex: michel.dupont@fai.fr"} } },
-				{label: "Phone",type: YAHOO.inputEx.FrenchPhone, inputParams: { name: "phone", messages: {invalid: "Numéro non valide."}}},
+            {label:'Password',type: YAHOO.inputEx.PasswordField, inputParams: {name : "password", required:true }},
+                  {label: "Phone",type: YAHOO.inputEx.FrenchPhone, inputParams: { name: "phone", messages: {invalid: "Numéro non valide."}}},
 				{label: "IP Adress", type: YAHOO.inputEx.IpadressField, inputParams: { name: "ipadress" } },
-				{label: "ZipCode", inputParams: { name: "zipcode", numbers: true } }
+				{label: "ZipCode", inputParams: { name: "zipcode", numbers: true } },
+			   {label: "Favorite color",type: YAHOO.inputEx.ColorField, inputParams: { name: "colorref"}},
+			   {label: "Other colors",type: YAHOO.inputEx.ColorField, inputParams: { name: "colorref_2", auto:3, ratio:[4,3]}}
 			],
 			buttons: [
 				{value: "Valider", type: "submit"}
