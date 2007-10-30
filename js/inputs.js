@@ -189,6 +189,7 @@ YAHOO.inputEx.HiddenField = function(options) {
 YAHOO.lang.extend(YAHOO.inputEx.HiddenField, YAHOO.inputEx.Field);
 
 YAHOO.inputEx.HiddenField.prototype.render = function() {
+   this.type = YAHOO.inputEx.HiddenField;
 	this.divEl = document.createElement('DIV');
 	
 	this.el = document.createElement('INPUT');

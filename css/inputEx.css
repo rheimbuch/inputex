@@ -88,6 +88,10 @@ form.inputExForm fieldset table tbody tr td{
 	padding: 3px;
 }
 
+form.inputExForm fieldset table tbody tr.inputExForm-hiddenLine td {
+   padding: 0px;
+}
+
 form.inputExForm fieldset table tbody tr td.inputExForm-label{
 	font-family:"MS Sans Serif",Arial,Tahoma,Verdana,sans-serif;
 	width: 80px;

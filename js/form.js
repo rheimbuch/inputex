@@ -172,6 +172,11 @@ YAHOO.inputEx.Form.prototype.renderInputFields = function() {
 
 		// Create the new field with the given type as class
 		if( !input.type ) input.type = YAHOO.inputEx.Field;
+      
+      // Mask hidden fields
+		if(input.type == YAHOO.inputEx.HiddenField) {
+         YAHOO.util.Dom.addClass(tr,'inputExForm-hiddenLine');
+      };
 		
 		var inputParams = {};
 		for( var field in input.inputParams ) {
