@@ -13,7 +13,8 @@ YAHOO.namespace('inputEx');
 
 YAHOO.inputEx.messages = {
 	required: "This field is required",
-	invalid: "This field is invalid"
+	invalid: "This field is invalid",
+	valid: "This field is valid"
 };
 
 /**
@@ -36,6 +37,7 @@ YAHOO.inputEx.Field = function(options) {
 	this.options.messages = this.options.messages || {};
 	this.options.messages.required = this.options.messages.required || YAHOO.inputEx.messages.required;
 	this.options.messages.invalid = this.options.messages.invalid || YAHOO.inputEx.messages.invalid;
+	this.options.messages.valid = this.options.messages.valid || YAHOO.inputEx.messages.valid;
 	
 	// Call the render of the dom
 	this.render();
@@ -71,7 +73,7 @@ YAHOO.inputEx.Field.prototype.render = function() {
 	
 	// Create a span next to the field with an icon and a tooltip
 	if( !this.options.noicon ) {
-		this.imgEl = document.createElement('SPAN');
+		this.imgEl = document.createElement('span');
 		this.imgEl.innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;';
 		YAHOO.util.Dom.addClass(this.imgEl, 'inputEx-field-img');
 	
@@ -135,12 +137,18 @@ YAHOO.inputEx.Field.prototype.setClassFromState = function() {
  */ 
 YAHOO.inputEx.Field.prototype.setToolTipMessage = function() { 
 	if(this.tooltip) {
+	   var content = "";
 		if( this.previousState == 'required') {
-			this.tooltip.setBody('<img src="images/required.gif" /> '+this.options.messages.required);
+			content = '<div class="inputEx-tooltip-required"></div> <span>'+this.options.messages.required+'</span>';
 		}
 		else if( this.previousState == 'invalid') {
-			this.tooltip.setBody('<img src="images/exclamation.gif" /> '+this.options.messages.invalid);
+			content = '<div class="inputEx-tooltip-exclamation"></div> <span>'+this.options.messages.invalid+'</span>';
 		}
+   	else {
+   	   console.log(this.options.messages);
+   		content = '<div class="inputEx-tooltip-validated"></div> <span>'+this.options.messages.valid+'</span>';
+   	}
+   	this.tooltip.setBody(content);
 	}
 };  
 

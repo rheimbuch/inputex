@@ -36,11 +36,11 @@ span.inputEx-field-img {
 	margin-left:4px;
 }
 
-/* No image when valid:
+/* No image when valid:*/
 div.inputEx-valid span.inputEx-field-img {
-	background-image: url('validated.gif');
+	background-image: url('../images/validated.gif');
 	visibility: visible;
-}*/
+}
 
 div.inputEx-invalid span.inputEx-field-img {
 	background-image: url('../images/exclamation.gif');
@@ -121,3 +121,30 @@ div.inputEx-field-color {
 .inputEx-color-popup .hd {padding:5px; }
 .inputEx-color-popup .bd {padding:5px; }
 .inputEx-color-popup .ft {padding:5px; }
+
+/**
+ * Tooltips
+ */
+div.inputEx-tooltip-exclamation {
+	background-image: url('../images/exclamation.gif');
+	width: 16px;
+	height: 16px;
+	margin-right: 16px;
+	float: left;
+}
+
+div.inputEx-tooltip-required {
+	background-image: url('../images/required.gif');
+	width: 14px;
+	height: 14px;
+	margin-right: 16px;
+	float: left;
+}
+
+div.inputEx-tooltip-validated {
+	background-image: url('../images/validated.gif');
+	width: 16px;
+	height: 16px;
+	margin-right: 16px;
+	float: left;
+}
