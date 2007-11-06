@@ -56,14 +56,12 @@ YAHOO.inputEx.builder.Table.prototype.addNewRow = function(e, elmt) {
    // Actions :
    var actionsTd = cn('td').appendTo(tr);
    
-   var that = this;
    var removeLink = cn('a', null, null, "Remove").appendTo(actionsTd);
    YAHOO.util.Event.addListener(removeLink, 'click', function() { 
       var td = this.parentNode;
       var tr = td.parentNode;
       var tbody = tr.parentNode;
       tbody.removeChild(tr);
-      that.updateEvt.fire();
    });
    
    tr.appendTo(this.tbody);
