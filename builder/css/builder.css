@@ -1,0 +1,41 @@
+
+/**
+ *  Main Table of builder
+ */
+.inputEx-builder-table {
+   margin: 20px auto;
+}
+
+
+.inputEx-builder-table tbody tr td.inputEx-builder-cell {
+   padding: 30px;
+   border: 1px solid black;
+   vertical-align: top;
+}
+
+.inputEx-builder-table tbody tr td.inputEx-builder-cell h2.inputEx-builder-cellTitle {
+   font-size: 14pt;
+   margin: 10px;
+}
+
+/**
+ * Editor Fields Table
+ */
+table.inputEx-builder-fieldsTable {
+   margin-top: 10px;
+}
+
+
+table.inputEx-builder-fieldsTable thead {
+   background-color: #ddd;
+}
+
+table.inputEx-builder-fieldsTable thead tr th {
+   padding: 5px;
+   border: 3px solid white;
+}
+
+table.inputEx-builder-fieldsTable tbody tr td {
+   padding: 5px;
+}
+
