@@ -44,7 +44,6 @@ YAHOO.inputEx.Form = function(options) {
 YAHOO.inputEx.Form.prototype.onSubmit = function(e) {
 	if ( !this.validate() ) {
 		YAHOO.util.Event.stopEvent(e);
-    console.log('pas de validation');
 	} 
 };
 

@@ -38,7 +38,9 @@ YAHOO.inputEx.UserForm = function() {
 				{label: "ZipCode", inputParams: { name: "zipcode", numbers: true } },
 			   {label: "Favorite color",type: YAHOO.inputEx.ColorField, inputParams: { name: "colorref"}},
 			   {label: "Other colors",type: YAHOO.inputEx.ColorField, inputParams: { name: "colorref_2", auto:3, ratio:[4,3]}},
-			   {label: "",type: YAHOO.inputEx.HiddenField, inputParams: {value:"secret"}}
+			   {label: "",type: YAHOO.inputEx.HiddenField, inputParams: {value:"secret"}},
+				
+			   {label: "Balbla",type: YAHOO.inputEx.checkBox,inputParams:{name:"smsreminder",noicon:true,value:'N'}}
 			],
 			buttons: [
 				{value: "Valider", type: "submit"}

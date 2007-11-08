@@ -145,7 +145,6 @@ YAHOO.inputEx.Field.prototype.setToolTipMessage = function() {
 			content = '<div class="inputEx-tooltip-exclamation"></div> <span>'+this.options.messages.invalid+'</span>';
 		}
    	else {
-   	   console.log(this.options.messages);
    		content = '<div class="inputEx-tooltip-validated"></div> <span>'+this.options.messages.valid+'</span>';
    	}
    	this.tooltip.setBody(content);
