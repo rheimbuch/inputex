@@ -236,6 +236,9 @@ YAHOO.inputEx.EmailField.prototype.render = function() {
 	this.el.size = 27;
 };
 
+YAHOO.inputEx.EmailField.prototype.getValue = function() {
+	return this.el.value.toLowerCase();
+};
 
 /**
  * @class YAHOO.inputEx.IpadressField
