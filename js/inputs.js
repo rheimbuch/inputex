@@ -231,10 +231,10 @@ YAHOO.inputEx.EmailField = function(options) {
 };
 YAHOO.lang.extend(YAHOO.inputEx.EmailField, YAHOO.inputEx.Field);
 
-YAHOO.inputEx.EmailField.prototype.render = function() {
+/*YAHOO.inputEx.EmailField.prototype.render = function() {
 	YAHOO.inputEx.EmailField.superclass.render.call(this);
 	this.el.size = 27;
-};
+};*/
 
 YAHOO.inputEx.EmailField.prototype.getValue = function() {
 	return this.el.value.toLowerCase();
