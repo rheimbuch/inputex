@@ -1,0 +1,791 @@
+<!doctype html public "-//W3C//DTD HTML 4.0 Frameset//EN""http://www.w3.org/TR/REC-html40/frameset.dtd">
+<html>
+<head>
+<title>
+InputEx Overview
+</title>
+<link rel ="stylesheet" type="text/css" href="stylesheet.css" title="Style">
+<script>
+function asd() {
+	
+		parent.document.title="inputs.js Overview";
+	
+}
+</script>
+</head>
+<body bgcolor="white" onload="asd();">
+
+<!-- ========== START OF NAVBAR ========== -->
+<a name="navbar_top"><!-- --></a>
+<table border="0" width="100%" cellpadding="1" cellspacing="0">
+<tr>
+<td colspan=2 bgcolor="#EEEEFF" class="NavBarCell1">
+<a name="navbar_top_firstrow"><!-- --></a>
+<table border="0" cellpadding="0" cellspacing="3">
+  <tr align="center" valign="top">
+  
+  
+  <td bgcolor="#EEEEFF" class="NavBarCell1">    <a href="overview-summary.html"><font class="NavBarFont1"><b>Overview</b></font></a>&nbsp;</td>
+  <td bgcolor="#FFFFFF" class="NavBarCell1Rev">	&nbsp;<font class="NavBarFont1Rev"><b>File</b></font>&nbsp;</td>
+  
+
+  <td bgcolor="#FFFFFF" class="NavBarCell1"> 	<font class="NavBarFont1">Class</font>&nbsp;</td>
+  <td bgcolor="#EEEEFF" class="NavBarCell1">    <a href="overview-tree.html"><font class="NavBarFont1"><b>Tree</b></font></a>&nbsp;</td>
+  <td bgcolor="#EEEEFF" class="NavBarCell1">    <a href="index-all.html"--><font class="NavBarFont1"><b>Index</b></font></a>&nbsp;</td>
+  <td bgcolor="#EEEEFF" class="NavBarCell1">    <a href="help-doc.html"><font class="NavBarFont1"><b>Help</b></font></a>&nbsp;</td>
+  </tr>
+</table>
+</td>
+<td bgcolor="#EEEEFF" align="right" valign="top">
+<em>
+<b>InputEx</b></em>
+</td>
+</tr>
+
+<tr>
+<td bgcolor="white" class="NavBarCell2"><font size="-2">
+&nbsp;PREV&nbsp;
+&nbsp;NEXT</font></td>
+<td bgcolor="white" class="NavBarCell2"><font size="-2">
+  <a href="index.html" target="_top"><b>FRAMES</b></a>  &nbsp;
+&nbsp;<a href="overview-summary.html" target="_top"><b>NO FRAMES</b></a>
+&nbsp;&nbsp;
+<script>
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="allclasses-noframe.html" TARGET=""><B>All Classes</B></A>');
+  }
+  //-->
+</script>
+<noscript>
+<a href="allclasses-noframe.html" target=""><b>All Classes</b></a>
+</noscript>
+</font></td>
+</tr>
+</table>
+<!-- =========== END OF NAVBAR =========== -->
+
+<hr>
+<center>
+	
+	   <h2>inputs.js</h2>
+	
+</center>
+
+	
+
+
+<h4>Summary</h4>
+<p>
+	
+		No overview generated for 'inputs.js'<BR/><BR/>
+	
+</p>
+
+<hr>
+
+
+
+<!-- ========== METHOD SUMMARY =========== -->
+
+<!-- ========== END METHOD SUMMARY =========== -->
+
+
+        <pre class="sourceview">
+
+<span class="comment">/**
+ * <span class="attrib">@class</span> YAHOO.inputEx.UpperCaseField
+ * Create a field where the value is always uppercase
+ */</span>
+YAHOO.inputEx.UpperCaseField = <span class="reserved">function</span>(options) {
+   YAHOO.inputEx.UpperCaseField.superclass.constructor.call(<span class="reserved">this</span>,options);
+};
+YAHOO.lang.extend(YAHOO.inputEx.UpperCaseField, YAHOO.inputEx.Field);
+
+YAHOO.inputEx.UpperCaseField.<span class="reserved">prototype</span>.onInput = <span class="reserved">function</span>(e) { 
+	<span class="reserved">this</span>.setValue( (<span class="reserved">this</span>.getValue()).toUpperCase() );
+	<span class="reserved">this</span>.setClassFromState();
+};
+
+
+
+<span class="comment">/**
+ * <span class="attrib">@class</span> YAHOO.inputEx.UneditableHtmlField
+ * Create a uneditable field where you can stick the html you want
+ */</span>
+YAHOO.inputEx.UneditableHtmlField = <span class="reserved">function</span>(options) {
+	YAHOO.inputEx.UneditableHtmlField.superclass.constructor.call(<span class="reserved">this</span>,options);
+};
+YAHOO.lang.extend(YAHOO.inputEx.UneditableHtmlField, YAHOO.inputEx.Field);
+
+YAHOO.inputEx.UneditableHtmlField.<span class="reserved">prototype</span>.render = <span class="reserved">function</span>() {
+   <span class="reserved">this</span>.divEl = document.createElement(<span class="literal">'DIV'</span>);
+};
+
+YAHOO.inputEx.UneditableHtmlField.<span class="reserved">prototype</span>.setValue = <span class="reserved">function</span>(val) {
+   <span class="reserved">this</span>.value = val;
+   <span class="reserved">if</span>(<span class="reserved">this</span>.options.formatValue) {
+      <span class="reserved">this</span>.divEl.innerHTML = <span class="reserved">this</span>.options.formatValue(val);
+   }
+   <span class="reserved">else</span> <span class="reserved">if</span>(<span class="reserved">this</span>.options.formatDom) {
+      var r = <span class="reserved">this</span>.options.formatDom(val);
+      <span class="reserved">this</span>.divEl.innerHTML = <span class="literal">""</span>;
+      <span class="reserved">if</span>(r) <span class="reserved">this</span>.divEl.appendChild(r);
+   }
+   <span class="reserved">else</span> {
+      <span class="reserved">this</span>.divEl.innerHTML = val;
+   }
+};
+
+YAHOO.inputEx.UneditableHtmlField.<span class="reserved">prototype</span>.getValue = <span class="reserved">function</span>() {
+   <span class="reserved">return</span> <span class="reserved">this</span>.value;
+};
+
+
+
+<span class="comment">/**
+ * <span class="attrib">@class</span> YAHOO.inputEx.SelectField
+ * Create a &lt;select&gt; input, inherits from YAHOO.inputEx.Field
+ *
+ * options:
+ *		- selectValues: contains the list of &lt;options&gt; values
+ */</span>
+YAHOO.inputEx.SelectField = <span class="reserved">function</span>(options) {
+	YAHOO.inputEx.SelectField.superclass.constructor.call(<span class="reserved">this</span>,options);
+  };
+YAHOO.lang.extend(YAHOO.inputEx.SelectField, YAHOO.inputEx.Field);
+
+YAHOO.inputEx.SelectField.<span class="reserved">prototype</span>.render = <span class="reserved">function</span>() {
+   <span class="reserved">this</span>.divEl = document.createElement(<span class="literal">'DIV'</span>);
+   <span class="reserved">this</span>.el = document.createElement(<span class="literal">'SELECT'</span>);
+   <span class="reserved">this</span>.el.name = <span class="reserved">this</span>.options.name || <span class="literal">''</span>;
+   <span class="reserved">if</span> (<span class="reserved">this</span>.options.multiple) {<span class="reserved">this</span>.el.multiple = true; <span class="reserved">this</span>.el.size = <span class="reserved">this</span>.options.selectValues.length;}
+   <span class="reserved">this</span>.optionEls = [];
+   <span class="reserved">for</span>( var i = 0 ; i &lt; <span class="reserved">this</span>.options.selectValues.length ; i++) {
+      <span class="reserved">this</span>.optionEls[i] = document.createElement(<span class="literal">'OPTION'</span>);
+      <span class="reserved">this</span>.optionEls[i].value = <span class="reserved">this</span>.options.selectValues[i];
+      <span class="reserved">this</span>.optionEls[i].innerHTML = (<span class="reserved">this</span>.options.selectOptions) ? <span class="reserved">this</span>.options.selectOptions[i] : <span class="reserved">this</span>.options.selectValues[i];
+      <span class="reserved">this</span>.el.appendChild(<span class="reserved">this</span>.optionEls[i]);
+   }
+   <span class="reserved">this</span>.divEl.appendChild(<span class="reserved">this</span>.el);
+};
+
+YAHOO.inputEx.SelectField.<span class="reserved">prototype</span>.setValue = <span class="reserved">function</span>(val) {
+   var index = 0;
+   var option;
+   <span class="reserved">for</span>(var i = 0 ; i &lt; <span class="reserved">this</span>.options.selectValues.length ; i++) {
+      <span class="reserved">if</span>(val === <span class="reserved">this</span>.options.selectValues[i]) {
+         option = <span class="reserved">this</span>.el.childNodes[i];
+		 option.selected = <span class="literal">"selected"</span>;
+      }
+   }
+};
+
+<span class="comment">/**
+ * <span class="attrib">@class</span> YAHOO.inputEx.checkBox
+ * Create a &lt;checkbox&gt; input, inherits from YAHOO.inputEx.Field
+ *
+ * options:
+ *		- checked: true or false
+ *		- sentValues: contains a list of two strings to be returned if checked or unchecked (ex: sentValues:['Returned_if_checked','Returned_if_unchecked'])
+ */</span>
+YAHOO.inputEx.checkBox = <span class="reserved">function</span>(options) {
+	YAHOO.inputEx.checkBox.superclass.constructor.call(<span class="reserved">this</span>,options);
+};
+YAHOO.lang.extend(YAHOO.inputEx.checkBox, YAHOO.inputEx.Field);
+
+YAHOO.inputEx.checkBox.<span class="reserved">prototype</span>.render = <span class="reserved">function</span>() {
+  
+  <span class="reserved">this</span>.sentValues = <span class="reserved">this</span>.options.sentValues || [<span class="literal">'Y'</span>,<span class="literal">'N'</span>];
+  <span class="reserved">this</span>.checkedValue = <span class="reserved">this</span>.sentValues[0];
+  <span class="reserved">this</span>.uncheckedValue = <span class="reserved">this</span>.sentValues[1];
+
+  <span class="reserved">this</span>.divEl = document.createElement(<span class="literal">'DIV'</span>);
+
+  <span class="reserved">this</span>.el = document.createElement(<span class="literal">'INPUT'</span>);
+  <span class="reserved">this</span>.el.type = <span class="literal">'checkbox'</span>;
+  <span class="reserved">this</span>.el.checked = (<span class="reserved">this</span>.options.checked === false) ? false : true;
+  <span class="reserved">this</span>.divEl.appendChild(<span class="reserved">this</span>.el);
+  
+  <span class="reserved">this</span>.label = document.createElement(<span class="literal">'label'</span>);
+  <span class="reserved">this</span>.label.innerHTML = <span class="reserved">this</span>.options.label || <span class="literal">''</span>;
+  YAHOO.util.Dom.addClass(<span class="reserved">this</span>.label, <span class="literal">'inputExForm-checkbox-rightLabel'</span>);
+  <span class="reserved">this</span>.divEl.appendChild(<span class="reserved">this</span>.label);
+  
+  <span class="comment">// Keep state of checkbox in a hidden field (format : this.checkedValue or this.uncheckedValue)</span>
+  <span class="reserved">this</span>.hiddenEl = document.createElement(<span class="literal">'INPUT'</span>);
+  <span class="reserved">this</span>.hiddenEl.type = <span class="literal">'hidden'</span>;
+  <span class="reserved">this</span>.hiddenEl.name = <span class="reserved">this</span>.options.name || <span class="literal">''</span>;
+  <span class="reserved">this</span>.hiddenEl.value = <span class="reserved">this</span>.el.checked ? <span class="reserved">this</span>.checkedValue : <span class="reserved">this</span>.uncheckedValue;
+  <span class="reserved">this</span>.divEl.appendChild(<span class="reserved">this</span>.hiddenEl);
+
+  YAHOO.util.Event.addListener(<span class="reserved">this</span>.el, <span class="literal">"change"</span>, <span class="reserved">this</span>.toggleHiddenEl, <span class="reserved">this</span>, true);	
+};
+
+YAHOO.inputEx.checkBox.<span class="reserved">prototype</span>.toggleHiddenEl = <span class="reserved">function</span>() {
+   <span class="reserved">this</span>.hiddenEl.value = <span class="reserved">this</span>.el.checked ? <span class="reserved">this</span>.checkedValue : <span class="reserved">this</span>.uncheckedValue;
+};
+
+YAHOO.inputEx.checkBox.<span class="reserved">prototype</span>.getValue = <span class="reserved">function</span>() {
+   <span class="reserved">return</span> <span class="reserved">this</span>.el.checked ? <span class="reserved">this</span>.checkedValue : <span class="reserved">this</span>.uncheckedValue;
+};
+
+<span class="comment">/**
+ * Function to set the value
+ */</span>
+YAHOO.inputEx.checkBox.<span class="reserved">prototype</span>.setValue = <span class="reserved">function</span>(val) {
+    <span class="reserved">if</span> (val===<span class="reserved">this</span>.checkedValue) {
+		<span class="reserved">this</span>.hiddenEl.value = val;
+		<span class="reserved">this</span>.el.checked = true;
+	}
+    <span class="reserved">else</span> <span class="reserved">if</span> (val===<span class="reserved">this</span>.uncheckedValue) {
+		<span class="reserved">this</span>.hiddenEl.value = val;
+		<span class="reserved">this</span>.el.checked = false;
+	}
+	<span class="reserved">else</span> {
+	    throw <span class="literal">"Wrong value assignment in checkBox input"</span>;
+	}
+};
+
+
+
+<span class="comment">/**
+ * <span class="attrib">@class</span> YAHOO.inputEx.Textarea
+ * Create a &lt;select&gt; input, inherits from YAHOO.inputEx.Field
+ *
+ * options:
+ *		- selectValues: contains the list of &lt;options&gt; values
+ */</span>
+YAHOO.inputEx.Textarea = <span class="reserved">function</span>(options) {
+	YAHOO.inputEx.Textarea.superclass.constructor.call(<span class="reserved">this</span>,options);
+};
+YAHOO.lang.extend(YAHOO.inputEx.Textarea, YAHOO.inputEx.Field);
+
+YAHOO.inputEx.Textarea.<span class="reserved">prototype</span>.render = <span class="reserved">function</span>() {
+	<span class="reserved">this</span>.divEl = document.createElement(<span class="literal">'DIV'</span>);
+	<span class="reserved">this</span>.el = document.createElement(<span class="literal">'TEXTAREA'</span>);
+	<span class="reserved">this</span>.el.value = <span class="reserved">this</span>.options.value || <span class="literal">''</span>;
+	<span class="reserved">this</span>.el.rows = <span class="reserved">this</span>.options.rows || 6;
+	<span class="reserved">this</span>.el.cols = <span class="reserved">this</span>.options.cols || 23;
+	YAHOO.util.Dom.addClass(<span class="reserved">this</span>.el, <span class="literal">'inputEx-field'</span>);
+	<span class="reserved">this</span>.divEl.appendChild(<span class="reserved">this</span>.el);
+};
+
+
+<span class="comment">/**
+ * <span class="attrib">@class</span> YAHOO.inputEx.HiddenField
+ * Create a hidden input, inherits from YAHOO.inputEx.Field
+ */</span>
+YAHOO.inputEx.HiddenField = <span class="reserved">function</span>(options) {
+	YAHOO.inputEx.HiddenField.superclass.constructor.call(<span class="reserved">this</span>,options);
+};
+YAHOO.lang.extend(YAHOO.inputEx.HiddenField, YAHOO.inputEx.Field);
+
+YAHOO.inputEx.HiddenField.<span class="reserved">prototype</span>.render = <span class="reserved">function</span>() {
+   <span class="reserved">this</span>.type = YAHOO.inputEx.HiddenField;
+	<span class="reserved">this</span>.divEl = document.createElement(<span class="literal">'DIV'</span>);
+	
+	<span class="reserved">this</span>.el = document.createElement(<span class="literal">'INPUT'</span>);
+	<span class="reserved">this</span>.el.type = <span class="literal">'hidden'</span>;
+  <span class="reserved">this</span>.el.name = <span class="reserved">this</span>.options.name || <span class="literal">''</span>;
+
+	YAHOO.util.Dom.addClass(<span class="reserved">this</span>.el, <span class="literal">'inputEx-field'</span>);
+	
+	<span class="reserved">this</span>.divEl.appendChild(<span class="reserved">this</span>.el);
+};
+
+
+<span class="comment">/**
+ * <span class="attrib">@class</span> YAHOO.inputEx.PasswordField
+ * Create a password input, inherits from YAHOO.inputEx.Field
+ */</span>
+YAHOO.inputEx.PasswordField = <span class="reserved">function</span>(options) {
+	YAHOO.inputEx.PasswordField.superclass.constructor.call(<span class="reserved">this</span>,options);
+};
+YAHOO.lang.extend(YAHOO.inputEx.PasswordField, YAHOO.inputEx.Field);
+
+YAHOO.inputEx.PasswordField.<span class="reserved">prototype</span>.render = <span class="reserved">function</span>() {
+	YAHOO.inputEx.PasswordField.superclass.render.call(<span class="reserved">this</span>);
+	<span class="reserved">this</span>.el.type = <span class="literal">'password'</span>;
+};
+
+	
+<span class="comment">/**
+ * <span class="attrib">@class</span> YAHOO.inputEx.EmailField
+ * Adds an email regexp, inherits from YAHOO.inputEx.Field
+ */</span>
+YAHOO.inputEx.messages.invalidEmail = <span class="literal">"Invalid email, ex: sample@test.com"</span>;
+
+YAHOO.inputEx.EmailField = <span class="reserved">function</span>(options) {
+	options.messages = options.messages || {};
+	options.messages.invalid = YAHOO.inputEx.messages.invalidEmail;
+	options.regexp = /^(([^&lt;&gt;()[\]\\.,;:\s@\<span class="literal">"]+(\.[^&lt;&gt;()[\]\\.,;:\s@\"</span>]+)*)|(\<span class="literal">".+\"</span>))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	YAHOO.inputEx.EmailField.superclass.constructor.call(<span class="reserved">this</span>,options);
+};
+YAHOO.lang.extend(YAHOO.inputEx.EmailField, YAHOO.inputEx.Field);
+
+<span class="comment">/*YAHOO.inputEx.EmailField.prototype.render = function() {
+	YAHOO.inputEx.EmailField.superclass.render.call(this);
+	this.el.size = 27;
+};*/</span>
+
+YAHOO.inputEx.EmailField.<span class="reserved">prototype</span>.getValue = <span class="reserved">function</span>() {
+	<span class="reserved">return</span> <span class="reserved">this</span>.el.value.toLowerCase();
+};
+
+<span class="comment">/**
+ * <span class="attrib">@class</span> YAHOO.inputEx.IpadressField
+ * Adds an IPv4 adress regexp, inherits from YAHOO.inputEx.Field
+ */</span>
+YAHOO.inputEx.IpadressField = <span class="reserved">function</span>(options) {
+	options.regexp = /^(?:1\d?\d?|2(?:[0-4]\d?|[6789]|5[0-5]?)?|[3-9]\d?|0)(?:\.(?:1\d?\d?|2(?:[0-4]\d?|[6789]|5[0-5]?)?|[3-9]\d?|0)){3}$/;
+	YAHOO.inputEx.IpadressField.superclass.constructor.call(<span class="reserved">this</span>,options);
+};
+YAHOO.lang.extend(YAHOO.inputEx.IpadressField, YAHOO.inputEx.Field);
+
+
+<span class="comment">/**
+ * <span class="attrib">@class</span> YAHOO.inputEx.FormattedField
+ * Uses a format, inherits from YAHOO.inputEx.Field
+ * This is used for numbers only.
+ *
+ * options:
+ *		- format: format (zipcode: '#####', date: '##/##/####' )
+ */</span>
+<span class="comment">// Adds the numbers only option</span>
+YAHOO.inputEx.FormattedField = <span class="reserved">function</span>(options) {
+	YAHOO.inputEx.FormattedField.superclass.constructor.call(<span class="reserved">this</span>,options);
+};
+YAHOO.lang.extend(YAHOO.inputEx.FormattedField, YAHOO.inputEx.Field);
+
+YAHOO.inputEx.FormattedField.<span class="reserved">prototype</span>.validate = <span class="reserved">function</span>() { 
+	<span class="reserved">return</span> !<span class="reserved">this</span>.getFormattedValue().match(<span class="literal">'_'</span>);
+};
+
+<span class="comment">// Alias for getValue() here, but to getValue will be overriden in Datefield (where formatted value like 10/04/2003 and value is a datetime like 2003-10-4 00:00:00).</span>
+YAHOO.inputEx.FormattedField.<span class="reserved">prototype</span>.getFormattedValue = <span class="reserved">function</span>() {
+	<span class="reserved">return</span> <span class="reserved">this</span>.el.value;
+};
+
+YAHOO.inputEx.FormattedField.<span class="reserved">prototype</span>.onInput = <span class="reserved">function</span>(e) {
+	
+	var value = <span class="reserved">this</span>.getFormattedValue();
+	
+	var v = value.split(<span class="literal">''</span>);
+	var f = <span class="reserved">this</span>.options.format.split(<span class="literal">''</span>);
+	
+	var resultString = <span class="literal">''</span>;
+	var matching = true;
+	var lastMatchedPos = 0;
+	<span class="reserved">for</span>(var i = 0 ; i &lt; f.length ; i++) {
+		
+		<span class="comment">// Check if this char is matching</span>
+		<span class="reserved">if</span>( matching &amp;&amp; (	(v.length &lt;= i ) ||
+			 					(f[i] == <span class="literal">'#'</span> &amp;&amp; (<span class="literal">"0123456789"</span>).indexOf(v[i]) == -1) ||
+			 					(f[i] != <span class="literal">'#'</span> &amp;&amp; f[i] != v[i]) ) ) {
+				matching = false;
+		}
+		
+		<span class="reserved">if</span>( matching ) {
+			resultString += v[i];
+			<span class="comment">// autocomplete</span>
+			<span class="reserved">if</span> ( i+1 &lt; f.length &amp;&amp; f[i+1] != <span class="literal">'#'</span>) {
+				resultString += f[i+1];
+				i++;
+			}
+			lastMatchedPos = i+1;
+		}
+		<span class="reserved">else</span> {
+			resultString += f[i].replace(<span class="literal">'#'</span>,<span class="literal">'_'</span>);
+		}
+	}
+	<span class="comment">//this.setValue(resultString);</span>
+	<span class="reserved">this</span>.el.value = resultString;
+	<span class="reserved">this</span>.el.selectionStart = lastMatchedPos;
+   <span class="reserved">this</span>.el.selectionEnd = lastMatchedPos;
+	
+	<span class="reserved">this</span>.setClassFromState();
+};
+
+YAHOO.inputEx.FormattedField.<span class="reserved">prototype</span>.initEvents = <span class="reserved">function</span>() {
+	YAHOO.inputEx.FormattedField.superclass.initEvents.call(<span class="reserved">this</span>);
+	YAHOO.util.Event.addListener(<span class="reserved">this</span>.el, <span class="literal">'keydown'</span>, <span class="reserved">this</span>.onKeyDown, <span class="reserved">this</span>, true);
+};
+
+YAHOO.inputEx.FormattedField.<span class="reserved">prototype</span>.onKeyDown = <span class="reserved">function</span>(e) {
+	<span class="reserved">if</span>(e.keyCode == 8) {
+		<span class="reserved">if</span>( <span class="reserved">this</span>.el.selectionStart == <span class="reserved">this</span>.el.selectionEnd ) {
+			var v = (<span class="reserved">this</span>.getFormattedValue()).split(<span class="literal">''</span>);
+			<span class="reserved">if</span>( (<span class="literal">"0123456789"</span>).indexOf(v[<span class="reserved">this</span>.el.selectionStart-1]) == -1 ) {
+				<span class="comment">//this.setValue((this.getFormattedValue()).substr(0,this.el.selectionStart-1) );</span>
+            <span class="reserved">this</span>.el.value = (<span class="reserved">this</span>.getFormattedValue()).substr(0,<span class="reserved">this</span>.el.selectionStart-1);
+			}
+		}
+	}
+};
+
+YAHOO.inputEx.FormattedField.<span class="reserved">prototype</span>.onBlur = <span class="reserved">function</span>(e) {
+	YAHOO.inputEx.FormattedField.superclass.onBlur.call(<span class="reserved">this</span>,e);
+
+	<span class="reserved">if</span>( <span class="reserved">this</span>.getFormattedValue() == <span class="reserved">this</span>.options.format.replace(/#/g,<span class="literal">'_'</span>) ) {
+		<span class="comment">//this.setValue('');</span>
+      <span class="reserved">this</span>.el.value = <span class="literal">''</span>;
+	}
+
+	<span class="reserved">this</span>.setClassFromState();
+};
+
+<span class="comment">/**
+ * <span class="attrib">@class</span> YAHOO.inputEx.DateField
+ *
+ * options: 
+ *		- dateFormat: default to 'm/d/Y'
+ */</span>
+YAHOO.inputEx.DateField = <span class="reserved">function</span>(options) {
+	options.format = <span class="literal">'##/##/####'</span>;
+	options.dateFormat = options.dateFormat || <span class="literal">'m/d/Y'</span>;
+	YAHOO.inputEx.DateField.superclass.constructor.call(<span class="reserved">this</span>,options);
+};
+YAHOO.lang.extend(YAHOO.inputEx.DateField, YAHOO.inputEx.FormattedField);
+
+YAHOO.inputEx.DateField.<span class="reserved">prototype</span>.validate = <span class="reserved">function</span> () {
+	
+	var value = <span class="reserved">this</span>.el.value;
+	<span class="reserved">if</span>( value.match(<span class="literal">'_'</span>) ) { <span class="reserved">return</span> false; }
+   <span class="reserved">if</span> (value === <span class="literal">""</span>) { <span class="reserved">return</span> false; }
+   var ladate = value.split(<span class="literal">"/"</span>);
+   <span class="reserved">if</span> ((ladate.length != 3) || isNaN(parseInt(ladate[0])) || isNaN(parseInt(ladate[1])) || isNaN(parseInt(ladate[2]))) { <span class="reserved">return</span> false; }
+	 var formatSplit = <span class="reserved">this</span>.options.dateFormat.split(<span class="literal">'/'</span>);
+	 var d = parseInt(ladate[ formatSplit.indexOf(<span class="literal">'d'</span>) ],10);
+	 var Y = parseInt(ladate[ formatSplit.indexOf(<span class="literal">'Y'</span>) ],10);
+	 var m = parseInt(ladate[ formatSplit.indexOf(<span class="literal">'m'</span>) ],10)-1;
+   var unedate = new Date(Y,m,d);
+   var annee = unedate.getFullYear();
+   <span class="reserved">return</span> ((unedate.getDate() == d) &amp;&amp; (unedate.getMonth() == m) &amp;&amp; (annee == Y));
+};
+
+YAHOO.inputEx.DateField.<span class="reserved">prototype</span>.render = <span class="reserved">function</span>() {
+	YAHOO.inputEx.DateField.superclass.render.call(<span class="reserved">this</span>);
+	<span class="reserved">this</span>.el.size = 10;
+};
+
+<span class="comment">// Return value in DATETIME format (use getFormattedValue() to have 04/10/2002-like format)</span>
+YAHOO.inputEx.DateField.<span class="reserved">prototype</span>.getValue = <span class="reserved">function</span>() {
+   <span class="comment">// Hack to validate if field not required and empty</span>
+   <span class="reserved">if</span> (<span class="reserved">this</span>.el.value === <span class="literal">''</span>) { <span class="reserved">return</span> <span class="literal">''</span>;}
+   var ladate = <span class="reserved">this</span>.getFormattedValue().split(<span class="literal">"/"</span>);
+   var formatSplit = <span class="reserved">this</span>.options.dateFormat.split(<span class="literal">'/'</span>);
+   var d = parseInt(ladate[ formatSplit.indexOf(<span class="literal">'d'</span>) ],10);
+   var Y = parseInt(ladate[ formatSplit.indexOf(<span class="literal">'Y'</span>) ],10);
+   var m = parseInt(ladate[ formatSplit.indexOf(<span class="literal">'m'</span>) ],10)-1;
+   <span class="reserved">return</span> (new Date(Y,m,d));
+};
+
+YAHOO.inputEx.DateField.<span class="reserved">prototype</span>.setValue = <span class="reserved">function</span>(val) {
+   
+   <span class="comment">// Don't try to parse a date if there is no date</span>
+   <span class="reserved">if</span>( val === <span class="literal">''</span> ) {
+      <span class="reserved">this</span>.el.value = <span class="literal">''</span>;
+      <span class="reserved">return</span>;
+   }
+   
+  <span class="comment">// DATETIME</span>
+	<span class="reserved">if</span> (val instanceof Date) {
+     str = <span class="reserved">this</span>.options.dateFormat.replace(<span class="literal">'Y'</span>,val.getFullYear());
+     str = str.replace(<span class="literal">'m'</span>,val.GetMonthNumberString());
+     str = str.replace(<span class="literal">'d'</span>,val.GetDateString());
+  } 
+  <span class="comment">// else date must match this.options.dateFormat</span>
+  <span class="reserved">else</span> {
+     str = val;
+  }
+		
+	<span class="reserved">this</span>.el.value = str;
+};
+
+<span class="comment">/**
+ * YAHOO.inputEx.ColorField
+ *
+ * <span class="attrib">@classDescription</span>    Create a ColorPicker input field
+ * <span class="attrib">@inherits</span>            YAHOO.inputEx.Field
+ * <span class="attrib">@param</span> {Object}      same as parent options
+ * <span class="attrib">@constructor</span>
+ */</span>
+YAHOO.inputEx.messages.selectColor = <span class="literal">"Select a color :"</span>;
+YAHOO.inputEx.ColorField = <span class="reserved">function</span>(options) {
+	YAHOO.inputEx.ColorField.superclass.constructor.call(<span class="reserved">this</span>,options);
+};
+YAHOO.lang.extend(YAHOO.inputEx.ColorField, YAHOO.inputEx.Field);
+
+<span class="comment">/**
+ * Create a box that opens a Overlay when clicked
+ *
+ * <span class="attrib">@method</span>  render
+ * <span class="attrib">@memberOf</span>         YAHOO.inputEx.ColorField
+ */</span>
+YAHOO.inputEx.ColorField.<span class="reserved">prototype</span>.render = <span class="reserved">function</span>() {
+
+	<span class="comment">// Create a DIV element to wrap the editing el and the image</span>
+	<span class="reserved">this</span>.divEl = document.createElement(<span class="literal">'DIV'</span>);
+
+	<span class="comment">// A hidden input field to store the color code </span>
+	<span class="reserved">this</span>.el = document.createElement(<span class="literal">'INPUT'</span>);
+	<span class="reserved">this</span>.el.type = <span class="literal">'hidden'</span>;
+	<span class="reserved">this</span>.el.name = <span class="reserved">this</span>.options.name;
+	<span class="reserved">this</span>.el.value = <span class="reserved">this</span>.options.value || <span class="literal">'#DD7870'</span>;
+	YAHOO.util.Dom.addClass(<span class="reserved">this</span>.el, <span class="literal">'inputEx-field'</span>);
+
+	<span class="comment">// Create a colored area</span>
+	<span class="reserved">this</span>.colorEl = document.createElement(<span class="literal">'DIV'</span>);
+	YAHOO.util.Dom.addClass(<span class="reserved">this</span>.colorEl, <span class="literal">'inputEx-field-color'</span>);
+	YAHOO.util.Dom.setStyle(<span class="reserved">this</span>.colorEl, <span class="literal">'background-color'</span>, <span class="reserved">this</span>.el.value);
+
+	<span class="comment">// Render the popup</span>
+	<span class="reserved">this</span>.renderPopUp();
+
+	<span class="comment">// Elements are bound to divEl</span>
+	<span class="reserved">this</span>.divEl.appendChild(<span class="reserved">this</span>.el);
+	<span class="reserved">this</span>.divEl.appendChild(<span class="reserved">this</span>.colorEl);
+};
+
+<span class="comment">// This create a popup and add an colorGrid</span>
+YAHOO.inputEx.ColorField.<span class="reserved">prototype</span>.renderPopUp = <span class="reserved">function</span>() {
+	
+  <span class="comment">// display or not the title</span>
+  <span class="reserved">this</span>.displayTitle = <span class="reserved">this</span>.options.displayTitle || false;
+  
+	<span class="comment">// set default color grid  to be used</span>
+	var defaultGrid = <span class="reserved">this</span>.options.auto || 1;
+	
+	<span class="comment">// set colors available</span>
+	<span class="reserved">this</span>.colors = <span class="reserved">this</span>.options.colors || <span class="reserved">this</span>.setDefaultColors(defaultGrid);
+	<span class="reserved">this</span>.length = <span class="reserved">this</span>.colors.length;
+	
+	<span class="comment">// set PopUp size ratio (default 16/9 ratio)</span>
+	<span class="reserved">this</span>.ratio = <span class="reserved">this</span>.options.ratio || [16,9];
+	
+	<span class="comment">// set color grid dimensions</span>
+	<span class="reserved">this</span>.squaresPerLine = Math.ceil(Math.sqrt(<span class="reserved">this</span>.length*<span class="reserved">this</span>.ratio[0]/<span class="reserved">this</span>.ratio[1]));
+	<span class="reserved">this</span>.squaresPerColumn = Math.ceil(<span class="reserved">this</span>.length/<span class="reserved">this</span>.squaresPerLine);
+	<span class="reserved">this</span>.squaresOnLastLine = <span class="reserved">this</span>.squaresPerLine - (<span class="reserved">this</span>.squaresPerLine*<span class="reserved">this</span>.squaresPerColumn-<span class="reserved">this</span>.length);
+	
+	<span class="comment">// set popup width</span>
+	var width = 30*<span class="reserved">this</span>.squaresPerLine+10;
+	
+	<span class="comment">// keep the visible state of the popup</span>
+	<span class="reserved">this</span>.visible = false;
+	
+	<span class="comment">// create the popup</span>
+	<span class="reserved">this</span>.colorPopUp = document.createElement(<span class="literal">'div'</span>);
+   YAHOO.util.Dom.setStyle(<span class="reserved">this</span>.colorPopUp, <span class="literal">"width"</span>, width+<span class="literal">'px'</span>);
+   YAHOO.util.Dom.setStyle(<span class="reserved">this</span>.colorPopUp, <span class="literal">"display"</span>, <span class="literal">'none'</span>);
+	YAHOO.util.Dom.addClass(<span class="reserved">this</span>.colorPopUp, <span class="literal">'inputEx-color-popup'</span>);
+	
+	<span class="comment">// create the title</span>
+	<span class="reserved">if</span> (<span class="reserved">this</span>.displayTitle) {
+      var div = document.createElement(<span class="literal">'div'</span>);
+      div.innerHTML = YAHOO.inputEx.messages.selectColor;
+      <span class="reserved">this</span>.colorPopUp.appendChild( div );
+   }
+
+   var body = document.createElement(<span class="literal">'div'</span>);
+   body.appendChild( <span class="reserved">this</span>.renderColorGrid() );
+   <span class="reserved">this</span>.colorPopUp.appendChild(body);
+   
+   <span class="reserved">this</span>.divEl.appendChild(<span class="reserved">this</span>.colorPopUp);
+};
+
+<span class="comment">/**
+ * Add listeners for click and blur events
+ *
+ * <span class="attrib">@method</span>           initEvents
+ * <span class="attrib">@memberOf</span>         YAHOO.inputEx.ColorField
+ */</span>
+YAHOO.inputEx.ColorField.<span class="reserved">prototype</span>.initEvents = <span class="reserved">function</span>() {
+	YAHOO.util.Event.addListener(<span class="reserved">this</span>.colorEl, <span class="literal">"click"</span>, <span class="reserved">this</span>.toggleColorPopUp, <span class="reserved">this</span>, true);
+	YAHOO.util.Event.addListener(<span class="reserved">this</span>.colorEl, <span class="literal">"blur"</span>, <span class="reserved">this</span>.closeColorPopUp, <span class="reserved">this</span>, true);
+};
+
+YAHOO.inputEx.ColorField.<span class="reserved">prototype</span>.toggleColorPopUp = <span class="reserved">function</span>() {
+	<span class="reserved">if</span>( <span class="reserved">this</span>.visible ) {	<span class="reserved">this</span>.colorPopUp.style.display = <span class="literal">'none'</span>; <span class="comment">/*this.colorPopUp.hide(); */</span>}
+	<span class="reserved">else</span> { <span class="reserved">this</span>.colorPopUp.style.display = <span class="literal">'block'</span>; <span class="comment">/*this.colorPopUp.show(); */</span>}
+	<span class="reserved">this</span>.visible = !<span class="reserved">this</span>.visible;
+};
+
+YAHOO.inputEx.ColorField.<span class="reserved">prototype</span>.close = <span class="reserved">function</span>() {
+   <span class="reserved">this</span>.closeColorPopUp();
+};
+
+YAHOO.inputEx.ColorField.<span class="reserved">prototype</span>.closeColorPopUp = <span class="reserved">function</span>() {
+	<span class="reserved">this</span>.colorPopUp.style.display = <span class="literal">'none'</span>; <span class="comment">/*this.colorPopUp.hide(); */</span>
+	<span class="reserved">this</span>.visible = false;
+};
+
+<span class="comment">/**
+ * This creates a color grid
+ */</span> 
+YAHOO.inputEx.ColorField.<span class="reserved">prototype</span>.renderColorGrid = <span class="reserved">function</span>() {
+	
+	var table = document.createElement(<span class="literal">'TABLE'</span>);
+	var tbody = document.createElement(<span class="literal">'TBODY'</span>);
+	var square, line, spacer;
+	<span class="reserved">for</span>(var i = 0; i&lt;<span class="reserved">this</span>.squaresPerColumn; i++) {
+		line = document.createElement(<span class="literal">'TR'</span>);
+		<span class="reserved">for</span>(var j = 0; j&lt;<span class="reserved">this</span>.squaresPerLine; j++) {
+			<span class="comment">// spacer cells</span>
+			spacer = document.createElement(<span class="literal">'TD'</span>);
+			YAHOO.util.Dom.setStyle(spacer, <span class="literal">'background-color'</span>, <span class="literal">'#fff'</span>);
+			YAHOO.util.Dom.setStyle(spacer, <span class="literal">'line-height'</span>, <span class="literal">'10px'</span>);
+			YAHOO.util.Dom.setStyle(spacer, <span class="literal">'cursor'</span>, <span class="literal">'default'</span>);
+			spacer.innerHTML = <span class="literal">'&amp;nbsp;'</span>;
+			line.appendChild(spacer);
+
+			<span class="comment">// fill remaining space with empty and inactive squares</span>
+		    <span class="reserved">if</span> (i===(<span class="reserved">this</span>.squaresPerColumn-1) &amp;&amp; j&gt;=<span class="reserved">this</span>.squaresOnLastLine ) {
+				square = document.createElement(<span class="literal">'TD'</span>);
+				YAHOO.util.Dom.setStyle(square, <span class="literal">'background-color'</span>, <span class="literal">'#fff'</span>);
+				YAHOO.util.Dom.setStyle(square, <span class="literal">'line-height'</span>, <span class="literal">'10px'</span>);
+				YAHOO.util.Dom.setStyle(square, <span class="literal">'cursor'</span>, <span class="literal">'default'</span>);
+				square.innerHTML = <span class="literal">'&amp;nbsp;&amp;nbsp;&amp;nbsp;'</span>;
+				line.appendChild(square);
+			<span class="comment">// create active squares</span>
+			} <span class="reserved">else</span> {
+				square = document.createElement(<span class="literal">'TD'</span>);
+				YAHOO.util.Dom.setStyle(square, <span class="literal">'background-color'</span>, <span class="literal">'#'</span>+<span class="reserved">this</span>.colors[i*<span class="reserved">this</span>.squaresPerLine+j]);
+				YAHOO.util.Dom.setStyle(square, <span class="literal">'line-height'</span>, <span class="literal">'10px'</span>);
+				YAHOO.util.Dom.setStyle(square, <span class="literal">'cursor'</span>, <span class="literal">'pointer'</span>);
+				square.innerHTML = <span class="literal">'&amp;nbsp;&amp;nbsp;&amp;nbsp;'</span>;
+				YAHOO.util.Event.addListener(square, <span class="literal">"click"</span>, <span class="reserved">this</span>.onColorClick, <span class="reserved">this</span>, true );
+				line.appendChild(square);
+			}
+		}
+		tbody.appendChild(line);
+		
+		<span class="comment">// spacer line</span>
+		spacer = document.createElement(<span class="literal">'TR'</span>);
+		YAHOO.util.Dom.setStyle(spacer, <span class="literal">'height'</span>, <span class="literal">'8px'</span>);
+		tbody.appendChild(spacer);
+	}
+	table.appendChild(tbody);
+
+	<span class="reserved">return</span> table;
+};
+
+YAHOO.inputEx.ColorField.<span class="reserved">prototype</span>.onColorClick = <span class="reserved">function</span>(e) {
+	var square = e.target;
+	var couleur = YAHOO.util.Dom.getStyle(square,<span class="literal">'background-color'</span>); 
+	YAHOO.util.Dom.setStyle(<span class="reserved">this</span>.colorEl,<span class="literal">'background-color'</span>,couleur);
+	
+	<span class="comment">// set hidden field value</span>
+	<span class="comment">// Convertit une chaine du style "rgb(255,142,0)" en hexadecimal du style "#FF8E00"</span>
+  	var hexa = <span class="reserved">function</span> (rgbcolor) {
+	 <span class="comment">// Convertit un entier en hexa</span>
+	 var DecToHex = <span class="reserved">function</span> (n){
+     var tblCode = new Array(<span class="literal">"0"</span>, <span class="literal">"1"</span>, <span class="literal">"2"</span>, <span class="literal">"3"</span>, <span class="literal">"4"</span>, <span class="literal">"5"</span>, <span class="literal">"6"</span>, <span class="literal">"7"</span>, <span class="literal">"8"</span>, <span class="literal">"9"</span>, <span class="literal">"A"</span>, <span class="literal">"B"</span>, <span class="literal">"C"</span>, <span class="literal">"D"</span>, <span class="literal">"E"</span>,<span class="literal">"F"</span>);
+     var BASE=16;
+     var Num = parseInt(n, 10);
+     var i;
+     var strHex = <span class="literal">""</span>;
+     <span class="reserved">if</span> (! isNaN(Num)){
+	    <span class="reserved">if</span>(Num == <span class="literal">''</span>) <span class="reserved">return</span> <span class="literal">"00"</span>; 
+       <span class="reserved">while</span> (Num&gt;0){
+          i=0;
+          <span class="reserved">while</span>(Num/Math.pow(BASE, i++)&gt;=BASE);
+          strHex += tblCode[Math.floor(Num/Math.pow(BASE, i-1))];
+          <span class="reserved">if</span> (Num%BASE==0) strHex+=<span class="literal">"0"</span>;
+          Num = (Num % Math.pow(BASE, i-1));
+       }
+	    <span class="reserved">if</span>(strHex.length == 1) {<span class="reserved">return</span> <span class="literal">'0'</span>+strHex;}
+       <span class="reserved">return</span> strHex;
+     }
+     <span class="reserved">else</span> <span class="reserved">return</span> 0;
+   };
+
+	var rgb = rgbcolor.split(/([(,)])/);
+	<span class="reserved">return</span> <span class="literal">'#'</span>+DecToHex(rgb[2])+DecToHex(rgb[4])+DecToHex(rgb[6]);
+  };
+	<span class="reserved">this</span>.el.value = hexa(couleur);
+	
+	<span class="comment">// Overlay closure</span>
+	<span class="reserved">this</span>.visible = !<span class="reserved">this</span>.visible;
+	<span class="reserved">this</span>.colorPopUp.style.display = <span class="literal">'none'</span>; <span class="comment">/*this.colorPopUp.hide(); */</span>
+};
+
+YAHOO.inputEx.ColorField.<span class="reserved">prototype</span>.setDefaultColors = <span class="reserved">function</span>(index) {
+	var selections = [];
+	<span class="comment">// Interventions</span>
+	selections[0] = [<span class="literal">"FFEA99"</span>,<span class="literal">"FFFF66"</span>,<span class="literal">"FFCC99"</span>,<span class="literal">"FFCAB2"</span>,<span class="literal">"FF99AD"</span>,<span class="literal">"FFD6FF"</span>,<span class="literal">"FF6666"</span>,<span class="literal">"E8EEF7"</span>,<span class="literal">"ADC2FF"</span>,<span class="literal">"ADADFF"</span>,<span class="literal">"CCFFFF"</span>,<span class="literal">"D6EAAD"</span>,<span class="literal">"B5EDBC"</span>,<span class="literal">"CCFF99"</span>]; <span class="comment">//["FF0000","FF2222","FF3333","FF4444","FF5555","FF6666","FF7777","FF8888","FF9999","FFAAAA"];</span>
+	<span class="comment">//Evenements</span>
+	selections[1] = [<span class="literal">"55AAFF"</span>,<span class="literal">"FFAAFF"</span>,<span class="literal">"FF7FAA"</span>,<span class="literal">"FF0202"</span>,<span class="literal">"FFD42A"</span>,<span class="literal">"F9F93B"</span>,<span class="literal">"DF8181"</span>,<span class="literal">"FEE3E2"</span>,<span class="literal">"D47FFF"</span>,<span class="literal">"2AD4FF"</span>,<span class="literal">"2AFFFF"</span>,<span class="literal">"AAFFD4"</span>];
+	<span class="comment">// Extjs colorPalette</span>
+	selections[2] = [<span class="literal">"000000"</span>,<span class="literal">"993300"</span>,<span class="literal">"333300"</span>,<span class="literal">"003300"</span>,<span class="literal">"003366"</span>,<span class="literal">"000080"</span>,<span class="literal">"333399"</span>,<span class="literal">"333333"</span>,<span class="literal">"800000"</span>,<span class="literal">"FF6600"</span>,<span class="literal">"808000"</span>,<span class="literal">"008000"</span>,<span class="literal">"008080"</span>,<span class="literal">"0000FF"</span>,<span class="literal">"666699"</span>,<span class="literal">"808080"</span>,<span class="literal">"FF0000"</span>,<span class="literal">"FF9900"</span>,<span class="literal">"99CC00"</span>,<span class="literal">"339966"</span>,<span class="literal">"33CCCC"</span>,<span class="literal">"3366FF"</span>,<span class="literal">"800080"</span>,<span class="literal">"969696"</span>,<span class="literal">"FF00FF"</span>,<span class="literal">"FFCC00"</span>,<span class="literal">"FFFF00"</span>,<span class="literal">"00FF00"</span>,<span class="literal">"00FFFF"</span>,<span class="literal">"00CCFF"</span>,<span class="literal">"993366"</span>,<span class="literal">"C0C0C0"</span>,<span class="literal">"FF99CC"</span>,<span class="literal">"FFCC99"</span>,<span class="literal">"FFFF99"</span>,<span class="literal">"CCFFCC"</span>,<span class="literal">"CCFFFF"</span>,<span class="literal">"99CCFF"</span>,<span class="literal">"CC99FF"</span>,<span class="literal">"F0F0F0"</span>];
+	
+	<span class="reserved">return</span> selections[index-1];
+};
+
+YAHOO.inputEx.ColorField.<span class="reserved">prototype</span>.setValue = <span class="reserved">function</span>(val) {
+   <span class="reserved">this</span>.el.value = val;
+   YAHOO.util.Dom.setStyle(<span class="reserved">this</span>.colorEl, <span class="literal">'background-color'</span>, <span class="reserved">this</span>.el.value);
+};
+
+   </pre>
+	<hr>
+
+
+
+<!-- ========== START OF NAVBAR ========== -->
+<a name="navbar_top"><!-- --></a>
+<table border="0" width="100%" cellpadding="1" cellspacing="0">
+<tr>
+<td colspan=2 bgcolor="#EEEEFF" class="NavBarCell1">
+<a name="navbar_top_firstrow"><!-- --></a>
+<table border="0" cellpadding="0" cellspacing="3">
+  <tr align="center" valign="top">
+  
+  
+  <td bgcolor="#EEEEFF" class="NavBarCell1">    <a href="overview-summary.html"><font class="NavBarFont1"><b>Overview</b></font></a>&nbsp;</td>
+  <td bgcolor="#FFFFFF" class="NavBarCell1Rev">	&nbsp;<font class="NavBarFont1Rev"><b>File</b></font>&nbsp;</td>
+  
+
+  <td bgcolor="#FFFFFF" class="NavBarCell1"> <font class="NavBarFont1">Class</font>&nbsp;</td>
+  <td bgcolor="#EEEEFF" class="NavBarCell1">    <a href="overview-tree.html"><font class="NavBarFont1"><b>Tree</b></font></a>&nbsp;</td>
+  <td bgcolor="#EEEEFF" class="NavBarCell1">    <a href="index-all.html"--><font class="NavBarFont1"><b>Index</b></font></a>&nbsp;</td>
+  <td bgcolor="#EEEEFF" class="NavBarCell1">    <a href="help-doc.html"><font class="NavBarFont1"><b>Help</b></font></a>&nbsp;</td>
+  </tr>
+</table>
+</td>
+<td bgcolor="#EEEEFF" align="right" valign="top"><em>
+<b>InputEx</b></em>
+</td>
+</tr>
+
+<tr>
+<td bgcolor="white" class="NavBarCell2"><font size="-2">
+&nbsp;PREV&nbsp;
+&nbsp;NEXT</font></td>
+<td bgcolor="white" class="NavBarCell2"><font size="-2">
+  <a href="index.html" target="_top"><b>FRAMES</b></a>  &nbsp;
+&nbsp;<a href="overview-summary.html" target="_top"><b>NO FRAMES</b></a>
+&nbsp;&nbsp;
+<script>
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="allclasses-noframe.html" TARGET=""><B>All Classes</B></A>');
+  }
+  //-->
+</script>
+<noscript>
+<a href="allclasses-noframe.html" target=""><b>All Classes</b></a>
+</noscript>
+</font></td>
+</tr>
+</table>
+<!-- =========== END OF NAVBAR =========== -->
+
+<hr>
+<font size="-1">
+
+</font>
+<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Mon Jan 28 19:43:38 2008</div>
+</body>
+</html>

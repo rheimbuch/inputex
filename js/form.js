@@ -153,7 +153,7 @@ YAHOO.inputEx.Form.prototype.render = function() {
  */
 YAHOO.inputEx.Form.prototype.renderLabel = function(inputConfig, tdLabel) {
    if (inputConfig.label) {
-		tdLabel.innerHTML = input.label;
+		tdLabel.innerHTML = inputConfig.label;
 	}
 };
 
@@ -162,20 +162,19 @@ YAHOO.inputEx.Form.prototype.renderLabel = function(inputConfig, tdLabel) {
  * builds input fields
  */
 YAHOO.inputEx.Form.prototype.renderInputFields = function() {
-	var input,tr,tdLabel,tdInput;
-	
+   
 	// Array that will contain the references to the created Fields
-	this.inputs = [];
+	this.inputs = [];
 		
 	// Iterate this.createInput on input fields
 	for (var i = 0 ; i < this.options.inputs.length ; i++) {
-		input = this.options.inputs[i];
-		tr = document.createElement('TR');
+		var input = this.options.inputs[i];
+		var tr = document.createElement('TR');
 				
-		tdLabel = document.createElement('TD');
+		var tdLabel = document.createElement('TD');
 		this.renderLabel(input, tdLabel);
 		
-		tdInput = document.createElement('TD');
+		var tdInput = document.createElement('TD');
 
 		// Create the new field with the given type as class
 		if( !input.type ) input.type = YAHOO.inputEx.Field;
