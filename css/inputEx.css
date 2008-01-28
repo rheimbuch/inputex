@@ -27,7 +27,7 @@ div.inputEx-focused input,select,textarea {
 
 /* Field icons */
 
-span.inputEx-field-img {
+div.inputEx-field-img {
 	width: 16px;
 	height: 16px;
 	background: transparent url('') no-repeat scroll 0px 0px;
@@ -37,17 +37,17 @@ span.inputEx-field-img {
 }
 
 /* No image when valid:*/
-div.inputEx-valid span.inputEx-field-img {
+div.inputEx-valid div.inputEx-field-img {
 	background-image: url('../images/validated.gif');
 	visibility: visible;
 }
 
-div.inputEx-invalid span.inputEx-field-img {
+div.inputEx-invalid div.inputEx-field-img {
 	background-image: url('../images/exclamation.gif');
 	visibility: visible;
 }
 
-div.inputEx-required span.inputEx-field-img {
+div.inputEx-required div.inputEx-field-img {
 	background-image: url('../images/required.gif');
 	visibility: visible;
 }

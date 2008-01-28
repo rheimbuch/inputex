@@ -149,6 +149,15 @@ YAHOO.inputEx.Form.prototype.render = function() {
 };
 
 /**
+ *
+ */
+YAHOO.inputEx.Form.prototype.renderLabel = function(inputConfig, tdLabel) {
+   if (inputConfig.label) {
+		tdLabel.innerHTML = input.label;
+	}
+};
+
+/**
  * @method renderInputFields
  * builds input fields
  */
@@ -164,9 +173,8 @@ YAHOO.inputEx.Form.prototype.renderInputFields = function() {
 		tr = document.createElement('TR');
 				
 		tdLabel = document.createElement('TD');
-		if (input.label) {
-			tdLabel.innerHTML = input.label;
-		}
+		this.renderLabel(input, tdLabel);
+		
 		tdInput = document.createElement('TD');
 
 		// Create the new field with the given type as class

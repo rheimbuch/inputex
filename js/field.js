@@ -71,12 +71,13 @@ YAHOO.inputEx.Field.prototype.render = function() {
 	YAHOO.util.Dom.addClass(this.el, 'inputEx-field');
 	this.divEl.appendChild(this.el);
 	
-	// Create a span next to the field with an icon and a tooltip
+	// Create a div next to the field with an icon and a tooltip
 	if( !this.options.noicon ) {
-		this.imgEl = document.createElement('span');
+		this.imgEl = document.createElement('div');
 		this.imgEl.innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;';
 		YAHOO.util.Dom.addClass(this.imgEl, 'inputEx-field-img');
 	
+	   // TODO: random number
    	this.tooltip = new YAHOO.widget.Tooltip('random'+this.options.name, { context: this.imgEl, text:"" }); 
 		YAHOO.util.Dom.setStyle(this.tooltip.element, 'z-index', '999');
 		
@@ -217,5 +218,21 @@ YAHOO.inputEx.Field.prototype.onInput = function(e) {
  */
 YAHOO.inputEx.Field.prototype.close = function() {
    // Please override this function...
+};
+
+
+
+/**
+ * Disable the field
+ */
+YAHOO.inputEx.Field.prototype.disable = function() {
+   this.el.disabled = true;
+};
+
+/**
+ * Enable the field
+ */
+YAHOO.inputEx.Field.prototype.enable = function() {
+   this.el.disabled = false;
 };
 
