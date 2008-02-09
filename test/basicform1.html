@@ -12,34 +12,36 @@
 <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.4.1/build/container/assets/container.css"> 
 	
 <!-- InputEx -->
-<script src="../js/field.js"  type='text/javascript'></script> 
+<script src="../js/inputex.js"  type='text/javascript'></script>
+<script src="../js/field.js"  type='text/javascript'></script>
 <script src="../js/form.js"  type='text/javascript'></script> 
-<script src="../js/inputs.js"  type='text/javascript'></script> 
+
+<script src="../js/fields/checkBox.js"  type='text/javascript'></script>
 <link type='text/css' rel='stylesheet' href='../css/inputEx.css' />
 	
 <!-- Demo Javascript -->
 <script>
 	
-YAHOO.inputEx.UserForm = function() {
+var UserForm = function() {
 	
 	var formOptions = {
 			inputs: [ 
-				{label: "Title", type: YAHOO.inputEx.SelectField, inputParams: {name: "title", selectValues: ['Mr','Mrs','Mme'] } },
+				{label: "Title", type: inputEx.SelectField, inputParams: {name: "title", selectValues: ['Mr','Mrs','Mme'] } },
 				{label: "Firstname", inputParams: {name: "firstname", required: true, messages: {required: "Ce champ est obligatoire"}, value:'test' } },
 				{label: "Lastname", inputParams: {name: "lastname", required: true, messages: {required: "Ce champ est obligatoire"}} },
-				{label: "Birthdate",  type: YAHOO.inputEx.DateField, inputParams: 
+				{label: "Birthdate",  type: inputEx.DateField, inputParams: 
 				{name: "birthdate", required: true, messages: {required: "Ce champ est obligatoire", invalid: "Date non valide, ex: 25/01/2007"}, value: '10/01/1984' } },
-				{label: "Email", type: YAHOO.inputEx.EmailField, inputParams: 
+				{label: "Email", type: inputEx.EmailField, inputParams: 
 				{ name: "email",  required: true, messages: {required: "Ce champ est obligatoire", invalid: "Email non valide, ex: michel.dupont@fai.fr"} } },
-            {label:'Password',type: YAHOO.inputEx.PasswordField, inputParams: {name : "password", required:true }},
-            {label: "Phone",type: YAHOO.inputEx.FrenchPhone, inputParams: { name: "phone", messages: {invalid: "Numéro non valide."}}},
-				{label: "IP Adress", type: YAHOO.inputEx.IpadressField, inputParams: { name: "ipadress" } },
+            {label:'Password',type: inputEx.PasswordField, inputParams: {name : "password", required:true }},
+            {label: "Phone",type: inputEx.FrenchPhone, inputParams: { name: "phone", messages: {invalid: "Numéro non valide."}}},
+				{label: "IP Adress", type: inputEx.IpadressField, inputParams: { name: "ipadress" } },
 				{label: "ZipCode", inputParams: { name: "zipcode", numbers: true } },
-			   {label: "Favorite color",type: YAHOO.inputEx.ColorField, inputParams: { name: "colorref"}},
-			   {label: "Other colors",type: YAHOO.inputEx.ColorField, inputParams: { name: "colorref_2", auto:3, ratio:[4,3]}},
-			   {label: "",type: YAHOO.inputEx.HiddenField, inputParams: {value:"secret"}},
+			   {label: "Favorite color",type: inputEx.ColorField, inputParams: { name: "colorref"}},
+			   {label: "Other colors",type: inputEx.ColorField, inputParams: { name: "colorref_2", auto:3, ratio:[4,3]}},
+			   {label: "",type: inputEx.HiddenField, inputParams: {value:"secret"}},
 				
-			   {label: "Balbla",type: YAHOO.inputEx.checkBox,inputParams:{name:"smsreminder",noicon:true,value:'N'}}
+			   {label: "Balbla",type: inputEx.checkBox,inputParams:{name:"smsreminder",noicon:true,value:'N'}}
 			],
 			buttons: [
 				{value: "Valider", type: "submit"}
@@ -49,16 +51,16 @@ YAHOO.inputEx.UserForm = function() {
 			action: ''
 		};
 	
-	YAHOO.inputEx.UserForm.superclass.constructor.call(this,formOptions);
+	UserForm.superclass.constructor.call(this,formOptions);
 };
-YAHOO.lang.extend(YAHOO.inputEx.UserForm, YAHOO.inputEx.Form);
+YAHOO.lang.extend(UserForm, inputEx.Form);
 	
 	
 	
 YAHOO.util.Event.onAvailable('container', function() {
 		
 		// Create the form
-		var form = new YAHOO.inputEx.UserForm();
+		var form = new UserForm();
 		
 		// Append it to the 'container' div
 		YAHOO.util.Dom.get('container').appendChild( form.getEl() );

@@ -114,12 +114,12 @@ function asd() {
  *		- formName: 'name' attribute of the form
  * 	- label: form title text
  *		- inputs: list of Inputs like:
- *			{label: "Phone", name: "phone", type: YAHOO.inputEx.Field, numbers: true, required: true},
+ *			{label: "Phone", name: "phone", type: inputEx.Field, numbers: true, required: true},
  *			(See each params for each field)
  *		- buttons: list of buttons like:
  *			{value: "Valider", type: "submit"}
  */</span>
-YAHOO.inputEx.Form = <span class="reserved">function</span>(options) {
+inputEx.Form = <span class="reserved">function</span>(options) {
 
   <span class="comment">// Save the options locally</span>
   <span class="reserved">this</span>.options = options || {};
@@ -138,7 +138,7 @@ YAHOO.inputEx.Form = <span class="reserved">function</span>(options) {
  * <span class="attrib">@method</span> onSubmitForm
  * Intercept the 'onsubmit' event and stop it if !validate
  */</span>
-YAHOO.inputEx.Form.<span class="reserved">prototype</span>.onSubmit = <span class="reserved">function</span>(e) {
+inputEx.Form.<span class="reserved">prototype</span>.onSubmit = <span class="reserved">function</span>(e) {
 	<span class="reserved">if</span> ( !<span class="reserved">this</span>.validate() ) {
 		YAHOO.util.Event.stopEvent(e);
 	} 
@@ -148,13 +148,13 @@ YAHOO.inputEx.Form.<span class="reserved">prototype</span>.onSubmit = <span clas
  * <span class="attrib">@method</span> validate
  * Return true if all the fields validates
  */</span>
-YAHOO.inputEx.Form.<span class="reserved">prototype</span>.validate = <span class="reserved">function</span>() {
+inputEx.Form.<span class="reserved">prototype</span>.validate = <span class="reserved">function</span>() {
 	
 	<span class="comment">// Validate all the sub fields</span>
 	<span class="reserved">for</span> (var i = 0 ; i &lt; <span class="reserved">this</span>.inputs.length ; i++) {
 		var input = <span class="reserved">this</span>.inputs[i];
 		var state = input.getState();
-		<span class="reserved">if</span>( state == YAHOO.inputEx.Field.stateRequired || state == YAHOO.inputEx.Field.stateInvalid ) {
+		<span class="reserved">if</span>( state == inputEx.Field.stateRequired || state == inputEx.Field.stateInvalid ) {
 			<span class="reserved">return</span> false;
 		}
    }
@@ -165,7 +165,7 @@ YAHOO.inputEx.Form.<span class="reserved">prototype</span>.validate = <span clas
  * <span class="attrib">@method</span> getEl
  * Returns the form element
  */</span>
-YAHOO.inputEx.Form.<span class="reserved">prototype</span>.getEl = <span class="reserved">function</span>() {
+inputEx.Form.<span class="reserved">prototype</span>.getEl = <span class="reserved">function</span>() {
    <span class="reserved">return</span> <span class="reserved">this</span>.form;
 };
 
@@ -173,7 +173,7 @@ YAHOO.inputEx.Form.<span class="reserved">prototype</span>.getEl = <span class="
  * <span class="attrib">@method</span> getValue
  * Returns a javascript object of the name/value pairs
  */</span>
-YAHOO.inputEx.Form.<span class="reserved">prototype</span>.getValue = <span class="reserved">function</span>() {
+inputEx.Form.<span class="reserved">prototype</span>.getValue = <span class="reserved">function</span>() {
 	var o = {};
 	<span class="reserved">for</span> (var i = 0 ; i &lt; <span class="reserved">this</span>.inputs.length ; i++) {
 		o[<span class="reserved">this</span>.inputs[i].options.name] = <span class="reserved">this</span>.inputs[i].getValue();
@@ -185,7 +185,7 @@ YAHOO.inputEx.Form.<span class="reserved">prototype</span>.getValue = <span clas
  *  <span class="attrib">@methode</span> enable
  *  Enable/Disable all fields in the form
  */</span>
-YAHOO.inputEx.Form.<span class="reserved">prototype</span>.enable = <span class="reserved">function</span>(enable) {
+inputEx.Form.<span class="reserved">prototype</span>.enable = <span class="reserved">function</span>(enable) {
    var disabled = !enable;
  	<span class="reserved">for</span> (var i = 0 ; i &lt; <span class="reserved">this</span>.inputs.length ; i++) {
  	   var el = <span class="reserved">this</span>.inputs[i].getEl();
@@ -197,7 +197,7 @@ YAHOO.inputEx.Form.<span class="reserved">prototype</span>.enable = <span class=
  * <span class="attrib">@method</span> setValue
  * <span class="attrib">@param</span> oValues object literal with the values
  */</span>
-YAHOO.inputEx.Form.<span class="reserved">prototype</span>.setValue = <span class="reserved">function</span>(oValues) { 
+inputEx.Form.<span class="reserved">prototype</span>.setValue = <span class="reserved">function</span>(oValues) { 
 	<span class="reserved">for</span> (var i = 0 ; i &lt; <span class="reserved">this</span>.inputs.length ; i++) {
 		<span class="reserved">this</span>.inputs[i].setValue(oValues[<span class="reserved">this</span>.inputs[i].options.name] || <span class="literal">''</span>);
 		<span class="reserved">this</span>.inputs[i].setClassFromState();
@@ -208,7 +208,7 @@ YAHOO.inputEx.Form.<span class="reserved">prototype</span>.setValue = <span clas
  * <span class="attrib">@method</span> render
  * generates the dom of the form
  */</span>
-YAHOO.inputEx.Form.<span class="reserved">prototype</span>.render = <span class="reserved">function</span>() {
+inputEx.Form.<span class="reserved">prototype</span>.render = <span class="reserved">function</span>() {
 		
 	<span class="comment">// Create the YAHOO.util.Dom tree</span>
 	<span class="reserved">this</span>.form = document.createElement(<span class="literal">'FORM'</span>);
@@ -248,7 +248,7 @@ YAHOO.inputEx.Form.<span class="reserved">prototype</span>.render = <span class=
 <span class="comment">/**
  *
  */</span>
-YAHOO.inputEx.Form.<span class="reserved">prototype</span>.renderLabel = <span class="reserved">function</span>(inputConfig, tdLabel) {
+inputEx.Form.<span class="reserved">prototype</span>.renderLabel = <span class="reserved">function</span>(inputConfig, tdLabel) {
    <span class="reserved">if</span> (inputConfig.label) {
 		tdLabel.innerHTML = input.label;
 	}
@@ -258,7 +258,7 @@ YAHOO.inputEx.Form.<span class="reserved">prototype</span>.renderLabel = <span c
  * <span class="attrib">@method</span> renderInputFields
  * builds input fields
  */</span>
-YAHOO.inputEx.Form.<span class="reserved">prototype</span>.renderInputFields = <span class="reserved">function</span>() {
+inputEx.Form.<span class="reserved">prototype</span>.renderInputFields = <span class="reserved">function</span>() {
 	var input,tr,tdLabel,tdInput;
 	
 	<span class="comment">// Array that will contain the references to the created Fields</span>
@@ -275,10 +275,10 @@ YAHOO.inputEx.Form.<span class="reserved">prototype</span>.renderInputFields = <
 		tdInput = document.createElement(<span class="literal">'TD'</span>);
 
 		<span class="comment">// Create the new field with the given type as class</span>
-		<span class="reserved">if</span>( !input.type ) input.type = YAHOO.inputEx.Field;
+		<span class="reserved">if</span>( !input.type ) input.type = inputEx.Field;
       
       <span class="comment">// Mask hidden fields</span>
-		<span class="reserved">if</span>(input.type == YAHOO.inputEx.HiddenField) {
+		<span class="reserved">if</span>(input.type == inputEx.HiddenField) {
          YAHOO.util.Dom.addClass(tr,<span class="literal">'inputExForm-hiddenLine'</span>);
       };
 		
@@ -342,7 +342,7 @@ YAHOO.inputEx.Form.<span class="reserved">prototype</span>.renderInputFields = <
  * <span class="attrib">@method</span> addGroupEntries
  * add a new instance of each input field in groupName
  */</span>
-YAHOO.inputEx.Form.<span class="reserved">prototype</span>.addGroupEntries = <span class="reserved">function</span>() {
+inputEx.Form.<span class="reserved">prototype</span>.addGroupEntries = <span class="reserved">function</span>() {
    
    var groupName = <span class="literal">"fields"</span>;
    
@@ -380,7 +380,7 @@ YAHOO.inputEx.Form.<span class="reserved">prototype</span>.addGroupEntries = <sp
  * <span class="attrib">@method</span> renderButtons
  * Render the buttons dom
  */</span>
-YAHOO.inputEx.Form.<span class="reserved">prototype</span>.renderButtons = <span class="reserved">function</span>() {
+inputEx.Form.<span class="reserved">prototype</span>.renderButtons = <span class="reserved">function</span>() {
 	var tr = document.createElement(<span class="literal">'TR'</span>);
 	var tdLabel = document.createElement(<span class="literal">'TD'</span>);
 	var tdButtons = document.createElement(<span class="literal">'TD'</span>);
@@ -407,7 +407,7 @@ YAHOO.inputEx.Form.<span class="reserved">prototype</span>.renderButtons = <span
  * <span class="attrib">@method</span> close
  * Calls close on each field
  */</span>
-YAHOO.inputEx.Form.<span class="reserved">prototype</span>.close = <span class="reserved">function</span>() {
+inputEx.Form.<span class="reserved">prototype</span>.close = <span class="reserved">function</span>() {
 	<span class="reserved">for</span> (var i = 0 ; i &lt; <span class="reserved">this</span>.inputs.length ; i++) {
 		<span class="reserved">this</span>.inputs[i].close();
    }

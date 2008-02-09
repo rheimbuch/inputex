@@ -1,29 +1,29 @@
 
 /**
- *  YAHOO.inputEx.builder.FieldsTable
+ *  inputEx.builder.FieldsTable
  */
-YAHOO.inputEx.builder.FieldsTable = function() {
+inputEx.builder.FieldsTable = function() {
    this.propertiesForms = {};
-   YAHOO.inputEx.builder.FieldsTable.superclass.constructor.call(this, "Fields", ['Fieldname', 'Editor', 'Properties'] );
+   inputEx.builder.FieldsTable.superclass.constructor.call(this, "Fields", ['Fieldname', 'Editor', 'Properties'] );
 };
 
-YAHOO.extend(YAHOO.inputEx.builder.FieldsTable,YAHOO.inputEx.builder.Table);
+YAHOO.extend(inputEx.builder.FieldsTable,inputEx.builder.Table);
 
 
-YAHOO.inputEx.builder.FieldsTable.typeLabels = [ "text", "color", "date", "email", "hidden", "IP", "Password", "selector", "text area", "checkbox"];
-YAHOO.inputEx.builder.FieldsTable.typeClasses = [YAHOO.inputEx.Field, 
-                                                 YAHOO.inputEx.ColorField, 
-                                                 YAHOO.inputEx.DateField, 
-                                                 YAHOO.inputEx.EmailField, 
-                                                 YAHOO.inputEx.HiddenField,
-                                                 YAHOO.inputEx.IpadressField,
-                                                 YAHOO.inputEx.PasswordField,
-                                                 YAHOO.inputEx.SelectField,
-                                                 YAHOO.inputEx.Textarea, 
-                                                 YAHOO.inputEx.checkBox];
+inputEx.builder.FieldsTable.typeLabels = [ "text", "color", "date", "email", "hidden", "IP", "Password", "selector", "text area", "checkbox"];
+inputEx.builder.FieldsTable.typeClasses = [inputEx.Field, 
+                                                 inputEx.ColorField, 
+                                                 inputEx.DateField, 
+                                                 inputEx.EmailField, 
+                                                 inputEx.HiddenField,
+                                                 inputEx.IpadressField,
+                                                 inputEx.PasswordField,
+                                                 inputEx.SelectField,
+                                                 inputEx.Textarea, 
+                                                 inputEx.checkBox];
 
 
-YAHOO.inputEx.builder.FieldsTable.prototype.getRowElements = function(field) {
+inputEx.builder.FieldsTable.prototype.getRowElements = function(field) {
    
    var value = "";
    if( field && field.inputParams && field.inputParams.name) {
@@ -35,7 +35,7 @@ YAHOO.inputEx.builder.FieldsTable.prototype.getRowElements = function(field) {
    
    // Le type du champ
    var select = this.generateTypeSelector();
-   var index = YAHOO.inputEx.builder.FieldsTable.typeClasses.indexOf(field.type);
+   var index = inputEx.builder.FieldsTable.typeClasses.indexOf(field.type);
    if( index != -1 ) {
       select.selectedIndex = index;
    }
@@ -43,11 +43,11 @@ YAHOO.inputEx.builder.FieldsTable.prototype.getRowElements = function(field) {
    // Properties:
    var propertiesEl=null;
    var type = field.type
-   if( !YAHOO.inputEx.builder.propertiesForms[type] ) {
-      type = YAHOO.inputEx.builder.DefaultForm;
+   if( !inputEx.builder.propertiesForms[type] ) {
+      type = inputEx.builder.DefaultForm;
    }
       
-   var f = new YAHOO.inputEx.builder.propertiesForms[type](field);
+   var f = new inputEx.builder.propertiesForms[type](field);
    this.propertiesForms[select.id] = f;
    propertiesEl = f.getEl();
    
@@ -61,14 +61,14 @@ YAHOO.inputEx.builder.FieldsTable.prototype.getRowElements = function(field) {
  *
  * Generate a select tag containing the various options type
  */
-YAHOO.inputEx.builder.FieldsTable.prototype.generateTypeSelector = function() {
+inputEx.builder.FieldsTable.prototype.generateTypeSelector = function() {
    
    if(!this.nextSelectId) this.nextSelectId = 0;
    
    var select = cn('select', {id: 'inputEx-builder-typeSelector'+this.nextSelectId});
    this.nextSelectId += 1;
    
-   var options = YAHOO.inputEx.builder.FieldsTable.typeLabels;
+   var options = inputEx.builder.FieldsTable.typeLabels;
    for(var i = 0 ; i < options.length ; i++) {
       cn('option', {value: options[i]}, null, options[i]).appendTo(select);
    }
@@ -76,17 +76,17 @@ YAHOO.inputEx.builder.FieldsTable.prototype.generateTypeSelector = function() {
       
       // Update the property form !
       var select = e.target;
-      var newType = YAHOO.inputEx.builder.FieldsTable.typeClasses[select.selectedIndex];
+      var newType = inputEx.builder.FieldsTable.typeClasses[select.selectedIndex];
       
       var tdProperties = select.parentNode.nextSibling;
       tdProperties.innerHTML = "";
       
       // Create the form
-      if(!YAHOO.inputEx.builder.propertiesForms[newType]) {
-         newType = YAHOO.inputEx.builder.DefaultForm;
+      if(!inputEx.builder.propertiesForms[newType]) {
+         newType = inputEx.builder.DefaultForm;
       }
       
-      var f = new YAHOO.inputEx.builder.propertiesForms[newType]();
+      var f = new inputEx.builder.propertiesForms[newType]();
       this.propertiesForms[select.id] = f;
       tdProperties.appendChild(f.getEl());
    
@@ -94,7 +94,7 @@ YAHOO.inputEx.builder.FieldsTable.prototype.generateTypeSelector = function() {
    return select;
 };
 
-YAHOO.inputEx.builder.FieldsTable.prototype.getValue = function() {
+inputEx.builder.FieldsTable.prototype.getValue = function() {
    var inputs = [];
    
    for(var i = 0 ; i < this.tbody.rows.length ; i++) {
@@ -110,7 +110,7 @@ YAHOO.inputEx.builder.FieldsTable.prototype.getValue = function() {
       if( !input.inputParams ) input.inputParams = {};
       input.inputParams.name = row.cells[0].childNodes[0].value;
       
-      input.type = YAHOO.inputEx.builder.FieldsTable.typeClasses[select.selectedIndex];
+      input.type = inputEx.builder.FieldsTable.typeClasses[select.selectedIndex];
 
       inputs.push(input);
    }

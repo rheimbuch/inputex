@@ -1,43 +1,32 @@
 /** 
- * @fileoverview This files contains the 'Field' 
- * class of {@link http://inputEx.neyric.com inputEx}
- *
- * @dependencies YAHOO.util.Dom, YAHOO.util.Event
- *
- * @author Eric Abouaf eric.abouaf at centraliens.net
- * @version 0.1 
+ * @fileoverview This files contains the inputEx.Field class
  */
-
-// defines YAHOO.inputEx namespace
-YAHOO.namespace('inputEx');
-
-YAHOO.inputEx.messages = {
-	required: "This field is required",
-	invalid: "This field is invalid",
-	valid: "This field is valid"
-};
-
-/**
- * @class YAHOO.inputEx.Field 
- * Create the dom and basic behaviour of a RUI field 
+/** 
+ * Create the dom and basic behaviour of an inputEx field
  *
- * options:
- *		- name (required): the name of the field
- *		- numbers: boolean
- *		- required: cannot be null and must validate
- *		- regexp: regular expression used to validate (otherwise it always validate)
- *		- noicon: this prevent the icon from being rendered (and the tooltip as well) (default to false)
+ * @class inputEx.Field 
+ * @constructor
+ * @param {Object} options Options object (see options property)
  */
-YAHOO.inputEx.Field = function(options) {
+inputEx.Field = function(options) {
 	
-	// Save the options locally
-	this.options = options;
+	/**
+	 * Options :
+	 * <ul>
+    *	  <li>name: the name of the field</li>
+    *	  <li>numbersOnly: boolean, accept only numbers if true</li>
+    *	  <li>required: boolean, cannot be null if true</li>
+    *	  <li>regexp: regular expression used to validate (otherwise it always validate)</li>
+    *	  <li>tooltipIcon: show an icon next to the field and display an error in a tooltip (default false)</li>
+    *   <li>className: CSS class name for the div wrapper (default 'inputEx-Field')
+    *   <li>size: size attribute of the input</li>
+    *   <li>value: initial value</li>
+    * </ul>
+	 */
+	this.options = options || {};
 	
-	// Define default messages
-	this.options.messages = this.options.messages || {};
-	this.options.messages.required = this.options.messages.required || YAHOO.inputEx.messages.required;
-	this.options.messages.invalid = this.options.messages.invalid || YAHOO.inputEx.messages.invalid;
-	this.options.messages.valid = this.options.messages.valid || YAHOO.inputEx.messages.valid;
+	// Set the default values of the options
+	this.setOptions();
 	
 	// Call the render of the dom
 	this.render();
@@ -54,75 +43,106 @@ YAHOO.inputEx.Field = function(options) {
 	this.setClassFromState();
 };
 
+/**
+ * Set the default values of the options
+ */
+inputEx.Field.prototype.setOptions = function() {
+   
+   // Define default messages
+	this.options.messages = this.options.messages || {};
+	this.options.messages.required = this.options.messages.required || inputEx.messages.required;
+	this.options.messages.invalid = this.options.messages.invalid || inputEx.messages.invalid;
+	this.options.messages.valid = this.options.messages.valid || inputEx.messages.valid;
+	
+	// Other options
+	this.options.size = this.options.size || 20;
+	this.options.className = this.options.className || 'inputEx-Field';
+	this.options.required = this.options.required ? true : false;
+	this.options.tooltipIcon = this.options.tooltipIcon ? true : false;
+	
+	// The following options are used later:
+	// + this.options.name
+	// + this.options.regexp
+	// + this.options.numbersOnly
+	// + this.options.value
+	
+};
 
 /**
  * Default render of the dom element
  */
-YAHOO.inputEx.Field.prototype.render = function() {
+inputEx.Field.prototype.render = function() {
 	
 	// Create a DIV element to wrap the editing el and the image
-	this.divEl = document.createElement('DIV');
+	this.divEl = inputEx.cn('div', {className: this.options.className});
 	
-	this.el = document.createElement('INPUT');
-	this.el.type = 'text';
-   this.el.name = this.options.name;
-   this.el.value = this.options.value || ''; // modif par MAX //////////////
-	this.el.size = this.options.size || 20;
-	YAHOO.util.Dom.addClass(this.el, 'inputEx-field');
-	this.divEl.appendChild(this.el);
+	// Render the component
+	this.renderComponent();
 	
 	// Create a div next to the field with an icon and a tooltip
-	if( !this.options.noicon ) {
-		this.imgEl = document.createElement('div');
-		this.imgEl.innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;';
-		YAHOO.util.Dom.addClass(this.imgEl, 'inputEx-field-img');
-	
-	   // TODO: random number
-   	this.tooltip = new YAHOO.widget.Tooltip('random'+this.options.name, { context: this.imgEl, text:"" }); 
-		YAHOO.util.Dom.setStyle(this.tooltip.element, 'z-index', '999');
-		
-		this.divEl.appendChild(this.imgEl);
+	if( this.options.tooltipIcon ) {
+		this.tooltipIcon = inputEx.cn('img', {src: inputEx.spacerUrl, className: 'inputEx-Field-stateIcon'});
+		if(!inputEx.tooltipCount) { inputEx.tooltipCount = 0; }
+   	this.tooltip = new YAHOO.widget.Tooltip('inputEx-tooltip-'+(inputEx.tooltipCount++), { context: this.tooltipIcon, text:"" }); 
+		this.divEl.appendChild(this.tooltipIcon);
 	}
 	
 };
 
 /**
- * The default render creates a div to put in the messages
+ * Render the interface component
  */
-
-YAHOO.inputEx.Field.prototype.getEl = function() {
-	return this.divEl;
+inputEx.Field.prototype.renderComponent = function() {
+   // Attributes of the input field
+   var attributes = {};
+   attributes.type = 'text';
+   attributes.size = this.options.size;
+   if(this.options.name) attributes.name = this.options.name;
+   
+   // Create the node
+	this.el = inputEx.cn('input', attributes);
+	
+	// Append it to the main element
+	this.divEl.appendChild(this.el);
 };
 
+/**
+ * The default render creates a div to put in the messages
+ * @return {DOMElement} divEl The main DIV wrapper
+ */
+inputEx.Field.prototype.getEl = function() {
+	return this.divEl;
+};
 
 /**
  * Initialize events of the Input
  */
-YAHOO.inputEx.Field.prototype.initEvents = function() {
+inputEx.Field.prototype.initEvents = function() {
 	YAHOO.util.Event.addListener(this.el, "input", this.onInput, this, true);
 	YAHOO.util.Event.addListener(this.el, "focus", this.onFocus, this, true);
 	YAHOO.util.Event.addListener(this.el, "blur", this.onBlur, this, true);
 };
 
-
 /**
  * Return the value of the input
+ * @return {String} value of the field
  */
-YAHOO.inputEx.Field.prototype.getValue = function() {
+inputEx.Field.prototype.getValue = function() {
 	return this.el.value;
 };
 
 /**
  * Function to set the value
+ * @param {String} value The new value
  */
-YAHOO.inputEx.Field.prototype.setValue = function(val) {
-	this.el.value = val;
+inputEx.Field.prototype.setValue = function(value) {
+	this.el.value = value;
 };
 
 /**
  * Set the styles for valid/invalide state
  */
-YAHOO.inputEx.Field.prototype.setClassFromState = function() {
+inputEx.Field.prototype.setClassFromState = function() {
 	
 	if( this.previousState ) {
 		YAHOO.util.Dom.removeClass(this.getEl(), 'inputEx-'+this.previousState );
@@ -136,7 +156,7 @@ YAHOO.inputEx.Field.prototype.setClassFromState = function() {
 /**
  * Set the tooltip message
  */ 
-YAHOO.inputEx.Field.prototype.setToolTipMessage = function() { 
+inputEx.Field.prototype.setToolTipMessage = function() { 
 	if(this.tooltip) {
 	   var content = "";
 		if( this.previousState == 'required') {
@@ -152,47 +172,40 @@ YAHOO.inputEx.Field.prototype.setToolTipMessage = function() {
 	}
 };  
 
-YAHOO.inputEx.Field.prototype.onFocus = function(e) {
+/**
+ * Function called on the focus event
+ */
+inputEx.Field.prototype.onFocus = function(e) {
 	YAHOO.util.Dom.addClass(this.getEl(), 'inputEx-focused');
 };
 
-YAHOO.inputEx.Field.prototype.onBlur = function(e) {
+/**
+ * Function called on the blur event
+ */
+inputEx.Field.prototype.onBlur = function(e) {
 	YAHOO.util.Dom.removeClass(this.getEl(), 'inputEx-focused');
 };
 
 /**
- * @method getState
- * returns a string containing one of the following
- * states:
+ * Returns the current state (given its value)
+ * @return {String} One of the following states: 'empty', 'required', 'valid' or 'invalid'
  */
-YAHOO.inputEx.Field.stateEmpty = 'empty';
-YAHOO.inputEx.Field.stateRequired = 'required';
-YAHOO.inputEx.Field.stateValid = 'valid';
-YAHOO.inputEx.Field.stateInvalid = 'invalid';
-YAHOO.inputEx.Field.prototype.getState = function() { 
-	
+inputEx.Field.prototype.getState = function() { 
 	// if the field is empty :
 	if( this.getValue() === '' ) {
-		if( this.options.required) { 
-			return YAHOO.inputEx.Field.stateRequired; 
-		}
-		else { 
-			return YAHOO.inputEx.Field.stateEmpty;  
-		}
+	   return this.options.required ? inputEx.Field.stateRequired : inputEx.Field.stateEmpty;
 	}
-	
-	if( this.validate() ) {
-		return YAHOO.inputEx.Field.stateValid;
-	}
-	else {
-		return YAHOO.inputEx.Field.stateInvalid;
-	}
+	return this.validate() ? inputEx.Field.stateValid : inputEx.Field.stateInvalid;
 };
+inputEx.Field.stateEmpty = 'empty';
+inputEx.Field.stateRequired = 'required';
+inputEx.Field.stateValid = 'valid';
+inputEx.Field.stateInvalid = 'invalid';
 
 /**
  * Validation of the field
  */
-YAHOO.inputEx.Field.prototype.validate = function() { 
+inputEx.Field.prototype.validate = function() { 
 	// if we are using a regular expression
 	if( this.options.regexp ) {
 		return this.getValue().match(this.options.regexp);
@@ -203,8 +216,8 @@ YAHOO.inputEx.Field.prototype.validate = function() {
 /**
  * onInput event handler
  */
-YAHOO.inputEx.Field.prototype.onInput = function(e) { 
-	if(this.options.numbers) {
+inputEx.Field.prototype.onInput = function(e) { 
+	if(this.options.numbersOnly) {
 		YAHOO.util.Event.stopEvent(e);
 		this.setValue( (this.getValue()).replace(/[^0-9]/g,'') );
 	}
@@ -212,27 +225,29 @@ YAHOO.inputEx.Field.prototype.onInput = function(e) {
 	this.setClassFromState();
 };  
 
-
 /**
  * Close the field and eventually opened popups...
  */
-YAHOO.inputEx.Field.prototype.close = function() {
+inputEx.Field.prototype.close = function() {
    // Please override this function...
 };
-
-
 
 /**
  * Disable the field
  */
-YAHOO.inputEx.Field.prototype.disable = function() {
+inputEx.Field.prototype.disable = function() {
    this.el.disabled = true;
 };
 
 /**
  * Enable the field
  */
-YAHOO.inputEx.Field.prototype.enable = function() {
+inputEx.Field.prototype.enable = function() {
    this.el.disabled = false;
 };
+
+/**
+ * Register this class as "string" type
+ */
+inputEx.registerType("string", inputEx.Field);
 

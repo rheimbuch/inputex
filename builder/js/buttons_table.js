@@ -1,15 +1,15 @@
 
 /**
- *  YAHOO.inputEx.builder.ButtonsTable
+ *  inputEx.builder.ButtonsTable
  */
-YAHOO.inputEx.builder.ButtonsTable = function() {
-   YAHOO.inputEx.builder.ButtonsTable.superclass.constructor.call(this, "Buttons", ['Text', 'Type'] );
+inputEx.builder.ButtonsTable = function() {
+   inputEx.builder.ButtonsTable.superclass.constructor.call(this, "Buttons", ['Text', 'Type'] );
 };
 
-YAHOO.extend(YAHOO.inputEx.builder.ButtonsTable,YAHOO.inputEx.builder.Table);
+YAHOO.extend(inputEx.builder.ButtonsTable,inputEx.builder.Table);
 
 
-YAHOO.inputEx.builder.ButtonsTable.prototype.getRowElements = function(button) {
+inputEx.builder.ButtonsTable.prototype.getRowElements = function(button) {
    
    // Le nom du champ
    var fieldNameField = cn('input', {type: 'text', value: button.value || ""});
@@ -22,7 +22,7 @@ YAHOO.inputEx.builder.ButtonsTable.prototype.getRowElements = function(button) {
 };
 
 
-YAHOO.inputEx.builder.ButtonsTable.prototype.getValue = function() {
+inputEx.builder.ButtonsTable.prototype.getValue = function() {
   
   var buttons = [];
   

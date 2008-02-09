@@ -8,17 +8,17 @@
  * @version 0.1 
  */
 
-// defines YAHOO.inputEx namespace
+// defines inputEx namespace
 YAHOO.namespace('inputEx');
 
-YAHOO.inputEx.messages = {
+inputEx.messages = {
 	required: "This field is required",
 	invalid: "This field is invalid",
 	valid: "This field is valid"
 };
 
 /**
- * @class YAHOO.inputEx.Field 
+ * @class inputEx.Field 
  * Create the dom and basic behaviour of a RUI field 
  *
  * options:
@@ -28,16 +28,16 @@ YAHOO.inputEx.messages = {
  *		- regexp: regular expression used to validate (otherwise it always validate)
  *		- noicon: this prevent the icon from being rendered (and the tooltip as well) (default to false)
  */
-YAHOO.inputEx.Field = function(options) {
+inputEx.Field = function(options) {
 	
 	// Save the options locally
 	this.options = options;
 	
 	// Define default messages
 	this.options.messages = this.options.messages || {};
-	this.options.messages.required = this.options.messages.required || YAHOO.inputEx.messages.required;
-	this.options.messages.invalid = this.options.messages.invalid || YAHOO.inputEx.messages.invalid;
-	this.options.messages.valid = this.options.messages.valid || YAHOO.inputEx.messages.valid;
+	this.options.messages.required = this.options.messages.required || inputEx.messages.required;
+	this.options.messages.invalid = this.options.messages.invalid || inputEx.messages.invalid;
+	this.options.messages.valid = this.options.messages.valid || inputEx.messages.valid;
 	
 	// Call the render of the dom
 	this.render();
@@ -58,7 +58,7 @@ YAHOO.inputEx.Field = function(options) {
 /**
  * Default render of the dom element
  */
-YAHOO.inputEx.Field.prototype.render = function() {
+inputEx.Field.prototype.render = function() {
 	
 	// Create a DIV element to wrap the editing el and the image
 	this.divEl = document.createElement('DIV');
@@ -90,7 +90,7 @@ YAHOO.inputEx.Field.prototype.render = function() {
  * The default render creates a div to put in the messages
  */
 
-YAHOO.inputEx.Field.prototype.getEl = function() {
+inputEx.Field.prototype.getEl = function() {
 	return this.divEl;
 };
 
@@ -98,7 +98,7 @@ YAHOO.inputEx.Field.prototype.getEl = function() {
 /**
  * Initialize events of the Input
  */
-YAHOO.inputEx.Field.prototype.initEvents = function() {
+inputEx.Field.prototype.initEvents = function() {
 	YAHOO.util.Event.addListener(this.el, "input", this.onInput, this, true);
 	YAHOO.util.Event.addListener(this.el, "focus", this.onFocus, this, true);
 	YAHOO.util.Event.addListener(this.el, "blur", this.onBlur, this, true);
@@ -108,21 +108,21 @@ YAHOO.inputEx.Field.prototype.initEvents = function() {
 /**
  * Return the value of the input
  */
-YAHOO.inputEx.Field.prototype.getValue = function() {
+inputEx.Field.prototype.getValue = function() {
 	return this.el.value;
 };
 
 /**
  * Function to set the value
  */
-YAHOO.inputEx.Field.prototype.setValue = function(val) {
+inputEx.Field.prototype.setValue = function(val) {
 	this.el.value = val;
 };
 
 /**
  * Set the styles for valid/invalide state
  */
-YAHOO.inputEx.Field.prototype.setClassFromState = function() {
+inputEx.Field.prototype.setClassFromState = function() {
 	
 	if( this.previousState ) {
 		YAHOO.util.Dom.removeClass(this.getEl(), 'inputEx-'+this.previousState );
@@ -136,7 +136,7 @@ YAHOO.inputEx.Field.prototype.setClassFromState = function() {
 /**
  * Set the tooltip message
  */ 
-YAHOO.inputEx.Field.prototype.setToolTipMessage = function() { 
+inputEx.Field.prototype.setToolTipMessage = function() { 
 	if(this.tooltip) {
 	   var content = "";
 		if( this.previousState == 'required') {
@@ -152,11 +152,11 @@ YAHOO.inputEx.Field.prototype.setToolTipMessage = function() {
 	}
 };  
 
-YAHOO.inputEx.Field.prototype.onFocus = function(e) {
+inputEx.Field.prototype.onFocus = function(e) {
 	YAHOO.util.Dom.addClass(this.getEl(), 'inputEx-focused');
 };
 
-YAHOO.inputEx.Field.prototype.onBlur = function(e) {
+inputEx.Field.prototype.onBlur = function(e) {
 	YAHOO.util.Dom.removeClass(this.getEl(), 'inputEx-focused');
 };
 
@@ -165,34 +165,34 @@ YAHOO.inputEx.Field.prototype.onBlur = function(e) {
  * returns a string containing one of the following
  * states:
  */
-YAHOO.inputEx.Field.stateEmpty = 'empty';
-YAHOO.inputEx.Field.stateRequired = 'required';
-YAHOO.inputEx.Field.stateValid = 'valid';
-YAHOO.inputEx.Field.stateInvalid = 'invalid';
-YAHOO.inputEx.Field.prototype.getState = function() { 
+inputEx.Field.stateEmpty = 'empty';
+inputEx.Field.stateRequired = 'required';
+inputEx.Field.stateValid = 'valid';
+inputEx.Field.stateInvalid = 'invalid';
+inputEx.Field.prototype.getState = function() { 
 	
 	// if the field is empty :
 	if( this.getValue() === '' ) {
 		if( this.options.required) { 
-			return YAHOO.inputEx.Field.stateRequired; 
+			return inputEx.Field.stateRequired; 
 		}
 		else { 
-			return YAHOO.inputEx.Field.stateEmpty;  
+			return inputEx.Field.stateEmpty;  
 		}
 	}
 	
 	if( this.validate() ) {
-		return YAHOO.inputEx.Field.stateValid;
+		return inputEx.Field.stateValid;
 	}
 	else {
-		return YAHOO.inputEx.Field.stateInvalid;
+		return inputEx.Field.stateInvalid;
 	}
 };
 
 /**
  * Validation of the field
  */
-YAHOO.inputEx.Field.prototype.validate = function() { 
+inputEx.Field.prototype.validate = function() { 
 	// if we are using a regular expression
 	if( this.options.regexp ) {
 		return this.getValue().match(this.options.regexp);
@@ -203,7 +203,7 @@ YAHOO.inputEx.Field.prototype.validate = function() {
 /**
  * onInput event handler
  */
-YAHOO.inputEx.Field.prototype.onInput = function(e) { 
+inputEx.Field.prototype.onInput = function(e) { 
 	if(this.options.numbers) {
 		YAHOO.util.Event.stopEvent(e);
 		this.setValue( (this.getValue()).replace(/[^0-9]/g,'') );
@@ -216,7 +216,7 @@ YAHOO.inputEx.Field.prototype.onInput = function(e) {
 /**
  * Close the field and eventually opened popups...
  */
-YAHOO.inputEx.Field.prototype.close = function() {
+inputEx.Field.prototype.close = function() {
    // Please override this function...
 };
 
@@ -225,14 +225,14 @@ YAHOO.inputEx.Field.prototype.close = function() {
 /**
  * Disable the field
  */
-YAHOO.inputEx.Field.prototype.disable = function() {
+inputEx.Field.prototype.disable = function() {
    this.el.disabled = true;
 };
 
 /**
  * Enable the field
  */
-YAHOO.inputEx.Field.prototype.enable = function() {
+inputEx.Field.prototype.enable = function() {
    this.el.disabled = false;
 };
 
@@ -255,12 +255,12 @@ YAHOO.inputEx.Field.prototype.enable = function() {
  *		- formName: 'name' attribute of the form
  * 	- label: form title text
  *		- inputs: list of Inputs like:
- *			{label: "Phone", name: "phone", type: YAHOO.inputEx.Field, numbers: true, required: true},
+ *			{label: "Phone", name: "phone", type: inputEx.Field, numbers: true, required: true},
  *			(See each params for each field)
  *		- buttons: list of buttons like:
  *			{value: "Valider", type: "submit"}
  */
-YAHOO.inputEx.Form = function(options) {
+inputEx.Form = function(options) {
 
   // Save the options locally
   this.options = options || {};
@@ -279,7 +279,7 @@ YAHOO.inputEx.Form = function(options) {
  * @method onSubmitForm
  * Intercept the 'onsubmit' event and stop it if !validate
  */
-YAHOO.inputEx.Form.prototype.onSubmit = function(e) {
+inputEx.Form.prototype.onSubmit = function(e) {
 	if ( !this.validate() ) {
 		YAHOO.util.Event.stopEvent(e);
 	} 
@@ -289,13 +289,13 @@ YAHOO.inputEx.Form.prototype.onSubmit = function(e) {
  * @method validate
  * Return true if all the fields validates
  */
-YAHOO.inputEx.Form.prototype.validate = function() {
+inputEx.Form.prototype.validate = function() {
 	
 	// Validate all the sub fields
 	for (var i = 0 ; i < this.inputs.length ; i++) {
 		var input = this.inputs[i];
 		var state = input.getState();
-		if( state == YAHOO.inputEx.Field.stateRequired || state == YAHOO.inputEx.Field.stateInvalid ) {
+		if( state == inputEx.Field.stateRequired || state == inputEx.Field.stateInvalid ) {
 			return false;
 		}
    }
@@ -306,7 +306,7 @@ YAHOO.inputEx.Form.prototype.validate = function() {
  * @method getEl
  * Returns the form element
  */
-YAHOO.inputEx.Form.prototype.getEl = function() {
+inputEx.Form.prototype.getEl = function() {
    return this.form;
 };
 
@@ -314,7 +314,7 @@ YAHOO.inputEx.Form.prototype.getEl = function() {
  * @method getValue
  * Returns a javascript object of the name/value pairs
  */
-YAHOO.inputEx.Form.prototype.getValue = function() {
+inputEx.Form.prototype.getValue = function() {
 	var o = {};
 	for (var i = 0 ; i < this.inputs.length ; i++) {
 		o[this.inputs[i].options.name] = this.inputs[i].getValue();
@@ -326,7 +326,7 @@ YAHOO.inputEx.Form.prototype.getValue = function() {
  *  @methode enable
  *  Enable/Disable all fields in the form
  */
-YAHOO.inputEx.Form.prototype.enable = function(enable) {
+inputEx.Form.prototype.enable = function(enable) {
    var disabled = !enable;
  	for (var i = 0 ; i < this.inputs.length ; i++) {
  	   var el = this.inputs[i].getEl();
@@ -338,7 +338,7 @@ YAHOO.inputEx.Form.prototype.enable = function(enable) {
  * @method setValue
  * @param oValues object literal with the values
  */
-YAHOO.inputEx.Form.prototype.setValue = function(oValues) { 
+inputEx.Form.prototype.setValue = function(oValues) { 
 	for (var i = 0 ; i < this.inputs.length ; i++) {
 		this.inputs[i].setValue(oValues[this.inputs[i].options.name] || '');
 		this.inputs[i].setClassFromState();
@@ -349,7 +349,7 @@ YAHOO.inputEx.Form.prototype.setValue = function(oValues) {
  * @method render
  * generates the dom of the form
  */
-YAHOO.inputEx.Form.prototype.render = function() {
+inputEx.Form.prototype.render = function() {
 		
 	// Create the YAHOO.util.Dom tree
 	this.form = document.createElement('FORM');
@@ -389,7 +389,7 @@ YAHOO.inputEx.Form.prototype.render = function() {
 /**
  *
  */
-YAHOO.inputEx.Form.prototype.renderLabel = function(inputConfig, tdLabel) {
+inputEx.Form.prototype.renderLabel = function(inputConfig, tdLabel) {
    if (inputConfig.label) {
 		tdLabel.innerHTML = input.label;
 	}
@@ -399,7 +399,7 @@ YAHOO.inputEx.Form.prototype.renderLabel = function(inputConfig, tdLabel) {
  * @method renderInputFields
  * builds input fields
  */
-YAHOO.inputEx.Form.prototype.renderInputFields = function() {
+inputEx.Form.prototype.renderInputFields = function() {
 	var input,tr,tdLabel,tdInput;
 	
 	// Array that will contain the references to the created Fields
@@ -416,10 +416,10 @@ YAHOO.inputEx.Form.prototype.renderInputFields = function() {
 		tdInput = document.createElement('TD');
 
 		// Create the new field with the given type as class
-		if( !input.type ) input.type = YAHOO.inputEx.Field;
+		if( !input.type ) input.type = inputEx.Field;
       
       // Mask hidden fields
-		if(input.type == YAHOO.inputEx.HiddenField) {
+		if(input.type == inputEx.HiddenField) {
          YAHOO.util.Dom.addClass(tr,'inputExForm-hiddenLine');
       };
 		
@@ -483,7 +483,7 @@ YAHOO.inputEx.Form.prototype.renderInputFields = function() {
  * @method addGroupEntries
  * add a new instance of each input field in groupName
  */
-YAHOO.inputEx.Form.prototype.addGroupEntries = function() {
+inputEx.Form.prototype.addGroupEntries = function() {
    
    var groupName = "fields";
    
@@ -521,7 +521,7 @@ YAHOO.inputEx.Form.prototype.addGroupEntries = function() {
  * @method renderButtons
  * Render the buttons dom
  */
-YAHOO.inputEx.Form.prototype.renderButtons = function() {
+inputEx.Form.prototype.renderButtons = function() {
 	var tr = document.createElement('TR');
 	var tdLabel = document.createElement('TD');
 	var tdButtons = document.createElement('TD');
@@ -548,22 +548,22 @@ YAHOO.inputEx.Form.prototype.renderButtons = function() {
  * @method close
  * Calls close on each field
  */
-YAHOO.inputEx.Form.prototype.close = function() {
+inputEx.Form.prototype.close = function() {
 	for (var i = 0 ; i < this.inputs.length ; i++) {
 		this.inputs[i].close();
    }
 };
 
 /**
- * @class YAHOO.inputEx.UpperCaseField
+ * @class inputEx.UpperCaseField
  * Create a field where the value is always uppercase
  */
-YAHOO.inputEx.UpperCaseField = function(options) {
-   YAHOO.inputEx.UpperCaseField.superclass.constructor.call(this,options);
+inputEx.UpperCaseField = function(options) {
+   inputEx.UpperCaseField.superclass.constructor.call(this,options);
 };
-YAHOO.lang.extend(YAHOO.inputEx.UpperCaseField, YAHOO.inputEx.Field);
+YAHOO.lang.extend(inputEx.UpperCaseField, inputEx.Field);
 
-YAHOO.inputEx.UpperCaseField.prototype.onInput = function(e) { 
+inputEx.UpperCaseField.prototype.onInput = function(e) { 
 	this.setValue( (this.getValue()).toUpperCase() );
 	this.setClassFromState();
 };
@@ -571,19 +571,19 @@ YAHOO.inputEx.UpperCaseField.prototype.onInput = function(e) {
 
 
 /**
- * @class YAHOO.inputEx.UneditableHtmlField
+ * @class inputEx.UneditableHtmlField
  * Create a uneditable field where you can stick the html you want
  */
-YAHOO.inputEx.UneditableHtmlField = function(options) {
-	YAHOO.inputEx.UneditableHtmlField.superclass.constructor.call(this,options);
+inputEx.UneditableHtmlField = function(options) {
+	inputEx.UneditableHtmlField.superclass.constructor.call(this,options);
 };
-YAHOO.lang.extend(YAHOO.inputEx.UneditableHtmlField, YAHOO.inputEx.Field);
+YAHOO.lang.extend(inputEx.UneditableHtmlField, inputEx.Field);
 
-YAHOO.inputEx.UneditableHtmlField.prototype.render = function() {
+inputEx.UneditableHtmlField.prototype.render = function() {
    this.divEl = document.createElement('DIV');
 };
 
-YAHOO.inputEx.UneditableHtmlField.prototype.setValue = function(val) {
+inputEx.UneditableHtmlField.prototype.setValue = function(val) {
    this.value = val;
    if(this.options.formatValue) {
       this.divEl.innerHTML = this.options.formatValue(val);
@@ -598,25 +598,25 @@ YAHOO.inputEx.UneditableHtmlField.prototype.setValue = function(val) {
    }
 };
 
-YAHOO.inputEx.UneditableHtmlField.prototype.getValue = function() {
+inputEx.UneditableHtmlField.prototype.getValue = function() {
    return this.value;
 };
 
 
 
 /**
- * @class YAHOO.inputEx.SelectField
- * Create a <select> input, inherits from YAHOO.inputEx.Field
+ * @class inputEx.SelectField
+ * Create a <select> input, inherits from inputEx.Field
  *
  * options:
  *		- selectValues: contains the list of <options> values
  */
-YAHOO.inputEx.SelectField = function(options) {
-	YAHOO.inputEx.SelectField.superclass.constructor.call(this,options);
+inputEx.SelectField = function(options) {
+	inputEx.SelectField.superclass.constructor.call(this,options);
   };
-YAHOO.lang.extend(YAHOO.inputEx.SelectField, YAHOO.inputEx.Field);
+YAHOO.lang.extend(inputEx.SelectField, inputEx.Field);
 
-YAHOO.inputEx.SelectField.prototype.render = function() {
+inputEx.SelectField.prototype.render = function() {
    this.divEl = document.createElement('DIV');
    this.el = document.createElement('SELECT');
    this.el.name = this.options.name || '';
@@ -631,7 +631,7 @@ YAHOO.inputEx.SelectField.prototype.render = function() {
    this.divEl.appendChild(this.el);
 };
 
-YAHOO.inputEx.SelectField.prototype.setValue = function(val) {
+inputEx.SelectField.prototype.setValue = function(val) {
    var index = 0;
    var option;
    for(var i = 0 ; i < this.options.selectValues.length ; i++) {
@@ -643,19 +643,19 @@ YAHOO.inputEx.SelectField.prototype.setValue = function(val) {
 };
 
 /**
- * @class YAHOO.inputEx.checkBox
- * Create a <checkbox> input, inherits from YAHOO.inputEx.Field
+ * @class inputEx.checkBox
+ * Create a <checkbox> input, inherits from inputEx.Field
  *
  * options:
  *		- checked: true or false
  *		- sentValues: contains a list of two strings to be returned if checked or unchecked (ex: sentValues:['Returned_if_checked','Returned_if_unchecked'])
  */
-YAHOO.inputEx.checkBox = function(options) {
-	YAHOO.inputEx.checkBox.superclass.constructor.call(this,options);
+inputEx.checkBox = function(options) {
+	inputEx.checkBox.superclass.constructor.call(this,options);
 };
-YAHOO.lang.extend(YAHOO.inputEx.checkBox, YAHOO.inputEx.Field);
+YAHOO.lang.extend(inputEx.checkBox, inputEx.Field);
 
-YAHOO.inputEx.checkBox.prototype.render = function() {
+inputEx.checkBox.prototype.render = function() {
   
   this.sentValues = this.options.sentValues || ['Y','N'];
   this.checkedValue = this.sentValues[0];
@@ -683,18 +683,18 @@ YAHOO.inputEx.checkBox.prototype.render = function() {
   YAHOO.util.Event.addListener(this.el, "change", this.toggleHiddenEl, this, true);	
 };
 
-YAHOO.inputEx.checkBox.prototype.toggleHiddenEl = function() {
+inputEx.checkBox.prototype.toggleHiddenEl = function() {
    this.hiddenEl.value = this.el.checked ? this.checkedValue : this.uncheckedValue;
 };
 
-YAHOO.inputEx.checkBox.prototype.getValue = function() {
+inputEx.checkBox.prototype.getValue = function() {
    return this.el.checked ? this.checkedValue : this.uncheckedValue;
 };
 
 /**
  * Function to set the value
  */
-YAHOO.inputEx.checkBox.prototype.setValue = function(val) {
+inputEx.checkBox.prototype.setValue = function(val) {
     if (val===this.checkedValue) {
 		this.hiddenEl.value = val;
 		this.el.checked = true;
@@ -711,18 +711,18 @@ YAHOO.inputEx.checkBox.prototype.setValue = function(val) {
 
 
 /**
- * @class YAHOO.inputEx.Textarea
- * Create a <select> input, inherits from YAHOO.inputEx.Field
+ * @class inputEx.Textarea
+ * Create a <select> input, inherits from inputEx.Field
  *
  * options:
  *		- selectValues: contains the list of <options> values
  */
-YAHOO.inputEx.Textarea = function(options) {
-	YAHOO.inputEx.Textarea.superclass.constructor.call(this,options);
+inputEx.Textarea = function(options) {
+	inputEx.Textarea.superclass.constructor.call(this,options);
 };
-YAHOO.lang.extend(YAHOO.inputEx.Textarea, YAHOO.inputEx.Field);
+YAHOO.lang.extend(inputEx.Textarea, inputEx.Field);
 
-YAHOO.inputEx.Textarea.prototype.render = function() {
+inputEx.Textarea.prototype.render = function() {
 	this.divEl = document.createElement('DIV');
 	this.el = document.createElement('TEXTAREA');
 	this.el.value = this.options.value || '';
@@ -734,16 +734,16 @@ YAHOO.inputEx.Textarea.prototype.render = function() {
 
 
 /**
- * @class YAHOO.inputEx.HiddenField
- * Create a hidden input, inherits from YAHOO.inputEx.Field
+ * @class inputEx.HiddenField
+ * Create a hidden input, inherits from inputEx.Field
  */
-YAHOO.inputEx.HiddenField = function(options) {
-	YAHOO.inputEx.HiddenField.superclass.constructor.call(this,options);
+inputEx.HiddenField = function(options) {
+	inputEx.HiddenField.superclass.constructor.call(this,options);
 };
-YAHOO.lang.extend(YAHOO.inputEx.HiddenField, YAHOO.inputEx.Field);
+YAHOO.lang.extend(inputEx.HiddenField, inputEx.Field);
 
-YAHOO.inputEx.HiddenField.prototype.render = function() {
-   this.type = YAHOO.inputEx.HiddenField;
+inputEx.HiddenField.prototype.render = function() {
+   this.type = inputEx.HiddenField;
 	this.divEl = document.createElement('DIV');
 	
 	this.el = document.createElement('INPUT');
@@ -757,78 +757,78 @@ YAHOO.inputEx.HiddenField.prototype.render = function() {
 
 
 /**
- * @class YAHOO.inputEx.PasswordField
- * Create a password input, inherits from YAHOO.inputEx.Field
+ * @class inputEx.PasswordField
+ * Create a password input, inherits from inputEx.Field
  */
-YAHOO.inputEx.PasswordField = function(options) {
-	YAHOO.inputEx.PasswordField.superclass.constructor.call(this,options);
+inputEx.PasswordField = function(options) {
+	inputEx.PasswordField.superclass.constructor.call(this,options);
 };
-YAHOO.lang.extend(YAHOO.inputEx.PasswordField, YAHOO.inputEx.Field);
+YAHOO.lang.extend(inputEx.PasswordField, inputEx.Field);
 
-YAHOO.inputEx.PasswordField.prototype.render = function() {
-	YAHOO.inputEx.PasswordField.superclass.render.call(this);
+inputEx.PasswordField.prototype.render = function() {
+	inputEx.PasswordField.superclass.render.call(this);
 	this.el.type = 'password';
 };
 
 	
 /**
- * @class YAHOO.inputEx.EmailField
- * Adds an email regexp, inherits from YAHOO.inputEx.Field
+ * @class inputEx.EmailField
+ * Adds an email regexp, inherits from inputEx.Field
  */
-YAHOO.inputEx.messages.invalidEmail = "Invalid email, ex: sample@test.com";
+inputEx.messages.invalidEmail = "Invalid email, ex: sample@test.com";
 
-YAHOO.inputEx.EmailField = function(options) {
+inputEx.EmailField = function(options) {
 	options.messages = options.messages || {};
-	options.messages.invalid = YAHOO.inputEx.messages.invalidEmail;
+	options.messages.invalid = inputEx.messages.invalidEmail;
 	options.regexp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	YAHOO.inputEx.EmailField.superclass.constructor.call(this,options);
+	inputEx.EmailField.superclass.constructor.call(this,options);
 };
-YAHOO.lang.extend(YAHOO.inputEx.EmailField, YAHOO.inputEx.Field);
+YAHOO.lang.extend(inputEx.EmailField, inputEx.Field);
 
-/*YAHOO.inputEx.EmailField.prototype.render = function() {
-	YAHOO.inputEx.EmailField.superclass.render.call(this);
+/*inputEx.EmailField.prototype.render = function() {
+	inputEx.EmailField.superclass.render.call(this);
 	this.el.size = 27;
 };*/
 
-YAHOO.inputEx.EmailField.prototype.getValue = function() {
+inputEx.EmailField.prototype.getValue = function() {
 	return this.el.value.toLowerCase();
 };
 
 /**
- * @class YAHOO.inputEx.IpadressField
- * Adds an IPv4 adress regexp, inherits from YAHOO.inputEx.Field
+ * @class inputEx.IpadressField
+ * Adds an IPv4 adress regexp, inherits from inputEx.Field
  */
-YAHOO.inputEx.IpadressField = function(options) {
+inputEx.IpadressField = function(options) {
 	options.regexp = /^(?:1\d?\d?|2(?:[0-4]\d?|[6789]|5[0-5]?)?|[3-9]\d?|0)(?:\.(?:1\d?\d?|2(?:[0-4]\d?|[6789]|5[0-5]?)?|[3-9]\d?|0)){3}$/;
-	YAHOO.inputEx.IpadressField.superclass.constructor.call(this,options);
+	inputEx.IpadressField.superclass.constructor.call(this,options);
 };
-YAHOO.lang.extend(YAHOO.inputEx.IpadressField, YAHOO.inputEx.Field);
+YAHOO.lang.extend(inputEx.IpadressField, inputEx.Field);
 
 
 /**
- * @class YAHOO.inputEx.FormattedField
- * Uses a format, inherits from YAHOO.inputEx.Field
+ * @class inputEx.FormattedField
+ * Uses a format, inherits from inputEx.Field
  * This is used for numbers only.
  *
  * options:
  *		- format: format (zipcode: '#####', date: '##/##/####' )
  */
 // Adds the numbers only option
-YAHOO.inputEx.FormattedField = function(options) {
-	YAHOO.inputEx.FormattedField.superclass.constructor.call(this,options);
+inputEx.FormattedField = function(options) {
+	inputEx.FormattedField.superclass.constructor.call(this,options);
 };
-YAHOO.lang.extend(YAHOO.inputEx.FormattedField, YAHOO.inputEx.Field);
+YAHOO.lang.extend(inputEx.FormattedField, inputEx.Field);
 
-YAHOO.inputEx.FormattedField.prototype.validate = function() { 
+inputEx.FormattedField.prototype.validate = function() { 
 	return !this.getFormattedValue().match('_');
 };
 
 // Alias for getValue() here, but to getValue will be overriden in Datefield (where formatted value like 10/04/2003 and value is a datetime like 2003-10-4 00:00:00).
-YAHOO.inputEx.FormattedField.prototype.getFormattedValue = function() {
+inputEx.FormattedField.prototype.getFormattedValue = function() {
 	return this.el.value;
 };
 
-YAHOO.inputEx.FormattedField.prototype.onInput = function(e) {
+inputEx.FormattedField.prototype.onInput = function(e) {
 	
 	var value = this.getFormattedValue();
 	
@@ -868,12 +868,12 @@ YAHOO.inputEx.FormattedField.prototype.onInput = function(e) {
 	this.setClassFromState();
 };
 
-YAHOO.inputEx.FormattedField.prototype.initEvents = function() {
-	YAHOO.inputEx.FormattedField.superclass.initEvents.call(this);
+inputEx.FormattedField.prototype.initEvents = function() {
+	inputEx.FormattedField.superclass.initEvents.call(this);
 	YAHOO.util.Event.addListener(this.el, 'keydown', this.onKeyDown, this, true);
 };
 
-YAHOO.inputEx.FormattedField.prototype.onKeyDown = function(e) {
+inputEx.FormattedField.prototype.onKeyDown = function(e) {
 	if(e.keyCode == 8) {
 		if( this.el.selectionStart == this.el.selectionEnd ) {
 			var v = (this.getFormattedValue()).split('');
@@ -885,8 +885,8 @@ YAHOO.inputEx.FormattedField.prototype.onKeyDown = function(e) {
 	}
 };
 
-YAHOO.inputEx.FormattedField.prototype.onBlur = function(e) {
-	YAHOO.inputEx.FormattedField.superclass.onBlur.call(this,e);
+inputEx.FormattedField.prototype.onBlur = function(e) {
+	inputEx.FormattedField.superclass.onBlur.call(this,e);
 
 	if( this.getFormattedValue() == this.options.format.replace(/#/g,'_') ) {
 		//this.setValue('');
@@ -897,19 +897,19 @@ YAHOO.inputEx.FormattedField.prototype.onBlur = function(e) {
 };
 
 /**
- * @class YAHOO.inputEx.DateField
+ * @class inputEx.DateField
  *
  * options: 
  *		- dateFormat: default to 'm/d/Y'
  */
-YAHOO.inputEx.DateField = function(options) {
+inputEx.DateField = function(options) {
 	options.format = '##/##/####';
 	options.dateFormat = options.dateFormat || 'm/d/Y';
-	YAHOO.inputEx.DateField.superclass.constructor.call(this,options);
+	inputEx.DateField.superclass.constructor.call(this,options);
 };
-YAHOO.lang.extend(YAHOO.inputEx.DateField, YAHOO.inputEx.FormattedField);
+YAHOO.lang.extend(inputEx.DateField, inputEx.FormattedField);
 
-YAHOO.inputEx.DateField.prototype.validate = function () {
+inputEx.DateField.prototype.validate = function () {
 	
 	var value = this.el.value;
 	if( value.match('_') ) { return false; }
@@ -925,13 +925,13 @@ YAHOO.inputEx.DateField.prototype.validate = function () {
    return ((unedate.getDate() == d) && (unedate.getMonth() == m) && (annee == Y));
 };
 
-YAHOO.inputEx.DateField.prototype.render = function() {
-	YAHOO.inputEx.DateField.superclass.render.call(this);
+inputEx.DateField.prototype.render = function() {
+	inputEx.DateField.superclass.render.call(this);
 	this.el.size = 10;
 };
 
 // Return value in DATETIME format (use getFormattedValue() to have 04/10/2002-like format)
-YAHOO.inputEx.DateField.prototype.getValue = function() {
+inputEx.DateField.prototype.getValue = function() {
    // Hack to validate if field not required and empty
    if (this.el.value === '') { return '';}
    var ladate = this.getFormattedValue().split("/");
@@ -942,7 +942,7 @@ YAHOO.inputEx.DateField.prototype.getValue = function() {
    return (new Date(Y,m,d));
 };
 
-YAHOO.inputEx.DateField.prototype.setValue = function(val) {
+inputEx.DateField.prototype.setValue = function(val) {
    
    // Don't try to parse a date if there is no date
    if( val === '' ) {
@@ -965,26 +965,26 @@ YAHOO.inputEx.DateField.prototype.setValue = function(val) {
 };
 
 /**
- * YAHOO.inputEx.ColorField
+ * inputEx.ColorField
  *
  * @classDescription    Create a ColorPicker input field
- * @inherits            YAHOO.inputEx.Field
+ * @inherits            inputEx.Field
  * @param {Object}      same as parent options
  * @constructor
  */
-YAHOO.inputEx.messages.selectColor = "Select a color :";
-YAHOO.inputEx.ColorField = function(options) {
-	YAHOO.inputEx.ColorField.superclass.constructor.call(this,options);
+inputEx.messages.selectColor = "Select a color :";
+inputEx.ColorField = function(options) {
+	inputEx.ColorField.superclass.constructor.call(this,options);
 };
-YAHOO.lang.extend(YAHOO.inputEx.ColorField, YAHOO.inputEx.Field);
+YAHOO.lang.extend(inputEx.ColorField, inputEx.Field);
 
 /**
  * Create a box that opens a Overlay when clicked
  *
  * @method  render
- * @memberOf         YAHOO.inputEx.ColorField
+ * @memberOf         inputEx.ColorField
  */
-YAHOO.inputEx.ColorField.prototype.render = function() {
+inputEx.ColorField.prototype.render = function() {
 
 	// Create a DIV element to wrap the editing el and the image
 	this.divEl = document.createElement('DIV');
@@ -1010,7 +1010,7 @@ YAHOO.inputEx.ColorField.prototype.render = function() {
 };
 
 // This create a popup and add an colorGrid
-YAHOO.inputEx.ColorField.prototype.renderPopUp = function() {
+inputEx.ColorField.prototype.renderPopUp = function() {
 	
   // display or not the title
   this.displayTitle = this.options.displayTitle || false;
@@ -1045,7 +1045,7 @@ YAHOO.inputEx.ColorField.prototype.renderPopUp = function() {
 	// create the title
 	if (this.displayTitle) {
       var div = document.createElement('div');
-      div.innerHTML = YAHOO.inputEx.messages.selectColor;
+      div.innerHTML = inputEx.messages.selectColor;
       this.colorPopUp.appendChild( div );
    }
 
@@ -1060,24 +1060,24 @@ YAHOO.inputEx.ColorField.prototype.renderPopUp = function() {
  * Add listeners for click and blur events
  *
  * @method           initEvents
- * @memberOf         YAHOO.inputEx.ColorField
+ * @memberOf         inputEx.ColorField
  */
-YAHOO.inputEx.ColorField.prototype.initEvents = function() {
+inputEx.ColorField.prototype.initEvents = function() {
 	YAHOO.util.Event.addListener(this.colorEl, "click", this.toggleColorPopUp, this, true);
 	YAHOO.util.Event.addListener(this.colorEl, "blur", this.closeColorPopUp, this, true);
 };
 
-YAHOO.inputEx.ColorField.prototype.toggleColorPopUp = function() {
+inputEx.ColorField.prototype.toggleColorPopUp = function() {
 	if( this.visible ) {	this.colorPopUp.style.display = 'none'; /*this.colorPopUp.hide(); */}
 	else { this.colorPopUp.style.display = 'block'; /*this.colorPopUp.show(); */}
 	this.visible = !this.visible;
 };
 
-YAHOO.inputEx.ColorField.prototype.close = function() {
+inputEx.ColorField.prototype.close = function() {
    this.closeColorPopUp();
 };
 
-YAHOO.inputEx.ColorField.prototype.closeColorPopUp = function() {
+inputEx.ColorField.prototype.closeColorPopUp = function() {
 	this.colorPopUp.style.display = 'none'; /*this.colorPopUp.hide(); */
 	this.visible = false;
 };
@@ -1085,7 +1085,7 @@ YAHOO.inputEx.ColorField.prototype.closeColorPopUp = function() {
 /**
  * This creates a color grid
  */ 
-YAHOO.inputEx.ColorField.prototype.renderColorGrid = function() {
+inputEx.ColorField.prototype.renderColorGrid = function() {
 	
 	var table = document.createElement('TABLE');
 	var tbody = document.createElement('TBODY');
@@ -1132,7 +1132,7 @@ YAHOO.inputEx.ColorField.prototype.renderColorGrid = function() {
 	return table;
 };
 
-YAHOO.inputEx.ColorField.prototype.onColorClick = function(e) {
+inputEx.ColorField.prototype.onColorClick = function(e) {
 	var square = e.target;
 	var couleur = YAHOO.util.Dom.getStyle(square,'background-color'); 
 	YAHOO.util.Dom.setStyle(this.colorEl,'background-color',couleur);
@@ -1172,7 +1172,7 @@ YAHOO.inputEx.ColorField.prototype.onColorClick = function(e) {
 	this.colorPopUp.style.display = 'none'; /*this.colorPopUp.hide(); */
 };
 
-YAHOO.inputEx.ColorField.prototype.setDefaultColors = function(index) {
+inputEx.ColorField.prototype.setDefaultColors = function(index) {
 	var selections = [];
 	// Interventions
 	selections[0] = ["FFEA99","FFFF66","FFCC99","FFCAB2","FF99AD","FFD6FF","FF6666","E8EEF7","ADC2FF","ADADFF","CCFFFF","D6EAAD","B5EDBC","CCFF99"]; //["FF0000","FF2222","FF3333","FF4444","FF5555","FF6666","FF7777","FF8888","FF9999","FFAAAA"];
@@ -1184,7 +1184,7 @@ YAHOO.inputEx.ColorField.prototype.setDefaultColors = function(index) {
 	return selections[index-1];
 };
 
-YAHOO.inputEx.ColorField.prototype.setValue = function(val) {
+inputEx.ColorField.prototype.setValue = function(val) {
    this.el.value = val;
    YAHOO.util.Dom.setStyle(this.colorEl, 'background-color', this.el.value);
 };

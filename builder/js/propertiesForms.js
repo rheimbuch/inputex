@@ -1,26 +1,26 @@
 
 
-YAHOO.inputEx.builder.propertiesForms = [];
+inputEx.builder.propertiesForms = [];
 
 
 /**
  * Default Form
  */
-YAHOO.inputEx.builder.DefaultForm = {};
-YAHOO.inputEx.builder.propertiesForms[YAHOO.inputEx.builder.DefaultForm] = function(field) {
+inputEx.builder.DefaultForm = {};
+inputEx.builder.propertiesForms[inputEx.builder.DefaultForm] = function(field) {
 
    var labelValue = field ? (field.label || "") : "";
 
    var formOptions = { inputs: [ 
       {label: "Label", inputParams: {name: "label", value: labelValue} } ,
-      {label: "Required ?", type: YAHOO.inputEx.checkBox, inputParams: {name: "required"} } 
+      {label: "Required ?", type: inputEx.checkBox, inputParams: {name: "required"} } 
    ] };   
-   YAHOO.inputEx.builder.propertiesForms[YAHOO.inputEx.builder.DefaultForm].superclass.constructor.call(this, formOptions);
+   inputEx.builder.propertiesForms[inputEx.builder.DefaultForm].superclass.constructor.call(this, formOptions);
 };
 
-YAHOO.extend(YAHOO.inputEx.builder.propertiesForms[YAHOO.inputEx.builder.DefaultForm], YAHOO.inputEx.Form);
+YAHOO.extend(inputEx.builder.propertiesForms[inputEx.builder.DefaultForm], inputEx.Form);
 
-YAHOO.inputEx.builder.propertiesForms[YAHOO.inputEx.builder.DefaultForm].prototype.getInputField = function() {
+inputEx.builder.propertiesForms[inputEx.builder.DefaultForm].prototype.getInputField = function() {
    var value = this.getValue();
    var input = {label: value.label, inputParams: {} };
    
@@ -35,13 +35,13 @@ YAHOO.inputEx.builder.propertiesForms[YAHOO.inputEx.builder.DefaultForm].prototy
 /**
  * Hidden Field
  */
-YAHOO.inputEx.builder.propertiesForms[YAHOO.inputEx.HiddenField] = function(field) {
+inputEx.builder.propertiesForms[inputEx.HiddenField] = function(field) {
    var formOptions = { inputs: [ ]};
-   YAHOO.inputEx.builder.propertiesForms[YAHOO.inputEx.HiddenField].superclass.constructor.call(this, formOptions);
+   inputEx.builder.propertiesForms[inputEx.HiddenField].superclass.constructor.call(this, formOptions);
 };
-YAHOO.extend(YAHOO.inputEx.builder.propertiesForms[YAHOO.inputEx.HiddenField], YAHOO.inputEx.Form);
+YAHOO.extend(inputEx.builder.propertiesForms[inputEx.HiddenField], inputEx.Form);
 
-YAHOO.inputEx.builder.propertiesForms[YAHOO.inputEx.HiddenField].prototype.getInputField = function() {
+inputEx.builder.propertiesForms[inputEx.HiddenField].prototype.getInputField = function() {
    return {label: "", inputParams: {} };
 };
 
@@ -49,18 +49,18 @@ YAHOO.inputEx.builder.propertiesForms[YAHOO.inputEx.HiddenField].prototype.getIn
 /**
  * Select Field
  */
-YAHOO.inputEx.builder.propertiesForms[YAHOO.inputEx.SelectField] = function(field) {
+inputEx.builder.propertiesForms[inputEx.SelectField] = function(field) {
  var labelValue = field ? (field.label || "") : "";
    var formOptions = { inputs: [ 
       {label: "Label", inputParams: {name: "label", value: labelValue} } ,
-      {label: "Required ?", type: YAHOO.inputEx.checkBox, inputParams: {name: "required"} },
+      {label: "Required ?", type: inputEx.checkBox, inputParams: {name: "required"} },
       {label: "Options (comma separated)", inputParams: {name: "options"} }
    ]};
-   YAHOO.inputEx.builder.propertiesForms[YAHOO.inputEx.SelectField].superclass.constructor.call(this, formOptions);
+   inputEx.builder.propertiesForms[inputEx.SelectField].superclass.constructor.call(this, formOptions);
 };
-YAHOO.extend(YAHOO.inputEx.builder.propertiesForms[YAHOO.inputEx.SelectField], YAHOO.inputEx.Form);
+YAHOO.extend(inputEx.builder.propertiesForms[inputEx.SelectField], inputEx.Form);
 
-YAHOO.inputEx.builder.propertiesForms[YAHOO.inputEx.SelectField].prototype.getInputField = function() {
+inputEx.builder.propertiesForms[inputEx.SelectField].prototype.getInputField = function() {
    var value = this.getValue();
    var input = {label: value.label, inputParams: {} };
    if(value.required == 'Y') {

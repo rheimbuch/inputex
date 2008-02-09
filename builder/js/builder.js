@@ -1,15 +1,15 @@
 
 /**
- * YAHOO.inputEx.builder
+ * inputEx.builder
  * @constructor
  * @params  {DOMel}  parentEl
  * @params  {inputExFormStruct}  inputExFormStruct
  */
-YAHOO.inputEx.builder = function(parentEl, inputExFormStruct) {
+inputEx.builder = function(parentEl, inputExFormStruct) {
 
    // Save parameters locally
    this.parentEl = parentEl;
-   this.inputExFormStruct = inputExFormStruct || YAHOO.inputEx.builder.defaultStruct;
+   this.inputExFormStruct = inputExFormStruct || inputEx.builder.defaultStruct;
 
    // Render the dom of the builder
    this.render();
@@ -21,10 +21,10 @@ YAHOO.inputEx.builder = function(parentEl, inputExFormStruct) {
 /**
  * Default structure
  */
-YAHOO.inputEx.builder.defaultStruct = {
+inputEx.builder.defaultStruct = {
 	inputs: [ 
-		{label: "", type: YAHOO.inputEx.HiddenField, inputParams: {name: "id"} },
-		{label: "Name", type: YAHOO.inputEx.Field, inputParams: {name: "name" } }
+		{label: "", type: inputEx.HiddenField, inputParams: {name: "id"} },
+		{label: "Name", type: inputEx.Field, inputParams: {name: "name" } }
 	],
 	buttons: [
 		{value: "Valider", type: "submit"}
@@ -37,7 +37,7 @@ YAHOO.inputEx.builder.defaultStruct = {
  *
  * Create the dom of the builder.
  */
-YAHOO.inputEx.builder.prototype.render = function() {
+inputEx.builder.prototype.render = function() {
    
    // Crée la table de 3 cellules
    var table = cn('table', {className: 'inputEx-builder-table'});
@@ -70,7 +70,7 @@ YAHOO.inputEx.builder.prototype.render = function() {
  *
  * Create the dom of the editor cell
  */
-YAHOO.inputEx.builder.prototype.renderEditor = function() {
+inputEx.builder.prototype.renderEditor = function() {
    
    // Titre
    cn('h2', {className: 'inputEx-builder-cellTitle'}, null, 'Editor').appendTo(this.editorContainer);
@@ -82,12 +82,12 @@ YAHOO.inputEx.builder.prototype.renderEditor = function() {
    YAHOO.util.Event.addListener(this.formLabelField, 'change', this.updateForm, this, true);
    
    // Tableau contenant la liste des champs
-   this.fieldsTable = new YAHOO.inputEx.builder.FieldsTable();
+   this.fieldsTable = new inputEx.builder.FieldsTable();
    //this.fieldsTable.updateEvt.subscribe(this.updateForm, this, true);
    this.fieldsTable.getEl().appendTo(this.editorContainer);
    
    // Tableau contenant la liste des boutons
-   this.buttonsTable = new YAHOO.inputEx.builder.ButtonsTable();
+   this.buttonsTable = new inputEx.builder.ButtonsTable();
    //this.buttonsTable.updateEvt.subscribe(this.updateForm, this, true);
    this.buttonsTable.getEl().appendTo( this.editorContainer );
 };
@@ -98,7 +98,7 @@ YAHOO.inputEx.builder.prototype.renderEditor = function() {
  *
  * Set the value of the editor
  */
-YAHOO.inputEx.builder.prototype.setValue = function() {
+inputEx.builder.prototype.setValue = function() {
    
    // Various parameters of the field
    this.formLabelField.value = this.inputExFormStruct.label;
@@ -118,7 +118,7 @@ YAHOO.inputEx.builder.prototype.setValue = function() {
  *
  * Get the value of the editor
  */
-YAHOO.inputEx.builder.prototype.getValue = function() {
+inputEx.builder.prototype.getValue = function() {
    
    this.inputExFormStruct = {
       inputs: this.fieldsTable.getValue(),
@@ -134,13 +134,13 @@ YAHOO.inputEx.builder.prototype.getValue = function() {
  *
  * update the demo form
  */
-YAHOO.inputEx.builder.prototype.updateForm = function() {
+inputEx.builder.prototype.updateForm = function() {
    
    var struct = this.getValue();
    
    // Form preview
    this.formContainer.innerHTML = "";
-   this.form = new YAHOO.inputEx.Form( struct );
+   this.form = new inputEx.Form( struct );
    this.formContainer.appendChild( this.form.getEl() );
    
 };

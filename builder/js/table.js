@@ -1,17 +1,17 @@
 
 
 /**
- * YAHOO.inputEx.builder.Table
+ * inputEx.builder.Table
  *
  * 
  */
-YAHOO.inputEx.builder.Table = function(tableName, fieldsName) {
+inputEx.builder.Table = function(tableName, fieldsName) {
    
    this.render(tableName, fieldsName);
    
 };
 
-YAHOO.inputEx.builder.Table.prototype.render = function(tableName, fieldsName) {
+inputEx.builder.Table.prototype.render = function(tableName, fieldsName) {
    
    this.el = cn('div');
    
@@ -36,12 +36,12 @@ YAHOO.inputEx.builder.Table.prototype.render = function(tableName, fieldsName) {
    YAHOO.util.Event.addListener(a, 'click', this.addNewRow, this, true);
 };
 
-YAHOO.inputEx.builder.Table.prototype.getEl = function() {
+inputEx.builder.Table.prototype.getEl = function() {
    return this.el;
 };
 
 
-YAHOO.inputEx.builder.Table.prototype.addNewRow = function(e, elmt) {
+inputEx.builder.Table.prototype.addNewRow = function(e, elmt) {
    
    var tr = cn('tr');
    
@@ -68,7 +68,7 @@ YAHOO.inputEx.builder.Table.prototype.addNewRow = function(e, elmt) {
 };
 
 
-YAHOO.inputEx.builder.Table.prototype.setValues = function(values) {
+inputEx.builder.Table.prototype.setValues = function(values) {
    this.tbody.innerHTML = "";
    for(var i = 0 ; i < values.length ; i++) {
       this.addNewRow(null, values[i]);

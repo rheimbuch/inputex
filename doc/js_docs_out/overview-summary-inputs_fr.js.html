@@ -97,7 +97,7 @@ function asd() {
  */</span>
 
 <span class="comment">// Definition des messages en francais</span>
-YAHOO.inputEx.messages = {
+inputEx.messages = {
 	required: <span class="literal">"Ce champ est obligatoire"</span>,
 	invalid: <span class="literal">"Ce champ n'est pas valide"</span>,
 	valid: <span class="literal">"Ce champ est valide"</span>,
@@ -106,16 +106,16 @@ YAHOO.inputEx.messages = {
 };
 
 <span class="comment">/**
- * <span class="attrib">@class</span> YAHOO.inputEx.FrenchPhone
+ * <span class="attrib">@class</span> inputEx.FrenchPhone
  */</span>
-YAHOO.inputEx.FrenchPhone = <span class="reserved">function</span>(options) {
+inputEx.FrenchPhone = <span class="reserved">function</span>(options) {
 	options.format = <span class="literal">'## ## ## ## ##'</span>;
 	options.messages = {invalid: <span class="literal">"Numéro non valide."</span>};
-	YAHOO.inputEx.FrenchPhone.superclass.constructor.call(<span class="reserved">this</span>,options);
+	inputEx.FrenchPhone.superclass.constructor.call(<span class="reserved">this</span>,options);
 };
-YAHOO.lang.extend(YAHOO.inputEx.FrenchPhone, YAHOO.inputEx.FormattedField);
+YAHOO.lang.extend(inputEx.FrenchPhone, inputEx.FormattedField);
 
-YAHOO.inputEx.FrenchPhone.<span class="reserved">prototype</span>.validate = <span class="reserved">function</span> () {
+inputEx.FrenchPhone.<span class="reserved">prototype</span>.validate = <span class="reserved">function</span> () {
 	var value = <span class="reserved">this</span>.getValue();
 	<span class="reserved">if</span>( value.match(<span class="literal">'_'</span>) ) { <span class="reserved">return</span> false; }
 	<span class="reserved">if</span>( value.substr(0,1) != <span class="literal">'0'</span> ) { <span class="reserved">return</span> false; }
@@ -123,14 +123,14 @@ YAHOO.inputEx.FrenchPhone.<span class="reserved">prototype</span>.validate = <sp
 };
 
 <span class="comment">/**
- * <span class="attrib">@class</span> YAHOO.inputEx.FrenchDate
+ * <span class="attrib">@class</span> inputEx.FrenchDate
  */</span>
-YAHOO.inputEx.FrenchDate = <span class="reserved">function</span>(options) {
+inputEx.FrenchDate = <span class="reserved">function</span>(options) {
 	options.dateFormat = <span class="literal">'d/m/Y'</span>;
 	options.messages = {invalid: <span class="literal">"Date non valide, ex: 25/01/2007"</span>};
-	YAHOO.inputEx.FrenchDate.superclass.constructor.call(<span class="reserved">this</span>,options);
+	inputEx.FrenchDate.superclass.constructor.call(<span class="reserved">this</span>,options);
 };
-YAHOO.lang.extend(YAHOO.inputEx.FrenchDate, YAHOO.inputEx.DateField);
+YAHOO.lang.extend(inputEx.FrenchDate, inputEx.DateField);
 </pre>
 	<hr>
 

@@ -1,13 +1,9 @@
 ﻿/** 
- * @fileoverview This files contains the 'Form' 
- * class of {@link http://inputEx.neyric.com inputEx}
- *
- * @dependencies YAHOO.util.Dom, YAHOO.util.YAHOO.util.Event
- *
- * @author Eric Abouaf eric.abouaf at centraliens.net
- * @version 0.1 
+ * @fileoverview This files contains the 'Form' class of {@link http://javascript.neyric.com/inputex inputEx}
  */
-
+/**
+ * TODO: Form doit hériter de Group
+ */
 /**
  * @class Provide a generative method to build a dom form
  * with some user-interaction features.
@@ -17,12 +13,12 @@
  *		- formName: 'name' attribute of the form
  * 	- label: form title text
  *		- inputs: list of Inputs like:
- *			{label: "Phone", name: "phone", type: YAHOO.inputEx.Field, numbers: true, required: true},
+ *			{label: "Phone", name: "phone", type: inputEx.Field, numbers: true, required: true},
  *			(See each params for each field)
  *		- buttons: list of buttons like:
  *			{value: "Valider", type: "submit"}
  */
-YAHOO.inputEx.Form = function(options) {
+inputEx.Form = function(options) {
 
   // Save the options locally
   this.options = options || {};
@@ -30,18 +26,22 @@ YAHOO.inputEx.Form = function(options) {
   // Render the dom
   this.render();
 		
-  // Styling, default className is 'inputEx'
-  YAHOO.util.Dom.addClass(this.form, this.options.className || 'inputExForm');
-		
-  // Subscribe to events
-  YAHOO.util.Event.addListener(this.form, 'submit', this.options.onSubmit || this.onSubmit,this,true);
+  // init the events
+  this.initEvents();
+};
+
+/**
+ * Init the events
+ */
+inputEx.Form.prototype.initEvents = function() {
+   YAHOO.util.Event.addListener(this.form, 'submit', this.options.onSubmit || this.onSubmit,this,true);
 };
 
 /**
  * @method onSubmitForm
  * Intercept the 'onsubmit' event and stop it if !validate
  */
-YAHOO.inputEx.Form.prototype.onSubmit = function(e) {
+inputEx.Form.prototype.onSubmit = function(e) {
 	if ( !this.validate() ) {
 		YAHOO.util.Event.stopEvent(e);
 	} 
@@ -51,13 +51,13 @@ YAHOO.inputEx.Form.prototype.onSubmit = function(e) {
  * @method validate
  * Return true if all the fields validates
  */
-YAHOO.inputEx.Form.prototype.validate = function() {
+inputEx.Form.prototype.validate = function() {
 	
 	// Validate all the sub fields
 	for (var i = 0 ; i < this.inputs.length ; i++) {
 		var input = this.inputs[i];
 		var state = input.getState();
-		if( state == YAHOO.inputEx.Field.stateRequired || state == YAHOO.inputEx.Field.stateInvalid ) {
+		if( state == inputEx.Field.stateRequired || state == inputEx.Field.stateInvalid ) {
 			return false;
 		}
    }
@@ -68,7 +68,7 @@ YAHOO.inputEx.Form.prototype.validate = function() {
  * @method getEl
  * Returns the form element
  */
-YAHOO.inputEx.Form.prototype.getEl = function() {
+inputEx.Form.prototype.getEl = function() {
    return this.form;
 };
 
@@ -76,7 +76,7 @@ YAHOO.inputEx.Form.prototype.getEl = function() {
  * @method getValue
  * Returns a javascript object of the name/value pairs
  */
-YAHOO.inputEx.Form.prototype.getValue = function() {
+inputEx.Form.prototype.getValue = function() {
 	var o = {};
 	for (var i = 0 ; i < this.inputs.length ; i++) {
 		o[this.inputs[i].options.name] = this.inputs[i].getValue();
@@ -88,7 +88,7 @@ YAHOO.inputEx.Form.prototype.getValue = function() {
  *  @methode enable
  *  Enable/Disable all fields in the form
  */
-YAHOO.inputEx.Form.prototype.enable = function(enable) {
+inputEx.Form.prototype.enable = function(enable) {
    var disabled = !enable;
  	for (var i = 0 ; i < this.inputs.length ; i++) {
  	   var el = this.inputs[i].getEl();
@@ -100,7 +100,7 @@ YAHOO.inputEx.Form.prototype.enable = function(enable) {
  * @method setValue
  * @param oValues object literal with the values
  */
-YAHOO.inputEx.Form.prototype.setValue = function(oValues) { 
+inputEx.Form.prototype.setValue = function(oValues) { 
 	for (var i = 0 ; i < this.inputs.length ; i++) {
 		this.inputs[i].setValue(oValues[this.inputs[i].options.name] || '');
 		this.inputs[i].setClassFromState();
@@ -111,24 +111,20 @@ YAHOO.inputEx.Form.prototype.setValue = function(oValues) {
  * @method render
  * generates the dom of the form
  */
-YAHOO.inputEx.Form.prototype.render = function() {
+inputEx.Form.prototype.render = function() {
 		
 	// Create the YAHOO.util.Dom tree
-	this.form = document.createElement('FORM');
+	this.form = inputEx.cn('form', {method: this.options.method || 'POST', action: this.options.action || '', className: this.options.className || 'inputExForm'});
 	
 	// Set the autocomplete attribute to off to disable firefox autocompletion
 	this.form.setAttribute('autocomplete','off');
 	
-	var fieldset = document.createElement('FIELDSET');
-	var table = document.createElement('TABLE');
-	this.tbody = document.createElement('TBODY');
+	var fieldset = inputEx.cn('fieldset');
+	var table = inputEx.cn('table');
+	this.tbody = inputEx.cn('tbody');
 		
 	// Set the name of the form
 	if(this.options.formName) { this.form.name = this.options.formName; }
-	
-	// Set the method and action
-	this.form.method = this.options.method || 'POST';
-	this.form.action = this.options.action || '';
 		
 	// Adds input fields and buttons
 	this.renderInputFields();
@@ -139,8 +135,7 @@ YAHOO.inputEx.Form.prototype.render = function() {
 	
 	// Set the label of the fieldset
 	if( this.options.label ) {
-		var legend = document.createElement('LEGEND');
-		legend.innerHTML = this.options.label;
+		var legend = inputEx.cn('legend', null, null, this.options.label);
 		fieldset.appendChild(legend);
 	}
 	
@@ -151,7 +146,7 @@ YAHOO.inputEx.Form.prototype.render = function() {
 /**
  *
  */
-YAHOO.inputEx.Form.prototype.renderLabel = function(inputConfig, tdLabel) {
+inputEx.Form.prototype.renderLabel = function(inputConfig, tdLabel) {
    if (inputConfig.label) {
 		tdLabel.innerHTML = inputConfig.label;
 	}
@@ -161,7 +156,7 @@ YAHOO.inputEx.Form.prototype.renderLabel = function(inputConfig, tdLabel) {
  * @method renderInputFields
  * builds input fields
  */
-YAHOO.inputEx.Form.prototype.renderInputFields = function() {
+inputEx.Form.prototype.renderInputFields = function() {
    
 	// Array that will contain the references to the created Fields
 	this.inputs = [];
@@ -169,18 +164,18 @@ YAHOO.inputEx.Form.prototype.renderInputFields = function() {
 	// Iterate this.createInput on input fields
 	for (var i = 0 ; i < this.options.inputs.length ; i++) {
 		var input = this.options.inputs[i];
-		var tr = document.createElement('TR');
+		var tr = inputEx.cn('tr');
 				
-		var tdLabel = document.createElement('TD');
+		var tdLabel = inputEx.cn('td');
 		this.renderLabel(input, tdLabel);
 		
-		var tdInput = document.createElement('TD');
+		var tdInput = inputEx.cn('td');
 
 		// Create the new field with the given type as class
-		if( !input.type ) input.type = YAHOO.inputEx.Field;
+		if( !input.type ) input.type = inputEx.Field;
       
       // Mask hidden fields
-		if(input.type == YAHOO.inputEx.HiddenField) {
+		if(input.type == inputEx.HiddenField) {
          YAHOO.util.Dom.addClass(tr,'inputExForm-hiddenLine');
       };
 		
@@ -244,7 +239,7 @@ YAHOO.inputEx.Form.prototype.renderInputFields = function() {
  * @method addGroupEntries
  * add a new instance of each input field in groupName
  */
-YAHOO.inputEx.Form.prototype.addGroupEntries = function() {
+inputEx.Form.prototype.addGroupEntries = function() {
    
    var groupName = "fields";
    
@@ -261,12 +256,12 @@ YAHOO.inputEx.Form.prototype.addGroupEntries = function() {
 		
 	   var input = new form._groups[groupName][j].type(inputParams);
 	   form.inputs.push(input);
-	   var tr = document.createElement('TR');
-		var tdLabel = document.createElement('TD');
+	   var tr = inputEx.cn('tr');
+		var tdLabel = inputEx.cn('td');
 		if (form._groups[groupName][j].label) {
 			tdLabel.innerHTML = form._groups[groupName][j].label;
 		}
-		var tdInput = document.createElement('TD');
+		var tdInput = inputEx.cn('td');
 		tdInput.appendChild( input.getEl() );
 	   tr.appendChild(tdLabel);
 	   tr.appendChild(tdInput);
@@ -282,18 +277,16 @@ YAHOO.inputEx.Form.prototype.addGroupEntries = function() {
  * @method renderButtons
  * Render the buttons dom
  */
-YAHOO.inputEx.Form.prototype.renderButtons = function() {
-	var tr = document.createElement('TR');
-	var tdLabel = document.createElement('TD');
-	var tdButtons = document.createElement('TD');
+inputEx.Form.prototype.renderButtons = function() {
+	var tr = inputEx.cn('tr');
+	var tdLabel = inputEx.cn('td');
+	var tdButtons = inputEx.cn('td');
 		
 	var button, buttonEl;
 	if(this.options.buttons) {
 		for(var i = 0 ; i < this.options.buttons.length ; i++ ) {
 			button = this.options.buttons[i];
-			buttonEl = document.createElement('INPUT');
-			buttonEl.type = button.type;
-			buttonEl.value = button.value;
+			buttonEl = inputEx.cn('input', {type: button.type, value: button.value});
 			if( button.onClick ) { buttonEl.onclick = button.onClick; }
 			tdButtons.appendChild(buttonEl);
 		}
@@ -309,7 +302,7 @@ YAHOO.inputEx.Form.prototype.renderButtons = function() {
  * @method close
  * Calls close on each field
  */
-YAHOO.inputEx.Form.prototype.close = function() {
+inputEx.Form.prototype.close = function() {
 	for (var i = 0 ; i < this.inputs.length ; i++) {
 		this.inputs[i].close();
    }
