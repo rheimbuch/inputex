@@ -1,0 +1,33 @@
+
+
+- change event "update" (for each fields and in forms)
+
+
+- TypeField
+- Pour chaque field, créer un formulaire d'options (builder)
+//- ajouter des types associés à chaque field
+
+
+
+
+- Array Field
+- Object Field
+- InPlaceEditField
+- AutoCompleteField
+
+- attribuer des classes CSS à chaque field
+
+
+
+LATER:
+------
+
+- Date: integrate DateJs dans un datejs field
+- Password: make an option to have 2 fields
+- Password: export in SHA1 or MD5
+- add an "unobstrusive" layer
+- add "minlength" and "maxlength" properties
+- Option qui met le texte du tooltip à droite au lieu de l'icone
+- CAPTCHA !! (http://ajaxian.com/archives/jquery-validation-plugin-v12-updated)
+- Server-side validation
+- Field novaluedisplay: text qui doit être ajouté lorsqu'il n'y a pas de valeur
