@@ -9,10 +9,14 @@ var demo = {
    },
    
    onClickComponent: function(e, args) {
-      var li = e.originalTarget;
+      var li = YAHOO.util.Event.getTarget(e);
       if(li.tagName != "LI") return;
-      if(!this.examplePages[li.innerHTML]) return;
-      this.showExamples(this.examplePages[li.innerHTML]);
+      var className = li.innerHTML.replace(' ','');
+      if(!this.examplePages[className]) {
+         alert("no example for '"+className+"'");
+         return;
+      }
+      this.showExamples(this.examplePages[className]);
    }, 
    
    showExamples: function(exampleList) {
@@ -33,7 +37,7 @@ var demo = {
             eval(example.code);
          }
          catch(ex) {
-            console.log(ex);
+            alert(ex.message);
          }
          
          page.appendChild(exampleDiv);
@@ -243,7 +247,7 @@ var demo = {
       {
          title: "Basic Group",
          description: "Group",
-         code: "var group = new inputEx.Group( [ {label: 'Title', type: inputEx.SelectField, inputParams: {name: 'title', selectValues: ['Mr','Mrs','Mme'] } },{label: 'Firstname', inputParams: {name: 'firstname', required: true, messages: {required: 'Ce champ est obligatoire'}, value:'test' } } ]);\nexampleDiv.appendChild( group.getEl() ); "
+         code: "var group = new inputEx.Group( [ {label: 'Title', type: inputEx.SelectField, optional: true, inputParams: {name: 'title', selectValues: ['Mr','Mrs','Mme'] } },{label: 'Firstname', inputParams: {name: 'firstname', required: true, messages: {required: 'Ce champ est obligatoire'}, value:'test' } } ]);\nexampleDiv.appendChild( group.getEl() ); "
       }
       ]
    }

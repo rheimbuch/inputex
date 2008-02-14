@@ -1,3 +1,16 @@
+/**
+ * Define firebug functions as empty functions if firebug is not present
+ */
+if (!window.console || !console.firebug) {
+    var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml",
+    "group", "groupEnd", "time", "timeEnd", "count", "trace", "profile", "profileEnd"];
+
+    window.console = {};
+    for (var i = 0; i < names.length; ++i) {
+        window.console[names[i]] = function() {};
+    }
+}
+
 /** 
  * @fileoverview This files declares the main namespace of {@link http://javascript.neyric.com/inputex inputEx}
  */
@@ -88,9 +101,9 @@ var inputEx =  {
             if(typeof (domAttribute)=="function"){
                continue;
             }
-            if(YAHOO.env.ua.ie && i=="type" && (el.tagName=="INPUT"||el.tagName=="SELECT") ){
+            /*if(YAHOO.env.ua.ie && i=="type" && (el.tagName=="INPUT"||el.tagName=="SELECT") ){
                continue;
-            }
+            }*/
             if(i=="className"){
                i="class";
                el.className=domAttribute;

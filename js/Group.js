@@ -1,5 +1,9 @@
-
-
+/**
+ * Handle multiple fields
+ *
+ * @class inputEx.Group
+ * @constructor
+ */
 inputEx.Group = function(inputs) {
    
    // Save the options locally
@@ -29,19 +33,15 @@ inputEx.Group.prototype = {
    	return true;
    },
    
-   getValue: function() {
-   	var o = {};
-   	for (var i = 0 ; i < this.inputs.length ; i++) {
-   		o[this.inputs[i].options.name] = this.inputs[i].getValue();
+   enable: function() {
+    	for (var i = 0 ; i < this.inputs.length ; i++) {
+    	   this.inputs[i].enable();
       }
-   	return o;
    },
    
-   enable: function(enable) {
-      var disabled = !enable;
+   disable: function() {
     	for (var i = 0 ; i < this.inputs.length ; i++) {
-    	   var el = this.inputs[i].getEl();
-    		el.disabled = disabled;
+    	   this.inputs[i].disable();
       }
    },
    
@@ -50,6 +50,15 @@ inputEx.Group.prototype = {
    		this.inputs[i].setValue(oValues[this.inputs[i].options.name] || '');
    		this.inputs[i].setClassFromState();
       }
+   },
+   
+   
+   getValue: function() {
+   	var o = {};
+   	for (var i = 0 ; i < this.inputs.length ; i++) {
+   		o[this.inputs[i].options.name] = this.inputs[i].getValue();
+      }
+   	return o;
    },
   
   render: function() {
@@ -81,7 +90,10 @@ inputEx.Group.prototype = {
     	  this.inputs[i] = new input.type(inputParams);
     	  YAHOO.util.Dom.setStyle(this.inputs[i].getEl(), "display", "inline");
     	  
-    	  if(!inputParams.required) {
+    	  /**
+    	   * If the input has the "optional" parameter, put it in the optionsEl
+    	   */
+    	  if(input.optional) {
     	      if(!this.optionsEl) {
        	      this.optionsEl = inputEx.cn('div', {className: "inputEx-Group-Options"}, {display: 'none'});
     	      }

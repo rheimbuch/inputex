@@ -124,7 +124,7 @@ YAHOO.lang.extend(inputEx.ColorField, inputEx.Field, {
    			 else {
     			   // create active squares
    		      inputEx.sn(square, null, {backgroundColor: '#'+this.colors[i*this.squaresPerLine+j], cursor: 'pointer'});
-   				YAHOO.util.Event.addListener(square, "click", this.onColorClick, this, true );
+   				YAHOO.util.Event.addListener(square, "mousedown", this.onColorClick, this, true );
    			 }   
              line.appendChild(square);
    		}
@@ -138,10 +138,12 @@ YAHOO.lang.extend(inputEx.ColorField, inputEx.Field, {
    },
    
    onColorClick: function(e) {
-   	var square = e.target;
+      
+   	var square = YAHOO.util.Event.getTarget(e);//e.target;
+   	
    	var couleur = YAHOO.util.Dom.getStyle(square,'background-color'); 
    	YAHOO.util.Dom.setStyle(this.colorEl,'background-color',couleur);
-
+   	
    	// set hidden field value
    	// Convertit une chaine du style "rgb(255,142,0)" en hexadecimal du style "#FF8E00"
      	var hexa = function (rgbcolor) {
@@ -166,10 +168,11 @@ YAHOO.lang.extend(inputEx.ColorField, inputEx.Field, {
         }
         else return 0;
       };
-
+      
    	var rgb = rgbcolor.split(/([(,)])/);
    	return '#'+DecToHex(rgb[2])+DecToHex(rgb[4])+DecToHex(rgb[6]);
      };
+     
    	this.el.value = hexa(couleur);
 
    	// Overlay closure
