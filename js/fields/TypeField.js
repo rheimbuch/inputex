@@ -84,16 +84,15 @@ inputEx.registerType("type", inputEx.TypeField);
  */
  
 inputEx.Field.groupOptions = [
-   { label: 'Numbers Only', type: inputEx.CheckBox, inputParams: {name: 'numbersOnly'} } 
+   { label: 'Numbers Only', type: 'boolean', optional: true, inputParams: {name: 'numbersOnly'} } 
 ];
 
 
 inputEx.SelectField.groupOptions = [
-   {  type: inputEx.ListField, inputParams: {name: 'selectValues', listLabel: 'selectValues', elementType: inputEx.Field, elementOptions: {}, required: true} },
-   {  type: inputEx.ListField, inputParams: {name: 'selectOptions', listLabel: 'selectOptions', elementType: inputEx.Field, elementOptions: {} } }
+   {  type: 'list', inputParams: {name: 'selectValues', listLabel: 'selectValues', elementType: inputEx.Field, elementOptions: {}, required: true} },
+   {  type: 'list', optional: true, inputParams: {name: 'selectOptions', listLabel: 'selectOptions', elementType: inputEx.Field, elementOptions: {} } }
 ];
 
-
 inputEx.ListField.groupOptions = [
-   { name: 'type', label: 'of type', type: inputEx.TypeField, inputParams: {required: true} } 
+   { name: 'type', label: 'of type', type: 'type', inputParams: {required: true} } 
 ];
