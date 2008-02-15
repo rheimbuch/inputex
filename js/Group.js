@@ -107,9 +107,10 @@ inputEx.Group.prototype = {
    	}
 
       // Instanciate the field
-   	this.inputs[i] = new fieldClass(input.inputParams);
+      var inputInstance = new fieldClass(input.inputParams);
+   	this.inputs.push(inputInstance);
    	  
-      return this.inputs[i];
+      return inputInstance;
    },
   
    /**

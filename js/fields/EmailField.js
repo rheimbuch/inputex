@@ -2,7 +2,7 @@
  * Field that adds the email regexp for validation. Result is always lower case.
  *
  * @class inputEx.EmailField
- * @extends inputsEx.Field
+ * @extends inputEx.Field
  * @constructor
  * @param {Object} options inputEx.Field options object
  */
