@@ -1,13 +1,11 @@
 
 
-- change event "update" (for each fields and in forms)
+- change event "update" (for each fields and in groups)
 
+- Hide HiddenField in groups
 
 - TypeField
 - Pour chaque field, créer un formulaire d'options (builder)
-//- ajouter des types associés à chaque field
-
-
 
 
 - Array Field

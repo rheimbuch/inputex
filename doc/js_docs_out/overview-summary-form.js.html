@@ -8,7 +8,7 @@ InputEx Overview
 <script>
 function asd() {
 	
-		parent.document.title="form.js Overview";
+		parent.document.title="Form.js Overview";
 	
 }
 </script>
@@ -68,7 +68,7 @@ function asd() {
 <hr>
 <center>
 	
-	   <h2>form.js</h2>
+	   <h2>Form.js</h2>
 	
 </center>
 
@@ -78,16 +78,30 @@ function asd() {
 <h4>Summary</h4>
 <p>
 	
-		This files contains the 'Form' 
- class of <a href='http://inputEx.neyric.com'>inputEx</a>
-
- <BR/><BR/><B>Version: </B>0.1<BR/><BR/><B>Author:</B> Eric Abouaf eric.abouaf at centraliens.net
- <BR/>
+		No overview generated for 'Form.js'<BR/><BR/>
 	
 </p>
 
 <hr>
 
+
+    <table border="1" cellpadding="3" cellspacing="0" width="100%">
+    <tr bgcolor="#CCCCFF" class="TableHeadingColor">
+    <td colspan=2><font size="+2">
+    
+        <b>Class Summary</b>
+    
+    </font></td>
+    </tr>
+    
+    <tr bgcolor="white" class="TableRowColor">
+    <td width="15%"><b><a href="inputEx/Form.html">inputEx.Form</a></b></td>
+    <td>inputEx.Form
+ </td>
+    </tr>
+    
+    </table>
+    <hr/> 
 
 
 <!-- ========== METHOD SUMMARY =========== -->
@@ -95,323 +109,91 @@ function asd() {
 <!-- ========== END METHOD SUMMARY =========== -->
 
 
-        <pre class="sourceview">﻿<span class="comment">/** 
- * <span class="attrib">@fileoverview</span> This files contains the 'Form' 
- * class of {<span class="attrib">@link</span> http://inputEx.neyric.com inputEx}
+        <pre class="sourceview">﻿<span class="comment">/**
+ * Create a group of fields within a FORM tag
  *
- * <span class="attrib">@dependencies</span> YAHOO.util.Dom, YAHOO.util.YAHOO.util.Event
- *
- * <span class="attrib">@author</span> Eric Abouaf eric.abouaf at centraliens.net
- * <span class="attrib">@version</span> 0.1 
+ * <span class="attrib">@class</span> inputEx.Form
+ * <span class="attrib">@extends</span> inputEx.Group
+ * <span class="attrib">@constructor</span>
+ * 
  */</span>
-
-<span class="comment">/**
- * <span class="attrib">@class</span> Provide a generative method to build a dom form
- * with some user-interaction features.
- *
- * options:
- * 	- className: css class name
- *		- formName: 'name' attribute of the form
- * 	- label: form title text
- *		- inputs: list of Inputs like:
- *			{label: "Phone", name: "phone", type: inputEx.Field, numbers: true, required: true},
- *			(See each params for each field)
- *		- buttons: list of buttons like:
- *			{value: "Valider", type: "submit"}
- */</span>
-inputEx.Form = <span class="reserved">function</span>(options) {
+inputEx.Form = <span class="reserved">function</span>(inputConfigs, buttons, options) {
 
   <span class="comment">// Save the options locally</span>
+  <span class="reserved">this</span>.buttons = buttons || [];
   <span class="reserved">this</span>.options = options || {};
 
-  <span class="comment">// Render the dom</span>
-  <span class="reserved">this</span>.render();
-		
-  <span class="comment">// Styling, default className is 'inputEx'</span>
-  YAHOO.util.Dom.addClass(<span class="reserved">this</span>.form, <span class="reserved">this</span>.options.className || <span class="literal">'inputExForm'</span>);
-		
-  <span class="comment">// Subscribe to events</span>
-  YAHOO.util.Event.addListener(<span class="reserved">this</span>.form, <span class="literal">'submit'</span>, <span class="reserved">this</span>.options.onSubmit || <span class="reserved">this</span>.onSubmit,<span class="reserved">this</span>,true);
-};
-
-<span class="comment">/**
- * <span class="attrib">@method</span> onSubmitForm
- * Intercept the 'onsubmit' event and stop it if !validate
- */</span>
-inputEx.Form.<span class="reserved">prototype</span>.onSubmit = <span class="reserved">function</span>(e) {
-	<span class="reserved">if</span> ( !<span class="reserved">this</span>.validate() ) {
-		YAHOO.util.Event.stopEvent(e);
-	} 
-};
-
-<span class="comment">/**
- * <span class="attrib">@method</span> validate
- * Return true if all the fields validates
- */</span>
-inputEx.Form.<span class="reserved">prototype</span>.validate = <span class="reserved">function</span>() {
-	
-	<span class="comment">// Validate all the sub fields</span>
-	<span class="reserved">for</span> (var i = 0 ; i &lt; <span class="reserved">this</span>.inputs.length ; i++) {
-		var input = <span class="reserved">this</span>.inputs[i];
-		var state = input.getState();
-		<span class="reserved">if</span>( state == inputEx.Field.stateRequired || state == inputEx.Field.stateInvalid ) {
-			<span class="reserved">return</span> false;
-		}
-   }
-	<span class="reserved">return</span> true;
-};
-	
-<span class="comment">/**
- * <span class="attrib">@method</span> getEl
- * Returns the form element
- */</span>
-inputEx.Form.<span class="reserved">prototype</span>.getEl = <span class="reserved">function</span>() {
-   <span class="reserved">return</span> <span class="reserved">this</span>.form;
-};
-
-<span class="comment">/**
- * <span class="attrib">@method</span> getValue
- * Returns a javascript object of the name/value pairs
- */</span>
-inputEx.Form.<span class="reserved">prototype</span>.getValue = <span class="reserved">function</span>() {
-	var o = {};
-	<span class="reserved">for</span> (var i = 0 ; i &lt; <span class="reserved">this</span>.inputs.length ; i++) {
-		o[<span class="reserved">this</span>.inputs[i].options.name] = <span class="reserved">this</span>.inputs[i].getValue();
-   }
-	<span class="reserved">return</span> o;
-};
-
-<span class="comment">/**
- *  <span class="attrib">@methode</span> enable
- *  Enable/Disable all fields in the form
- */</span>
-inputEx.Form.<span class="reserved">prototype</span>.enable = <span class="reserved">function</span>(enable) {
-   var disabled = !enable;
- 	<span class="reserved">for</span> (var i = 0 ; i &lt; <span class="reserved">this</span>.inputs.length ; i++) {
- 	   var el = <span class="reserved">this</span>.inputs[i].getEl();
- 		el.disabled = disabled;
-   }
-};
-
-<span class="comment">/**
- * <span class="attrib">@method</span> setValue
- * <span class="attrib">@param</span> oValues object literal with the values
- */</span>
-inputEx.Form.<span class="reserved">prototype</span>.setValue = <span class="reserved">function</span>(oValues) { 
-	<span class="reserved">for</span> (var i = 0 ; i &lt; <span class="reserved">this</span>.inputs.length ; i++) {
-		<span class="reserved">this</span>.inputs[i].setValue(oValues[<span class="reserved">this</span>.inputs[i].options.name] || <span class="literal">''</span>);
-		<span class="reserved">this</span>.inputs[i].setClassFromState();
-   }
-};
-
-<span class="comment">/**
- * <span class="attrib">@method</span> render
- * generates the dom of the form
- */</span>
-inputEx.Form.<span class="reserved">prototype</span>.render = <span class="reserved">function</span>() {
-		
-	<span class="comment">// Create the YAHOO.util.Dom tree</span>
-	<span class="reserved">this</span>.form = document.createElement(<span class="literal">'FORM'</span>);
-	
-	<span class="comment">// Set the autocomplete attribute to off to disable firefox autocompletion</span>
-	<span class="reserved">this</span>.form.setAttribute(<span class="literal">'autocomplete'</span>,<span class="literal">'off'</span>);
-	
-	var fieldset = document.createElement(<span class="literal">'FIELDSET'</span>);
-	var table = document.createElement(<span class="literal">'TABLE'</span>);
-	<span class="reserved">this</span>.tbody = document.createElement(<span class="literal">'TBODY'</span>);
-		
-	<span class="comment">// Set the name of the form</span>
-	<span class="reserved">if</span>(<span class="reserved">this</span>.options.formName) { <span class="reserved">this</span>.form.name = <span class="reserved">this</span>.options.formName; }
-	
-	<span class="comment">// Set the method and action</span>
-	<span class="reserved">this</span>.form.method = <span class="reserved">this</span>.options.method || <span class="literal">'POST'</span>;
-	<span class="reserved">this</span>.form.action = <span class="reserved">this</span>.options.action || <span class="literal">''</span>;
-		
-	<span class="comment">// Adds input fields and buttons</span>
-	<span class="reserved">this</span>.renderInputFields();
-	<span class="reserved">this</span>.renderButtons();
-		
-	<span class="comment">// Append everything to the form element</span>
-	table.appendChild(<span class="reserved">this</span>.tbody);
-	
-	<span class="comment">// Set the label of the fieldset</span>
-	<span class="reserved">if</span>( <span class="reserved">this</span>.options.label ) {
-		var legend = document.createElement(<span class="literal">'LEGEND'</span>);
-		legend.innerHTML = <span class="reserved">this</span>.options.label;
-		fieldset.appendChild(legend);
-	}
-	
-	fieldset.appendChild(table);
-	<span class="reserved">this</span>.form.appendChild(fieldset);
-};
-
-<span class="comment">/**
- *
- */</span>
-inputEx.Form.<span class="reserved">prototype</span>.renderLabel = <span class="reserved">function</span>(inputConfig, tdLabel) {
-   <span class="reserved">if</span> (inputConfig.label) {
-		tdLabel.innerHTML = input.label;
-	}
-};
-
-<span class="comment">/**
- * <span class="attrib">@method</span> renderInputFields
- * builds input fields
- */</span>
-inputEx.Form.<span class="reserved">prototype</span>.renderInputFields = <span class="reserved">function</span>() {
-	var input,tr,tdLabel,tdInput;
-	
-	<span class="comment">// Array that will contain the references to the created Fields</span>
-	<span class="reserved">this</span>.inputs = [];
-		
-	<span class="comment">// Iterate this.createInput on input fields</span>
-	<span class="reserved">for</span> (var i = 0 ; i &lt; <span class="reserved">this</span>.options.inputs.length ; i++) {
-		input = <span class="reserved">this</span>.options.inputs[i];
-		tr = document.createElement(<span class="literal">'TR'</span>);
-				
-		tdLabel = document.createElement(<span class="literal">'TD'</span>);
-		<span class="reserved">this</span>.renderLabel(input, tdLabel);
-		
-		tdInput = document.createElement(<span class="literal">'TD'</span>);
-
-		<span class="comment">// Create the new field with the given type as class</span>
-		<span class="reserved">if</span>( !input.type ) input.type = inputEx.Field;
-      
-      <span class="comment">// Mask hidden fields</span>
-		<span class="reserved">if</span>(input.type == inputEx.HiddenField) {
-         YAHOO.util.Dom.addClass(tr,<span class="literal">'inputExForm-hiddenLine'</span>);
-      };
-		
-		var inputParams = {};
-		<span class="reserved">for</span>( var field in input.inputParams ) {
-		   <span class="reserved">if</span>( input.inputParams.hasOwnProperty(field) ) {
-		      inputParams[field] = input.inputParams[field];
-		   }
-		}
-		<span class="reserved">if</span>(input.group) { inputParams.name += <span class="literal">'[0]'</span>; }
-		<span class="reserved">this</span>.inputs[i] = new input.type(inputParams);
-		tdInput.appendChild( <span class="reserved">this</span>.inputs[i].getEl() );
-			
-		YAHOO.util.Dom.addClass(tdLabel, <span class="literal">'inputExForm-label'</span>);
-			
-		tr.appendChild(tdLabel);
-		tr.appendChild(tdInput);
-		<span class="reserved">this</span>.tbody.appendChild(tr);
-		
-		<span class="comment">// Sort input fields by groups</span>
-		<span class="reserved">if</span>(input.group) {
-		   <span class="reserved">if</span>(!<span class="reserved">this</span>._groups) { 
-		      <span class="reserved">this</span>._groups = []; 
-   		   <span class="reserved">this</span>._groupDubNbr = []; <span class="comment">// Keep the number for [0]</span>
-		   }
-		   <span class="reserved">if</span>( !<span class="reserved">this</span>._groups[input.group] ) {
-		      <span class="reserved">this</span>._groups[input.group] = [input];
-		      <span class="reserved">this</span>._groupDubNbr[input.group] = 1;
-		   }
-		   <span class="reserved">else</span> {
-		      <span class="reserved">this</span>._groups[input.group].push(input);
-		   }
-		}
-		
-	}
-	
-	<span class="comment">// Add a button to duplicate a group</span>
-	<span class="reserved">if</span>(<span class="reserved">this</span>._groups) {
-	   <span class="reserved">for</span>(var groupName in <span class="reserved">this</span>._groups) {
-	      <span class="reserved">if</span>( <span class="reserved">this</span>._groups.hasOwnProperty(groupName) ) {
-      		tr = document.createElement(<span class="literal">'TR'</span>);
-		      tdLabel = document.createElement(<span class="literal">'TD'</span>);
-      		tdInput = document.createElement(<span class="literal">'TD'</span>);
-      		var button = document.createElement(<span class="literal">'input'</span>);
-      		button.type = <span class="literal">"button"</span>;
-      		button.value = <span class="literal">"+"</span>;
-      		YAHOO.util.Event.addListener(button, <span class="literal">'click'</span>, <span class="reserved">this</span>.addGroupEntries, <span class="reserved">this</span>, true);
-      		tdInput.appendChild(button);
-   		   tr.appendChild(tdLabel);
-   		   tr.appendChild(tdInput);
-   		   <span class="reserved">this</span>.tbody.appendChild(tr);
-	      }
-	   }
-	}
-		
+  inputEx.Form.superclass.constructor.call(<span class="reserved">this</span>, inputConfigs);
 };
 
 
-
-<span class="comment">/**
- * <span class="attrib">@method</span> addGroupEntries
- * add a new instance of each input field in groupName
- */</span>
-inputEx.Form.<span class="reserved">prototype</span>.addGroupEntries = <span class="reserved">function</span>() {
+YAHOO.extend(inputEx.Form, inputEx.Group, {
    
-   var groupName = <span class="literal">"fields"</span>;
    
-   var form = <span class="reserved">this</span>;
-   <span class="reserved">for</span>( var j = 0 ; j &lt; form._groups[groupName].length ; j++) {
-      
-		var inputParams = {};
-		<span class="reserved">for</span>( var field in form._groups[groupName][j].inputParams ) {
-		   <span class="reserved">if</span>( form._groups[groupName][j].inputParams.hasOwnProperty(field) ) {
-		      inputParams[field] = form._groups[groupName][j].inputParams[field];
-		   }
-		}
-		inputParams.name += <span class="literal">'['</span>+<span class="reserved">this</span>._groupDubNbr[groupName]+<span class="literal">']'</span>;
+   <span class="comment">/**
+    * Render the group
+    */</span>
+   render: <span class="reserved">function</span>() {
+   
+      <span class="comment">// Create the div wrapper for this group</span>
+  	   <span class="reserved">this</span>.divEl = inputEx.cn(<span class="literal">'div'</span>, {className: <span class="literal">'inputEx-Group'</span>});
+  	   
+  	   <span class="comment">// Create the FORM element</span>
+   	<span class="reserved">this</span>.form = inputEx.cn(<span class="literal">'form'</span>, {method: <span class="reserved">this</span>.options.method || <span class="literal">'POST'</span>, action: <span class="reserved">this</span>.options.action || <span class="literal">''</span>, className: <span class="reserved">this</span>.options.className || <span class="literal">'inputEx-Form'</span>});
+   	<span class="reserved">this</span>.divEl.appendChild(<span class="reserved">this</span>.form);
+
+   	<span class="comment">// Set the autocomplete attribute to off to disable firefox autocompletion</span>
+   	<span class="reserved">this</span>.form.setAttribute(<span class="literal">'autocomplete'</span>,<span class="literal">'off'</span>);
+   	
+   	<span class="comment">// Set the name of the form</span>
+   	<span class="reserved">if</span>(<span class="reserved">this</span>.options.formName) { <span class="reserved">this</span>.form.name = <span class="reserved">this</span>.options.formName; }
+  	   
+  	   <span class="reserved">this</span>.renderFields(<span class="reserved">this</span>.form);
+
+   	<span class="reserved">this</span>.renderButtons();	  
+   },
+   
+   <span class="comment">/**
+    * <span class="attrib">@method</span> renderButtons
+    * Render the buttons 
+    */</span>
+   renderButtons: <span class="reserved">function</span>() {
 		
-	   var input = new form._groups[groupName][j].type(inputParams);
-	   form.inputs.push(input);
-	   var tr = document.createElement(<span class="literal">'TR'</span>);
-		var tdLabel = document.createElement(<span class="literal">'TD'</span>);
-		<span class="reserved">if</span> (form._groups[groupName][j].label) {
-			tdLabel.innerHTML = form._groups[groupName][j].label;
-		}
-		var tdInput = document.createElement(<span class="literal">'TD'</span>);
-		tdInput.appendChild( input.getEl() );
-	   tr.appendChild(tdLabel);
-	   tr.appendChild(tdInput);
-	   <span class="reserved">this</span>.tbody.insertBefore(tr,<span class="reserved">this</span>.tbody.childNodes[<span class="reserved">this</span>.tbody.childNodes.length-2] );
+	   var button, buttonEl;
+	   <span class="reserved">for</span>(var i = 0 ; i &lt; <span class="reserved">this</span>.options.buttons.length ; i++ ) {
+		   button = <span class="reserved">this</span>.options.buttons[i];
+		   buttonEl = inputEx.cn(<span class="literal">'input'</span>, {type: button.type, value: button.value});
+		   <span class="reserved">if</span>( button.onClick ) { buttonEl.onclick = button.onClick; }
+		   <span class="reserved">this</span>.divEl.appendChild(buttonEl);
+	   }	
+   },
+   
+   
+   <span class="comment">/**
+    * Init the events
+    */</span>
+   initEvents: <span class="reserved">function</span>() {
+
+      inputEx.Form.superclass.initEvents.call(<span class="reserved">this</span>);
+
+      <span class="comment">// Handle the submit event</span>
+      YAHOO.util.Event.addListener(<span class="reserved">this</span>.form, <span class="literal">'submit'</span>, <span class="reserved">this</span>.options.onSubmit || <span class="reserved">this</span>.onSubmit,<span class="reserved">this</span>,true);
+   },
+   
+
+   <span class="comment">/**
+    * <span class="attrib">@method</span> onSubmitForm
+    * Intercept the 'onsubmit' event and stop it if !validate
+    */</span>
+   onSubmit: <span class="reserved">function</span>(e) {
+   	<span class="reserved">if</span> ( !<span class="reserved">this</span>.validate() ) {
+   		YAHOO.util.Event.stopEvent(e);
+   	} 
    }
    
-   <span class="reserved">this</span>._groupDubNbr[groupName] += 1;
-};
+});
 
-
-	
-<span class="comment">/**
- * <span class="attrib">@method</span> renderButtons
- * Render the buttons dom
- */</span>
-inputEx.Form.<span class="reserved">prototype</span>.renderButtons = <span class="reserved">function</span>() {
-	var tr = document.createElement(<span class="literal">'TR'</span>);
-	var tdLabel = document.createElement(<span class="literal">'TD'</span>);
-	var tdButtons = document.createElement(<span class="literal">'TD'</span>);
-		
-	var button, buttonEl;
-	<span class="reserved">if</span>(<span class="reserved">this</span>.options.buttons) {
-		<span class="reserved">for</span>(var i = 0 ; i &lt; <span class="reserved">this</span>.options.buttons.length ; i++ ) {
-			button = <span class="reserved">this</span>.options.buttons[i];
-			buttonEl = document.createElement(<span class="literal">'INPUT'</span>);
-			buttonEl.type = button.type;
-			buttonEl.value = button.value;
-			<span class="reserved">if</span>( button.onClick ) { buttonEl.onclick = button.onClick; }
-			tdButtons.appendChild(buttonEl);
-		}
-	}
-		
-	tr.appendChild(tdLabel);
-	tr.appendChild(tdButtons);
-	<span class="reserved">this</span>.tbody.appendChild(tr);
-};
-	
-
-<span class="comment">/**
- * <span class="attrib">@method</span> close
- * Calls close on each field
- */</span>
-inputEx.Form.<span class="reserved">prototype</span>.close = <span class="reserved">function</span>() {
-	<span class="reserved">for</span> (var i = 0 ; i &lt; <span class="reserved">this</span>.inputs.length ; i++) {
-		<span class="reserved">this</span>.inputs[i].close();
-   }
-};</pre>
+</pre>
 	<hr>
 
 
@@ -469,6 +251,6 @@ inputEx.Form.<span class="reserved">prototype</span>.close = <span class="reserv
 <font size="-1">
 
 </font>
-<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Mon Jan 28 19:43:38 2008</div>
+<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Fri Feb 15 16:09:19 2008</div>
 </body>
 </html>

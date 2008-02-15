@@ -1,25 +1,149 @@
 /**
- * Handle multiple fields
+ * Handle a group of fields
  *
  * @class inputEx.Group
  * @constructor
+ * @param {Array} inputConfigs Array of input fields : { label: 'Enter the value:' , type: 'text' or fieldClass: inputEx.Field, optional: true/false, inputParams: {inputparams object} }
  */
-inputEx.Group = function(inputs) {
-   
+inputEx.Group = function(inputConfigs) {
+
    // Save the options locally
-   this.options = { inputs: inputs};
+   this.inputConfigs = inputConfigs;
+   
+   /**
+    * Array containing the list of the field instances
+    */
+   this.inputs = [];
    
    // Render the dom
    this.render();
+   
+   // Init the events
+   this.initEvents();
 };
 
 
 inputEx.Group.prototype = {
+
+   /**
+    * Render the group
+    */
+   render: function() {
    
+      // Create the div wrapper for this group
+  	   this.divEl = inputEx.cn('div', {className: 'inputEx-Group'});
+  	   
+  	   this.renderFields(this.divEl);
+  	  
+   },
+   
+   /**
+    * Render all the fields.
+    * We use the parentEl so that inputEx.Form can append them to the FORM tag
+    */
+   renderFields: function(parentEl) {
+      
+      // Table containing non-optional fields
+  	   var tableNonOptional = inputEx.cn('table');
+  	   var tbodyNonOptional = inputEx.cn('tbody');
+  	   tableNonOptional.appendChild(tbodyNonOptional);
+  	   
+  	   // Table containing optional fields
+  	   this.tableOptional = inputEx.cn('table', {className: 'inputEx-Group-Options'}, {display: 'none'});
+  	   var tbodyOptional = inputEx.cn('tbody');
+  	   this.tableOptional.appendChild(tbodyOptional);
+  	   
+      // Iterate this.createInput on input fields
+      for (var i = 0 ; i < this.inputConfigs.length ; i++) {
+         var input = this.inputConfigs[i];
+
+         var tr = inputEx.cn('tr');
+         
+         // Label element
+         tr.appendChild( inputEx.cn('td', {className: 'inputEx-Group-label'}, null, input.label || "") );
+        
+    	   // Render the field (and adds it into this.inputs)
+    	   var field = this.renderField(input);
+    	   
+    	   // If the input has the "optional" parameter, put it in the optionsEl
+    	   var td = inputEx.cn('td');
+         td.appendChild(field.getEl() );
+         tr.appendChild(td);
+            
+         // Select the tbody to insert the row into
+         var tbody = input.optional ? tbodyOptional : tbodyNonOptional;
+         tbody.appendChild(tr);
+  	   }
+  	   
+  	   // Append the non-optional table
+  	   parentEl.appendChild(tableNonOptional);
+  	  
+  	   // Options: toggle the element
+  	   if(tbodyOptional.childNodes.length > 0) {
+ 	      this.optionsLabel = inputEx.cn('div', {className: 'inputEx-Group-Options-Label inputEx-Group-Options-Label-Collapsed'});
+ 	      this.optionsLabel.appendChild( inputEx.cn('img', {src: inputEx.spacerUrl}) );
+ 	      this.optionsLabel.appendChild( inputEx.cn('span',null,null, "Options") );
+ 	      parentEl.appendChild(this.optionsLabel);
+     	   parentEl.appendChild(this.tableOptional);
+  	   }
+  	   
+   },
+  
+   /**
+    * Instanciate one field given its parameters, type or fieldClass
+    */
+   renderField: function(input) {
+      /**
+   	 * Get the class for this field: if "type" is specified, we call inputEx.getFieldClass 
+   	 * otherwise, we look for the "fieldClass" parameter.
+   	 */
+      var fieldClass = null;
+   	if(input.type) {
+   	   fieldClass = inputEx.getFieldClass(input.type);
+   	   if(fieldClass === null) fieldClass = inputEx.Field;
+   	}
+   	else {
+   	   fieldClass = input.fieldClass ? input.fieldClass : inputEx.Field;
+   	}
+
+      // Instanciate the field
+   	this.inputs[i] = new fieldClass(input.inputParams);
+   	  
+      return this.inputs[i];
+   },
+  
+   /**
+    * Init the events for the group
+    */
+   initEvents: function() {
+      YAHOO.util.Event.addListener(this.optionsLabel, "click", this.onClickOptionsLabel, this, true);
+   },
+  
+   /**
+    * Handle the click on the "Options" label
+    */
+   onClickOptionsLabel: function() {
+      if(this.tableOptional.style.display == 'none') {
+         this.tableOptional.style.display = '';
+         YAHOO.util.Dom.replaceClass(this.optionsLabel, "inputEx-Group-Options-Label-Collapsed", "inputEx-Group-Options-Label-Expanded");
+      }
+      else {
+         this.tableOptional.style.display = 'none';
+         YAHOO.util.Dom.replaceClass(this.optionsLabel, "inputEx-Group-Options-Label-Expanded", "inputEx-Group-Options-Label-Collapsed");
+      }
+   },
+  
+   /**
+    * Return the group wrapper DIV element
+    */
    getEl: function() {
       return this.divEl;
    },
    
+   /**
+    * Validate each field
+    * @returns {Boolean} true if all fields validate and required fields are not empty
+    */
    validate: function() {
 
    	// Validate all the sub fields
@@ -33,18 +157,27 @@ inputEx.Group.prototype = {
    	return true;
    },
    
+   /**
+    * Enable all fields in the group
+    */
    enable: function() {
     	for (var i = 0 ; i < this.inputs.length ; i++) {
     	   this.inputs[i].enable();
       }
    },
    
+   /**
+    * Disable all fields in the group
+    */
    disable: function() {
     	for (var i = 0 ; i < this.inputs.length ; i++) {
     	   this.inputs[i].disable();
       }
    },
    
+   /**
+    * Set the values of each field from a key/value hash object
+    */
    setValue: function(oValues) { 
    	for (var i = 0 ; i < this.inputs.length ; i++) {
    		this.inputs[i].setValue(oValues[this.inputs[i].options.name] || '');
@@ -52,90 +185,28 @@ inputEx.Group.prototype = {
       }
    },
    
-   
+   /**
+    * Return an object with all the values of the fields
+    */
    getValue: function() {
    	var o = {};
    	for (var i = 0 ; i < this.inputs.length ; i++) {
-   		o[this.inputs[i].options.name] = this.inputs[i].getValue();
+   	   if(this.inputs[i].options.name) {
+   		   o[this.inputs[i].options.name] = this.inputs[i].getValue();
+		   }
       }
    	return o;
    },
   
-  render: function() {
-   
-     // Create the div wrapper for this group
-  	  this.divEl = inputEx.cn('div', {className: 'inputEx-Group'});
-
-  	  // Array that will contain the references to the created Fields
-     this.inputs = [];
-
-     // Iterate this.createInput on input fields
-     for (var i = 0 ; i < this.options.inputs.length ; i++) {
-        
-        var input = this.options.inputs[i];
-        
-        // Label element
-        var labelEl = input.label ? inputEx.cn('div', {className: 'inputEx-Group-label'}, null, input.label) : null;
-        
-    	  // Create the new field with the given type as class
-    	  if( !input.type ) input.type = inputEx.Field;
-
-    	  var inputParams = {};
-    	  for( var field in input.inputParams ) {
-    	     if( input.inputParams.hasOwnProperty(field) ) {
-    		      inputParams[field] = input.inputParams[field];
-    		  }
-    	  }
-    		  
-    	  this.inputs[i] = new input.type(inputParams);
-    	  YAHOO.util.Dom.setStyle(this.inputs[i].getEl(), "display", "inline");
-    	  
-    	  /**
-    	   * If the input has the "optional" parameter, put it in the optionsEl
-    	   */
-    	  if(input.optional) {
-    	      if(!this.optionsEl) {
-       	      this.optionsEl = inputEx.cn('div', {className: "inputEx-Group-Options"}, {display: 'none'});
-    	      }
-    	      
-            if(labelEl) { this.optionsEl.appendChild(labelEl); }
-            this.optionsEl.appendChild( this.inputs[i].getEl() );
-    	  }
-    	  else {
-           if(labelEl) { this.divEl.appendChild(labelEl); }
-    	     this.divEl.appendChild( this.inputs[i].getEl() );
- 	     }
-  	   }
-  	  
-  	   // Options: toggle the element
-  	   if(this.optionsEl) {
-  	      
- 	      this.optionsLabel = inputEx.cn('div', {className: 'inputEx-Group-Options-Label inputEx-Group-Options-Label-Collapsed'}, {cursor: 'pointer'});
- 	      this.optionsLabel.appendChild( inputEx.cn('img', {src: inputEx.spacerUrl}) );
- 	      this.optionsLabel.appendChild( inputEx.cn('span',null,null, "Options") );
- 	      this.divEl.appendChild(this.optionsLabel);
- 	      
- 	      YAHOO.util.Event.addListener(this.optionsLabel, "click", function() { 
- 	         if(this.optionsEl.style.display == 'none') {
- 	            this.optionsEl.style.display = '';
- 	            YAHOO.util.Dom.replaceClass(this.optionsLabel, "inputEx-Group-Options-Label-Collapsed", "inputEx-Group-Options-Label-Expanded");
- 	         }
- 	         else {
- 	            this.optionsEl.style.display = 'none';
- 	            YAHOO.util.Dom.replaceClass(this.optionsLabel, "inputEx-Group-Options-Label-Expanded", "inputEx-Group-Options-Label-Collapsed");
- 	         }
- 	         
- 	      }, this, true);
- 	      this.divEl.appendChild(this.optionsEl);
-  	   }
-  	  
-  },
-  
-  close: function() {
-     for (var i = 0 ; i < this.inputs.length ; i++) {
-  	     this.inputs[i].close();
-     }
-  }
+   /**
+    * Close the group (recursively calls "close" on each field, does NOT hide the group )
+    * Call this function before hidding the group to close any field popup
+    */
+   close: function() {
+      for (var i = 0 ; i < this.inputs.length ; i++) {
+  	      this.inputs[i].close();
+      }
+   }
    
 };
 

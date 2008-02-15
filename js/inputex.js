@@ -1,7 +1,7 @@
 /**
  * Define firebug functions as empty functions if firebug is not present
  */
-if (!window.console || !console.firebug) {
+/*if (!window.console || !console.firebug) {
     var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml",
     "group", "groupEnd", "time", "timeEnd", "count", "trace", "profile", "profileEnd"];
 
@@ -9,7 +9,7 @@ if (!window.console || !console.firebug) {
     for (var i = 0; i < names.length; ++i) {
         window.console[names[i]] = function() {};
     }
-}
+}*/
 
 /** 
  * @fileoverview This files declares the main namespace of {@link http://javascript.neyric.com/inputex inputEx}

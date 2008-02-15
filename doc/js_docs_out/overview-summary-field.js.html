@@ -8,7 +8,7 @@ InputEx Overview
 <script>
 function asd() {
 	
-		parent.document.title="field.js Overview";
+		parent.document.title="Field.js Overview";
 	
 }
 </script>
@@ -68,7 +68,7 @@ function asd() {
 <hr>
 <center>
 	
-	   <h2>field.js</h2>
+	   <h2>Field.js</h2>
 	
 </center>
 
@@ -78,16 +78,30 @@ function asd() {
 <h4>Summary</h4>
 <p>
 	
-		This files contains the 'Field' 
- class of <a href='http://inputEx.neyric.com'>inputEx</a>
-
- <BR/><BR/><B>Version: </B>0.1<BR/><BR/><B>Author:</B> Eric Abouaf eric.abouaf at centraliens.net
- <BR/>
+		This files contains the inputEx.Field class<BR/><BR/>
 	
 </p>
 
 <hr>
 
+
+    <table border="1" cellpadding="3" cellspacing="0" width="100%">
+    <tr bgcolor="#CCCCFF" class="TableHeadingColor">
+    <td colspan=2><font size="+2">
+    
+        <b>Class Summary</b>
+    
+    </font></td>
+    </tr>
+    
+    <tr bgcolor="white" class="TableRowColor">
+    <td width="15%"><b><a href="inputEx/Field.html">inputEx.Field</a></b></td>
+    <td>inputEx.Field 
+ </td>
+    </tr>
+    
+    </table>
+    <hr/> 
 
 
 <!-- ========== METHOD SUMMARY =========== -->
@@ -96,45 +110,34 @@ function asd() {
 
 
         <pre class="sourceview"><span class="comment">/** 
- * <span class="attrib">@fileoverview</span> This files contains the 'Field' 
- * class of {<span class="attrib">@link</span> http://inputEx.neyric.com inputEx}
- *
- * <span class="attrib">@dependencies</span> YAHOO.util.Dom, YAHOO.util.Event
- *
- * <span class="attrib">@author</span> Eric Abouaf eric.abouaf at centraliens.net
- * <span class="attrib">@version</span> 0.1 
+ * <span class="attrib">@fileoverview</span> This files contains the inputEx.Field class
  */</span>
-
-<span class="comment">// defines inputEx namespace</span>
-YAHOO.namespace(<span class="literal">'inputEx'</span>);
-
-inputEx.messages = {
-	required: <span class="literal">"This field is required"</span>,
-	invalid: <span class="literal">"This field is invalid"</span>,
-	valid: <span class="literal">"This field is valid"</span>
-};
-
-<span class="comment">/**
- * <span class="attrib">@class</span> inputEx.Field 
- * Create the dom and basic behaviour of a RUI field 
+<span class="comment">/** 
+ * Create the dom and basic behaviour of an inputEx field
  *
- * options:
- *		- name (required): the name of the field
- *		- numbers: boolean
- *		- required: cannot be null and must validate
- *		- regexp: regular expression used to validate (otherwise it always validate)
- *		- noicon: this prevent the icon from being rendered (and the tooltip as well) (default to false)
+ * <span class="attrib">@class</span> inputEx.Field 
+ * <span class="attrib">@constructor</span>
+ * <span class="attrib">@param</span> {Object} options Options object (see options property)
  */</span>
 inputEx.Field = <span class="reserved">function</span>(options) {
 	
-	<span class="comment">// Save the options locally</span>
-	<span class="reserved">this</span>.options = options;
+	<span class="comment">/**
+	 * Options :
+	 * &lt;ul&gt;
+    *	  &lt;li&gt;name: the name of the field&lt;/li&gt;
+    *	  &lt;li&gt;numbersOnly: boolean, accept only numbers if true&lt;/li&gt;
+    *	  &lt;li&gt;required: boolean, cannot be null if true&lt;/li&gt;
+    *	  &lt;li&gt;regexp: regular expression used to validate (otherwise it always validate)&lt;/li&gt;
+    *	  &lt;li&gt;tooltipIcon: show an icon next to the field and display an error in a tooltip (default false)&lt;/li&gt;
+    *   &lt;li&gt;className: CSS class name for the div wrapper (default 'inputEx-Field')
+    *   &lt;li&gt;size: size attribute of the input&lt;/li&gt;
+    *   &lt;li&gt;value: initial value&lt;/li&gt;
+    * &lt;/ul&gt;
+	 */</span>
+	<span class="reserved">this</span>.options = options || {};
 	
-	<span class="comment">// Define default messages</span>
-	<span class="reserved">this</span>.options.messages = <span class="reserved">this</span>.options.messages || {};
-	<span class="reserved">this</span>.options.messages.required = <span class="reserved">this</span>.options.messages.required || inputEx.messages.required;
-	<span class="reserved">this</span>.options.messages.invalid = <span class="reserved">this</span>.options.messages.invalid || inputEx.messages.invalid;
-	<span class="reserved">this</span>.options.messages.valid = <span class="reserved">this</span>.options.messages.valid || inputEx.messages.valid;
+	<span class="comment">// Set the default values of the options</span>
+	<span class="reserved">this</span>.setOptions();
 	
 	<span class="comment">// Call the render of the dom</span>
 	<span class="reserved">this</span>.render();
@@ -151,6 +154,30 @@ inputEx.Field = <span class="reserved">function</span>(options) {
 	<span class="reserved">this</span>.setClassFromState();
 };
 
+<span class="comment">/**
+ * Set the default values of the options
+ */</span>
+inputEx.Field.<span class="reserved">prototype</span>.setOptions = <span class="reserved">function</span>() {
+   
+   <span class="comment">// Define default messages</span>
+	<span class="reserved">this</span>.options.messages = <span class="reserved">this</span>.options.messages || {};
+	<span class="reserved">this</span>.options.messages.required = <span class="reserved">this</span>.options.messages.required || inputEx.messages.required;
+	<span class="reserved">this</span>.options.messages.invalid = <span class="reserved">this</span>.options.messages.invalid || inputEx.messages.invalid;
+	<span class="reserved">this</span>.options.messages.valid = <span class="reserved">this</span>.options.messages.valid || inputEx.messages.valid;
+	
+	<span class="comment">// Other options</span>
+	<span class="reserved">this</span>.options.size = <span class="reserved">this</span>.options.size || 20;
+	<span class="reserved">this</span>.options.className = <span class="reserved">this</span>.options.className || <span class="literal">'inputEx-Field'</span>;
+	<span class="reserved">this</span>.options.required = <span class="reserved">this</span>.options.required ? true : false;
+	<span class="reserved">this</span>.options.tooltipIcon = <span class="reserved">this</span>.options.tooltipIcon ? true : false;
+	
+	<span class="comment">// The following options are used later:</span>
+	<span class="comment">// + this.options.name</span>
+	<span class="comment">// + this.options.regexp</span>
+	<span class="comment">// + this.options.numbersOnly</span>
+	<span class="comment">// + this.options.value</span>
+	
+};
 
 <span class="comment">/**
  * Default render of the dom element
@@ -158,52 +185,66 @@ inputEx.Field = <span class="reserved">function</span>(options) {
 inputEx.Field.<span class="reserved">prototype</span>.render = <span class="reserved">function</span>() {
 	
 	<span class="comment">// Create a DIV element to wrap the editing el and the image</span>
-	<span class="reserved">this</span>.divEl = document.createElement(<span class="literal">'DIV'</span>);
+	<span class="reserved">this</span>.divEl = inputEx.cn(<span class="literal">'div'</span>, {className: <span class="reserved">this</span>.options.className});
 	
-	<span class="reserved">this</span>.el = document.createElement(<span class="literal">'INPUT'</span>);
-	<span class="reserved">this</span>.el.type = <span class="literal">'text'</span>;
-   <span class="reserved">this</span>.el.name = <span class="reserved">this</span>.options.name;
-   <span class="reserved">this</span>.el.value = <span class="reserved">this</span>.options.value || <span class="literal">''</span>; <span class="comment">// modif par MAX //////////////</span>
-	<span class="reserved">this</span>.el.size = <span class="reserved">this</span>.options.size || 20;
-	YAHOO.util.Dom.addClass(<span class="reserved">this</span>.el, <span class="literal">'inputEx-field'</span>);
-	<span class="reserved">this</span>.divEl.appendChild(<span class="reserved">this</span>.el);
+	<span class="comment">// Render the component</span>
+	<span class="reserved">this</span>.renderComponent();
 	
 	<span class="comment">// Create a div next to the field with an icon and a tooltip</span>
-	<span class="reserved">if</span>( !<span class="reserved">this</span>.options.noicon ) {
-		<span class="reserved">this</span>.imgEl = document.createElement(<span class="literal">'div'</span>);
-		<span class="reserved">this</span>.imgEl.innerHTML = <span class="literal">'&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;'</span>;
-		YAHOO.util.Dom.addClass(<span class="reserved">this</span>.imgEl, <span class="literal">'inputEx-field-img'</span>);
-	
-	   <span class="comment">// TODO: random number</span>
-   	<span class="reserved">this</span>.tooltip = new YAHOO.widget.Tooltip(<span class="literal">'random'</span>+<span class="reserved">this</span>.options.name, { context: <span class="reserved">this</span>.imgEl, text:<span class="literal">""</span> }); 
-		YAHOO.util.Dom.setStyle(<span class="reserved">this</span>.tooltip.element, <span class="literal">'z-index'</span>, <span class="literal">'999'</span>);
-		
-		<span class="reserved">this</span>.divEl.appendChild(<span class="reserved">this</span>.imgEl);
+	<span class="reserved">if</span>( <span class="reserved">this</span>.options.tooltipIcon ) {
+		<span class="reserved">this</span>.tooltipIcon = inputEx.cn(<span class="literal">'img'</span>, {src: inputEx.spacerUrl, className: <span class="literal">'inputEx-Field-stateIcon'</span>});
+		<span class="reserved">if</span>(!inputEx.tooltipCount) { inputEx.tooltipCount = 0; }
+   	<span class="reserved">this</span>.tooltip = new YAHOO.widget.Tooltip(<span class="literal">'inputEx-tooltip-'</span>+(inputEx.tooltipCount++), { context: <span class="reserved">this</span>.tooltipIcon, text:<span class="literal">""</span> }); 
+		<span class="reserved">this</span>.divEl.appendChild(<span class="reserved">this</span>.tooltipIcon);
 	}
 	
 };
 
 <span class="comment">/**
- * The default render creates a div to put in the messages
+ * Render the interface component
  */</span>
+inputEx.Field.<span class="reserved">prototype</span>.renderComponent = <span class="reserved">function</span>() {
+   <span class="comment">// Attributes of the input field</span>
+   var attributes = {};
+   attributes.type = <span class="literal">'text'</span>;
+   attributes.size = <span class="reserved">this</span>.options.size;
+   <span class="reserved">if</span>(<span class="reserved">this</span>.options.name) attributes.name = <span class="reserved">this</span>.options.name;
+   
+   <span class="comment">// Create the node</span>
+	<span class="reserved">this</span>.el = inputEx.cn(<span class="literal">'input'</span>, attributes);
+	
+	<span class="comment">// Append it to the main element</span>
+	<span class="reserved">this</span>.divEl.appendChild(<span class="reserved">this</span>.el);
+};
 
+<span class="comment">/**
+ * The default render creates a div to put in the messages
+ * <span class="attrib">@return</span> {DOMElement} divEl The main DIV wrapper
+ */</span>
 inputEx.Field.<span class="reserved">prototype</span>.getEl = <span class="reserved">function</span>() {
 	<span class="reserved">return</span> <span class="reserved">this</span>.divEl;
 };
-
 
 <span class="comment">/**
  * Initialize events of the Input
  */</span>
 inputEx.Field.<span class="reserved">prototype</span>.initEvents = <span class="reserved">function</span>() {
-	YAHOO.util.Event.addListener(<span class="reserved">this</span>.el, <span class="literal">"input"</span>, <span class="reserved">this</span>.onInput, <span class="reserved">this</span>, true);
+	
+	<span class="comment">// The "input" event doesn't exist in IE so we use the "keypress" with a setTimeout to wait until the new value has been set</span>
+	<span class="comment">//YAHOO.util.Event.addListener(this.el, "input", this.onInput, this, true);</span>
+	var that = <span class="reserved">this</span>;
+	YAHOO.util.Event.addListener(<span class="reserved">this</span>.el, <span class="literal">"keypress"</span>, <span class="reserved">function</span>(e) { setTimeout(<span class="reserved">function</span>() { that.onInput(e); },50); });
+	
+	YAHOO.util.Event.addListener(<span class="reserved">this</span>.el, <span class="literal">"change"</span>, <span class="reserved">this</span>.onChange, <span class="reserved">this</span>, true);
+	
 	YAHOO.util.Event.addListener(<span class="reserved">this</span>.el, <span class="literal">"focus"</span>, <span class="reserved">this</span>.onFocus, <span class="reserved">this</span>, true);
 	YAHOO.util.Event.addListener(<span class="reserved">this</span>.el, <span class="literal">"blur"</span>, <span class="reserved">this</span>.onBlur, <span class="reserved">this</span>, true);
+   
 };
-
 
 <span class="comment">/**
  * Return the value of the input
+ * <span class="attrib">@return</span> {String} value of the field
  */</span>
 inputEx.Field.<span class="reserved">prototype</span>.getValue = <span class="reserved">function</span>() {
 	<span class="reserved">return</span> <span class="reserved">this</span>.el.value;
@@ -211,9 +252,10 @@ inputEx.Field.<span class="reserved">prototype</span>.getValue = <span class="re
 
 <span class="comment">/**
  * Function to set the value
+ * <span class="attrib">@param</span> {String} value The new value
  */</span>
-inputEx.Field.<span class="reserved">prototype</span>.setValue = <span class="reserved">function</span>(val) {
-	<span class="reserved">this</span>.el.value = val;
+inputEx.Field.<span class="reserved">prototype</span>.setValue = <span class="reserved">function</span>(value) {
+	<span class="reserved">this</span>.el.value = value;
 };
 
 <span class="comment">/**
@@ -249,42 +291,35 @@ inputEx.Field.<span class="reserved">prototype</span>.setToolTipMessage = <span 
 	}
 };  
 
+<span class="comment">/**
+ * Function called on the focus event
+ */</span>
 inputEx.Field.<span class="reserved">prototype</span>.onFocus = <span class="reserved">function</span>(e) {
 	YAHOO.util.Dom.addClass(<span class="reserved">this</span>.getEl(), <span class="literal">'inputEx-focused'</span>);
 };
 
+<span class="comment">/**
+ * Function called on the blur event
+ */</span>
 inputEx.Field.<span class="reserved">prototype</span>.onBlur = <span class="reserved">function</span>(e) {
 	YAHOO.util.Dom.removeClass(<span class="reserved">this</span>.getEl(), <span class="literal">'inputEx-focused'</span>);
 };
 
 <span class="comment">/**
- * <span class="attrib">@method</span> getState
- * returns a string containing one of the following
- * states:
+ * Returns the current state (given its value)
+ * <span class="attrib">@return</span> {String} One of the following states: 'empty', 'required', 'valid' or 'invalid'
  */</span>
+inputEx.Field.<span class="reserved">prototype</span>.getState = <span class="reserved">function</span>() { 
+	<span class="comment">// if the field is empty :</span>
+	<span class="reserved">if</span>( <span class="reserved">this</span>.getValue() === <span class="literal">''</span> ) {
+	   <span class="reserved">return</span> <span class="reserved">this</span>.options.required ? inputEx.Field.stateRequired : inputEx.Field.stateEmpty;
+	}
+	<span class="reserved">return</span> <span class="reserved">this</span>.validate() ? inputEx.Field.stateValid : inputEx.Field.stateInvalid;
+};
 inputEx.Field.stateEmpty = <span class="literal">'empty'</span>;
 inputEx.Field.stateRequired = <span class="literal">'required'</span>;
 inputEx.Field.stateValid = <span class="literal">'valid'</span>;
 inputEx.Field.stateInvalid = <span class="literal">'invalid'</span>;
-inputEx.Field.<span class="reserved">prototype</span>.getState = <span class="reserved">function</span>() { 
-	
-	<span class="comment">// if the field is empty :</span>
-	<span class="reserved">if</span>( <span class="reserved">this</span>.getValue() === <span class="literal">''</span> ) {
-		<span class="reserved">if</span>( <span class="reserved">this</span>.options.required) { 
-			<span class="reserved">return</span> inputEx.Field.stateRequired; 
-		}
-		<span class="reserved">else</span> { 
-			<span class="reserved">return</span> inputEx.Field.stateEmpty;  
-		}
-	}
-	
-	<span class="reserved">if</span>( <span class="reserved">this</span>.validate() ) {
-		<span class="reserved">return</span> inputEx.Field.stateValid;
-	}
-	<span class="reserved">else</span> {
-		<span class="reserved">return</span> inputEx.Field.stateInvalid;
-	}
-};
 
 <span class="comment">/**
  * Validation of the field
@@ -298,17 +333,22 @@ inputEx.Field.<span class="reserved">prototype</span>.validate = <span class="re
 };  
 
 <span class="comment">/**
- * onInput event handler
+ * onInput is called 50ms after a "keypress" event
  */</span>
 inputEx.Field.<span class="reserved">prototype</span>.onInput = <span class="reserved">function</span>(e) { 
-	<span class="reserved">if</span>(<span class="reserved">this</span>.options.numbers) {
-		YAHOO.util.Event.stopEvent(e);
-		<span class="reserved">this</span>.setValue( (<span class="reserved">this</span>.getValue()).replace(/[^0-9]/g,<span class="literal">''</span>) );
+	<span class="reserved">if</span>(<span class="reserved">this</span>.options.numbersOnly) {
+		<span class="reserved">this</span>.setValue( <span class="reserved">this</span>.getValue().replace(/[^0-9]/g,<span class="literal">''</span>) );
 	}
 	
 	<span class="reserved">this</span>.setClassFromState();
 };  
 
+<span class="comment">/**
+ * onChange event handler
+ */</span>
+inputEx.Field.<span class="reserved">prototype</span>.onChange = <span class="reserved">function</span>(e) {
+	<span class="reserved">this</span>.setClassFromState();
+};
 
 <span class="comment">/**
  * Close the field and eventually opened popups...
@@ -316,8 +356,6 @@ inputEx.Field.<span class="reserved">prototype</span>.onInput = <span class="res
 inputEx.Field.<span class="reserved">prototype</span>.close = <span class="reserved">function</span>() {
    <span class="comment">// Please override this function...</span>
 };
-
-
 
 <span class="comment">/**
  * Disable the field
@@ -332,6 +370,11 @@ inputEx.Field.<span class="reserved">prototype</span>.disable = <span class="res
 inputEx.Field.<span class="reserved">prototype</span>.enable = <span class="reserved">function</span>() {
    <span class="reserved">this</span>.el.disabled = false;
 };
+
+<span class="comment">/**
+ * Register this class as "string" type
+ */</span>
+inputEx.registerType(<span class="literal">"string"</span>, inputEx.Field);
 
 </pre>
 	<hr>
@@ -391,6 +434,6 @@ inputEx.Field.<span class="reserved">prototype</span>.enable = <span class="rese
 <font size="-1">
 
 </font>
-<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Mon Jan 28 19:43:38 2008</div>
+<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Fri Feb 15 16:09:19 2008</div>
 </body>
 </html>

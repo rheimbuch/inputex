@@ -241,13 +241,13 @@ var demo = {
       ],
       
       /**
-       *
+       * inputEx.Group
        */
       "Group": [
       {
          title: "Basic Group",
          description: "Group",
-         code: "var group = new inputEx.Group( [ {label: 'Title', type: inputEx.SelectField, optional: true, inputParams: {name: 'title', selectValues: ['Mr','Mrs','Mme'] } },{label: 'Firstname', inputParams: {name: 'firstname', required: true, messages: {required: 'Ce champ est obligatoire'}, value:'test' } } ]);\nexampleDiv.appendChild( group.getEl() ); "
+         code: "var group = new inputEx.Group( [ {label: 'Title', type: 'select', optional: true, inputParams: {name: 'title', selectValues: ['Mr','Mrs','Mme'] } }, {label: 'Firstname', inputParams: {name: 'firstname', required: true, value:'Jacques' } }, {label: 'Lastname', inputParams: {name: 'lastname', value:'Dupont' } }, {label: 'Email', type:'email', optional: true}, {label: 'Website', type:'url', optional: true} ]);\nexampleDiv.appendChild( group.getEl() ); "
       }
       ]
    }

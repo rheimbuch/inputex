@@ -118,9 +118,17 @@ inputEx.Field.prototype.getEl = function() {
  * Initialize events of the Input
  */
 inputEx.Field.prototype.initEvents = function() {
-	YAHOO.util.Event.addListener(this.el, "input", this.onInput, this, true);
+	
+	// The "input" event doesn't exist in IE so we use the "keypress" with a setTimeout to wait until the new value has been set
+	//YAHOO.util.Event.addListener(this.el, "input", this.onInput, this, true);
+	var that = this;
+	YAHOO.util.Event.addListener(this.el, "keypress", function(e) { setTimeout(function() { that.onInput(e); },50); });
+	
+	YAHOO.util.Event.addListener(this.el, "change", this.onChange, this, true);
+	
 	YAHOO.util.Event.addListener(this.el, "focus", this.onFocus, this, true);
 	YAHOO.util.Event.addListener(this.el, "blur", this.onBlur, this, true);
+   
 };
 
 /**
@@ -214,16 +222,22 @@ inputEx.Field.prototype.validate = function() {
 };  
 
 /**
- * onInput event handler
+ * onInput is called 50ms after a "keypress" event
  */
 inputEx.Field.prototype.onInput = function(e) { 
 	if(this.options.numbersOnly) {
-		YAHOO.util.Event.stopEvent(e);
-		this.setValue( (this.getValue()).replace(/[^0-9]/g,'') );
+		this.setValue( this.getValue().replace(/[^0-9]/g,'') );
 	}
 	
 	this.setClassFromState();
 };  
+
+/**
+ * onChange event handler
+ */
+inputEx.Field.prototype.onChange = function(e) {
+	this.setClassFromState();
+};
 
 /**
  * Close the field and eventually opened popups...

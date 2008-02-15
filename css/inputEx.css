@@ -147,13 +147,18 @@ img.inputEx-ListField-delButton {
  * inputEx.Group
  */
 
-div.inputEx-Group-label {
-   
+td.inputEx-Group-label {
+   padding: 3px;
 }
  
-div.inputEx-Group-Options {
+table.inputEx-Group-Options {
     margin-left: 20px;
 }
+
+div.inputEx-Group-Options-Label {
+   cursor: pointer;
+}
+
 div.inputEx-Group-Options-Label img {
    width: 14px;
    height: 14px;
@@ -175,48 +180,3 @@ div.inputEx-Group-Options-Label-Expanded img {
 div.inputEx-Group-Options-Label-Expanded:hover img {
    background-position: -8px -76px;
 }
-
-/* Form 
-form.inputExForm fieldset {
-  color:#00f;
-  border: 1px solid #ddd;
-  width: 350px;
-  margin: auto;
-  padding: 10px;
-  background-color: #eee;
-}
-
-form.inputExForm fieldset legend {
-	border: 1px solid #aaa; 
-	padding: 3px; 
-   background-color: #ccc;
-	color: black;
-	font-weight: bold;
-}
-
-
-form.inputExForm fieldset table {
-}
-
-form.inputExForm fieldset table tbody {
-	margin: 10px;
-}
-
-form.inputExForm fieldset table tbody tr{
-}
-
-
-form.inputExForm fieldset table tbody tr td{
-	padding: 3px;
-}
-
-form.inputExForm fieldset table tbody tr.inputExForm-hiddenLine td {
-   padding: 0px;
-}
-
-form.inputExForm fieldset table tbody tr td.inputExForm-label{
-	font-family:"MS Sans Serif",Arial,Tahoma,Verdana,sans-serif;
-	width: 80px;
-	font-size: 9pt;
-}*/
-

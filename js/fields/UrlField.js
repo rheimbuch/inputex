@@ -49,17 +49,21 @@ YAHOO.lang.extend(inputEx.UrlField, inputEx.Field, {
    validate: function() {
       var url = this.getValue().match(inputEx.regexps.url);   
       
-      // Hide the favicon
-      inputEx.sn(this.favicon, null, {visibility: 'hidden'});
+      var newSrc = url ? (url[0]+"/favicon.ico") : inputEx.spacerUrl;
       
-      // Change the src
-      //if(url) { this.favicon.src = url[0]+"/favicon.ico"; }
-      this.favicon.src = url ? (url[0]+"/favicon.ico") : inputEx.spacerUrl;
+      if(newSrc != this.favicon.src) {
+         
+         // Hide the favicon
+         inputEx.sn(this.favicon, null, {visibility: 'hidden'});
       
-      // Set the timer to launch displayFavicon in 1s
-      if(this.timer) { clearTimeout(this.timer); }
-   	var that = this;
-   	this.timer = setTimeout(function(){that.displayFavicon();}, 1000);
+         // Change the src
+         this.favicon.src = newSrc;
+      
+         // Set the timer to launch displayFavicon in 1s
+         if(this.timer) { clearTimeout(this.timer); }
+   	   var that = this;
+   	   this.timer = setTimeout(function(){that.displayFavicon();}, 1000);
+      }
       	
       return !!url;
    },
