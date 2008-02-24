@@ -63,12 +63,16 @@ YAHOO.extend(inputEx.TypeField, inputEx.SelectField, {
          this.group = new inputEx.Group(classO.groupOptions);
          this.groupOptionsWrapper.appendChild( this.group.getEl() );
          
-         // Register the updated event
-         this.group.updatedEvt.subscribe(this.updateFieldValue, this, true);
       }
       
       
       if(this.options.createValueField) {
+      
+         if(this.group) {
+            // Register the updated event
+            this.group.updatedEvt.subscribe(this.updateFieldValue, this, true);
+         }
+      
          if(this.fieldValue) {
             this.fieldValue = null;
             this.fieldWrapper.innerHTML = "";
