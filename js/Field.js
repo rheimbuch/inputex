@@ -36,6 +36,12 @@ inputEx.Field = function(options) {
 		this.setValue(this.options.value);
 	}
 	
+	/**
+	 * YAHOO custom event "updated"
+	 */
+	this.updatedEvt = new YAHOO.util.CustomEvent('updated', this);
+	//this.updatedEvt.subscribe(function(e, params) { var value = params[0]; console.log("updated",value); }, this, true);
+	
 	// initialize behaviour events
 	this.initEvents();
 	
@@ -237,6 +243,15 @@ inputEx.Field.prototype.onInput = function(e) {
  */
 inputEx.Field.prototype.onChange = function(e) {
 	this.setClassFromState();
+	
+	// Fire the "updated" event (only if the field validated)
+	if(this.validate()) {
+	   // Uses setTimeout to escape the stack (that originiated in an event)
+	   var that = this;
+	   setTimeout(function() {
+   	   that.updatedEvt.fire(that.getValue());
+	   },50);
+   }
 };
 
 /**

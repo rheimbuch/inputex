@@ -149,6 +149,7 @@ img.inputEx-ListField-delButton {
 
 td.inputEx-Group-label {
    padding: 3px;
+   vertical-align: top;
 }
  
 table.inputEx-Group-Options {

@@ -125,8 +125,8 @@ inputEx.TypeField = <span class="reserved">function</span>(options) {
       }
    }
    <span class="comment">// Build the "selectValues" property of SelectField options</span>
-   opts.selectValues = [];
-   opts.selectOptions = [];
+   opts.selectValues = [<span class="literal">""</span>];
+   opts.selectOptions = [<span class="literal">""</span>];
    <span class="reserved">for</span>(var key in inputEx.typeClasses) {
       opts.selectValues.push( inputEx.typeClasses[key] );
       opts.selectOptions.push( key );
@@ -144,38 +144,81 @@ YAHOO.extend(inputEx.TypeField, inputEx.SelectField, {
    renderComponent: <span class="reserved">function</span>() {
       inputEx.TypeField.superclass.renderComponent.call(<span class="reserved">this</span>);
       
+      <span class="comment">// DIV element to wrap the options group</span>
+      <span class="reserved">this</span>.groupOptionsWrapper = inputEx.cn(<span class="literal">'div'</span>);
+      <span class="reserved">this</span>.divEl.appendChild( <span class="reserved">this</span>.groupOptionsWrapper );
+      
+      <span class="comment">// DIV element to wrap the div</span>
       <span class="reserved">this</span>.fieldWrapper = inputEx.cn(<span class="literal">'div'</span>);
       <span class="reserved">this</span>.divEl.appendChild( <span class="reserved">this</span>.fieldWrapper );
    },
    
-   onChange: <span class="reserved">function</span>() {
+   <span class="comment">/**
+    * Called when the type is changed, update the group options
+    */</span>
+   onChange: <span class="reserved">function</span>(e) {
+      
+      inputEx.TypeField.superclass.onChange.call(<span class="reserved">this</span>, e);
       
       <span class="comment">// Get value is directly the class !!</span>
       var classO = <span class="reserved">this</span>.getValue();
       
-      <span class="comment">// Instanciate the field</span>
-      
-      <span class="reserved">this</span>.fieldWrapper.innerHTML = <span class="literal">""</span>;
-      
       <span class="reserved">if</span>(classO.groupOptions) {
+         
+         <span class="comment">// Close a previously created group</span>
          <span class="reserved">if</span>(<span class="reserved">this</span>.group) {
             <span class="reserved">this</span>.group.close();
+            <span class="reserved">this</span>.groupOptionsWrapper.innerHTML = <span class="literal">""</span>;
          }
+         <span class="comment">// Instanciate the group</span>
          <span class="reserved">this</span>.group = new inputEx.Group(classO.groupOptions);
-         <span class="reserved">this</span>.fieldWrapper.appendChild( <span class="reserved">this</span>.group.getEl() );
+         <span class="reserved">this</span>.groupOptionsWrapper.appendChild( <span class="reserved">this</span>.group.getEl() );
+         
+         <span class="comment">// Register the updated event</span>
+         <span class="reserved">this</span>.group.updatedEvt.subscribe(<span class="reserved">this</span>.updateFieldValue, <span class="reserved">this</span>, true);
       }
+      
+      
+      <span class="reserved">if</span>(<span class="reserved">this</span>.options.createValueField) {
+         <span class="reserved">if</span>(<span class="reserved">this</span>.fieldValue) {
+            <span class="reserved">this</span>.fieldValue = null;
+            <span class="reserved">this</span>.fieldWrapper.innerHTML = <span class="literal">""</span>;
+         }
+         <span class="comment">// Create the value field</span>
+         <span class="reserved">this</span>.updateFieldValue();
+      }
+      
    },
    
    
-   createField: <span class="reserved">function</span>() {
+   updateFieldValue: <span class="reserved">function</span>() {
    
+      var previousValue = null;
+      
+      <span class="comment">// Close previous field</span>
+      <span class="reserved">if</span>(<span class="reserved">this</span>.fieldValue) {
+         previousValue = <span class="reserved">this</span>.fieldValue.getValue();
+         <span class="reserved">this</span>.fieldValue.close();
+         <span class="reserved">this</span>.fieldWrapper.innerHTML = <span class="literal">""</span>;
+      }
+
+      <span class="comment">// Get the field class</span>
       var classO = <span class="reserved">this</span>.getValue();
+
+      <span class="comment">// Get the form options</span>
+      var opts = <span class="reserved">this</span>.group ? <span class="reserved">this</span>.group.getValue() : null;
+
+      <span class="comment">// Instanciate the field</span>
+      <span class="reserved">this</span>.fieldValue = new classO(opts);
       
-      var opts = <span class="reserved">this</span>.group.getValue();
-      console.log(opts);
+      <span class="comment">// Set the previous value</span>
+      <span class="reserved">if</span>(previousValue) {
+         <span class="reserved">this</span>.fieldValue.setValue(previousValue);
+      }
+
+      <span class="comment">// Add the field to the wrapper</span>
+      <span class="reserved">this</span>.fieldWrapper.appendChild( <span class="reserved">this</span>.fieldValue.getEl() );
       
-      var newField = new classO(opts);
-      <span class="reserved">this</span>.fieldWrapper.appendChild( newField.getEl() );
    }
    
 });
@@ -193,20 +236,29 @@ inputEx.registerType(<span class="literal">"type"</span>, inputEx.TypeField);
 <span class="comment">/**
  * group Options for each field
  */</span>
+
+inputEx.CheckBox.groupOptions = [
+   {label: <span class="literal">'Label'</span>, type: <span class="literal">'string'</span>, optional: true, inputParams: {name: <span class="literal">'label'</span>} }
+];
+inputEx.ColorField.groupOptions = [];
+inputEx.EmailField.groupOptions = [];
+inputEx.IPv4Field.groupOptions = [];
+inputEx.PasswordField.groupOptions = []; 
+inputEx.RTEField.groupOptions = [];
+inputEx.UrlField.groupOptions = [];
+inputEx.Textarea.groupOptions = [];
  
 inputEx.Field.groupOptions = [
-   { label: <span class="literal">'Numbers Only'</span>, type: inputEx.CheckBox, inputParams: {name: <span class="literal">'numbersOnly'</span>} } 
+   { label: <span class="literal">'Numbers Only'</span>, type: <span class="literal">'boolean'</span>, optional: true, inputParams: {name: <span class="literal">'numbersOnly'</span>, checked: false} } 
 ];
-
 
 inputEx.SelectField.groupOptions = [
-   {  type: inputEx.ListField, inputParams: {name: <span class="literal">'selectValues'</span>, listLabel: <span class="literal">'selectValues'</span>, elementType: inputEx.Field, elementOptions: {}, required: true} },
-   {  type: inputEx.ListField, inputParams: {name: <span class="literal">'selectOptions'</span>, listLabel: <span class="literal">'selectOptions'</span>, elementType: inputEx.Field, elementOptions: {} } }
+   {  type: <span class="literal">'list'</span>, inputParams: {name: <span class="literal">'selectValues'</span>, listLabel: <span class="literal">'selectValues'</span>, elementType: inputEx.Field, elementOptions: {}, required: true} },
+   {  type: <span class="literal">'list'</span>, optional: true, inputParams: {name: <span class="literal">'selectOptions'</span>, listLabel: <span class="literal">'selectOptions'</span>, elementType: inputEx.Field, elementOptions: {} } }
 ];
 
-
 inputEx.ListField.groupOptions = [
-   { name: <span class="literal">'type'</span>, label: <span class="literal">'of type'</span>, type: inputEx.TypeField, inputParams: {required: true} } 
+   { name: <span class="literal">'type'</span>, label: <span class="literal">'of type'</span>, type: <span class="literal">'type'</span>, inputParams: {required: true, createValueField: false} } 
 ];
 </pre>
 	<hr>
@@ -266,6 +318,6 @@ inputEx.ListField.groupOptions = [
 <font size="-1">
 
 </font>
-<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Fri Feb 15 16:09:19 2008</div>
+<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Sun Feb 24 19:49:22 2008</div>
 </body>
 </html>

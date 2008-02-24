@@ -178,6 +178,8 @@ YAHOO.lang.extend(inputEx.ColorField, inputEx.Field, {
    	// Overlay closure
    	this.visible = !this.visible;
    	this.colorPopUp.style.display = 'none';
+   	
+   	this.onChange();
    }
    
 });

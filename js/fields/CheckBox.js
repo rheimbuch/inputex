@@ -49,14 +49,16 @@ YAHOO.lang.extend(inputEx.CheckBox, inputEx.Field, {
     * Clear the previous events and listen for the "change" event
     */
    initEvents: function() {
-      YAHOO.util.Event.addListener(this.el, "change", this.toggleHiddenEl, this, true);	
+      YAHOO.util.Event.addListener(this.el, "change", this.onChange, this, true);	
    },
    
    /**
     * Function called when the checkbox is toggled
     */
-   toggleHiddenEl: function() {
+   onChange: function(e) {
       this.hiddenEl.value = this.el.checked ? this.checkedValue : this.uncheckedValue;
+      
+      inputEx.CheckBox.superclass.onChange.call(this,e);
    },
    
    getValue: function() {

@@ -216,6 +216,12 @@ inputEx.Field = function(options) {
 		this.setValue(this.options.value);
 	}
 	
+	/**
+	 * YAHOO custom event "updated"
+	 */
+	this.updatedEvt = new YAHOO.util.CustomEvent('updated', this);
+	//this.updatedEvt.subscribe(function(e, params) { var value = params[0]; console.log("updated",value); }, this, true);
+	
 	// initialize behaviour events
 	this.initEvents();
 	
@@ -417,6 +423,15 @@ inputEx.Field.prototype.onInput = function(e) {
  */
 inputEx.Field.prototype.onChange = function(e) {
 	this.setClassFromState();
+	
+	// Fire the "updated" event (only if the field validated)
+	if(this.validate()) {
+	   // Uses setTimeout to escape the stack (that originiated in an event)
+	   var that = this;
+	   setTimeout(function() {
+   	   that.updatedEvt.fire(that.getValue());
+	   },50);
+   }
 };
 
 /**
@@ -464,6 +479,12 @@ inputEx.Group = function(inputConfigs) {
    
    // Render the dom
    this.render();
+   
+	/**
+	 * YAHOO custom event "updated"
+	 */
+	this.updatedEvt = new YAHOO.util.CustomEvent('updated', this);
+	this.updatedEvt.subscribe(function(e, params) { var value = params[0]; console.log("updated",value); }, this, true);
    
    // Init the events
    this.initEvents();
@@ -554,9 +575,13 @@ inputEx.Group.prototype = {
    	}
 
       // Instanciate the field
-   	this.inputs[i] = new fieldClass(input.inputParams);
+      var inputInstance = new fieldClass(input.inputParams);
+   	this.inputs.push(inputInstance);
+   	
+   	// Subscribe to the field "updated" event to send the group "updated" event
+      inputInstance.updatedEvt.subscribe(this.onChange, this, true);
    	  
-      return this.inputs[i];
+      return inputInstance;
    },
   
    /**
@@ -652,6 +677,17 @@ inputEx.Group.prototype = {
    close: function() {
       for (var i = 0 ; i < this.inputs.length ; i++) {
   	      this.inputs[i].close();
+      }
+   },
+   
+   /**
+    * Called when one of the field sent its "updated" event.
+    */
+   onChange: function() {
+      
+   	if(this.validate()) {
+         // We already escaped the stack here so we can fire it directly
+         this.updatedEvt.fire(this.getValue());
       }
    }
    
@@ -792,14 +828,16 @@ YAHOO.lang.extend(inputEx.CheckBox, inputEx.Field, {
     * Clear the previous events and listen for the "change" event
     */
    initEvents: function() {
-      YAHOO.util.Event.addListener(this.el, "change", this.toggleHiddenEl, this, true);	
+      YAHOO.util.Event.addListener(this.el, "change", this.onChange, this, true);	
    },
    
    /**
     * Function called when the checkbox is toggled
     */
-   toggleHiddenEl: function() {
+   onChange: function(e) {
       this.hiddenEl.value = this.el.checked ? this.checkedValue : this.uncheckedValue;
+      
+      inputEx.CheckBox.superclass.onChange.call(this,e);
    },
    
    getValue: function() {
@@ -1007,6 +1045,8 @@ YAHOO.lang.extend(inputEx.ColorField, inputEx.Field, {
    	// Overlay closure
    	this.visible = !this.visible;
    	this.colorPopUp.style.display = 'none';
+   	
+   	this.onChange();
    }
    
 });
@@ -1031,7 +1071,7 @@ inputEx.registerType("color", inputEx.ColorField);
  * Field that adds the email regexp for validation. Result is always lower case.
  *
  * @class inputEx.EmailField
- * @extends inputsEx.Field
+ * @extends inputEx.Field
  * @constructor
  * @param {Object} options inputEx.Field options object
  */
@@ -1223,6 +1263,9 @@ YAHOO.extend(inputEx.ListField,inputEx.Field, {
       YAHOO.util.Dom.setStyle(subFieldEl, 'margin-left', '4px');
       YAHOO.util.Dom.setStyle(subFieldEl, 'float', 'left');
       newDiv.appendChild( subFieldEl );
+      
+      // Subscribe the onChange event to resend it 
+      el.updatedEvt.subscribe(this.onChange, this, true);
 
       // Line breaker
       newDiv.appendChild( inputEx.cn('div', null, {clear: "both"}) );
@@ -1409,14 +1452,6 @@ YAHOO.lang.extend(inputEx.SelectField, inputEx.Field, {
     */
    getValue: function() {
       return this.options.selectValues[this.el.selectedIndex];
-   },
-   
-   /**
-    * Called on the "change" event
-    */
-   onChange: function() {
-      // Override me !
-      //console.log("onChange");
    }
    
 });
@@ -1571,8 +1606,8 @@ inputEx.TypeField = function(options) {
       }
    }
    // Build the "selectValues" property of SelectField options
-   opts.selectValues = [];
-   opts.selectOptions = [];
+   opts.selectValues = [""];
+   opts.selectOptions = [""];
    for(var key in inputEx.typeClasses) {
       opts.selectValues.push( inputEx.typeClasses[key] );
       opts.selectOptions.push( key );
@@ -1590,38 +1625,81 @@ YAHOO.extend(inputEx.TypeField, inputEx.SelectField, {
    renderComponent: function() {
       inputEx.TypeField.superclass.renderComponent.call(this);
       
+      // DIV element to wrap the options group
+      this.groupOptionsWrapper = inputEx.cn('div');
+      this.divEl.appendChild( this.groupOptionsWrapper );
+      
+      // DIV element to wrap the div
       this.fieldWrapper = inputEx.cn('div');
       this.divEl.appendChild( this.fieldWrapper );
    },
    
-   onChange: function() {
+   /**
+    * Called when the type is changed, update the group options
+    */
+   onChange: function(e) {
+      
+      inputEx.TypeField.superclass.onChange.call(this, e);
       
       // Get value is directly the class !!
       var classO = this.getValue();
       
-      // Instanciate the field
-      
-      this.fieldWrapper.innerHTML = "";
-      
       if(classO.groupOptions) {
+         
+         // Close a previously created group
          if(this.group) {
             this.group.close();
+            this.groupOptionsWrapper.innerHTML = "";
          }
+         // Instanciate the group
          this.group = new inputEx.Group(classO.groupOptions);
-         this.fieldWrapper.appendChild( this.group.getEl() );
+         this.groupOptionsWrapper.appendChild( this.group.getEl() );
+         
+         // Register the updated event
+         this.group.updatedEvt.subscribe(this.updateFieldValue, this, true);
       }
+      
+      
+      if(this.options.createValueField) {
+         if(this.fieldValue) {
+            this.fieldValue = null;
+            this.fieldWrapper.innerHTML = "";
+         }
+         // Create the value field
+         this.updateFieldValue();
+      }
+      
    },
    
    
-   createField: function() {
+   updateFieldValue: function() {
    
+      var previousValue = null;
+      
+      // Close previous field
+      if(this.fieldValue) {
+         previousValue = this.fieldValue.getValue();
+         this.fieldValue.close();
+         this.fieldWrapper.innerHTML = "";
+      }
+
+      // Get the field class
       var classO = this.getValue();
+
+      // Get the form options
+      var opts = this.group ? this.group.getValue() : null;
+
+      // Instanciate the field
+      this.fieldValue = new classO(opts);
       
-      var opts = this.group.getValue();
-      console.log(opts);
+      // Set the previous value
+      if(previousValue) {
+         this.fieldValue.setValue(previousValue);
+      }
+
+      // Add the field to the wrapper
+      this.fieldWrapper.appendChild( this.fieldValue.getEl() );
       
-      var newField = new classO(opts);
-      this.fieldWrapper.appendChild( newField.getEl() );
    }
    
 });
@@ -1639,18 +1717,27 @@ inputEx.registerType("type", inputEx.TypeField);
 /**
  * group Options for each field
  */
+
+inputEx.CheckBox.groupOptions = [
+   {label: 'Label', type: 'string', optional: true, inputParams: {name: 'label'} }
+];
+inputEx.ColorField.groupOptions = [];
+inputEx.EmailField.groupOptions = [];
+inputEx.IPv4Field.groupOptions = [];
+inputEx.PasswordField.groupOptions = []; 
+inputEx.RTEField.groupOptions = [];
+inputEx.UrlField.groupOptions = [];
+inputEx.Textarea.groupOptions = [];
  
 inputEx.Field.groupOptions = [
-   { label: 'Numbers Only', type: inputEx.CheckBox, inputParams: {name: 'numbersOnly'} } 
+   { label: 'Numbers Only', type: 'boolean', optional: true, inputParams: {name: 'numbersOnly', checked: false} } 
 ];
-
 
 inputEx.SelectField.groupOptions = [
-   {  type: inputEx.ListField, inputParams: {name: 'selectValues', listLabel: 'selectValues', elementType: inputEx.Field, elementOptions: {}, required: true} },
-   {  type: inputEx.ListField, inputParams: {name: 'selectOptions', listLabel: 'selectOptions', elementType: inputEx.Field, elementOptions: {} } }
+   {  type: 'list', inputParams: {name: 'selectValues', listLabel: 'selectValues', elementType: inputEx.Field, elementOptions: {}, required: true} },
+   {  type: 'list', optional: true, inputParams: {name: 'selectOptions', listLabel: 'selectOptions', elementType: inputEx.Field, elementOptions: {} } }
 ];
 
-
 inputEx.ListField.groupOptions = [
-   { name: 'type', label: 'of type', type: inputEx.TypeField, inputParams: {required: true} } 
+   { name: 'type', label: 'of type', type: 'type', inputParams: {required: true, createValueField: false} } 
 ];

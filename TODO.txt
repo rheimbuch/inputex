@@ -1,20 +1,17 @@
 
 
-- change event "update" (for each fields and in groups)
-
-- Hide HiddenField in groups
 
 - TypeField
 - Pour chaque field, créer un formulaire d'options (builder)
 
+- Repair FormattedField, HiddenField, DateField, UpperCasField
 
+- Hide HiddenField in groups
 - Array Field
 - Object Field
 - InPlaceEditField
-- AutoCompleteField
-
+- AutoCompleteField (with multiple selection like http://ajaxian.com/archives/facebook-style-input-box)
 - attribuer des classes CSS à chaque field
-
 
 
 LATER:

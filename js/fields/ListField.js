@@ -123,6 +123,9 @@ YAHOO.extend(inputEx.ListField,inputEx.Field, {
       YAHOO.util.Dom.setStyle(subFieldEl, 'margin-left', '4px');
       YAHOO.util.Dom.setStyle(subFieldEl, 'float', 'left');
       newDiv.appendChild( subFieldEl );
+      
+      // Subscribe the onChange event to resend it 
+      el.updatedEvt.subscribe(this.onChange, this, true);
 
       // Line breaker
       newDiv.appendChild( inputEx.cn('div', null, {clear: "both"}) );

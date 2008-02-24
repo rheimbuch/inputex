@@ -18,6 +18,12 @@ inputEx.Group = function(inputConfigs) {
    // Render the dom
    this.render();
    
+	/**
+	 * YAHOO custom event "updated"
+	 */
+	this.updatedEvt = new YAHOO.util.CustomEvent('updated', this);
+	this.updatedEvt.subscribe(function(e, params) { var value = params[0]; console.log("updated",value); }, this, true);
+   
    // Init the events
    this.initEvents();
 };
@@ -109,6 +115,9 @@ inputEx.Group.prototype = {
       // Instanciate the field
       var inputInstance = new fieldClass(input.inputParams);
    	this.inputs.push(inputInstance);
+   	
+   	// Subscribe to the field "updated" event to send the group "updated" event
+      inputInstance.updatedEvt.subscribe(this.onChange, this, true);
    	  
       return inputInstance;
    },
@@ -206,6 +215,17 @@ inputEx.Group.prototype = {
    close: function() {
       for (var i = 0 ; i < this.inputs.length ; i++) {
   	      this.inputs[i].close();
+      }
+   },
+   
+   /**
+    * Called when one of the field sent its "updated" event.
+    */
+   onChange: function() {
+      
+   	if(this.validate()) {
+         // We already escaped the stack here so we can fire it directly
+         this.updatedEvt.fire(this.getValue());
       }
    }
    

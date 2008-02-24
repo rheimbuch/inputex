@@ -56,14 +56,6 @@ YAHOO.lang.extend(inputEx.SelectField, inputEx.Field, {
     */
    getValue: function() {
       return this.options.selectValues[this.el.selectedIndex];
-   },
-   
-   /**
-    * Called on the "change" event
-    */
-   onChange: function() {
-      // Override me !
-      //console.log("onChange");
    }
    
 });

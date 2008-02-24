@@ -236,7 +236,7 @@ var demo = {
       {
          title: "Basic Type Field",
          description: "Basic use of the Type field",
-         code: " field = new inputEx.TypeField({name: 'test'});\nexampleDiv.appendChild( field.getEl() );"
+         code: " field = new inputEx.TypeField({name: 'test',createValueField: true});\nexampleDiv.appendChild( field.getEl() );"
       }
       ],
       
@@ -247,7 +247,7 @@ var demo = {
       {
          title: "Basic Group",
          description: "Group",
-         code: "var group = new inputEx.Group( [ {label: 'Title', type: 'select', optional: true, inputParams: {name: 'title', selectValues: ['Mr','Mrs','Mme'] } }, {label: 'Firstname', inputParams: {name: 'firstname', required: true, value:'Jacques' } }, {label: 'Lastname', inputParams: {name: 'lastname', value:'Dupont' } }, {label: 'Email', type:'email', optional: true}, {label: 'Website', type:'url', optional: true} ]);\nexampleDiv.appendChild( group.getEl() ); "
+         code: "var group = new inputEx.Group( [ {label: 'Title', type: 'select', optional: true, inputParams: {name: 'title', selectValues: ['Mr','Mrs','Mme'] } }, {label: 'Firstname', inputParams: {name: 'firstname', required: true, value:'Jacques' } }, {label: 'Lastname', inputParams: {name: 'lastname', value:'Dupont' } }, {label: 'Email', type:'email', optional: true, inputParams: {name: 'email'}}, {label: 'Website', type:'url', optional: true, inputParams: {name:'website'}} ]);\nexampleDiv.appendChild( group.getEl() ); "
       }
       ]
    }
