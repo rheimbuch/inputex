@@ -156,5 +156,5 @@ inputEx.SelectField.groupOptions = [
 ];
 
 inputEx.ListField.groupOptions = [
-   { name: 'type', label: 'of type', type: 'type', inputParams: {required: true, createValueField: false} } 
+   { label: 'of type', type: 'type', inputParams: {required: true, createValueField: false, name: 'elementType'} } 
 ];

@@ -1,9 +1,4 @@
 
-
-
-- TypeField
-- Pour chaque field, créer un formulaire d'options (builder)
-
 - Repair FormattedField, HiddenField, DateField, UpperCasField
 
 - Hide HiddenField in groups
