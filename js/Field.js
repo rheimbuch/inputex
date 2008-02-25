@@ -207,14 +207,10 @@ inputEx.Field.prototype.onBlur = function(e) {
 inputEx.Field.prototype.getState = function() { 
 	// if the field is empty :
 	if( this.getValue() === '' ) {
-	   return this.options.required ? inputEx.Field.stateRequired : inputEx.Field.stateEmpty;
+	   return this.options.required ? inputEx.stateRequired : inputEx.stateEmpty;
 	}
-	return this.validate() ? inputEx.Field.stateValid : inputEx.Field.stateInvalid;
+	return this.validate() ? inputEx.stateValid : inputEx.stateInvalid;
 };
-inputEx.Field.stateEmpty = 'empty';
-inputEx.Field.stateRequired = 'required';
-inputEx.Field.stateValid = 'valid';
-inputEx.Field.stateInvalid = 'invalid';
 
 /**
  * Validation of the field

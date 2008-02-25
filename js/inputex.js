@@ -22,6 +22,14 @@ var inputEx =  {
    spacerUrl: "images/space.gif", // 1x1 px
    
    /**
+    * Field States
+    */
+   stateEmpty: 'empty',
+   stateRequired: 'required',
+   stateValid: 'valid',
+   stateInvalid: 'invalid',
+   
+   /**
     * Shared messages
     */
    messages: {

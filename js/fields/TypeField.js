@@ -22,7 +22,8 @@ inputEx.TypeField = function(options) {
    opts.selectValues = [""];
    opts.selectOptions = [""];
    for(var key in inputEx.typeClasses) {
-      opts.selectValues.push( inputEx.typeClasses[key] );
+      //opts.selectValues.push( inputEx.typeClasses[key] );
+      opts.selectValues.push( key );
       opts.selectOptions.push( key );
    }
    
@@ -31,6 +32,53 @@ inputEx.TypeField = function(options) {
 };
 
 YAHOO.extend(inputEx.TypeField, inputEx.SelectField, {
+   
+   /**
+    * Set the value
+    */
+   setValue: function(value) {
+      
+      // Select:
+      var index = 0;
+      var option;
+      for(var i = 0 ; i < this.options.selectValues.length ; i++) {
+         if(value.type === this.options.selectValues[i]) {
+            option = this.el.childNodes[i];
+   		 option.selected = "selected";
+         }
+      }
+      
+      this.rebuildGroupOptions();
+      
+      if(!!this.group && !!value.typeOptions) {
+         this.group.setValue(value.typeOptions);
+      }
+      
+      
+      if(this.options.createValueField) {
+         this.updateFieldValue();
+      
+         if(!!this.fieldValue && !!value.defaultValue) {
+            this.fieldValue.setValue(value.defaultValue);
+         }
+      }
+   },
+   
+   /**
+    * Return the value
+    */
+   getValue: function() {
+      var obj = { type: this.options.selectValues[this.el.selectedIndex] };
+      
+      if(this.group) {
+         obj.typeOptions = this.group.getValue();
+      }
+      if(this.fieldValue) {
+         obj.defaultValue = this.fieldValue.getValue();
+      }
+      
+      return obj;
+   },
    
    /**
     * Adds a div to wrap the component
@@ -54,8 +102,13 @@ YAHOO.extend(inputEx.TypeField, inputEx.SelectField, {
       
       inputEx.TypeField.superclass.onChange.call(this, e);
       
+      this.rebuildGroupOptions();
+      
+   },
+   
+   rebuildGroupOptions: function() {
       // Get value is directly the class !!
-      var classO = this.getValue();
+      var classO = inputEx.getFieldClass(this.getValue().type);
       
       if(classO.groupOptions) {
          
@@ -85,7 +138,6 @@ YAHOO.extend(inputEx.TypeField, inputEx.SelectField, {
          // Create the value field
          this.updateFieldValue();
       }
-      
    },
    
    
@@ -101,7 +153,7 @@ YAHOO.extend(inputEx.TypeField, inputEx.SelectField, {
       }
 
       // Get the field class
-      var classO = this.getValue();
+      var classO = inputEx.getFieldClass(this.getValue().type);
 
       // Get the form options
       var opts = this.group ? this.group.getValue() : null;

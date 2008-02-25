@@ -160,7 +160,7 @@ inputEx.Group.prototype = {
    	for (var i = 0 ; i < this.inputs.length ; i++) {
    		var input = this.inputs[i];
    		var state = input.getState();
-   		if( state == inputEx.Field.stateRequired || state == inputEx.Field.stateInvalid ) {
+   		if( state == inputEx.stateRequired || state == inputEx.stateInvalid ) {
    			return false;
    		}
       }

@@ -1,9 +1,13 @@
 
-- Repair FormattedField, HiddenField, DateField, UpperCasField
+- TypeField: getValue/setValue : créer le sous-formulaire sur setValue, exporter "typeOptions" dans getValue
+
+- l'id du RTEField doit changer sinon on a de gros problemes...
+
+- Repair FormattedField, HiddenField, DateField, UpperCaseField
 
 - Hide HiddenField in groups
-- Array Field
-- Object Field
+- Object Field (list of key/values)
+- Array Field (list of objects)
 - InPlaceEditField
 - AutoCompleteField (with multiple selection like http://ajaxian.com/archives/facebook-style-input-box)
 - attribuer des classes CSS à chaque field
