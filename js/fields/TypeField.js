@@ -1,5 +1,10 @@
 /**
- * Creates a type field with all the types in inpuEx.typeClasses
+ * Creates a type field with all the types in inpuEx.typeClasses.
+ *
+ * Added options:
+ * <ul>
+ *    <li>createValueField: boolean, schould we create a "default value" field</li>
+ * </ul>
  *
  * @class inputEx.TypeField
  * @extends inputEx.SelectField

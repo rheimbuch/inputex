@@ -22,7 +22,7 @@ inputEx.Group = function(inputConfigs) {
 	 * YAHOO custom event "updated"
 	 */
 	this.updatedEvt = new YAHOO.util.CustomEvent('updated', this);
-	this.updatedEvt.subscribe(function(e, params) { var value = params[0]; console.log("updated",value); }, this, true);
+	//this.updatedEvt.subscribe(function(e, params) { var value = params[0]; console.log("updated",value); }, this, true);
    
    // Init the events
    this.initEvents();
