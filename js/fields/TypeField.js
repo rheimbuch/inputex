@@ -184,6 +184,10 @@ YAHOO.extend(inputEx.TypeField, inputEx.SelectField, {
 
       // Get the field class
       var classO = inputEx.getFieldClass(this.getValue().type);
+      
+      if(classO === null) {
+         return;
+      }
 
       // Get the form options
       var opts = this.group ? this.group.getValue() : null;

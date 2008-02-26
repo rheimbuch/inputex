@@ -110,6 +110,12 @@ YAHOO.extend(inputEx.ListField,inputEx.Field, {
       
       // Instanciate the new subField
       var class0 = inputEx.getFieldClass(this.options.elementType.type);
+      
+      // Return if class not found
+      if(class0 === null) {
+         return;
+      }
+      
       var options = {};
       if( this.options.elementType.typeOptions) {
          for(var key in this.options.elementType.typeOptions) {
