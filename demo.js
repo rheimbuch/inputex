@@ -203,7 +203,7 @@ var demo = {
       {
          title: "Basic List Field",
          description: "Basic use of the List field",
-         code: "var field = new inputEx.ListField({name: 'websiteUrl', listLabel: 'Websites',elementType: inputEx.UrlField, elementOptions: {},value: ['http://www.neyric.com', 'http://www.ajaxian.com', 'http://www.google.com', 'http://www.yahoo.com']});\nexampleDiv.appendChild( field.getEl() ); var button = inputEx.cn('button', null, null, 'getValue()');\nexampleDiv.appendChild(button); YAHOO.util.Event.addListener(button, 'click', function() { console.log(field.getValue()); });  var button2 = inputEx.cn('button', null, null, 'setValue()');\nexampleDiv.appendChild(button2); YAHOO.util.Event.addListener(button2, 'click', function() { field.setValue(['http://www.sncf.com','http://www.clicrdv.com','http://www.neyric.com','http://javascript.neyric.com/wireit']); });"
+         code: "var field = new inputEx.ListField({name: 'websiteUrl', listLabel: 'Websites',elementType: {type: 'url'},value: ['http://www.neyric.com', 'http://www.ajaxian.com', 'http://www.google.com', 'http://www.yahoo.com']});\nexampleDiv.appendChild( field.getEl() ); var button = inputEx.cn('button', null, null, 'getValue()');\nexampleDiv.appendChild(button); YAHOO.util.Event.addListener(button, 'click', function() { console.log(field.getValue()); });  var button2 = inputEx.cn('button', null, null, 'setValue()');\nexampleDiv.appendChild(button2); YAHOO.util.Event.addListener(button2, 'click', function() { field.setValue(['http://www.sncf.com','http://www.clicrdv.com','http://www.neyric.com','http://javascript.neyric.com/wireit']); });"
       }
       ],
       

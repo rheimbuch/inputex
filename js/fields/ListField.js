@@ -88,16 +88,16 @@ YAHOO.extend(inputEx.ListField,inputEx.Field, {
    addElement: function(value) {
 
       // Create the Options object for the subField
-      var options = {};
+      /*var options = {};
       for(var key in this.options.elementOptions) {
          if(this.options.elementOptions.hasOwnProperty(key) ) {
             options[key] = this.options.elementOptions[key];
          }
       }
-      if(value) { options.value = value; }
+      if(value) { options.value = value; }*/
 
       // Render the subField
-      var subFieldEl = this.renderSubField(options);
+      var subFieldEl = this.renderSubField(value/*options*/);
       
       // Adds it to the local list
       this.subFields.push(subFieldEl);
@@ -107,7 +107,7 @@ YAHOO.extend(inputEx.ListField,inputEx.Field, {
     * Adds a new line to the List Field
     * @return  {inputEx.Field} instance of the created field (inputEx.Field or derivative)
     */
-   renderSubField: function(options) {
+   renderSubField: function(value) {
       
       // Div that wraps the deleteButton + the subField
       var newDiv = inputEx.cn('div');
@@ -118,7 +118,18 @@ YAHOO.extend(inputEx.ListField,inputEx.Field, {
       newDiv.appendChild( delButton );
       
       // Instanciate the new subField
-      var el = new this.options.elementType(options);
+      var class0 = inputEx.getFieldClass(this.options.elementType.type);
+      var options = {};
+      if( this.options.elementType.typeOptions) {
+         for(var key in this.options.elementType.typeOptions) {
+            if(this.options.elementType.typeOptions.hasOwnProperty(key) ) {
+               options[key] = this.options.elementType.typeOptions[key];
+            }
+         }
+      }
+      if(value) { options.value = value; }
+      
+      var el = new class0(options);
       var subFieldEl = el.getEl();
       YAHOO.util.Dom.setStyle(subFieldEl, 'margin-left', '4px');
       YAHOO.util.Dom.setStyle(subFieldEl, 'float', 'left');

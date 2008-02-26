@@ -22,7 +22,7 @@ inputEx.Group = function(inputConfigs) {
 	 * YAHOO custom event "updated"
 	 */
 	this.updatedEvt = new YAHOO.util.CustomEvent('updated', this);
-	//this.updatedEvt.subscribe(function(e, params) { var value = params[0]; console.log("updated",value); }, this, true);
+	//this.updatedEvt.subscribe(function(e, params) { var value = params[0]; console.log("group updated",value); }, this, true);
    
    // Init the events
    this.initEvents();
@@ -225,7 +225,8 @@ inputEx.Group.prototype = {
       
    	if(this.validate()) {
          // We already escaped the stack here so we can fire it directly
-         this.updatedEvt.fire(this.getValue());
+         var that = this;
+         setTimeout(function() {that.updatedEvt.fire(that.getValue());}, 50);
       }
    }
    

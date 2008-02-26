@@ -40,7 +40,7 @@ inputEx.Field = function(options) {
 	 * YAHOO custom event "updated"
 	 */
 	this.updatedEvt = new YAHOO.util.CustomEvent('updated', this);
-	//this.updatedEvt.subscribe(function(e, params) { var value = params[0]; console.log("updated",value); }, this, true);
+	//this.updatedEvt.subscribe(function(e, params) { var value = params[0]; console.log("updated",value, this.updatedEvt); }, this, true);
 	
 	// initialize behaviour events
 	this.initEvents();

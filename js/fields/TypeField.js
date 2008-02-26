@@ -1,5 +1,13 @@
 /**
  * Creates a type field with all the types in inpuEx.typeClasses.
+ * 
+ * The value of a type field is following this format:
+ *  {
+    type: 'date',
+    typeOptions: {
+       ...
+    }
+ }
  *
  * Added options:
  * <ul>
@@ -119,17 +127,14 @@ YAHOO.extend(inputEx.TypeField, inputEx.SelectField, {
          }
          // Instanciate the group
          this.group = new inputEx.Group(classO.groupOptions);
+         // Register the updated event
+         this.group.updatedEvt.subscribe(this.onChangeGroupOptions, this, true);
          this.groupOptionsWrapper.appendChild( this.group.getEl() );
          
       }
       
       
       if(this.options.createValueField) {
-      
-         if(this.group) {
-            // Register the updated event
-            this.group.updatedEvt.subscribe(this.updateFieldValue, this, true);
-         }
       
          if(this.fieldValue) {
             this.fieldValue = null;
@@ -138,6 +143,23 @@ YAHOO.extend(inputEx.TypeField, inputEx.SelectField, {
          // Create the value field
          this.updateFieldValue();
       }
+   },
+   
+   onChangeGroupOptions: function() {
+      
+      if(this.options.createValueField) {
+         this.updateFieldValue();
+      }
+      
+      if(this.validate()) {
+   	   // Uses setTimeout to escape the stack (that originiated in an event)
+   	   var that = this;
+   	   setTimeout(function() {
+      	   that.updatedEvt.fire(that.getValue());
+   	   },50);
+      }
+      
+      
    },
    
    
@@ -168,7 +190,6 @@ YAHOO.extend(inputEx.TypeField, inputEx.SelectField, {
 
       // Add the field to the wrapper
       this.fieldWrapper.appendChild( this.fieldValue.getEl() );
-      
    }
    
 });
@@ -203,8 +224,8 @@ inputEx.Field.groupOptions = [
 ];
 
 inputEx.SelectField.groupOptions = [
-   {  type: 'list', inputParams: {name: 'selectValues', listLabel: 'selectValues', elementType: inputEx.Field, elementOptions: {}, required: true} },
-   {  type: 'list', optional: true, inputParams: {name: 'selectOptions', listLabel: 'selectOptions', elementType: inputEx.Field, elementOptions: {} } }
+   {  type: 'list', inputParams: {name: 'selectValues', listLabel: 'selectValues', elementType: {type: 'string'}, required: true} },
+   {  type: 'list', optional: true, inputParams: {name: 'selectOptions', listLabel: 'selectOptions', elementType: {type: 'string'} } }
 ];
 
 inputEx.ListField.groupOptions = [

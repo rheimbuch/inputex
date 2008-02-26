@@ -19,6 +19,7 @@ LATER:
 - Date: integrate DateJs dans un datejs field
 - Password: make an option to have 2 fields
 - Password: export in SHA1 or MD5
+- GeoLocation
 - add an "unobstrusive" layer
 - add "minlength" and "maxlength" properties
 - Option qui met le texte du tooltip à droite au lieu de l'icone
