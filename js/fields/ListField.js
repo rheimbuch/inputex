@@ -87,17 +87,8 @@ YAHOO.extend(inputEx.ListField,inputEx.Field, {
     */
    addElement: function(value) {
 
-      // Create the Options object for the subField
-      /*var options = {};
-      for(var key in this.options.elementOptions) {
-         if(this.options.elementOptions.hasOwnProperty(key) ) {
-            options[key] = this.options.elementOptions[key];
-         }
-      }
-      if(value) { options.value = value; }*/
-
       // Render the subField
-      var subFieldEl = this.renderSubField(value/*options*/);
+      var subFieldEl = this.renderSubField(value);
       
       // Adds it to the local list
       this.subFields.push(subFieldEl);

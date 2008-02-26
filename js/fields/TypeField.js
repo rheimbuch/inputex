@@ -118,6 +118,14 @@ YAHOO.extend(inputEx.TypeField, inputEx.SelectField, {
       // Get value is directly the class !!
       var classO = inputEx.getFieldClass(this.getValue().type);
       
+      // if the class is not found, clear all the subfields and return
+      if(classO === null) {
+         this.groupOptionsWrapper.innerHTML = "";   
+         this.fieldWrapper.innerHTML = "";
+         this.fieldValue = null;
+         return;
+      }
+      
       if(classO.groupOptions) {
          
          // Close a previously created group
@@ -218,6 +226,10 @@ inputEx.PasswordField.groupOptions = [];
 inputEx.RTEField.groupOptions = [];
 inputEx.UrlField.groupOptions = [];
 inputEx.Textarea.groupOptions = [];
+
+inputEx.TypeField.groupOptions = [
+   { label: 'default value field', type: 'boolean', optional: true, inputParams: {name:'createValueField', checked: false}}
+];
  
 inputEx.Field.groupOptions = [
    { label: 'Numbers Only', type: 'boolean', optional: true, inputParams: {name: 'numbersOnly', checked: false} } 
@@ -229,5 +241,6 @@ inputEx.SelectField.groupOptions = [
 ];
 
 inputEx.ListField.groupOptions = [
-   { label: 'of type', type: 'type', inputParams: {required: true, createValueField: false, name: 'elementType'} } 
+   { label: 'of type', type: 'type', inputParams: {required: true, createValueField: false, name: 'elementType'} },
+   { label: 'List label', type: 'string', optional: true, inputParams: {name: 'listLabel'}}
 ];
