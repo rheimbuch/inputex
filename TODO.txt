@@ -1,6 +1,4 @@
 
-- TypeField: getValue/setValue : créer le sous-formulaire sur setValue, exporter "typeOptions" dans getValue
-
 - l'id du RTEField doit changer sinon on a de gros problemes...
 
 - Repair FormattedField, HiddenField, DateField, UpperCaseField

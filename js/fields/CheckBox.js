@@ -74,9 +74,9 @@ YAHOO.lang.extend(inputEx.CheckBox, inputEx.Field, {
    		this.hiddenEl.value = value;
    		this.el.checked = false;
    	}
-   	else {
+   	/*else {
    	    throw "Wrong value assignment in checkBox input";
-   	}
+   	}*/
    }
    
 });
