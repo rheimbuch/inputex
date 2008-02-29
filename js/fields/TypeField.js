@@ -220,31 +220,56 @@ inputEx.registerType("type", inputEx.TypeField);
  * group Options for each field
  */
 
-inputEx.CheckBox.groupOptions = [
-   {label: 'Label', type: 'string', optional: true, inputParams: {name: 'label'} }
-];
-inputEx.ColorField.groupOptions = [];
-inputEx.EmailField.groupOptions = [];
-inputEx.IPv4Field.groupOptions = [];
-inputEx.PasswordField.groupOptions = []; 
-inputEx.RTEField.groupOptions = [];
-inputEx.UrlField.groupOptions = [];
-inputEx.Textarea.groupOptions = [];
+if(inputEx.CheckBox) {
+   inputEx.CheckBox.groupOptions = [ {label: 'Label', type: 'string', optional: true, inputParams: {name: 'label'} } ];
+}
 
-inputEx.TypeField.groupOptions = [
-   { label: 'default value field', type: 'boolean', optional: true, inputParams: {name:'createValueField', checked: false}}
-];
+if(inputEx.ColorField) {
+   inputEx.ColorField.groupOptions = [];
+}
+
+if(inputEx.EmailField) {
+   inputEx.EmailField.groupOptions = [];
+}
+
+if(inputEx.IPv4Field) {
+   inputEx.IPv4Field.groupOptions = [];
+}
+
+if(inputEx.PasswordField) {
+   inputEx.PasswordField.groupOptions = []; 
+}
+
+if(inputEx.RTEField) {
+   inputEx.RTEField.groupOptions = [];
+}
+
+if(inputEx.UrlField) {
+   inputEx.UrlField.groupOptions = [];
+}
+
+if(inputEx.Textarea) {
+   inputEx.Textarea.groupOptions = [];
+}
+ 
+if(inputEx.SelectField) {
+   inputEx.SelectField.groupOptions = [
+      {  type: 'list', inputParams: {name: 'selectValues', listLabel: 'selectValues', elementType: {type: 'string'}, required: true} },
+      {  type: 'list', optional: true, inputParams: {name: 'selectOptions', listLabel: 'selectOptions', elementType: {type: 'string'} } }
+   ];
+}
+
+if(inputEx.ListField) {
+   inputEx.ListField.groupOptions = [
+      { label: 'of type', type: 'type', inputParams: {required: true, createValueField: false, name: 'elementType'} },
+      { label: 'List label', type: 'string', optional: true, inputParams: {name: 'listLabel'}}
+   ];
+}
  
 inputEx.Field.groupOptions = [
    { label: 'Numbers Only', type: 'boolean', optional: true, inputParams: {name: 'numbersOnly', checked: false} } 
 ];
 
-inputEx.SelectField.groupOptions = [
-   {  type: 'list', inputParams: {name: 'selectValues', listLabel: 'selectValues', elementType: {type: 'string'}, required: true} },
-   {  type: 'list', optional: true, inputParams: {name: 'selectOptions', listLabel: 'selectOptions', elementType: {type: 'string'} } }
-];
-
-inputEx.ListField.groupOptions = [
-   { label: 'of type', type: 'type', inputParams: {required: true, createValueField: false, name: 'elementType'} },
-   { label: 'List label', type: 'string', optional: true, inputParams: {name: 'listLabel'}}
+inputEx.TypeField.groupOptions = [
+   { label: 'default value field', type: 'boolean', optional: true, inputParams: {name:'createValueField', checked: false}}
 ];
