@@ -10,9 +10,9 @@ inputEx.Form = function(inputConfigs, buttons, options) {
 
   // Save the options locally
   this.buttons = buttons || [];
-  this.options = options || {};
 
   inputEx.Form.superclass.constructor.call(this, inputConfigs);
+  
 };
 
 
@@ -49,11 +49,11 @@ YAHOO.extend(inputEx.Form, inputEx.Group, {
    renderButtons: function() {
 		
 	   var button, buttonEl;
-	   for(var i = 0 ; i < this.options.buttons.length ; i++ ) {
-		   button = this.options.buttons[i];
+	   for(var i = 0 ; i < this.buttons.length ; i++ ) {
+		   button = this.buttons[i];
 		   buttonEl = inputEx.cn('input', {type: button.type, value: button.value});
 		   if( button.onClick ) { buttonEl.onclick = button.onClick; }
-		   this.divEl.appendChild(buttonEl);
+		   this.form.appendChild(buttonEl);
 	   }	
    },
    

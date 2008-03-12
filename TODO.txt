@@ -1,5 +1,7 @@
 
+- Intégrer le logMessage de Maxime ?
 
+- type d'aide: 'tooltip', 'icon', 'none', 'message' 
 
 - l'id du RTEField doit changer sinon on a de gros problemes...
 

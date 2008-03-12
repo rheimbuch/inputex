@@ -252,6 +252,17 @@ var demo = {
       ],
       
       /**
+       * inputEx.Form
+       */
+      "Form": [
+      {
+         title: "Basic Form",
+         description: "How to use Form",
+         code: "var group = new inputEx.Form( [ {label: 'Title', type: 'select', optional: true, inputParams: {name: 'title', selectValues: ['Mr','Mrs','Mme'] } }, {label: 'Firstname', inputParams: {name: 'firstname', required: true, value:'Jacques' } }, {label: 'Lastname', inputParams: {name: 'lastname', value:'Dupont' } }, {label: 'Email', type:'email', optional: true, inputParams: {name: 'email'}}, {label: 'Website', type:'url', optional: true, inputParams: {name:'website'}} ], [{type: 'submit', value: 'Change'}]);\nexampleDiv.appendChild( group.getEl() ); "
+      }
+      ],
+      
+      /**
        * inputEx.UneditableField
        */
        "UneditableField": [
