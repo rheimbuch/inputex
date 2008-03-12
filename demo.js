@@ -249,6 +249,22 @@ var demo = {
          description: "Group",
          code: "var group = new inputEx.Group( [ {label: 'Title', type: 'select', optional: true, inputParams: {name: 'title', selectValues: ['Mr','Mrs','Mme'] } }, {label: 'Firstname', inputParams: {name: 'firstname', required: true, value:'Jacques' } }, {label: 'Lastname', inputParams: {name: 'lastname', value:'Dupont' } }, {label: 'Email', type:'email', optional: true, inputParams: {name: 'email'}}, {label: 'Website', type:'url', optional: true, inputParams: {name:'website'}} ]);\nexampleDiv.appendChild( group.getEl() ); "
       }
+      ],
+      
+      /**
+       * inputEx.UneditableField
+       */
+       "UneditableField": [
+       {
+          title: "UneditableField with HTML string",
+          description: "To format the value of the field with an html string, use the <i>formatValue</i> function (schould return a string):",
+          code: "var field = new inputEx.UneditableField({name: 'date', value: new Date(), formatValue: function(value) { return 'Now: <i>'+value+'</i>';} });\nexampleDiv.appendChild( field.getEl() );"
+       },
+       {
+           title: "UneditableField with DOM rendering",
+           description: "To render the value of the field with a DOM element (to add a behaviour), use the <i>formatDom</i> function (schould return a dom element):",
+           code: "var field = new inputEx.UneditableField({name: 'date', value: 'http://neyric.com/images/diabolo.png', formatDom: function(value) { return inputEx.cn('img', {src: value}, {border: '2px solid black'});} });\nexampleDiv.appendChild( field.getEl() );"
+        }
       ]
    }
 

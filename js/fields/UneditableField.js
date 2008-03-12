@@ -1,22 +1,22 @@
 /**
  * Create a uneditable field where you can stick the html you want
- * Added Options
+ * Added Options:
  * <ul>
  *    <li>formatValue: String function(value)</li>
  *    <li>formatDom: DOMEl function(value)</li>
  * </ul>
  *
- * @class inputEx.UneditableHtmlField
+ * @class inputEx.UneditableField
  * @constructor
  * @extends inputEx.Field
  */
-inputEx.UneditableHtmlField = function(options) {
-	inputEx.UneditableHtmlField.superclass.constructor.call(this,options);
+inputEx.UneditableField = function(options) {
+	inputEx.UneditableField.superclass.constructor.call(this,options);
 };
-YAHOO.lang.extend(inputEx.UneditableHtmlField, inputEx.Field, {
+YAHOO.lang.extend(inputEx.UneditableField, inputEx.Field, {
    
    render: function() {
-      this.divEl = document.createElement('DIV');
+      this.divEl = inputEx.cn('div');
    },
    
    initEvents: function() {},
