@@ -7,5 +7,6 @@ inputEx.messages = {
 	valid: "Ce champ est valide",
 	invalidEmail: "Email non valide, ex: michel.dupont@fai.fr",
 	selectColor: "S&eacute;lectionnez une couleur :",
-	invalidPassword: "Le mot de passe doit contenir au moins 5 caract&egrave;res (lettres ou chiffres)"
+	invalidPassword: "Le mot de passe doit contenir au moins 5 caract&egrave;res (lettres ou chiffres)",
+	invalidPasswordConfirmation: "Les mots de passe entrés ne sont pas identiques !"
 };

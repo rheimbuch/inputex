@@ -1,4 +1,6 @@
 
+- Mettre un parentEl optionel sur Field aussi
+
 - Intégrer le logMessage de Maxime ?
 
 - type d'aide: 'tooltip', 'icon', 'none', 'message' 

@@ -168,6 +168,21 @@ inputEx.Field.prototype.setClassFromState = function() {
 };
 
 /**
+ * Get the string for the given state
+ */
+inputEx.Field.prototype.getStateString = function(state) {
+   if(state == 'required') {
+      return this.options.messages.required;
+   }
+   else if(state == 'invalid') {
+      return this.options.messages.invalid;
+   }
+   else {
+      return this.options.messages.valid;
+   }
+};
+
+/**
  * Set the tooltip message
  */ 
 inputEx.Field.prototype.setToolTipMessage = function() { 

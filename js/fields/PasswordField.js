@@ -31,11 +31,37 @@ YAHOO.lang.extend(inputEx.PasswordField, inputEx.Field, {
 
    	// Append it to the main element
    	this.divEl.appendChild(this.el);
+   },
+   
+   /**
+    * Set this field as the confirmation for the targeted password field:
+    */
+   setConfirmationField: function(passwordField) {
+      this.options.confirmPasswordField = passwordField;
+      this.options.messages.invalid = inputEx.messages.invalidPasswordConfirmation;
+      this.options.confirmPasswordField.options.confirmationPasswordField = this;
+   },
+   
+   validate: function() {
+      if(this.options.confirmPasswordField) {
+         return (this.options.confirmPasswordField.getValue() == this.getValue());
+      }
+      else {
+         return inputEx.PasswordField.superclass.validate.call(this);
+      }
+   },
+   
+   onInput: function(e) {
+      inputEx.PasswordField.superclass.onInput.call(this,e);
+      if(this.options.confirmationPasswordField) {
+         this.options.confirmationPasswordField.setClassFromState();
+      }
    }
 });
 
 // Specific message for the password field
 inputEx.messages.invalidPassword = "Invalid password, schould contain at least 5 numbers or caracters";
+inputEx.messages.invalidPasswordConfirmation = "Passwords are different !";
 
 /**
  * Register this class as "password" type

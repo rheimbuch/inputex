@@ -171,6 +171,11 @@ var demo = {
          title: "Basic PasswordField Field",
          description: "Basic use of the PasswordField",
          code: "var field = new inputEx.PasswordField({tooltipIcon: true, required: true});\nexampleDiv.appendChild( field.getEl() );"
+      },
+      {
+         title: "Password and confirmation",
+         description: "We always want a password field with a confirmation",
+         code: "var pass1 = new inputEx.PasswordField({tooltipIcon: true, required: true});\nexampleDiv.appendChild( pass1.getEl() ); var pass2 = new inputEx.PasswordField({tooltipIcon: true, required: true});\nexampleDiv.appendChild( pass2.getEl() ); pass2.setConfirmationField(pass1);"
       }
       ],
       
