@@ -293,6 +293,17 @@ var demo = {
          description: "The hidden field is by definition 'invisible', so there isn't a lot to see. However, it can be useful to keep an id :",
          code: "var group = new inputEx.Group( [ {label: '', type: 'hidden', inputParams: {name: 'id', value: 12 } }, {label: 'Firstname', inputParams: {name: 'firstname', required: true, value:'Jacques' } } ], {parentEl: exampleDiv});\nvar button=inputEx.cn('button',null,null, 'Get Value'); exampleDiv.appendChild(button); YAHOO.util.Event.addListener(button, 'click', function(){ alert(YAHOO.lang.JSON.stringify(group.getValue()) ); });"
       }
+      ],
+      
+      /**
+       * inputEx.UpperCaseField
+       */
+      "UpperCaseField": [ 
+      {
+         title: "Basic UpperCaseField creation",
+         description: "Simple example on how to subclass a Field",
+         code: "new inputEx.UpperCaseField({value: 'i was lowercase', parentEl: exampleDiv});"
+      }
       ]
    }
 

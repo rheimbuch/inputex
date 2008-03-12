@@ -1,6 +1,4 @@
 
-- l'id du RTEField doit changer sinon on a de gros problemes...
-
 - Repair FormattedField, DateField, UpperCaseField
 
 - Object Field (list of key/values)

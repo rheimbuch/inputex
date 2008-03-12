@@ -14,11 +14,15 @@ YAHOO.lang.extend(inputEx.RTEField, inputEx.Field, {
       // Create a DIV element to wrap the editing el and the image
    	this.divEl = inputEx.cn('div', {className: this.options.className});
       
-      this.el = inputEx.cn('textarea', {id: "msgpost"});
+      if(!inputEx.RTEfieldsNumber) { inputEx.RTEfieldsNumber = 0; }
+      var id = "inputEx-RTEField-"+inputEx.RTEfieldsNumber;
+      
+      this.el = inputEx.cn('textarea', {id: id});
+      inputEx.RTEfieldsNumber += 1;
       this.divEl.appendChild(this.el);
       
       
-      var myEditor = new YAHOO.widget.Editor("msgpost", {
+      var myEditor = new YAHOO.widget.Editor(id, {
           height: '300px',
           width: '522px',
           dompath: true
