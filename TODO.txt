@@ -21,6 +21,7 @@
 - Password: export in SHA1 or MD5
 - option inLine edit qui rend l'objet en "inPlaceEdit" avec une fonction pour le rendu non formulaire
 
+- indicateur de solidité du mot de passe
 
 LATER:
 ------

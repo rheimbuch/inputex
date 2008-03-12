@@ -8,6 +8,9 @@
  */
 inputEx.PasswordField = function(options) {
 	inputEx.PasswordField.superclass.constructor.call(this,options);
+	
+	this.options.messages.invalid = inputEx.messages.invalidPassword;
+	this.options.regexp = inputEx.regexps.password;
 };
 YAHOO.lang.extend(inputEx.PasswordField, inputEx.Field, {
    /**
@@ -31,6 +34,8 @@ YAHOO.lang.extend(inputEx.PasswordField, inputEx.Field, {
    }
 });
 
+// Specific message for the password field
+inputEx.messages.invalidPassword = "Invalid password, schould contain at least 5 numbers or caracters";
 
 /**
  * Register this class as "password" type

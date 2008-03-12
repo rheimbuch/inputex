@@ -170,7 +170,7 @@ var demo = {
       {
          title: "Basic PasswordField Field",
          description: "Basic use of the PasswordField",
-         code: "var field = new inputEx.PasswordField();\nexampleDiv.appendChild( field.getEl() );"
+         code: "var field = new inputEx.PasswordField({tooltipIcon: true, required: true});\nexampleDiv.appendChild( field.getEl() );"
       }
       ],
       
