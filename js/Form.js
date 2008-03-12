@@ -11,7 +11,7 @@ inputEx.Form = function(inputConfigs, buttons, options) {
   // Save the options locally
   this.buttons = buttons || [];
 
-  inputEx.Form.superclass.constructor.call(this, inputConfigs);
+  inputEx.Form.superclass.constructor.call(this, inputConfigs, options);
   
 };
 
