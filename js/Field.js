@@ -21,6 +21,7 @@ inputEx.Field = function(options) {
     *   <li>className: CSS class name for the div wrapper (default 'inputEx-Field')
     *   <li>size: size attribute of the input</li>
     *   <li>value: initial value</li>
+    *   <li>parentEl: append it immediatly to this DOM element/li>
     * </ul>
 	 */
 	this.options = options || {};
@@ -47,6 +48,11 @@ inputEx.Field = function(options) {
 	
 	// set the default styling
 	this.setClassFromState();
+	
+	// append it immediatly to the parent DOM element
+	if(this.options.parentEl) {
+	   this.options.parentEl.appendChild(this.getEl());
+	}
 };
 
 /**

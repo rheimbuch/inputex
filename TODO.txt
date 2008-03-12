@@ -1,17 +1,7 @@
 
-- Mettre un parentEl optionel sur Field aussi
-
-- Intégrer le logMessage de Maxime ?
-
-- type d'aide: 'tooltip', 'icon', 'none', 'message' 
-
 - l'id du RTEField doit changer sinon on a de gros problemes...
 
 - Repair FormattedField, HiddenField, DateField, UpperCaseField
-
-- Form ! avec envoi de requête ajax
-
-- Gérer les locales
 
 - Hide HiddenField in groups
 - Object Field (list of key/values)
@@ -19,8 +9,6 @@
 - InPlaceEditField
 - AutoCompleteField (with multiple selection like http://ajaxian.com/archives/facebook-style-input-box)
 - attribuer des classes CSS à chaque field
-- Password: make an option to have 2 fields (a confirm field)
-- Password: export in SHA1 or MD5
 - option inLine edit qui rend l'objet en "inPlaceEdit" avec une fonction pour le rendu non formulaire
 
 - indicateur de solidité du mot de passe
@@ -28,8 +16,11 @@
 LATER:
 ------
 
+- Gérer les locales
+- Form ! avec envoi de requête ajax
 - Date: integrate DateJs dans un datejs field
 - GeoLocation
+- Password: export in SHA1 or MD5
 - add an "unobstrusive" layer
 - add "minlength" and "maxlength" properties
 - Option qui met le texte du tooltip à droite au lieu de l'icone
