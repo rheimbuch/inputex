@@ -282,6 +282,17 @@ var demo = {
            description: "To render the value of the field with a DOM element (to add a behaviour), use the <i>formatDom</i> function (schould return a dom element):",
            code: "new inputEx.UneditableField({name: 'date', value: 'http://neyric.com/images/diabolo.png', formatDom: function(value) { return inputEx.cn('img', {src: value}, {border: '2px solid black'});}, parentEl: exampleDiv });"
         }
+      ],
+      
+      /**
+       * inputEx.HiddenField
+       */
+      "HiddenField": [
+      {
+         title: "HiddenField",
+         description: "The hidden field is by definition 'invisible', so there isn't a lot to see. However, it can be useful to keep an id :",
+         code: "var group = new inputEx.Group( [ {label: '', type: 'hidden', inputParams: {name: 'id', value: 12 } }, {label: 'Firstname', inputParams: {name: 'firstname', required: true, value:'Jacques' } } ], {parentEl: exampleDiv});\nvar button=inputEx.cn('button',null,null, 'Get Value'); exampleDiv.appendChild(button); YAHOO.util.Event.addListener(button, 'click', function(){ alert(YAHOO.lang.JSON.stringify(group.getValue()) ); });"
+      }
       ]
    }
 

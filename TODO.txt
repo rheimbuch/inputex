@@ -1,9 +1,8 @@
 
 - l'id du RTEField doit changer sinon on a de gros problemes...
 
-- Repair FormattedField, HiddenField, DateField, UpperCaseField
+- Repair FormattedField, DateField, UpperCaseField
 
-- Hide HiddenField in groups
 - Object Field (list of key/values)
 - Array Field (list of objects)
 - InPlaceEditField

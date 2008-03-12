@@ -80,6 +80,11 @@ inputEx.Group.prototype = {
 
          var tr = inputEx.cn('tr');
          
+         // Hide the row if type == "hidden"
+         if(input.type == 'hidden') {
+            YAHOO.util.Dom.setStyle(tr, 'display', 'none');
+         }
+         
          // Label element
          tr.appendChild( inputEx.cn('td', {className: 'inputEx-Group-label'}, null, input.label || "") );
         
