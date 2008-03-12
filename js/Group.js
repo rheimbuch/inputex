@@ -5,7 +5,17 @@
  * @constructor
  * @param {Array} inputConfigs Array of input fields : { label: 'Enter the value:' , type: 'text' or fieldClass: inputEx.Field, optional: true/false, inputParams: {inputparams object} }
  */
-inputEx.Group = function(inputConfigs) {
+inputEx.Group = function(inputConfigs, options) {
+
+   /**
+    * Group options:
+    * <ul>
+    *   <li>optionsLabel: String to display as the "optional" fields main label</li>
+    *   <li>parentEl: immediatly insert the group into the parentEl</li>
+    * </ul>
+    */
+   this.options = options || {};
+   this.options.optionsLabel = this.options.optionsLabel || 'Options';
 
    // Save the options locally
    this.inputConfigs = inputConfigs;
@@ -26,6 +36,11 @@ inputEx.Group = function(inputConfigs) {
    
    // Init the events
    this.initEvents();
+   
+   // Append to the optional parentEl
+   if(this.options.parentEl) {
+      this.options.parentEl.appendChild(this.getEl());
+   }
 };
 
 
@@ -88,7 +103,7 @@ inputEx.Group.prototype = {
   	   if(tbodyOptional.childNodes.length > 0) {
  	      this.optionsLabel = inputEx.cn('div', {className: 'inputEx-Group-Options-Label inputEx-Group-Options-Label-Collapsed'});
  	      this.optionsLabel.appendChild( inputEx.cn('img', {src: inputEx.spacerUrl}) );
- 	      this.optionsLabel.appendChild( inputEx.cn('span',null,null, "Options") );
+ 	      this.optionsLabel.appendChild( inputEx.cn('span',null,null, this.options.optionsLabel) );
  	      parentEl.appendChild(this.optionsLabel);
      	   parentEl.appendChild(this.tableOptional);
   	   }
