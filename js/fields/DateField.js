@@ -6,9 +6,10 @@
  */
 inputEx.DateField = function(options) {
    if(!options) { var options = {}; }
+   if(!options.messages) { options.messages = {}; }
 	if(!options.dateFormat) {options.dateFormat = 'm/d/Y'; }
+	options.messages.invalid = inputEx.messages.invalidDate;
 	inputEx.DateField.superclass.constructor.call(this,options);
-	this.options.messages.invalidDate = inputEx.messages.invalidDate;
 };
 YAHOO.lang.extend(inputEx.DateField, inputEx.Field, {
    

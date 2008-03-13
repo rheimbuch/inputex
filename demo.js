@@ -339,7 +339,17 @@ var demo = {
       {
          title: "PairField",
          description: "PairField",
-         code: "new inputEx.PairField({parentEl: exampleDiv, leftFieldOptions: {type: 'string'}, rightFieldOptions: { type: 'date', inputParams: {value: new Date()} } });"
+         code: "new inputEx.PairField({parentEl: exampleDiv, leftFieldOptions: {type: 'string'}, rightFieldOptions: { type: 'date', inputParams: {value: new Date(), tooltipIcon: true} } });"
+      },
+      {
+         title: "PairField",
+         description: "PairField",
+         code: "new inputEx.PairField({parentEl: exampleDiv, leftFieldOptions: {type: 'string'}, rightFieldOptions: { type: 'type', inputParams: {createValueField: true} } });"
+      },
+      {
+         title: "Basic List Field",
+         description: "Basic use of the List field",
+         code: "var field = new inputEx.ListField({listLabel: 'fields',elementType: {type: 'pair', typeOptions: {leftFieldOptions: {type: 'string'}, rightFieldOptions: { type: 'type', inputParams: {createValueField: true} }}}, parentEl: exampleDiv});"
       }
       ]
    }

@@ -51,3 +51,9 @@ YAHOO.extend( inputEx.PairField, inputEx.Field, {
    }
    
 });
+
+
+/**
+ * Register this class as "pair" type
+ */
+inputEx.registerType("pair", inputEx.PairField);

@@ -228,6 +228,14 @@ if(inputEx.ColorField) {
    inputEx.ColorField.groupOptions = [];
 }
 
+if(inputEx.DateField) {
+   inputEx.DateField.groupOptions = [];
+}
+
+if(inputEx.PairField) {
+   inputEx.PairField.groupOptions = [];
+}
+
 if(inputEx.EmailField) {
    inputEx.EmailField.groupOptions = [];
 }
