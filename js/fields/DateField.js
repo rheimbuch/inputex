@@ -5,6 +5,7 @@
  *		- dateFormat: default to 'm/d/Y'
  */
 inputEx.DateField = function(options) {
+   if(!options) { var options = {}; }
 	if(!options.dateFormat) {options.dateFormat = 'm/d/Y'; }
 	inputEx.DateField.superclass.constructor.call(this,options);
 	this.options.messages.invalidDate = inputEx.messages.invalidDate;

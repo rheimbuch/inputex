@@ -1,8 +1,8 @@
 
-- InPlaceEditField 
 - PairField (pair of two fields, ex: key(string)/value(type) )
 - Object Field (list of key/values)
 
+- InPlaceEditField
 - Form creator
   + options (autogenerate SQL)
 

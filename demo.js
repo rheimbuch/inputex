@@ -325,6 +325,22 @@ var demo = {
          description: "DateField",
          code: "var dateField = new inputEx.DateField({value: new Date(), dateFormat: 'd/m/Y', parentEl: exampleDiv, tooltipIcon: true}); var button = inputEx.cn('button', null, null, 'getValue()'); exampleDiv.appendChild(button); YAHOO.util.Event.addListener(button, 'click', function() { alert(dateField.getValue()); });"
       }
+      ],
+      
+      /**
+       * inputEx.PairField
+       */
+      "PairField": [ 
+      {
+         title: "PairField",
+         description: "PairField",
+         code: "new inputEx.PairField({parentEl: exampleDiv});"
+      },
+      {
+         title: "PairField",
+         description: "PairField",
+         code: "new inputEx.PairField({parentEl: exampleDiv, leftFieldOptions: {type: 'string'}, rightFieldOptions: { type: 'date', inputParams: {value: new Date()} } });"
+      }
       ]
    }
 
