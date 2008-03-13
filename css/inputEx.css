@@ -37,8 +37,8 @@ img.inputEx-Field-stateIcon {
 	background: transparent url('') no-repeat scroll 0px 0px;
 	visibility: hidden;
 	cursor: default;
-	margin-left:4px;
-	vertical-align: middle;
+	margin:2px 0pt 0px 4px;
+	vertical-align: top;
 }
 
 div.inputEx-valid img.inputEx-Field-stateIcon {
