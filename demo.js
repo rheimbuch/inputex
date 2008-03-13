@@ -304,6 +304,17 @@ var demo = {
          description: "Simple example on how to subclass a Field",
          code: "new inputEx.UpperCaseField({value: 'i was lowercase', parentEl: exampleDiv});"
       }
+      ],
+      
+      /**
+       * inputEx.DateField
+       */
+      "DateField": [ 
+      {
+         title: "DateField",
+         description: "DateField",
+         code: "new inputEx.DateField({value: new Date(), parentEl: exampleDiv});"
+      }
       ]
    }
 

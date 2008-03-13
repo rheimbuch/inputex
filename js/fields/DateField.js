@@ -5,13 +5,77 @@
  *		- dateFormat: default to 'm/d/Y'
  */
 inputEx.DateField = function(options) {
-	options.format = '##/##/####';
-	options.dateFormat = options.dateFormat || 'm/d/Y';
+	//options.format = '##/##/####';
 	inputEx.DateField.superclass.constructor.call(this,options);
+	
+	this.options.dateFormat = this.options.dateFormat || 'm/d/Y';
+	
+	this.options.regexp = new RegExp( '^'+this.options.dateFormat.replace('m','[O-9]{2}').replace('d','[O-9]{2}').replace('Y','[O-9]{4}')+'$');	
 };
-YAHOO.lang.extend(inputEx.DateField, inputEx.FormattedField);
+YAHOO.lang.extend(inputEx.DateField, inputEx.Field, {
+   
+   validate: function() {
+    
+      if(!inputEx.DateField.superclass.validate.call(this) ) {
+         return false;
+      }
+      
+      var value = this.el.value;
+      var ladate = value.split("/");
+      if( ladate.length != 3) { return false; }
+      if ( isNaN(parseInt(ladate[0])) || isNaN(parseInt(ladate[1])) || isNaN(parseInt(ladate[2]))) { return false; }
+   	var formatSplit = this.options.dateFormat.split("/");
+   	var d = parseInt(ladate[ formatSplit.indexOf('d') ],10);
+   	var Y = parseInt(ladate[ formatSplit.indexOf('Y') ],10);
+   	var m = parseInt(ladate[ formatSplit.indexOf('m') ],10)-1;
+      var unedate = new Date(Y,m,d);
+      var annee = unedate.getFullYear();
+      return ((unedate.getDate() == d) && (unedate.getMonth() == m) && (annee == Y));
+   },
+   
+   render: function() {
+   	inputEx.DateField.superclass.render.call(this);
+   	this.el.size = 10;
+   }/*,
+   
+   
+   // Return value in DATETIME format (use getFormattedValue() to have 04/10/2002-like format)
+   getValue: function() {
+      // Hack to validate if field not required and empty
+      if (this.el.value === '') { return '';}
+      var ladate = this.getValue().split("/");
+      var formatSplit = this.options.dateFormat.split('/');
+      var d = parseInt(ladate[ formatSplit.indexOf('d') ],10);
+      var Y = parseInt(ladate[ formatSplit.indexOf('Y') ],10);
+      var m = parseInt(ladate[ formatSplit.indexOf('m') ],10)-1;
+      return (new Date(Y,m,d));
+   },
 
-inputEx.DateField.prototype.validate = function () {
+   setValue: function(val) {
+
+      // Don't try to parse a date if there is no date
+      if( val === '' ) {
+         this.el.value = '';
+         return;
+      }
+
+     // DATETIME
+   	if (val instanceof Date) {
+        str = this.options.dateFormat.replace('Y',val.getFullYear());
+        str = str.replace('m',val.GetMonthNumberString());
+        str = str.replace('d',val.GetDateString());
+     } 
+     // else date must match this.options.dateFormat
+     else {
+        str = val;
+     }
+
+   	this.el.value = str;
+   }*/
+
+});
+
+/*inputEx.DateField.prototype.validate = function () {
 	
 	var value = this.el.value;
 	if( value.match('_') ) { return false; }
@@ -64,4 +128,4 @@ inputEx.DateField.prototype.setValue = function(val) {
   }
 		
 	this.el.value = str;
-};
+};*/
