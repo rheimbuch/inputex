@@ -42,7 +42,7 @@ img.inputEx-Field-stateIcon {
 }
 
 div.inputEx-valid img.inputEx-Field-stateIcon {
-	background-image: url('../images/tick.png');
+	background-image: url('../images/tick.gif');
 	visibility: visible;
 }
 
@@ -52,7 +52,7 @@ div.inputEx-invalid img.inputEx-Field-stateIcon {
 }
 
 div.inputEx-required img.inputEx-Field-stateIcon {
-	background-image: url('../images/cancel.png');
+	background-image: url('../images/cancel.gif');
 	visibility: visible;
 }
 
@@ -69,7 +69,7 @@ div.inputEx-tooltip-exclamation {
 }
 
 div.inputEx-tooltip-required {
-	background-image: url('../images/cancel.png');
+	background-image: url('../images/cancel.gif');
 	width: 16px;
 	height: 16px;
 	margin-right: 4px;
@@ -77,7 +77,7 @@ div.inputEx-tooltip-required {
 }
 
 div.inputEx-tooltip-validated {
-	background-image: url('../images/tick.png');
+	background-image: url('../images/tick.gif');
 	width: 16px;
 	height: 16px;
 	margin-right: 4px;
