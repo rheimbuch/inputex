@@ -313,7 +313,17 @@ var demo = {
       {
          title: "DateField",
          description: "DateField",
-         code: "new inputEx.DateField({value: new Date(), parentEl: exampleDiv});"
+         code: "new inputEx.DateField({value: new Date(), parentEl: exampleDiv, tooltipIcon: true});"
+      },
+      {
+         title: "DateField",
+         description: "DateField",
+         code: "new inputEx.DateField({value: '13/03/2008', parentEl: exampleDiv, tooltipIcon: true});"
+      },
+      {
+         title: "DateField",
+         description: "DateField",
+         code: "var dateField = new inputEx.DateField({value: new Date(), dateFormat: 'd/m/Y', parentEl: exampleDiv, tooltipIcon: true}); var button = inputEx.cn('button', null, null, 'getValue()'); exampleDiv.appendChild(button); YAHOO.util.Event.addListener(button, 'click', function() { alert(dateField.getValue()); });"
       }
       ]
    }

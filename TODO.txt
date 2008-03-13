@@ -1,5 +1,4 @@
 
-- Repair DateField, French date, FrenchPhone
 - InPlaceEditField 
 - PairField (pair of two fields, ex: key(string)/value(type) )
 - Object Field (list of key/values)

@@ -8,5 +8,6 @@ inputEx.messages = {
 	invalidEmail: "Email non valide, ex: michel.dupont@fai.fr",
 	selectColor: "S&eacute;lectionnez une couleur :",
 	invalidPassword: "Le mot de passe doit contenir au moins 5 caract&egrave;res (lettres ou chiffres)",
-	invalidPasswordConfirmation: "Les mots de passe entrés ne sont pas identiques !"
+	invalidPasswordConfirmation: "Les mots de passe entrés ne sont pas identiques !",
+	invalidDate: "Date non valide, ex: 25/01/2007"
 };

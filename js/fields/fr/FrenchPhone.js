@@ -1,17 +1,9 @@
-
 /**
  * @class inputEx.FrenchPhone
  */
 inputEx.FrenchPhone = function(options) {
-	options.format = '## ## ## ## ##';
-	options.messages = {invalid: "Numéro non valide."};
 	inputEx.FrenchPhone.superclass.constructor.call(this,options);
+	this.options.regexp = /^( *[0-9] *){10}$/;
+	this.options.messages.invalid = "Numéro de téléphone non valide, ex: 06 12 34 56 78";
 };
-YAHOO.lang.extend(inputEx.FrenchPhone, inputEx.FormattedField);
-
-inputEx.FrenchPhone.prototype.validate = function () {
-	var value = this.getValue();
-	if( value.match('_') ) { return false; }
-	if( value.substr(0,1) != '0' ) { return false; }
-	return true;
-};
+YAHOO.lang.extend(inputEx.FrenchPhone, inputEx.Field);
