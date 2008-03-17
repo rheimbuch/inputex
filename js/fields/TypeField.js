@@ -199,6 +199,17 @@ YAHOO.extend(inputEx.TypeField, inputEx.SelectField, {
       if(previousValue) {
          this.fieldValue.setValue(previousValue);
       }
+      
+      // Subscribe the field updatedEvt
+      this.fieldValue.updatedEvt.subscribe(function() {
+         if(this.validate()) {
+      	   // Uses setTimeout to escape the stack (that originiated in an event)
+      	   var that = this;
+      	   setTimeout(function() {
+         	   that.updatedEvt.fire(that.getValue());
+      	   },50);
+         }
+      }, this, true);
 
       // Add the field to the wrapper
       this.fieldWrapper.appendChild( this.fieldValue.getEl() );
