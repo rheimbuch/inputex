@@ -89,7 +89,7 @@ var inputEx =  {
    getType: function(FieldClass) {
       for(var type in this.typeClasses) {
          if(this.typeClasses.hasOwnProperty(type) ) {
-            if(this.typeClasses[FieldClass]) {
+            if(this.typeClasses[type] == FieldClass) {
                return type;
             }
          }
