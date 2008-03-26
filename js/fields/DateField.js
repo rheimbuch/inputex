@@ -30,7 +30,6 @@ YAHOO.lang.extend(inputEx.DateField, inputEx.Field, {
    
    render: function() {
    	inputEx.DateField.superclass.render.call(this);
-   	this.el.size = 10;
    },
    
 
