@@ -7,6 +7,9 @@ inputEx.FrenchDate = function(options) {
 };
 YAHOO.lang.extend(inputEx.FrenchDate, inputEx.DateField);
 
+// Specific message for the container
+inputEx.messages.invalidDate = "Date invalide, ex: 27/03/2008";
+
 /**
  * Register this class as "date" type
  */
