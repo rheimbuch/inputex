@@ -195,7 +195,8 @@ inputEx.Field.prototype.setToolTipMessage = function() {
 	if(this.tooltip) {
 	   var content = "";
 		if( this.previousState == 'required') {
-			content = '<div class="inputEx-tooltip-required"></div> <span>'+this.options.messages.required+'</span>';
+         // DISABLED (voir ce qu'on fait de ce cas, mais pas d'icone pour le moment)
+			//content = '<div class="inputEx-tooltip-required"></div> <span>'+this.options.messages.required+'</span>';
 		}
 		else if( this.previousState == 'invalid') {
 			content = '<div class="inputEx-tooltip-exclamation"></div> <span>'+this.options.messages.invalid+'</span>';
@@ -205,7 +206,7 @@ inputEx.Field.prototype.setToolTipMessage = function() {
    	}
    	this.tooltip.setBody(content);
 	}
-};  
+};
 
 /**
  * Function called on the focus event
