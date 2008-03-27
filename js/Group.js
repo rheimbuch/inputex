@@ -20,10 +20,11 @@ inputEx.Group = function(inputConfigs, options) {
    // Save the options locally
    this.inputConfigs = inputConfigs;
    
-   /**
-    * Array containing the list of the field instances
-    */
+   // Array containing the list of the field instances
    this.inputs = [];
+   
+   // Associative array containing the field names pointing on field position in inputs (ex : inputsNames["password"] => 0 )
+   this.inputsNames = {};
    
    // Render the dom
    this.render();
@@ -135,7 +136,12 @@ inputEx.Group.prototype = {
       // Instanciate the field
       var inputInstance = new fieldClass(input.inputParams);
    	this.inputs.push(inputInstance);
-   	
+      
+      // Store link between field_name and field_position in group
+   	if (inputInstance.el.name) {
+         this.inputsNames[inputInstance.el.name] = this.inputs.length-1;
+      }
+      
    	// Subscribe to the field "updated" event to send the group "updated" event
       inputInstance.updatedEvt.subscribe(this.onChange, this, true);
    	  
