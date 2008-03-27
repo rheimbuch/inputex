@@ -23,7 +23,7 @@ inputEx.Group = function(inputConfigs, options) {
    // Array containing the list of the field instances
    this.inputs = [];
    
-   // Associative array containing the field names pointing on field position in inputs (ex : inputsNames["password"] => 0 )
+   // Associative array containing the field instances by names
    this.inputsNames = {};
    
    // Render the dom
@@ -139,7 +139,7 @@ inputEx.Group.prototype = {
       
       // Store link between field_name and field_position in group
    	if (inputInstance.el.name) {
-         this.inputsNames[inputInstance.el.name] = this.inputs.length-1;
+         this.inputsNames[inputInstance.el.name] = inputInstance;
       }
       
    	// Subscribe to the field "updated" event to send the group "updated" event
