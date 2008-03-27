@@ -52,7 +52,9 @@ div.inputEx-invalid img.inputEx-Field-stateIcon {
 }
 
 div.inputEx-required img.inputEx-Field-stateIcon {
-	background-image: url('../images/cancel.gif');
+  /*   DISABLE
+   *   background-image: url('../images/cancel.gif');
+   */
 	visibility: visible;
 }
 
