@@ -9,8 +9,10 @@
 inputEx.PasswordField = function(options) {
 	inputEx.PasswordField.superclass.constructor.call(this,options);
 	
-	this.options.messages.invalid = inputEx.messages.invalidPassword;
 	this.options.regexp = inputEx.regexps.password;
+   //   minLength || 5 not possible because 0 falsy value...
+   this.options.minLength = (this.options.minLength == undefined) ? 5 : this.options.minLength;
+	this.options.messages.invalid = inputEx.messages.invalidPassword[0]+this.options.minLength+inputEx.messages.invalidPassword[1];
 };
 YAHOO.lang.extend(inputEx.PasswordField, inputEx.Field, {
    /**
@@ -47,7 +49,9 @@ YAHOO.lang.extend(inputEx.PasswordField, inputEx.Field, {
          return (this.options.confirmPasswordField.getValue() == this.getValue());
       }
       else {
-         return inputEx.PasswordField.superclass.validate.call(this);
+         var superValid = inputEx.PasswordField.superclass.validate.call(this);
+         var lengthValid = this.getValue().length >= this.options.minLength;
+         return superValid && lengthValid;
       }
    },
    
