@@ -12,19 +12,19 @@ div.inputEx-Field input,select,textarea {
 div.inputEx-valid input, div.inputEx-valid select, div.inputEx-valid textarea {
 }
 
-div.inputEx-invalid input, div.inputEx-valid select, div.inputEx-valid textarea {
+div.inputEx-invalid input, div.inputEx-invalid select, div.inputEx-invalid textarea {
 	border: 1px solid #DD7870;
 }
 
-div.inputEx-required input, div.inputEx-valid select, div.inputEx-valid textarea {
+div.inputEx-required input, div.inputEx-required select, div.inputEx-required textarea {
 	border: 1px solid #DD7870;
 }
 
-div.inputEx-empty input, div.inputEx-valid select, div.inputEx-valid textarea {
+div.inputEx-empty input, div.inputEx-empty select, div.inputEx-empty textarea {
 	border: 1px solid #B5B8C8;
 }
 
-div.inputEx-focused input, div.inputEx-valid select, div.inputEx-valid textarea {
+div.inputEx-focused input, div.inputEx-focused select, div.inputEx-focused textarea {
 	border: 1px solid #6E9DC9;
 }
 
