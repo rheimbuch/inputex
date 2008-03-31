@@ -9,22 +9,22 @@ div.inputEx-Field input,select,textarea {
 /**
  * State classes
  */
-div.inputEx-valid input,select,textarea {
+div.inputEx-valid input, div.inputEx-valid select, div.inputEx-valid textarea {
 }
 
-div.inputEx-invalid input,select,textarea {
+div.inputEx-invalid input, div.inputEx-valid select, div.inputEx-valid textarea {
 	border: 1px solid #DD7870;
 }
 
-div.inputEx-required input,select,textarea {
+div.inputEx-required input, div.inputEx-valid select, div.inputEx-valid textarea {
 	border: 1px solid #DD7870;
 }
 
-div.inputEx-empty input,select,textarea {
+div.inputEx-empty input, div.inputEx-valid select, div.inputEx-valid textarea {
 	border: 1px solid #B5B8C8;
 }
 
-div.inputEx-focused input,select,textarea {
+div.inputEx-focused input, div.inputEx-valid select, div.inputEx-valid textarea {
 	border: 1px solid #6E9DC9;
 }
 
