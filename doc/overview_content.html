@@ -15,17 +15,17 @@
 	<p>There are 4 ways to instanciate a Field :</p>
   <ul>
 		<li>Calling the class constructor (classic) :<br />
-<pre>
+<form><textarea name="code" class="JScript">
 	var field = new inputEx.StringField({name: 'test'});
-</pre></li><br />
+</textarea></form></li><br />
 	  <li>Using the inputEx.buildField function with the "type" construction:<br /> 
-<pre>
+<form><textarea name="code" class="JScript">
 	var field = inputEx.buildField({ type: 'string', inputParams: {name: 'test'} });
-</pre></li><br/>
+</textarea></form></li><br/>
 		<li>Using the inputEx.buildField function with the "fieldClass" construction:<br /> 
-<pre>
+<form><textarea name="code" class="JScript">
 	var field = inputEx.buildField({ fieldClass: inputEx.ColorField, inputParams: {name: 'test'} });
-</pre></li><br />
+</textarea></form></li><br />
 		<li>Through a meta-field (see below)</li>
 	</ul>
 	
@@ -69,9 +69,9 @@
 	</table>
 	
 	<p>To link a class with a "type", we use :</p>
-<pre>
+<form><textarea name="code" class="JScript">
 	inputEx.registerType(inputEx.StringField, 'string');
-</pre>
+</textarea></form>
 	
 	<p></p>
 
@@ -97,7 +97,7 @@
 
 <p></p>
 
-<pre>
+<form><textarea name="code" class="JScript">
 	var field = inputEx.FieldClass({...options...});
 	parentEl.appendChild( field.getEl() );
 	
@@ -108,7 +108,7 @@
 	// or
 		
 	var field = inputEx.FieldClass({...options..., parentEl: 'parentElId'});
-</pre>
+</textarea></form>
 
 <p></p>
 	
@@ -118,11 +118,11 @@
 
 <p>To subscribe this event for a field, use : (see <a href="http://developer.yahoo.com/yui/event/#customevent" target="_new">YUI Custom Events</a> for more informations)</p>
 
-<pre>
+<form><textarea name="code" class="JScript">
 	myField.updatedEvt.subscribe(function(e,value) {
 		// value = new value returned by getValue
 		...code here...
 	}, scope, true);
-</pre>
+</textarea></form>
 
 

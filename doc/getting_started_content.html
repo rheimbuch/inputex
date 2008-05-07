@@ -5,23 +5,38 @@
 
 
 	<ul>
-		<li>Download the inputEx zip file</li>
-		
-		<li>Copy inputex-min.css and inputex-min.js files into your project</li>
-
-		<li>Create a basic form</li>
+		<li><a href="http://code.google.com/p/inputex/downloads/list" target="_new">Download</a> the latest inputEx zip file</li>
+		<li>Copy the <i>build,css,images</i> directories into your project corresponding directories</li>
+		<li>Insert the script and CSS references into your page : (inputEx+YUI)
+			<form><textarea name="code" class="JScript">
+				
+					<!-- YUI utilities -->
+					<script src="http://yui.yahooapis.com/2.5.1/build/utilities/utilities.js" type="text/javascript"></script>
+					<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.1/build/reset-fonts/reset-fonts.css" />
+					<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.1/build/assets/skins/sam/skin.css" />
+					
+					<!-- inputEx -->
+					<script src="inputex/build/inputex-min.js" type="text/javascript"></script>
+					<link  href="inputex/build/inputex-min.css" rel="stylesheet" type="text/css" />
+					
+			</textarea></form>
+		</li>
+		<li>Create a DOM element that will contain your form: 
+			<form><textarea name="code" class="JScript">
+					<div id='myFormContainer'></div>
+			</textarea></form>
+		</li>
+		<li>Create a basic form :
+			
+			<form><textarea name="code" class="JScript">
+				new inputEx.Form({
+					parentEl: 'myFormContainer',
+					fields: [],
+					buttons: []
+				});
+			</textarea></form>
+		</li>
 	</ul>
 
- <p class="subtitle">1. You can use the packed-files</li>
-		- 1 css file
-		- 1 js file
-		
-	+ Some dependencies from YUI
-	+ ths YUI CSS files
-
-	
- 	<p class="subtitle">2. Use the files independently (if you have your own packing method)</p>
-
-	Warning: Those files are required: inputEx.js, Field.js
 
 	
