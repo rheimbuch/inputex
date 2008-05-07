@@ -1,0 +1,482 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>inputEx Documentation - Form.js</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="JsDoc Toolkit 1.4.1" />
+<link href="css/reset-fonts-grids.css" type="text/css" rel="stylesheet" media="all" /> 
+<link href="css/dpSyntaxHighlighter.css" type="text/css" rel="stylesheet" media="all" />
+<link href="css/style.css" type="text/css" rel="stylesheet" media="all" />
+</head>
+<body>
+	
+	<div id="doc3" class="yui-t2">					
+		<div id="hd">
+			
+			
+			<p class='layoutTitle'>inputEx Documentation <span><a href="../../">Back to homepage</a></span></p> 
+			
+			
+			<h3>
+				<a href="./index.html">inputEx Documentation</a> &gt; Form.js
+				<span class="subtitle">1.0.0</span>
+			</h3>
+		
+		</div>
+		<div id="bd">
+			<div id="yui-main">
+				<div class="yui-b">
+<div class="summary description">
+	<p>This is the source view for Form.js</p>
+</div>
+										
+<form>
+	<textarea name="code" class="JScript">﻿/**
+ * @class Create a group of fields within a FORM tag
+ * @extends inputEx.Group
+ * @constructor
+ * @param {Object} options inputEx.Field options object
+ */
+inputEx.Form = function(options) { 
+   inputEx.Form.superclass.constructor.call(this, options);
+};
+YAHOO.extend(inputEx.Form, inputEx.Group);
+
+/**
+ * Adds buttons and set ajax default parameters
+ */
+inputEx.Form.prototype.setOptions = function() {
+   inputEx.Form.superclass.setOptions.call(this);
+   
+   this.buttons = this.options.buttons;
+   
+   if(this.options.ajax) {
+      this.options.ajax.method = this.options.ajax.method || 'POST';
+      this.options.ajax.uri = this.options.ajax.uri || 'default.php';
+      this.options.ajax.callback = this.options.ajax.callback || {};
+      this.options.ajax.callback.scope = this.options.ajax.callback.scope || this;
+   }
+};
+   
+/**
+ * Render the group
+ */
+inputEx.Form.prototype.render = function() {
+   // Create the div wrapper for this group
+  	this.divEl = inputEx.cn('div', {className: 'inputEx-Group'});
+  	   
+  	// Create the FORM element
+   this.form = inputEx.cn('form', {method: this.options.method || 'POST', action: this.options.action || '', className: this.options.className || 'inputEx-Form'});
+   this.divEl.appendChild(this.form);
+
+	// Set the autocomplete attribute to off to disable firefox autocompletion
+	this.form.setAttribute('autocomplete','off');
+   	
+   // Set the name of the form
+   if(this.options.formName) { this.form.name = this.options.formName; }
+  	   
+  	this.renderFields(this.form);
+
+   this.renderButtons();	  
+};
+   
+/**
+ * @method renderButtons
+ * Render the buttons 
+ */
+inputEx.Form.prototype.renderButtons= function() {
+		
+	var button, buttonEl;
+	for(var i = 0 ; i < this.buttons.length ; i++ ) {
+	   button = this.buttons[i];
+	   buttonEl = inputEx.cn('input', {type: button.type, value: button.value});
+	   if( button.onClick ) { buttonEl.onclick = button.onClick; }
+	   this.form.appendChild(buttonEl);
+	}	
+};
+   
+   
+/**
+ * Init the events
+ */
+inputEx.Form.prototype.initEvents = function() {
+   inputEx.Form.superclass.initEvents.call(this);
+
+   // Handle the submit event
+   YAHOO.util.Event.addListener(this.form, 'submit', this.options.onSubmit || this.onSubmit,this,true);
+};
+   
+/**
+ * Intercept the 'onsubmit' event and stop it if !validate
+ * If the ajax option object is set, use YUI async Request to send the form
+ * @param {Event} e The original onSubmit event
+ */
+inputEx.Form.prototype.onSubmit = function(e) {
+	if ( !this.validate() ) {
+		YAHOO.util.Event.stopEvent(e);
+	} 
+	if(this.options.ajax) {
+		YAHOO.util.Event.stopEvent(e);
+	   this.asyncRequest();
+	}
+};
+  
+/**
+ * Send the form value in JSON through an ajax request
+ */
+inputEx.Form.prototype.asyncRequest = function() { 
+	//this.showMask();
+	var postData = "value="+YAHOO.lang.JSON.stringify(this.getValue());
+   YAHOO.util.Connect.asyncRequest(this.options.ajax.method, this.options.ajax.uri, { 
+      success: function(o) {
+         //this.hideMask();
+         if(typeof this.options.ajax.callback.success == "function") {
+            this.options.ajax.callback.success.call(this.options.ajax.callback.scope,o);
+         }
+      }, 
+      
+      failure: function(o) {
+         //this.hideMask();
+         if(typeof this.options.ajax.callback.failure == "function") {
+            this.options.ajax.callback.failure.call(this.options.ajax.callback.scope,o);
+         }
+      }, 
+      
+      scope:this 
+   }, postData);
+};
+  
+/**
+ * Create a Mask over the form
+ *
+inputEx.Form.prototype.renderMask = function() {
+   if(this.maskRendered) return;
+   
+   YAHOO.util.Dom.setStyle(this.divEl, "position", "relative");
+   this.formMask = inputEx.cn('div', {className: 'inputEx-Form-Mask'}, 
+      {
+         display: 'none', 
+         width: YAHOO.util.Dom.getStyle(this.divEl,"width"),
+         height: YAHOO.util.Dom.getStyle(this.divEl,"height"),
+      }, 
+      "<div/><center><br /><img src='../images/spinner.gif'/><br /><span>Envoi en cours...</span></center>");
+   this.divEl.appendChild(this.formMask);
+   this.maskRendered = true;
+};*/
+
+/**
+ * Show the form mask
+ *
+inputEx.Form.prototype.showMask = function() {
+   this.renderMask();
+   this.formMask.style.display = '';
+};
+*/
+
+/**
+ * Hide the form mask
+ *
+inputEx.Form.prototype.hideMask = function() {
+   this.formMask.style.display = 'none';
+};*/
+
+
+/**
+* Register this class as "form" type
+*/
+inputEx.registerType("form", inputEx.Form);</textarea>
+</form>
+					
+					
+					</div>
+			</div>
+			
+			<div class="yui-b">
+				<div class="nav">
+					
+					<div class="module">
+						<h4>Pages</h4>
+						<ul class="content">
+							
+								
+								<li>
+								<a href="index.html">Index</a></li>
+							
+								
+								<li>
+								<a href="getting_started.html">Getting Started</a></li>
+							
+								
+								<li>
+								<a href="overview.html">Overview</a></li>
+							
+								
+								<li>
+								<a href="create_field.html">Field development</a></li>
+							
+								
+								<li>
+								<a href="dom_helpers.html">DOM functions</a></li>
+							
+								
+								<li>
+								<a href="internationalization.html">Internationalization</a></li>
+							
+								
+								<li>
+								<a href="examples.html">Examples</a></li>
+							
+								
+						</ul>
+					</div>
+					
+					<div class="module">
+						<h4>Classes <a href="treeview.html">(treeview)</a></h4>
+						<ul class="content">
+							
+								
+								<li>
+									<a href="Array.html">Array</a></li>
+							
+								
+								<li>
+									<a href="inputEx.html">inputEx</a></li>
+							
+								
+								<li>
+									<a href="inputEx.AutoComplete.html">inputEx.AutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.CheckBox.html">inputEx.CheckBox</a></li>
+							
+								
+								<li>
+									<a href="inputEx.ColorField.html">inputEx.ColorField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.DateField.html">inputEx.DateField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.EmailField.html">inputEx.EmailField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.Field.html">inputEx.Field</a></li>
+							
+								
+								<li>
+									<a href="inputEx.Form.html">inputEx.Form</a></li>
+							
+								
+								<li>
+									<a href="inputEx.FrenchDate.html">inputEx.FrenchDate</a></li>
+							
+								
+								<li>
+									<a href="inputEx.FrenchPhone.html">inputEx.FrenchPhone</a></li>
+							
+								
+								<li>
+									<a href="inputEx.Group.html">inputEx.Group</a></li>
+							
+								
+								<li>
+									<a href="inputEx.HiddenField.html">inputEx.HiddenField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.InPlaceEdit.html">inputEx.InPlaceEdit</a></li>
+							
+								
+								<li>
+									<a href="inputEx.IPv4Field.html">inputEx.IPv4Field</a></li>
+							
+								
+								<li>
+									<a href="inputEx.ListField.html">inputEx.ListField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.PairField.html">inputEx.PairField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.PasswordField.html">inputEx.PasswordField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.RTEField.html">inputEx.RTEField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.SelectField.html">inputEx.SelectField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.StringField.html">inputEx.StringField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.Textarea.html">inputEx.Textarea</a></li>
+							
+								
+								<li>
+									<a href="inputEx.TreeField.html">inputEx.TreeField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.TypeField.html">inputEx.TypeField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.UneditableField.html">inputEx.UneditableField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.UpperCaseField.html">inputEx.UpperCaseField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.UrlField.html">inputEx.UrlField</a></li>
+							
+								
+						</ul>
+					</div>
+					
+					<div class="module">
+						<h4>Files</h4>
+						<ul class="content">
+							
+								
+								<li>
+								<a href="AutoComplete.js.html">AutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="CheckBox.js.html">CheckBox.js</a></li>
+							
+								
+								<li>
+								<a href="ColorField.js.html">ColorField.js</a></li>
+							
+								
+								<li>
+								<a href="DateField.js.html">DateField.js</a></li>
+							
+								
+								<li>
+								<a href="EmailField.js.html">EmailField.js</a></li>
+							
+								
+								<li>
+								<a href="Field.js.html">Field.js</a></li>
+							
+								<li class="selected">
+								
+								<a href="Form.js.html">Form.js</a></li>
+							
+								
+								<li>
+								<a href="fr_messages.js.html">fr_messages.js</a></li>
+							
+								
+								<li>
+								<a href="FrenchDate.js.html">FrenchDate.js</a></li>
+							
+								
+								<li>
+								<a href="FrenchPhone.js.html">FrenchPhone.js</a></li>
+							
+								
+								<li>
+								<a href="Group.js.html">Group.js</a></li>
+							
+								
+								<li>
+								<a href="HiddenField.js.html">HiddenField.js</a></li>
+							
+								
+								<li>
+								<a href="InPlaceEdit.js.html">InPlaceEdit.js</a></li>
+							
+								
+								<li>
+								<a href="inputex.js.html">inputex.js</a></li>
+							
+								
+								<li>
+								<a href="IPv4Field.js.html">IPv4Field.js</a></li>
+							
+								
+								<li>
+								<a href="ListField.js.html">ListField.js</a></li>
+							
+								
+								<li>
+								<a href="PairField.js.html">PairField.js</a></li>
+							
+								
+								<li>
+								<a href="PasswordField.js.html">PasswordField.js</a></li>
+							
+								
+								<li>
+								<a href="RTEField.js.html">RTEField.js</a></li>
+							
+								
+								<li>
+								<a href="SelectField.js.html">SelectField.js</a></li>
+							
+								
+								<li>
+								<a href="StringField.js.html">StringField.js</a></li>
+							
+								
+								<li>
+								<a href="Textarea.js.html">Textarea.js</a></li>
+							
+								
+								<li>
+								<a href="TreeField.js.html">TreeField.js</a></li>
+							
+								
+								<li>
+								<a href="TypeField.js.html">TypeField.js</a></li>
+							
+								
+								<li>
+								<a href="UneditableField.js.html">UneditableField.js</a></li>
+							
+								
+								<li>
+								<a href="UpperCaseField.js.html">UpperCaseField.js</a></li>
+							
+								
+								<li>
+								<a href="UrlField.js.html">UrlField.js</a></li>
+							
+						</ul>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		
+		<div id="ft">
+			<hr/>
+			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 1.4.1 on Tue, 06 May 2008 16:02:49 GMT.
+		</div>
+		
+	</div>
+
+<script src="js/dpSyntaxHighlighter.js" type="text/javascript"></script>
+<script language="javascript"> 
+dp.SyntaxHighlighter.HighlightAll('code');
+</script>
+</body>
+</html>

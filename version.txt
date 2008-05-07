@@ -1,0 +1,92 @@
+ _                   _   _____      
+(_)_ __  _ __  _   _| |_| ____|_  __
+| | '_ \| '_ \| | | | __|  _| \ \/ /		
+| | | | | |_) | |_| | |_| |___ >  < 		version 0.1.0
+|_|_| |_| .__/ \____|\__|_____/_/\_\
+        |_|                         
+
+
+version 0.1.0
+
+- Finish documentation
+	* getting started
+	* Field Development
+
+---------------------------------------------------------------------------------
+
+Ideas:
+
+- more PairField,TreeField Examples
+- InPlaceEdit: uniformiser noms de fonctions : formatValue ici rend du DOM, alors que dans 
+uneditable il faut utiliser formatDOM (formatValue pour texte)                  
+    ou en faire une seule et tester si elle retourne une string ou du DOM ?
+- InputExDb:
+	- des fonctions formatDom et formatValue avec une autodetection de type !
+	- Un getType ou on lui donne n'importe quelle valeur et inputEx trouve le type le plus approprié (mettre des règles dans 	le registerType)	
+	- A model association that would work either [on Gears, on an Ajax database endpoint, in Memory]
+  	+ options (autogenerate SQL)
+	- A importer that could create a form from an object of from SQL
+- FormBuilder: 
+	- recharger la "valeur" du formulaire lorsque on le regénère
+	- rajouter les boutons ( construire un Form au lieu d'un Groupe ?)
+		=> faire inputEx.Form.formOptions	
+	- make a form repository
+	
+- inputExRdf
+- setFocus apres un ajout d'element dans ListField
+- TypeField setValue is not implemented yet
+- supprimmer le spacerUrl 
+- passer les inputEx.macclass.prototype.maFunc en YAHOO.extend(, ,{ maFunc: ...}) (pour l'instant pas possible à cause de la doc)
+- passer compact et indexOf en statiques
+- faire un package avec yui+inputex
+- css styling customization for each field
+- CSS styling: repartir de meilleures bases
+- Builder: retirer tous les paramètres par défaut dans le code generator
+- Examples: make an "updatedEvt" example for each field
+- passer "optional" dans group !
+- typing invite: text when empty
+- Form: aligner les boutons dans les tds
+- do the form for the TypeField Configuration
+- ListField: ajouter des options pour les boutons + et - pour pouvoir faire un champ juste "reordonable"
+- harmoniser les noms des paramètres entre tous les meta-Fields 
+- faire une class meta fields ?
+- Unify meta Fields: Use "subfield" or "subfields" as properties for the created subfield
+ 	* InPlaceEdit
+	* ListField
+	* Autocomplete (not yet)
+	* Group
+	* Form
+	* TreeField
+- use YAHOO.lang.substitute in autocompleter, inplaceedit, and uneditable fields (instead of formatString ?)
+- AutoCompleteField with multiple selection like http://www.interiders.com/wp-content/demos/ProtoAutocompleteList/test.html
+- inputEx: chaque champ défini son type sql et rajouter un ORM gears !!
+- styling CSS as on http://30boxes.com/signup
+- Passer tous les YAHOO.util.Dom.setStyle dans les CSS !
+- un outil pour déterminer les dépendances
+- http://wufoo.com/
+- un Javascript function editor ?? (qui JSlint ;) )
+- Rendering templating engine ? (prédéfinir une liste de 'types' à prévisualiser)
+	utilisé dans le UneditableField, InPlaceEditField
+- get inspired by: http://www.rememberthemilk.com/signup/
+- radio button
+- include templating engine (http://code.google.com/p/trimpath/wiki/JavaScriptTemplates)
+- Faire un composant grid (partir du datatable de YUI ?) mais qui prend une définition de "group" en paramètres
+  pour faire un éditeur avec les in place edits
+- Un "SorterField" pour trier
+- Slider Field (type: integer ?)
+- Array Field (list of objects) (grid)
+- indicateur de solidité du mot de passe
+- Date: integrate DateJs dans un datejs field
+- GeoLocation (with google maps ?)
+- Password: export in SHA1 or MD5
+- add "minlength" and "maxlength" properties on StringField
+- Option qui met le texte du tooltip à droite au lieu de l'icone
+- CAPTCHA !! (http://ajaxian.com/archives/jquery-validation-plugin-v12-updated)
+- Server-side validation
+- Field novaluedisplay: text qui doit être ajouté lorsqu'il n'y a pas de valeur
+- server side image generator field
+- Faire un HTML properties group que l'on peut ajouter à tous les elements dom de la page !!!!!
+   * avec un hover qui met une bordurer comme l'inspecteur de firebug.
+- n-Related Select Boxes: http://pengoworks.com/qforms/docs/examples/n-related_selectboxes.htm
+- grafiti field: http://blog.nihilogic.dk/2008/04/saving-canvas-data-to-image-file.html
+

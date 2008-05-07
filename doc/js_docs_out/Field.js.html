@@ -1,0 +1,592 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>inputEx Documentation - Field.js</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="JsDoc Toolkit 1.4.1" />
+<link href="css/reset-fonts-grids.css" type="text/css" rel="stylesheet" media="all" /> 
+<link href="css/dpSyntaxHighlighter.css" type="text/css" rel="stylesheet" media="all" />
+<link href="css/style.css" type="text/css" rel="stylesheet" media="all" />
+</head>
+<body>
+	
+	<div id="doc3" class="yui-t2">					
+		<div id="hd">
+			
+			
+			<p class='layoutTitle'>inputEx Documentation <span><a href="../../">Back to homepage</a></span></p> 
+			
+			
+			<h3>
+				<a href="./index.html">inputEx Documentation</a> &gt; Field.js
+				<span class="subtitle">1.0.0</span>
+			</h3>
+		
+		</div>
+		<div id="bd">
+			<div id="yui-main">
+				<div class="yui-b">
+<div class="summary description">
+	<p>This is the source view for Field.js</p>
+</div>
+										
+<form>
+	<textarea name="code" class="JScript">/** 
+ * @class An abstract class that contains the shared features for all fields
+ * @constructor
+ * @param {Object} options Options object (see options property)
+ */
+inputEx.Field = function(options) {
+	
+	/**
+	 * All the field constructors use a unique parameter "options".
+	 * <ul>
+    *	  <li>name: the name of the field</li>
+    *	  <li>required: boolean, the field cannot be null if true</li>
+    *	  <li>tooltipIcon: show an icon next to the field and display an error in a tooltip (default false)</li>
+    *   <li>className: CSS class name for the div wrapper (default 'inputEx-Field')</li>
+    *   <li>value: initial value</li>
+    *   <li>parentEl: HTMLElement or String id, append the field to this DOM element</li>
+    * </ul>
+	 */
+	this.options = options || {};
+	
+	// Set the default values of the options
+	this.setOptions();
+	
+	// Call the render of the dom
+	this.render();
+	
+	// Set the initial value
+	if(!YAHOO.lang.isUndefined(this.options.value)) {
+		this.setValue(this.options.value);
+	}
+	
+	/**
+	 * @event
+	 * @param {Any} value The new value of the field
+	 * @desc YAHOO custom event fired when the field is "updated"<br /> subscribe with: this.updatedEvt.subscribe(function(e, params) { var value = params[0]; console.log("updated",value, this.updatedEvt); }, this, true);
+	 */
+	this.updatedEvt = new YAHOO.util.CustomEvent('updated', this);
+	
+	// initialize behaviour events
+	this.initEvents();
+	
+	// set the default styling
+	this.setClassFromState();
+	
+	// append it immediatly to the parent DOM element
+	if(this.options.parentEl) {
+	   if(typeof this.options.parentEl == "string") {
+	     YAHOO.util.Dom.get(this.options.parentEl).appendChild(this.getEl());  
+	   }
+	   else {
+	      this.options.parentEl.appendChild(this.getEl());
+      }
+	}
+};
+
+
+inputEx.Field.prototype = {
+  
+   /**
+    * Set the default values of the options
+    */
+	setOptions: function() {
+   
+      // Define default messages
+	   this.options.messages = this.options.messages || {};
+	   this.options.messages.required = this.options.messages.required || inputEx.messages.required;
+	   this.options.messages.invalid = this.options.messages.invalid || inputEx.messages.invalid;
+	   this.options.messages.valid = this.options.messages.valid || inputEx.messages.valid;
+	
+	   // Other options
+	   this.options.className = this.options.className || 'inputEx-Field';
+	   this.options.required = this.options.required ? true : false;
+	   this.options.tooltipIcon = this.options.tooltipIcon ? true : false;
+	
+	   // The following options are used later:
+	   // + this.options.name
+	   // + this.options.value
+	},
+
+   /**
+    * Default render of the dom element. Create a divEl that wraps the field.
+    */
+	render: function() {
+	
+	   // Create a DIV element to wrap the editing el and the image
+	   this.divEl = inputEx.cn('div', {className: this.options.className});
+	
+      // Render the component directly
+      this.renderComponent();
+	
+	   // Create a div next to the field with an icon and a tooltip
+	   if( this.options.tooltipIcon ) {
+		   this.tooltipIcon = inputEx.cn('img', {src: inputEx.spacerUrl, className: 'inputEx-Field-stateIcon'});
+		   if(!inputEx.tooltipCount) { inputEx.tooltipCount = 0; }
+   	   this.tooltip = new YAHOO.widget.Tooltip('inputEx-tooltip-'+(inputEx.tooltipCount++), { context: this.tooltipIcon, text:"" }); 
+		   this.divEl.appendChild(this.tooltipIcon);
+	   }
+	
+	},
+	
+	/**
+	 * Fire the "updated" event (only if the field validated)
+	 * Escape the stack using a setTimeout
+	 */
+	fireUpdatedEvt: function() {
+      if(this.validate()) {
+         // Uses setTimeout to escape the stack (that originiated in an event)
+         var that = this;
+         setTimeout(function() {
+      	   that.updatedEvt.fire(that.getValue());
+         },50);
+      }
+	},
+
+   /**
+    * Render the interface component into this.divEl
+    */
+	renderComponent: function() {
+	},
+
+   /**
+    * The default render creates a div to put in the messages
+    * @return {HTMLElement} divEl The main DIV wrapper
+    */
+	getEl: function() {
+	   return this.divEl;
+	},
+
+   /**
+    * Initialize events of the Input
+    */
+	initEvents: function() {
+	},
+
+   /**
+    * Return the value of the input
+    * @return {Any} value of the field
+    */
+	getValue: function() { 
+	   // override me
+	},
+
+   /**
+    * Function to set the value
+    * @param {Any} value The new value
+    */
+	setValue: function(value) {
+	   // override me
+	},
+
+   /**
+    * Set the styles for valid/invalide state
+    */
+	setClassFromState: function() {
+	
+	   if( this.previousState ) {
+		   YAHOO.util.Dom.removeClass(this.getEl(), 'inputEx-'+this.previousState );
+	   }
+	   this.previousState = this.getState();
+	   YAHOO.util.Dom.addClass(this.getEl(), 'inputEx-'+this.previousState );
+	
+	   this.setToolTipMessage();
+	},
+
+   /**
+    * Get the string for the given state
+    */
+	getStateString: function(state) {
+      if(state == 'required') {
+         return this.options.messages.required;
+      }
+      else if(state == 'invalid') {
+         return this.options.messages.invalid;
+      }
+      else {
+         return this.options.messages.valid;
+      }
+	},
+
+   /**   
+    * Set the tooltip message
+    */ 
+	setToolTipMessage: function() { 
+	   if(this.tooltip) {
+	      var content = "";
+		   if( this.previousState == 'required') {
+			   content = '<div class="inputEx-tooltip-required"></div> <span>'+this.options.messages.required+'</span>';
+		   }
+		   else if( this.previousState == 'invalid') {
+			   content = '<div class="inputEx-tooltip-exclamation"></div> <span>'+this.options.messages.invalid+'</span>';
+		   }
+   	   else {
+   		   content = '<div class="inputEx-tooltip-validated"></div> <span>'+this.options.messages.valid+'</span>';
+   	   }
+   	   this.tooltip.setBody(content);
+	   }
+	},
+
+
+   /**
+    * Returns the current state (given its value)
+    * @return {String} One of the following states: 'empty', 'required', 'valid' or 'invalid'
+    */
+	getState: function() { 
+	   // if the field is empty :
+	   if( this.getValue() === '' ) {
+	      return this.options.required ? inputEx.stateRequired : inputEx.stateEmpty;
+	   }
+	   return this.validate() ? inputEx.stateValid : inputEx.stateInvalid;
+	},
+
+   /**
+    * Validation of the field
+    * @return {Boolean} field validation status (true/false)
+    */
+	validate: function() {
+      return true;
+   },
+
+   /**
+    * Function called on the focus event
+    * @param {Event} e The original event
+    */
+	onFocus: function(e) {
+	   YAHOO.util.Dom.addClass(this.getEl(), 'inputEx-focused');
+	},
+
+   /**
+    * Function called on the blur event
+    * @param {Event} e The original event
+    */
+	onBlur: function(e) {
+	   YAHOO.util.Dom.removeClass(this.getEl(), 'inputEx-focused');
+	},
+
+   /**
+    * onChange event handler
+    * @param {Event} e The original event
+    */
+	onChange: function(e) {
+	   this.setClassFromState();
+      this.fireUpdatedEvt();
+	},
+
+   /**
+    * Close the field and eventually opened popups...
+    */
+	close: function() {
+	},
+
+   /**
+    * Disable the field
+    */
+	disable: function() {
+	},
+
+   /**
+    * Enable the field
+    */
+	enable: function() {
+	}
+
+
+};</textarea>
+</form>
+					
+					
+					</div>
+			</div>
+			
+			<div class="yui-b">
+				<div class="nav">
+					
+					<div class="module">
+						<h4>Pages</h4>
+						<ul class="content">
+							
+								
+								<li>
+								<a href="index.html">Index</a></li>
+							
+								
+								<li>
+								<a href="getting_started.html">Getting Started</a></li>
+							
+								
+								<li>
+								<a href="overview.html">Overview</a></li>
+							
+								
+								<li>
+								<a href="create_field.html">Field development</a></li>
+							
+								
+								<li>
+								<a href="dom_helpers.html">DOM functions</a></li>
+							
+								
+								<li>
+								<a href="internationalization.html">Internationalization</a></li>
+							
+								
+								<li>
+								<a href="examples.html">Examples</a></li>
+							
+								
+						</ul>
+					</div>
+					
+					<div class="module">
+						<h4>Classes <a href="treeview.html">(treeview)</a></h4>
+						<ul class="content">
+							
+								
+								<li>
+									<a href="Array.html">Array</a></li>
+							
+								
+								<li>
+									<a href="inputEx.html">inputEx</a></li>
+							
+								
+								<li>
+									<a href="inputEx.AutoComplete.html">inputEx.AutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.CheckBox.html">inputEx.CheckBox</a></li>
+							
+								
+								<li>
+									<a href="inputEx.ColorField.html">inputEx.ColorField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.DateField.html">inputEx.DateField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.EmailField.html">inputEx.EmailField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.Field.html">inputEx.Field</a></li>
+							
+								
+								<li>
+									<a href="inputEx.Form.html">inputEx.Form</a></li>
+							
+								
+								<li>
+									<a href="inputEx.FrenchDate.html">inputEx.FrenchDate</a></li>
+							
+								
+								<li>
+									<a href="inputEx.FrenchPhone.html">inputEx.FrenchPhone</a></li>
+							
+								
+								<li>
+									<a href="inputEx.Group.html">inputEx.Group</a></li>
+							
+								
+								<li>
+									<a href="inputEx.HiddenField.html">inputEx.HiddenField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.InPlaceEdit.html">inputEx.InPlaceEdit</a></li>
+							
+								
+								<li>
+									<a href="inputEx.IPv4Field.html">inputEx.IPv4Field</a></li>
+							
+								
+								<li>
+									<a href="inputEx.ListField.html">inputEx.ListField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.PairField.html">inputEx.PairField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.PasswordField.html">inputEx.PasswordField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.RTEField.html">inputEx.RTEField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.SelectField.html">inputEx.SelectField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.StringField.html">inputEx.StringField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.Textarea.html">inputEx.Textarea</a></li>
+							
+								
+								<li>
+									<a href="inputEx.TreeField.html">inputEx.TreeField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.TypeField.html">inputEx.TypeField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.UneditableField.html">inputEx.UneditableField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.UpperCaseField.html">inputEx.UpperCaseField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.UrlField.html">inputEx.UrlField</a></li>
+							
+								
+						</ul>
+					</div>
+					
+					<div class="module">
+						<h4>Files</h4>
+						<ul class="content">
+							
+								
+								<li>
+								<a href="AutoComplete.js.html">AutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="CheckBox.js.html">CheckBox.js</a></li>
+							
+								
+								<li>
+								<a href="ColorField.js.html">ColorField.js</a></li>
+							
+								
+								<li>
+								<a href="DateField.js.html">DateField.js</a></li>
+							
+								
+								<li>
+								<a href="EmailField.js.html">EmailField.js</a></li>
+							
+								<li class="selected">
+								
+								<a href="Field.js.html">Field.js</a></li>
+							
+								
+								<li>
+								<a href="Form.js.html">Form.js</a></li>
+							
+								
+								<li>
+								<a href="fr_messages.js.html">fr_messages.js</a></li>
+							
+								
+								<li>
+								<a href="FrenchDate.js.html">FrenchDate.js</a></li>
+							
+								
+								<li>
+								<a href="FrenchPhone.js.html">FrenchPhone.js</a></li>
+							
+								
+								<li>
+								<a href="Group.js.html">Group.js</a></li>
+							
+								
+								<li>
+								<a href="HiddenField.js.html">HiddenField.js</a></li>
+							
+								
+								<li>
+								<a href="InPlaceEdit.js.html">InPlaceEdit.js</a></li>
+							
+								
+								<li>
+								<a href="inputex.js.html">inputex.js</a></li>
+							
+								
+								<li>
+								<a href="IPv4Field.js.html">IPv4Field.js</a></li>
+							
+								
+								<li>
+								<a href="ListField.js.html">ListField.js</a></li>
+							
+								
+								<li>
+								<a href="PairField.js.html">PairField.js</a></li>
+							
+								
+								<li>
+								<a href="PasswordField.js.html">PasswordField.js</a></li>
+							
+								
+								<li>
+								<a href="RTEField.js.html">RTEField.js</a></li>
+							
+								
+								<li>
+								<a href="SelectField.js.html">SelectField.js</a></li>
+							
+								
+								<li>
+								<a href="StringField.js.html">StringField.js</a></li>
+							
+								
+								<li>
+								<a href="Textarea.js.html">Textarea.js</a></li>
+							
+								
+								<li>
+								<a href="TreeField.js.html">TreeField.js</a></li>
+							
+								
+								<li>
+								<a href="TypeField.js.html">TypeField.js</a></li>
+							
+								
+								<li>
+								<a href="UneditableField.js.html">UneditableField.js</a></li>
+							
+								
+								<li>
+								<a href="UpperCaseField.js.html">UpperCaseField.js</a></li>
+							
+								
+								<li>
+								<a href="UrlField.js.html">UrlField.js</a></li>
+							
+						</ul>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		
+		<div id="ft">
+			<hr/>
+			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 1.4.1 on Tue, 06 May 2008 16:02:49 GMT.
+		</div>
+		
+	</div>
+
+<script src="js/dpSyntaxHighlighter.js" type="text/javascript"></script>
+<script language="javascript"> 
+dp.SyntaxHighlighter.HighlightAll('code');
+</script>
+</body>
+</html>

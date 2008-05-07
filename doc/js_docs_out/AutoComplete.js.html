@@ -1,0 +1,576 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>inputEx Documentation - AutoComplete.js</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="JsDoc Toolkit 1.4.1" />
+<link href="css/reset-fonts-grids.css" type="text/css" rel="stylesheet" media="all" /> 
+<link href="css/dpSyntaxHighlighter.css" type="text/css" rel="stylesheet" media="all" />
+<link href="css/style.css" type="text/css" rel="stylesheet" media="all" />
+</head>
+<body>
+	
+	<div id="doc3" class="yui-t2">					
+		<div id="hd">
+			
+			
+			<p class='layoutTitle'>inputEx Documentation <span><a href="../../">Back to homepage</a></span></p> 
+			
+			
+			<h3>
+				<a href="./index.html">inputEx Documentation</a> &gt; AutoComplete.js
+				<span class="subtitle">1.0.0</span>
+			</h3>
+		
+		</div>
+		<div id="bd">
+			<div id="yui-main">
+				<div class="yui-b">
+<div class="summary description">
+	<p>This is the source view for AutoComplete.js</p>
+</div>
+										
+<form>
+	<textarea name="code" class="JScript">/**
+ * @class An autocomplete module
+ * @constructor
+ * @extends inputEx.StringField
+ */
+ 
+inputEx.AutoComplete = function(options) {
+   inputEx.AutoComplete.superclass.constructor.call(this, options);
+};
+
+YAHOO.extend(inputEx.AutoComplete, inputEx.StringField);
+
+/**
+ * Adds autocomplete options
+ */
+inputEx.AutoComplete.prototype.setOptions = function() {
+   
+   this.options.className = this.options.className || 'inputEx-Field inputEx-AutoComplete';
+   
+   inputEx.AutoComplete.superclass.setOptions.call(this);
+   
+   this.options.highlightClass = 'inputEx-AutoComplete-ItemHovered';
+   this.options.timerDelay = this.options.timerDelay || 300;
+   this.options.query = this.options.query || null;
+   this.options.queryMinLength = this.options.queryMinLength || 2;
+   this.options.displayEl = this.options.displayEl || function(val) { return inputEx.cn('div', null, null, val); };
+};
+
+/**
+ * Render the hidden list element
+ */
+inputEx.AutoComplete.prototype.renderComponent = function() {
+   
+   inputEx.AutoComplete.superclass.renderComponent.call(this);
+   
+   // Render the list :
+   this.listEl = inputEx.cn('div', {className: 'inputEx-AutoComplete-List'}, {display: 'none'});
+   this.divEl.appendChild(this.listEl);
+};
+
+/**
+ * Register some additional events
+ */
+inputEx.AutoComplete.prototype.initEvents = function() {
+   inputEx.AutoComplete.superclass.initEvents.call(this);
+   
+   YAHOO.util.Event.addListener(this.listEl, "click", this.validateItem, this, true);
+   YAHOO.util.Event.addListener(this.listEl, "mouseover", this.onListMouseOver, this, true);
+   
+   YAHOO.util.Event.addListener(this.el, "keydown", this.onKeyDown, this, true);
+};
+
+
+/**
+ * Listen for up/down keys
+ */
+inputEx.AutoComplete.prototype.onKeyDown = function(e) {
+   
+   // up/down keys
+   if( e.keyCode == 40 || e.keyCode == 38) {
+   
+      var pos = -1;
+      for(var i = 0 ; i < this.listEl.childNodes.length ; i++) {
+         if(this.listEl.childNodes[i]==this.highlightedItem) {
+            pos = i;
+            break;
+         }
+      }
+   
+      var lastPos = this.listEl.childNodes.length-1;
+      var indexItemToHighlight = (e.keyCode == 40) ? (pos < lastPos ? pos+1 : 0) : (pos != 0 ? pos-1 : lastPos);
+      var liItem = this.listEl.childNodes[indexItemToHighlight];
+            
+      if(liItem) {
+         this.highlightItem(liItem);
+         YAHOO.util.Event.stopEvent(e);
+      }
+   }
+   
+};
+
+
+/**
+ * Start the typing timer on Input
+ */
+inputEx.AutoComplete.prototype.onInput = function(e) { 
+   inputEx.AutoComplete.superclass.onInput.call(this, e);
+   
+   // Key enter
+   if(e.keyCode == 13) {
+      YAHOO.util.Event.stopEvent(e);
+      this.validateItem();
+	   return;
+   }
+   
+   
+   if( e.keyCode == 40 || e.keyCode == 38) {
+      return;
+   }
+   
+   
+   /**
+    * If this is a normal key, make the query
+    */
+   
+   // trim whitespaces (remove spaces at beginning and end of string)
+   var value = this.getValue().replace(/^\s+/g, '').replace(/\s+$/g, ''); 
+
+   if(value.length >= this.options.queryMinLength ) {
+      this.resetTimer();
+   }
+   else {
+      this.stopTimer();
+      this.hideList();
+   }
+   
+};
+
+/**
+ * Validate the item
+ */
+inputEx.AutoComplete.prototype.validateItem = function() {
+   
+   var pos = -1;
+   for(var i = 0 ; i < this.listEl.childNodes.length ; i++) {
+      if(this.listEl.childNodes[i]==this.highlightedItem) {
+         pos = i;
+         break;
+      }
+   }
+   if(pos == -1) { return; }
+   
+   this.setValue( this.options.displayAutocompleted.call(this, this.listValues[pos]) );
+   this.hideList();
+};
+
+/**
+ * Hide the list
+ */
+inputEx.AutoComplete.prototype.hideList = function() {
+   this.listEl.style.display = 'none';
+};
+
+/**
+ * Show the list
+ */
+inputEx.AutoComplete.prototype.showList = function() {
+ this.listEl.style.display = '';
+};
+
+/**
+ * Run the query function
+ */
+inputEx.AutoComplete.prototype.queryList = function(value) {
+   this.options.query.call(this, value);
+};
+
+/**
+ * Function to populate the list
+ */
+inputEx.AutoComplete.prototype.updateList = function(list) {
+   
+   this.listValues = list;
+   
+   this.listEl.innerHTML = "";
+   
+   // Call a rendering function:
+   for(var i = 0 ; i < list.length ; i++) {
+      var el = inputEx.cn('div', {className: 'inputEx-AutoComplete-Item'});
+      el.appendChild( this.options.displayEl.call(this,list[i]) );
+      this.listEl.appendChild(el);
+   }
+   
+   // Make the list visible
+   this.showList();
+};
+
+/**
+ * The timer is used to wait a little before sending the request, so that we don't send too much requests.
+ */
+inputEx.AutoComplete.prototype.resetTimer = function() {
+   if( this.timer ) {
+      clearTimeout(this.timer);
+   }
+   var that = this;
+   this.timer = setTimeout(function() { that.timerEnd(); }, this.options.timerDelay);
+};
+
+
+inputEx.AutoComplete.prototype.stopTimer = function() {
+   if( this.timer ) {
+      clearTimeout(this.timer);
+   }
+};
+
+/**
+ * Send the request when the timer ends.
+ */
+inputEx.AutoComplete.prototype.timerEnd = function() {
+   var value = this.getValue().replace(/^\s+/g, '').replace(/\s+$/g, ''); 
+	
+   this.queryList(value);
+};
+
+
+
+inputEx.AutoComplete.prototype.onBlur = function(e) {
+   inputEx.AutoComplete.superclass.onBlur.call(this, e);
+   //console.log("blur",e);
+   
+   // TODO: we must do something like this
+   // but it is fired before the click event !
+   //this.hideList();
+};
+
+
+/**
+ * Set the highlighted item
+ */
+inputEx.AutoComplete.prototype.highlightItem = function(liItem) {
+   this.toggleHighlightItem(this.highlightedItem, false);
+   this.toggleHighlightItem(liItem, true);
+   this.highlightedItem = liItem;
+};
+
+
+/**
+ * Hightlight or unhighlight an item from the list
+ */
+inputEx.AutoComplete.prototype.toggleHighlightItem = function(liItem, highlight) {
+   if(highlight) {
+     YAHOO.util.Dom.addClass(liItem, this.options.highlightClass);
+   }
+   else {
+     YAHOO.util.Dom.removeClass(liItem, this.options.highlightClass);
+   }
+};
+
+/**
+ * Highlight the overed item
+ */ 
+inputEx.AutoComplete.prototype.onListMouseOver = function(e) {
+   var target = YAHOO.util.Event.getTarget(e);
+   if( YAHOO.util.Dom.hasClass(target, 'inputEx-AutoComplete-Item') ) {
+      this.highlightItem(target);
+   }
+};
+</textarea>
+</form>
+					
+					
+					</div>
+			</div>
+			
+			<div class="yui-b">
+				<div class="nav">
+					
+					<div class="module">
+						<h4>Pages</h4>
+						<ul class="content">
+							
+								
+								<li>
+								<a href="index.html">Index</a></li>
+							
+								
+								<li>
+								<a href="getting_started.html">Getting Started</a></li>
+							
+								
+								<li>
+								<a href="overview.html">Overview</a></li>
+							
+								
+								<li>
+								<a href="create_field.html">Field development</a></li>
+							
+								
+								<li>
+								<a href="dom_helpers.html">DOM functions</a></li>
+							
+								
+								<li>
+								<a href="internationalization.html">Internationalization</a></li>
+							
+								
+								<li>
+								<a href="examples.html">Examples</a></li>
+							
+								
+						</ul>
+					</div>
+					
+					<div class="module">
+						<h4>Classes <a href="treeview.html">(treeview)</a></h4>
+						<ul class="content">
+							
+								
+								<li>
+									<a href="Array.html">Array</a></li>
+							
+								
+								<li>
+									<a href="inputEx.html">inputEx</a></li>
+							
+								
+								<li>
+									<a href="inputEx.AutoComplete.html">inputEx.AutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.CheckBox.html">inputEx.CheckBox</a></li>
+							
+								
+								<li>
+									<a href="inputEx.ColorField.html">inputEx.ColorField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.DateField.html">inputEx.DateField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.EmailField.html">inputEx.EmailField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.Field.html">inputEx.Field</a></li>
+							
+								
+								<li>
+									<a href="inputEx.Form.html">inputEx.Form</a></li>
+							
+								
+								<li>
+									<a href="inputEx.FrenchDate.html">inputEx.FrenchDate</a></li>
+							
+								
+								<li>
+									<a href="inputEx.FrenchPhone.html">inputEx.FrenchPhone</a></li>
+							
+								
+								<li>
+									<a href="inputEx.Group.html">inputEx.Group</a></li>
+							
+								
+								<li>
+									<a href="inputEx.HiddenField.html">inputEx.HiddenField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.InPlaceEdit.html">inputEx.InPlaceEdit</a></li>
+							
+								
+								<li>
+									<a href="inputEx.IPv4Field.html">inputEx.IPv4Field</a></li>
+							
+								
+								<li>
+									<a href="inputEx.ListField.html">inputEx.ListField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.PairField.html">inputEx.PairField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.PasswordField.html">inputEx.PasswordField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.RTEField.html">inputEx.RTEField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.SelectField.html">inputEx.SelectField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.StringField.html">inputEx.StringField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.Textarea.html">inputEx.Textarea</a></li>
+							
+								
+								<li>
+									<a href="inputEx.TreeField.html">inputEx.TreeField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.TypeField.html">inputEx.TypeField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.UneditableField.html">inputEx.UneditableField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.UpperCaseField.html">inputEx.UpperCaseField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.UrlField.html">inputEx.UrlField</a></li>
+							
+								
+						</ul>
+					</div>
+					
+					<div class="module">
+						<h4>Files</h4>
+						<ul class="content">
+							
+								<li class="selected">
+								
+								<a href="AutoComplete.js.html">AutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="CheckBox.js.html">CheckBox.js</a></li>
+							
+								
+								<li>
+								<a href="ColorField.js.html">ColorField.js</a></li>
+							
+								
+								<li>
+								<a href="DateField.js.html">DateField.js</a></li>
+							
+								
+								<li>
+								<a href="EmailField.js.html">EmailField.js</a></li>
+							
+								
+								<li>
+								<a href="Field.js.html">Field.js</a></li>
+							
+								
+								<li>
+								<a href="Form.js.html">Form.js</a></li>
+							
+								
+								<li>
+								<a href="fr_messages.js.html">fr_messages.js</a></li>
+							
+								
+								<li>
+								<a href="FrenchDate.js.html">FrenchDate.js</a></li>
+							
+								
+								<li>
+								<a href="FrenchPhone.js.html">FrenchPhone.js</a></li>
+							
+								
+								<li>
+								<a href="Group.js.html">Group.js</a></li>
+							
+								
+								<li>
+								<a href="HiddenField.js.html">HiddenField.js</a></li>
+							
+								
+								<li>
+								<a href="InPlaceEdit.js.html">InPlaceEdit.js</a></li>
+							
+								
+								<li>
+								<a href="inputex.js.html">inputex.js</a></li>
+							
+								
+								<li>
+								<a href="IPv4Field.js.html">IPv4Field.js</a></li>
+							
+								
+								<li>
+								<a href="ListField.js.html">ListField.js</a></li>
+							
+								
+								<li>
+								<a href="PairField.js.html">PairField.js</a></li>
+							
+								
+								<li>
+								<a href="PasswordField.js.html">PasswordField.js</a></li>
+							
+								
+								<li>
+								<a href="RTEField.js.html">RTEField.js</a></li>
+							
+								
+								<li>
+								<a href="SelectField.js.html">SelectField.js</a></li>
+							
+								
+								<li>
+								<a href="StringField.js.html">StringField.js</a></li>
+							
+								
+								<li>
+								<a href="Textarea.js.html">Textarea.js</a></li>
+							
+								
+								<li>
+								<a href="TreeField.js.html">TreeField.js</a></li>
+							
+								
+								<li>
+								<a href="TypeField.js.html">TypeField.js</a></li>
+							
+								
+								<li>
+								<a href="UneditableField.js.html">UneditableField.js</a></li>
+							
+								
+								<li>
+								<a href="UpperCaseField.js.html">UpperCaseField.js</a></li>
+							
+								
+								<li>
+								<a href="UrlField.js.html">UrlField.js</a></li>
+							
+						</ul>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		
+		<div id="ft">
+			<hr/>
+			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 1.4.1 on Tue, 06 May 2008 16:02:49 GMT.
+		</div>
+		
+	</div>
+
+<script src="js/dpSyntaxHighlighter.js" type="text/javascript"></script>
+<script language="javascript"> 
+dp.SyntaxHighlighter.HighlightAll('code');
+</script>
+</body>
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>inputEx Documentation - Overview</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="JsDoc Toolkit 1.4.1" />
+<link href="css/reset-fonts-grids.css" type="text/css" rel="stylesheet" media="all" /> 
+<link href="css/dpSyntaxHighlighter.css" type="text/css" rel="stylesheet" media="all" />
+<link href="css/style.css" type="text/css" rel="stylesheet" media="all" />
+</head>
+<body>
+	
+	<div id="doc3" class="yui-t2">					
+		<div id="hd">
+			
+			
+			<p class='layoutTitle'>inputEx Documentation <span><a href="../../">Back to homepage</a></span></p> 
+			
+			
+			<h3>
+				<a href="./index.html">inputEx Documentation</a> &gt; Overview
+				<span class="subtitle">1.0.0</span>
+			</h3>
+		
+		</div>
+		<div id="bd">
+			<div id="yui-main">
+				<div class="yui-b"><div class="page">
+<h2>Overview</h2>
+
+	<p>inputEx is built around the <b>Field</b> class. It is an <b>abstract</b> class (we <i>never</i> instantiate it).<br/>
+		 All the other field classes inherits directly or indirectly from this base class. (see diagram below)</p>
+	
+	<center>
+		<img src="../images/inputEx-class-diagram.png" />
+	</center>
+
+	<p></p>
+
+<h2>Instantiating a Field / the "type" property :</h2>
+	
+	<p>There are 4 ways to instanciate a Field :</p>
+  <ul>
+		<li>Calling the class constructor (classic) :<br />
+<pre>
+	var field = new inputEx.StringField({name: 'test'});
+</pre></li><br />
+	  <li>Using the inputEx.buildField function with the "type" construction:<br /> 
+<pre>
+	var field = inputEx.buildField({ type: 'string', inputParams: {name: 'test'} });
+</pre></li><br/>
+		<li>Using the inputEx.buildField function with the "fieldClass" construction:<br /> 
+<pre>
+	var field = inputEx.buildField({ fieldClass: inputEx.ColorField, inputParams: {name: 'test'} });
+</pre></li><br />
+		<li>Through a meta-field (see below)</li>
+	</ul>
+	
+	<p>The default "type" associations :</p>
+	
+<style>
+#associationTypes {
+	margin-left: 40px;
+}
+#associationTypes td {
+	width: 200px;
+}
+#associationTypes tr.odd {
+	background-color: #aaaaff;
+}
+</style>
+	<table id="associationTypes">
+		<tbody>
+			
+			<tr class="odd"><td>boolean</td><td>inputEx.CheckBox</td></tr>
+			<tr><td>color</td><td>inputEx.ColorField</td></tr>
+			<tr class="odd"><td>date</td><td>inputEx.DateField</td></tr>
+			<tr><td>email</td><td>inputEx.EmailField</td></tr>
+			<tr class="odd"><td>form</td><td>inputEx.Form</td></tr>
+			<tr><td>group</td><td>inputEx.Group</td></tr>
+			<tr class="odd"><td>hidden</td><td>inputEx.HiddenField</td></tr>
+			<tr><td>html</td><td>inputEx.RTEField</td></tr>
+			<tr class="odd"><td>inplaceedit</td><td>inputEx.InPlaceEdit</td></tr>
+			<tr><td>IPv4</td><td>inputEx.IPv4Field</td></tr>
+			<tr class="odd"><td>list</td><td>inputEx.ListField</td></tr>
+			<tr><td>pair</td><td>inputEx.PairField</td></tr>
+			<tr class="odd"><td>password</td><td>inputEx.PasswordField</td></tr>
+			<tr><td>select</td><td>inputEx.SelectField</td></tr>
+			<tr class="odd"><td>string</td><td>inputEx.StringField</td></tr>
+			<tr><td>text</td><td>inputEx.Textarea</td></tr>
+			<tr class="odd"><td>type</td><td>inputEx.TypeField</td></tr>
+			<tr><td>uneditable</td><td>inputEx.UneditableField</td></tr>
+			<tr class="odd"><td>url</td><td>inputEx.UrlField</td></tr>
+
+		</tbody>
+	</table>
+	
+	<p>To link a class with a "type", we use :</p>
+<pre>
+	inputEx.registerType(inputEx.StringField, 'string');
+</pre>
+	
+	<p></p>
+
+<h2>Meta-Fields :</h2>
+
+	<p>Some special fields called meta-fields take one or multiple "type" construction objects as configuration.</p>
+
+	<ul>
+		<li><b>Group</b>: A group of fields. It is itself a Field so it can be combined with any other field.</li>
+			
+		<li><b>Form</b>: A group that provide ajax form capabilities.</li>
+
+		 <li><b>List</b>: list of any subfield.</li>
+	
+		 <li><b>InPlaceEdit</b>: Make any subfield inplace-editable.</li>
+
+ 		 <li><b>Typefield</b>: A special field that returns a config object to create an instance through the inputEx.buildField function. We create a form for each Field class to define the parameters for the specified field.</li>
+		</ul>
+					
+		<p></p>
+
+<h2>Insert a Field into the DOM :</h2>
+
+<p></p>
+
+<pre>
+	var field = inputEx.FieldClass({...options...});
+	parentEl.appendChild( field.getEl() );
+	
+	// or
+	
+	var field = inputEx.FieldClass({...options..., parentEl: parentEl});
+	
+	// or
+		
+	var field = inputEx.FieldClass({...options..., parentEl: 'parentElId'});
+</pre>
+
+<p></p>
+	
+<h2>The "updated" event :</h2>
+
+<p>All the fields fire the same event when they are "updated".</p>
+
+<p>To subscribe this event for a field, use : (see <a href="http://developer.yahoo.com/yui/event/#customevent" target="_new">YUI Custom Events</a> for more informations)</p>
+
+<pre>
+	myField.updatedEvt.subscribe(function(e,value) {
+		// value = new value returned by getValue
+		...code here...
+	}, scope, true);
+</pre>
+
+
+</div></div>
+			</div>
+			
+			<div class="yui-b">
+				<div class="nav">
+					
+					<div class="module">
+						<h4>Pages</h4>
+						<ul class="content">
+							
+								
+								<li>
+								<a href="index.html">Index</a></li>
+							
+								
+								<li>
+								<a href="getting_started.html">Getting Started</a></li>
+							
+								<li class="selected">
+								
+								<a href="overview.html">Overview</a></li>
+							
+								
+								<li>
+								<a href="create_field.html">Field development</a></li>
+							
+								
+								<li>
+								<a href="dom_helpers.html">DOM functions</a></li>
+							
+								
+								<li>
+								<a href="internationalization.html">Internationalization</a></li>
+							
+								
+								<li>
+								<a href="examples.html">Examples</a></li>
+							
+								
+						</ul>
+					</div>
+					
+					<div class="module">
+						<h4>Classes <a href="treeview.html">(treeview)</a></h4>
+						<ul class="content">
+							
+								
+								<li>
+									<a href="Array.html">Array</a></li>
+							
+								
+								<li>
+									<a href="inputEx.html">inputEx</a></li>
+							
+								
+								<li>
+									<a href="inputEx.AutoComplete.html">inputEx.AutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.CheckBox.html">inputEx.CheckBox</a></li>
+							
+								
+								<li>
+									<a href="inputEx.ColorField.html">inputEx.ColorField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.DateField.html">inputEx.DateField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.EmailField.html">inputEx.EmailField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.Field.html">inputEx.Field</a></li>
+							
+								
+								<li>
+									<a href="inputEx.Form.html">inputEx.Form</a></li>
+							
+								
+								<li>
+									<a href="inputEx.FrenchDate.html">inputEx.FrenchDate</a></li>
+							
+								
+								<li>
+									<a href="inputEx.FrenchPhone.html">inputEx.FrenchPhone</a></li>
+							
+								
+								<li>
+									<a href="inputEx.Group.html">inputEx.Group</a></li>
+							
+								
+								<li>
+									<a href="inputEx.HiddenField.html">inputEx.HiddenField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.InPlaceEdit.html">inputEx.InPlaceEdit</a></li>
+							
+								
+								<li>
+									<a href="inputEx.IPv4Field.html">inputEx.IPv4Field</a></li>
+							
+								
+								<li>
+									<a href="inputEx.ListField.html">inputEx.ListField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.PairField.html">inputEx.PairField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.PasswordField.html">inputEx.PasswordField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.RTEField.html">inputEx.RTEField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.SelectField.html">inputEx.SelectField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.StringField.html">inputEx.StringField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.Textarea.html">inputEx.Textarea</a></li>
+							
+								
+								<li>
+									<a href="inputEx.TreeField.html">inputEx.TreeField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.TypeField.html">inputEx.TypeField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.UneditableField.html">inputEx.UneditableField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.UpperCaseField.html">inputEx.UpperCaseField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.UrlField.html">inputEx.UrlField</a></li>
+							
+								
+						</ul>
+					</div>
+					
+					<div class="module">
+						<h4>Files</h4>
+						<ul class="content">
+							
+								
+								<li>
+								<a href="AutoComplete.js.html">AutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="CheckBox.js.html">CheckBox.js</a></li>
+							
+								
+								<li>
+								<a href="ColorField.js.html">ColorField.js</a></li>
+							
+								
+								<li>
+								<a href="DateField.js.html">DateField.js</a></li>
+							
+								
+								<li>
+								<a href="EmailField.js.html">EmailField.js</a></li>
+							
+								
+								<li>
+								<a href="Field.js.html">Field.js</a></li>
+							
+								
+								<li>
+								<a href="Form.js.html">Form.js</a></li>
+							
+								
+								<li>
+								<a href="fr_messages.js.html">fr_messages.js</a></li>
+							
+								
+								<li>
+								<a href="FrenchDate.js.html">FrenchDate.js</a></li>
+							
+								
+								<li>
+								<a href="FrenchPhone.js.html">FrenchPhone.js</a></li>
+							
+								
+								<li>
+								<a href="Group.js.html">Group.js</a></li>
+							
+								
+								<li>
+								<a href="HiddenField.js.html">HiddenField.js</a></li>
+							
+								
+								<li>
+								<a href="InPlaceEdit.js.html">InPlaceEdit.js</a></li>
+							
+								
+								<li>
+								<a href="inputex.js.html">inputex.js</a></li>
+							
+								
+								<li>
+								<a href="IPv4Field.js.html">IPv4Field.js</a></li>
+							
+								
+								<li>
+								<a href="ListField.js.html">ListField.js</a></li>
+							
+								
+								<li>
+								<a href="PairField.js.html">PairField.js</a></li>
+							
+								
+								<li>
+								<a href="PasswordField.js.html">PasswordField.js</a></li>
+							
+								
+								<li>
+								<a href="RTEField.js.html">RTEField.js</a></li>
+							
+								
+								<li>
+								<a href="SelectField.js.html">SelectField.js</a></li>
+							
+								
+								<li>
+								<a href="StringField.js.html">StringField.js</a></li>
+							
+								
+								<li>
+								<a href="Textarea.js.html">Textarea.js</a></li>
+							
+								
+								<li>
+								<a href="TreeField.js.html">TreeField.js</a></li>
+							
+								
+								<li>
+								<a href="TypeField.js.html">TypeField.js</a></li>
+							
+								
+								<li>
+								<a href="UneditableField.js.html">UneditableField.js</a></li>
+							
+								
+								<li>
+								<a href="UpperCaseField.js.html">UpperCaseField.js</a></li>
+							
+								
+								<li>
+								<a href="UrlField.js.html">UrlField.js</a></li>
+							
+						</ul>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		
+		<div id="ft">
+			<hr/>
+			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 1.4.1 on Tue, 06 May 2008 16:02:50 GMT.
+		</div>
+		
+	</div>
+
+<script src="js/dpSyntaxHighlighter.js" type="text/javascript"></script>
+<script language="javascript"> 
+dp.SyntaxHighlighter.HighlightAll('code');
+</script>
+</body>
+</html>

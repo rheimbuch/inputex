@@ -1,0 +1,42 @@
+
+<h2>How to create your own fields</h2>
+
+<p>Once you've grasped the main ideas behind inputEx, you'll probably want to create your own fields. Here are some hints  on how to do so :</p>
+
+	
+<div>
+	<p><b>Choose the right parent Class !</b></p>
+	
+	<p>look at the classes to pick the closest one<br />
+		 if there's none, you schould inherit from inputEx.Field</p>
+</div>
+	
+
+
+<div>
+	<p><b>Override methods</b></p>
+
+	<p>setOptions
+	- function to override options	
+	render :
+	- this is basically the rendering of your component
+	renderComponent
+	</p>
+</div>
+
+
+	
+<div>
+	<p><b>updatedEvt</b></p>
+	
+	<p>- fire this event to indicate modifications with this.fireUpdatedEvt();</p>
+</div>
+	
+	
+<div>
+	<p><b>Code conventions</b></p>
+	
+	<p>- use YAHOO.extend to extend classes
+	- cannot use the third argument of YAHOO.extend to override/add methods because of JSDoc</p>
+	
+</div>
