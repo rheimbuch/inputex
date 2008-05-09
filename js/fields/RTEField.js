@@ -23,13 +23,35 @@ inputEx.RTEField.prototype.render = function() {
    this.el = inputEx.cn('textarea', {id: id});
    inputEx.RTEfieldsNumber += 1;
    this.divEl.appendChild(this.el);
-      
-   this.editor = new YAHOO.widget.Editor(id, {
+
+   //If not set, set it to empty
+   if (!this.options.opts) {
+        this.options.opts = {};
+   }
+   //This is the default config
+   var _def = {
        height: '300px',
        width: '522px',
        dompath: true
-   });
-   this.editor.render();
+   };
+   //The options object
+   var o = this.options.opts;
+   //Walk it to set the new config object
+   for (var i in o) {
+        if (YAHOO.lang.hasOwnProperty(o, i)) {
+            _def[i] = o[i];
+        }
+   }
+   //Check if options.type is present and set to simple, if it is use SimpleEditor instead of Editor
+   var editorType = ((this.options.type && (this.options.type == 'simple')) ? YAHOO.widget.SimpleEditor : YAHOO.widget.Editor);
+
+   //If this fails then the code is not loaded on the page
+   if (editorType) {
+       this.editor = new editorType(id, _def);
+       this.editor.render();
+   } else {
+    alert('Editor is not on the page');
+   }
 };
 
 inputEx.RTEField.prototype.setValue = function(value) {
