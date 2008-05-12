@@ -17,6 +17,7 @@ inputEx.UrlField.prototype.setOptions = function() {
    inputEx.UrlField.superclass.setOptions.call(this);
    this.options.className = "inputEx-Field inputEx-UrlField";
    this.options.messages.invalid = inputEx.messages.invalidUrl;
+   this.options.favicon = YAHOO.lang.isUndefined(this.options.favicon) ? true : this.options.favicon;
 };
    
 /**
@@ -39,8 +40,10 @@ inputEx.UrlField.prototype.render = function() {
    this.el.size = 27;
 
    // Create the favicon image tag
-   this.favicon = inputEx.cn('img');
-   this.divEl.insertBefore(this.favicon,this.el);
+   if(this.options.favicon) {
+      this.favicon = inputEx.cn('img');
+      this.divEl.insertBefore(this.favicon,this.el);
+   }
 };
    
 /**
@@ -49,20 +52,21 @@ inputEx.UrlField.prototype.render = function() {
 inputEx.UrlField.prototype.validate = function() {
    var url = this.getValue().match(inputEx.regexps.url);   
       
-   var newSrc = url ? (url[0]+"/favicon.ico") : inputEx.spacerUrl;
-      
-   if(newSrc != this.favicon.src) {
+   if(this.options.favicon) {
+      var newSrc = url ? (url[0]+"/favicon.ico") : inputEx.spacerUrl;
+      if(newSrc != this.favicon.src) {
          
-      // Hide the favicon
-      inputEx.sn(this.favicon, null, {visibility: 'hidden'});
+         // Hide the favicon
+         inputEx.sn(this.favicon, null, {visibility: 'hidden'});
       
-      // Change the src
-      this.favicon.src = newSrc;
+         // Change the src
+         this.favicon.src = newSrc;
       
-      // Set the timer to launch displayFavicon in 1s
-      if(this.timer) { clearTimeout(this.timer); }
-	   var that = this;
-	   this.timer = setTimeout(function(){that.displayFavicon();}, 1000);
+         // Set the timer to launch displayFavicon in 1s
+         if(this.timer) { clearTimeout(this.timer); }
+	      var that = this;
+	      this.timer = setTimeout(function(){that.displayFavicon();}, 1000);
+	   }
    }
       	
    return !!url;

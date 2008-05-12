@@ -97,9 +97,6 @@ Existing Fields enhancements :
 	  uneditable il faut utiliser formatDOM (formatValue pour texte)                  
      ou en faire une seule et tester si elle retourne une string ou du DOM ?
 
-- UrlField: 
-	* make favicon optional otherwise it breaks https
-
 - PasswordField: 
 	* output export in SHA1 or MD5
 	* password strength indicator

@@ -43,6 +43,26 @@
 </div>
 
 
+<!-- Example 2 -->
+<div class='exampleDiv'>
+
+	<p class="title">favicon option</p>
+	
+	<p>If you use https, you might need to remove the favicon option (or provide a proxy).</p>
+
+	<div class='demoContainer' id='container2'></div>
+
+	<div class='codeContainer'>
+		<form>
+		<textarea name="code" class="JScript">
+			new inputEx.UrlField({parentEl: 'container2', tooltipIcon: true, favicon: false});
+		</textarea>
+		</form>
+	</div>
+
+</div>
+
+
 <!-- YUI Library -->
 <script type="text/javascript" src="../lib/yui/yahoo/yahoo-min.js"></script> 
 <script type="text/javascript" src="../lib/yui/dom/dom-min.js"></script> 
@@ -70,6 +90,10 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 
 	// Example 1
 	new inputEx.UrlField({parentEl: 'container1', tooltipIcon: true});
+	
+	
+	// Example 2
+	new inputEx.UrlField({parentEl: 'container2', tooltipIcon: true, favicon: false});
 	
 });
 
