@@ -21,7 +21,7 @@ YAHOO.extend(inputEx.ListField,inputEx.Field);
 inputEx.ListField.prototype.setOptions = function() {
    inputEx.ListField.superclass.setOptions.call(this);
    this.options.className='inputEx-Field inputEx-ListField';
-   this.options.sortable = (typeof this.options.sortable == "undefined") ? false : this.options.sortable;
+   this.options.sortable = YAHOO.lang.isUndefined(this.options.sortable) ? false : this.options.sortable;
    
    this.options.elementType = this.options.elementType || {type: 'string'};
    

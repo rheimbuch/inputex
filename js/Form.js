@@ -97,14 +97,14 @@ inputEx.Form.prototype.asyncRequest = function() {
    YAHOO.util.Connect.asyncRequest(this.options.ajax.method, this.options.ajax.uri, { 
       success: function(o) {
          //this.hideMask();
-         if(typeof this.options.ajax.callback.success == "function") {
+         if( YAHOO.lang.isFunction(this.options.ajax.callback.success) ) {
             this.options.ajax.callback.success.call(this.options.ajax.callback.scope,o);
          }
       }, 
       
       failure: function(o) {
          //this.hideMask();
-         if(typeof this.options.ajax.callback.failure == "function") {
+         if( YAHOO.lang.isFunction(this.options.ajax.callback.failure) ) {
             this.options.ajax.callback.failure.call(this.options.ajax.callback.scope,o);
          }
       }, 

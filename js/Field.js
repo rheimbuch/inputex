@@ -44,7 +44,7 @@ inputEx.Field = function(options) {
 	
 	// append it immediatly to the parent DOM element
 	if(this.options.parentEl) {
-	   if(typeof this.options.parentEl == "string") {
+	   if( YAHOO.lang.isString(this.options.parentEl) ) {
 	     YAHOO.util.Dom.get(this.options.parentEl).appendChild(this.getEl());  
 	   }
 	   else {

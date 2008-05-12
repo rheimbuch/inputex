@@ -5,7 +5,7 @@
 |_|_| |_| .__/ \____|\__|_____/_/\_\
         |_|                         
 
-
+- url: favicon optional otherwise it breaks https
 - more PairField,TreeField Examples
 - InPlaceEdit: uniformiser noms de fonctions : formatValue ici rend du DOM, alors que dans 
 uneditable il faut utiliser formatDOM (formatValue pour texte)                  

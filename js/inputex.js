@@ -20,6 +20,8 @@
  */
 var inputEx =  {
    
+   VERSION: "0.1.1b",
+   
    /**
     * Url to the spacer image. This url schould be changed according to your project directories
     * @type String
@@ -81,10 +83,10 @@ var inputEx =  {
     * @static
     */
    registerType: function(type, field) {
-      if(typeof type != "string") {
+      if(!YAHOO.lang.isString(type)) {
          throw new Error("inputEx.registerType: first argument must be a string");
       }
-      if(typeof field != "function") {
+      if(!YAHOO.lang.isFunction(field)) {
          throw new Error("inputEx.registerType: second argument must be a function");
       }
       this.typeClasses[type] = field;
@@ -96,7 +98,7 @@ var inputEx =  {
     * @static
     */
    getFieldClass: function(type) {
-      if(typeof this.typeClasses[type] == "function") {
+      if(YAHOO.lang.isFunction(this.typeClasses[type])) {
          return this.typeClasses[type];
       }
       return null;
@@ -156,7 +158,7 @@ var inputEx =  {
       if(domAttributes){
          for(var i in domAttributes){
             var domAttribute = domAttributes[i];
-            if(typeof (domAttribute)=="function"){
+            if( YAHOO.lang.isFunction(domAttribute) ){
                continue;
             }
             /*if(YAHOO.env.ua.ie && i=="type" && (el.tagName=="INPUT"||el.tagName=="SELECT") ){
@@ -183,7 +185,7 @@ var inputEx =  {
 
       if(styleAttributes){
          for(var i in styleAttributes){
-            if(typeof (styleAttributes[i])=="function"){
+            if( YAHOO.lang.isFunction(styleAttributes[i]) ){
                continue;
             }
             if(el.style[i]!=styleAttributes[i]){

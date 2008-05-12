@@ -77,10 +77,10 @@ inputEx.InPlaceEdit.prototype.onVisuMouseOut = function() {
 inputEx.InPlaceEdit.prototype.renderVisuDiv = function() {
    this.formattedContainer = inputEx.cn('div', {className: 'inputEx-InPlaceEdit-formattedContainer'});
       
-   if(typeof this.options.formatDom == "function") {
+   if( YAHOO.lang.isFunction(this.options.formatDom) ) {
       this.formattedContainer.appendChild( this.options.formatDom(this.options.value) );
    }
-   else if(typeof this.options.formatValue == "function") {
+   else if( YAHOO.lang.isFunction(this.options.formatValue) ) {
       this.formattedContainer.innerHTML = this.options.formatValue(this.options.value);
    }
    else {
@@ -156,12 +156,12 @@ inputEx.InPlaceEdit.prototype.openEditor = function() {
    }
       
    // Set focus in the element !
-   if(this.editorField.el && typeof this.editorField.el.focus == "function") {
+   if(this.editorField.el && YAHOO.lang.isFunction(this.editorField.el.focus) ) {
       this.editorField.el.focus();
    }
    
    // Select the content
-   if(this.editorField.el && typeof this.editorField.el.setSelectionRange == "function" && (!!value && !!value.length)) {
+   if(this.editorField.el && YAHOO.lang.isFunction(this.editorField.el.setSelectionRange) && (!!value && !!value.length)) {
       this.editorField.el.setSelectionRange(0,value.length);
    }
       
@@ -177,16 +177,16 @@ inputEx.InPlaceEdit.prototype.setValue = function(value) {
    // Store the value
 	this.value = value;
    	
-   if(typeof value == "undefined" || value == "") {
+   if(YAHOO.lang.isUndefined(value) || value == "") {
       this.value = "(Edit me)";
    }
    	
 	// TODO: Display Value only 
-   if(typeof this.options.formatDom == "function") {
+   if(YAHOO.lang.isFunction(this.options.formatDom)) {
       this.formattedContainer.innerHTML = "";
       this.formattedContainer.appendChild( this.options.formatDom(this.value) );
    }
-   else if(typeof this.options.formatValue == "function") {
+   else if( YAHOO.lang.isFunction(this.options.formatValue) ) {
       this.formattedContainer.innerHTML = this.options.formatValue(this.value);
    }
    else {
