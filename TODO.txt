@@ -11,26 +11,24 @@ Architecture/Code/various:
 
 - ues YAHOO.namespace to define the namespace
 	The namespace would be YAHOO.inputEx instead of inputEx (we can provide an alias for backward compatibility)
+
 - use the YUI Loader
+
 - Make inputEx.Field extend YAHOO.widget.Element:
    * events => EventProvider
    * field options => AttributeProvider
    * use shortcuts
-- We've got 2 functions passer compact et indexOf en statiques
-- harmoniser les noms des paramètres entre tous les meta-Fields 
-- faire une class meta fields ?
+
 - Unify meta Fields: Use "subfield" or "subfields" as properties for the created subfield
- 	* InPlaceEdit
-	* ListField
-	* Autocomplete (not yet)
-	* Group
-	* Form
-	* TreeField
-- supprimmer le spacerUrl
-- passer "optional" dans group ! (and multi-group options)
+	(InPlaceEdit,ListField,Autocomplete,Group,Form,TreeField,PairField...)
+	
+- get rid of the "spacerUrl" hack if possible
+
 - use YAHOO.lang.substitute in autocompleter, inplaceedit, and uneditable fields (instead of formatString ?)
+
 - Rendering templating engine ? (prédéfinir une liste de 'types' à prévisualiser)
 	utilisé dans le UneditableField, InPlaceEditField
+	
 - include templating engine (http://code.google.com/p/trimpath/wiki/JavaScriptTemplates)
   pour faire un éditeur avec les in place edits
 
@@ -43,27 +41,24 @@ Examples :
 ----------
 
 - more PairField,TreeField Examples
-- RTEField: show usage of SimpleEditor
 - Examples: make an "updatedEvt" example for each field
 
 CSS Styling :
 ------------
 
-- skinnable
+- skinnable (make the actual to skin-sam)
 - use CSS floats instead of tables to order elements
 - make classNames out of field names so users can tailor fields/groups/form
-- css styling customization for each field
-- CSS styling: repartir de meilleures bases
+  (css styling customization for each field)
 - Passer tous les YAHOO.util.Dom.setStyle dans les CSS !
-- styling CSS as on http://30boxes.com/signup
-- get inspired by: http://www.rememberthemilk.com/signup/
+
+Nice form CSS :  http://30boxes.com/signup, http://www.rememberthemilk.com/signup/
 
 Optimization :
 --------------
 
 - CSS sprite images
-- wrap components in aninymous functions
-- passer les inputEx.macclass.prototype.maFunc en YAHOO.extend(, ,{ maFunc: ...}) (pour l'instant pas possible à cause de la doc)
+- passer les inputEx.macclass.prototype.maFunc en YAHOO.extend(, ,{ maFunc: ...}) (doc issue)
 - switch to jGrouseDoc ? (or implement better things in JsDocToolkit)
 - enclose components in anonymous functions
 - use prototype={} or YAHOO.extend(...,...,{ methods: });
@@ -71,35 +66,55 @@ Optimization :
 Existing Fields enhancements :
 ------------------------------
 
-- fieldset in forms
-- make group options "groupable" (multi group options)
-- Field: Option qui met le texte du tooltip à droite au lieu de l'icone
-- AutoCompleteField with multiple selection like http://www.interiders.com/wp-content/demos/ProtoAutocompleteList/test.html
-- Form: Server-side validation ?
-- typing invite: text when empty
-- Form: aligner les boutons dans les tds
-- do the form for the TypeField Configuration
-- InPlaceEdit: uniformiser noms de fonctions : formatValue ici rend du DOM, alors que dans 
-uneditable il faut utiliser formatDOM (formatValue pour texte)                  
-    ou en faire une seule et tester si elle retourne une string ou du DOM ?
-- setFocus apres un ajout d'element dans ListField
-- TypeField setValue is not implemented yet
-- ListField: ajouter des options pour les boutons + et - pour pouvoir faire un champ juste "reordonable"
-- add "minlength" and "maxlength" properties on StringField
-- UrlField: favicon optional otherwise it breaks https
+- Field:
+	* Put the status text in a floating div instead of the tooltip (allows to put it on the right or bottom of the field)
+
+- StringField:
+	* typing invite: text (and style) when empty
+	* add "minlength" and "maxlength" optional properties
+	
+- Group:
+	* move the "optional" option into inputEx.Group
+	* make group options "groupable" (multi group options)
+	* make entries with "float" instead of TDs
+
+- Form:
+  	* fieldset in forms
+	* align buttons
+	* Server-side validation ?
+
+- ListField:
+	* setFocus inside an added element
+	* make buttons '+' and '-' optional so we have a sortable field
+
+- AutoCompleteField:
+ 	* implement multiple selection like http://www.interiders.com/wp-content/demos/ProtoAutocompleteList/test.html
+
+- TypeField:
+	* do the form for the TypeField Configuration
+	* many groupOptions forms to update
+	* setValue is not implemented yet
+	
+- InPlaceEdit: 
+	* uniformiser noms de fonctions : formatValue ici rend du DOM, alors que dans 
+	  uneditable il faut utiliser formatDOM (formatValue pour texte)                  
+     ou en faire une seule et tester si elle retourne une string ou du DOM ?
+
+- UrlField: 
+	* make favicon optional otherwise it breaks https
+
 - PasswordField: 
-		* export in SHA1 or MD5
-		* indicateur de solidité du mot de passe
-- Field novaluedisplay: text qui doit être ajouté lorsqu'il n'y a pas de valeur
+	* output export in SHA1 or MD5
+	* password strength indicator
 
 New Fields :
 ------------
 
+- Slider Field (type: integer ?)
 - Un "SorterField" pour trier
 - Date: integrate DateJs dans un datejs field
 - GeoLocation (with google maps ?)
 - radio button
-- Slider Field (type: integer ?)
 - Array Field (list of objects) (grid)
 - n-Related Select Boxes: http://pengoworks.com/qforms/docs/examples/n-related_selectboxes.htm
 - server side image generator field

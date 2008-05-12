@@ -25,18 +25,14 @@ inputEx.DateField.prototype.validate = function() {
    if ( isNaN(parseInt(ladate[0])) || isNaN(parseInt(ladate[1])) || isNaN(parseInt(ladate[2]))) { return false; }
    var formatSplit = this.options.dateFormat.split("/");
    if (ladate[ formatSplit.indexOf('Y') ].length!=4) { return false; } // Avoid 3-digits years...
-   var d = parseInt(ladate[ formatSplit.indexOf('d') ],10);
-   var Y = parseInt(ladate[ formatSplit.indexOf('Y') ],10);
-   var m = parseInt(ladate[ formatSplit.indexOf('m') ],10)-1;
+   var d = parseInt(ladate[ inputEx.indexOf('d',formatSplit) ],10);
+   var Y = parseInt(ladate[ inputEx.indexOf('Y',formatSplit) ],10);
+   var m = parseInt(ladate[ inputEx.indexOf('m',formatSplit) ],10)-1;
    var unedate = new Date(Y,m,d);
    var annee = unedate.getFullYear();
    return ((unedate.getDate() == d) && (unedate.getMonth() == m) && (annee == Y));
 };
 
-/*
-inputEx.DateField.prototype.render = function() {
-   	inputEx.DateField.superclass.render.call(this);
-};*/
    
 /**
  * Format the date according to options.dateFormat
@@ -74,13 +70,12 @@ inputEx.DateField.prototype.getValue = function() {
    if (this.el.value === '') { return '';}
    var ladate = this.el.value.split("/");
    var formatSplit = this.options.dateFormat.split('/');
-   var d = parseInt(ladate[ formatSplit.indexOf('d') ],10);
-   var Y = parseInt(ladate[ formatSplit.indexOf('Y') ],10);
-   var m = parseInt(ladate[ formatSplit.indexOf('m') ],10)-1;
+   var d = parseInt(ladate[ inputEx.indexOf('d',formatSplit) ],10);
+   var Y = parseInt(ladate[ inputEx.indexOf('Y',formatSplit) ],10);
+   var m = parseInt(ladate[ inputEx.indexOf('m',formatSplit) ],10)-1;
    return (new Date(Y,m,d));
 };
    
-
 
 
 // Specific message for the container

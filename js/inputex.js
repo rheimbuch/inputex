@@ -212,38 +212,39 @@ var inputEx =  {
          el.innerHTML = innerHTML;
       }
       return el;
-   }
+   },
    
-};
-
-
-
-if(!Array.prototype.indexOf) {
+   
    /**
     * Find the position of the given element. (This method is not available in IE 6)
+    * @static
     * @param {Object} el Value to search
+    * @param {Array} arr The array to search
     * @return {number} Element position, -1 if not found
     */
-   Array.prototype.indexOf = function(el) {
-      for(var i = 0 ;i < this.length ; i++) {
-         if(this[i] == el) return i;
+   indexOf: function(el,arr) {
+      var l=arr.length,i;
+      for(i = 0 ;i < l ; i++) {
+         if(arr[i] == el) return i;
       }
       return -1;
-   };
-}
+   },
 
-if(!Array.prototype.compact) {
+   
    /**
-    * Create a new array without the falsy elements
-    * @return {Array} Array without falsy elements
+    * Create a new array without the null or undefined values
+    * @static
+    * @param {Array} arr The array to compact
+    * @return {Array} The new array
     */
-   Array.prototype.compact = function() {
-      var n = [];
-      for(var i = 0 ; i < this.length ; i++) {
-         if(this[i]) {
-            n.push(this[i]);
+   compactArray: function(arr) {
+      var n = [], l=arr.length,i;
+      for(i = 0 ; i < l ; i++) {
+         if( !YAHOO.lang.isNull(arr[i]) && !YAHOO.lang.isUndefined(arr[i]) ) {
+            n.push(arr[i]);
          }
       }
       return n;
-   };
-}
+   }
+   
+};

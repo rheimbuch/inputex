@@ -289,7 +289,7 @@ inputEx.ListField.prototype.removeElement = function(index) {
    var elementDiv = this.subFields[index].getEl().parentNode;
       
    this.subFields[index] = undefined;
-   this.subFields = this.subFields.compact();
+   this.subFields = inputEx.compactArray(this.subFields);
       
    // Remove the element
    elementDiv.parentNode.removeChild(elementDiv);
