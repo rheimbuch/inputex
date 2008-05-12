@@ -5,11 +5,112 @@
 |_|_| |_| .__/ \____|\__|_____/_/\_\
         |_|                         
 
-- url: favicon optional otherwise it breaks https
+
+Architecture/Code/various: 
+--------------------------
+
+- ues YAHOO.namespace to define the namespace
+	The namespace would be YAHOO.inputEx instead of inputEx (we can provide an alias for backward compatibility)
+- use the YUI Loader
+- Make inputEx.Field extend YAHOO.widget.Element:
+   * events => EventProvider
+   * field options => AttributeProvider
+   * use shortcuts
+- We've got 2 functions passer compact et indexOf en statiques
+- harmoniser les noms des paramètres entre tous les meta-Fields 
+- faire une class meta fields ?
+- Unify meta Fields: Use "subfield" or "subfields" as properties for the created subfield
+ 	* InPlaceEdit
+	* ListField
+	* Autocomplete (not yet)
+	* Group
+	* Form
+	* TreeField
+- supprimmer le spacerUrl
+- passer "optional" dans group ! (and multi-group options)
+- use YAHOO.lang.substitute in autocompleter, inplaceedit, and uneditable fields (instead of formatString ?)
+- Rendering templating engine ? (prédéfinir une liste de 'types' à prévisualiser)
+	utilisé dans le UneditableField, InPlaceEditField
+- include templating engine (http://code.google.com/p/trimpath/wiki/JavaScriptTemplates)
+  pour faire un éditeur avec les in place edits
+
+Bugs :
+------
+
+- IE6 bugs: http://groups.google.com/group/inputex/browse_thread/thread/740c02e56701a05c
+	
+Examples :
+----------
+
 - more PairField,TreeField Examples
+- RTEField: show usage of SimpleEditor
+- Examples: make an "updatedEvt" example for each field
+
+CSS Styling :
+------------
+
+- skinnable
+- use CSS floats instead of tables to order elements
+- make classNames out of field names so users can tailor fields/groups/form
+- css styling customization for each field
+- CSS styling: repartir de meilleures bases
+- Passer tous les YAHOO.util.Dom.setStyle dans les CSS !
+- styling CSS as on http://30boxes.com/signup
+- get inspired by: http://www.rememberthemilk.com/signup/
+
+Optimization :
+--------------
+
+- CSS sprite images
+- wrap components in aninymous functions
+- passer les inputEx.macclass.prototype.maFunc en YAHOO.extend(, ,{ maFunc: ...}) (pour l'instant pas possible à cause de la doc)
+- switch to jGrouseDoc ? (or implement better things in JsDocToolkit)
+- enclose components in anonymous functions
+- use prototype={} or YAHOO.extend(...,...,{ methods: });
+
+Existing Fields enhancements :
+------------------------------
+
+- fieldset in forms
+- make group options "groupable" (multi group options)
+- Field: Option qui met le texte du tooltip à droite au lieu de l'icone
+- AutoCompleteField with multiple selection like http://www.interiders.com/wp-content/demos/ProtoAutocompleteList/test.html
+- Form: Server-side validation ?
+- typing invite: text when empty
+- Form: aligner les boutons dans les tds
+- do the form for the TypeField Configuration
 - InPlaceEdit: uniformiser noms de fonctions : formatValue ici rend du DOM, alors que dans 
 uneditable il faut utiliser formatDOM (formatValue pour texte)                  
     ou en faire une seule et tester si elle retourne une string ou du DOM ?
+- setFocus apres un ajout d'element dans ListField
+- TypeField setValue is not implemented yet
+- ListField: ajouter des options pour les boutons + et - pour pouvoir faire un champ juste "reordonable"
+- add "minlength" and "maxlength" properties on StringField
+- UrlField: favicon optional otherwise it breaks https
+- PasswordField: 
+		* export in SHA1 or MD5
+		* indicateur de solidité du mot de passe
+- Field novaluedisplay: text qui doit être ajouté lorsqu'il n'y a pas de valeur
+
+New Fields :
+------------
+
+- Un "SorterField" pour trier
+- Date: integrate DateJs dans un datejs field
+- GeoLocation (with google maps ?)
+- radio button
+- Slider Field (type: integer ?)
+- Array Field (list of objects) (grid)
+- n-Related Select Boxes: http://pengoworks.com/qforms/docs/examples/n-related_selectboxes.htm
+- server side image generator field
+- grafiti field: http://blog.nihilogic.dk/2008/04/saving-canvas-data-to-image-file.html
+- Faire un composant grid (partir du datatable de YUI ?) mais qui prend une définition de "group" en paramètres
+- un Javascript function editor ?? (qui JSlint ;) )
+- CAPTCHA !! (http://ajaxian.com/archives/jquery-validation-plugin-v12-updated)
+
+Applications:
+-------------
+
 - InputExDb:
 	- des fonctions formatDom et formatValue avec une autodetection de type !
 	- Un getType ou on lui donne n'importe quelle valeur et inputEx trouve le type le plus approprié (mettre des règles dans 	le registerType)	
@@ -20,62 +121,10 @@ uneditable il faut utiliser formatDOM (formatValue pour texte)
 	- recharger la "valeur" du formulaire lorsque on le regénère
 	- rajouter les boutons ( construire un Form au lieu d'un Groupe ?)
 		=> faire inputEx.Form.formOptions	
-	- make a form repository
+	- make a form repository	
+	- Builder: retirer tous les paramètres par défaut dans le code generator
 - inputExRdf
-- setFocus apres un ajout d'element dans ListField
-- TypeField setValue is not implemented yet
-- supprimmer le spacerUrl 
-- passer les inputEx.macclass.prototype.maFunc en YAHOO.extend(, ,{ maFunc: ...}) (pour l'instant pas possible à cause de la doc)
-- passer compact et indexOf en statiques
-- faire un package avec yui+inputex
-- css styling customization for each field
-- CSS styling: repartir de meilleures bases
-- Builder: retirer tous les paramètres par défaut dans le code generator
-- Examples: make an "updatedEvt" example for each field
-- passer "optional" dans group !
-- typing invite: text when empty
-- Form: aligner les boutons dans les tds
-- do the form for the TypeField Configuration
-- ListField: ajouter des options pour les boutons + et - pour pouvoir faire un champ juste "reordonable"
-- harmoniser les noms des paramètres entre tous les meta-Fields 
-- faire une class meta fields ?
-- Unify meta Fields: Use "subfield" or "subfields" as properties for the created subfield
- 	* InPlaceEdit
-	* ListField
-	* Autocomplete (not yet)
-	* Group
-	* Form
-	* TreeField
-- use YAHOO.lang.substitute in autocompleter, inplaceedit, and uneditable fields (instead of formatString ?)
-- AutoCompleteField with multiple selection like http://www.interiders.com/wp-content/demos/ProtoAutocompleteList/test.html
-- inputEx: chaque champ défini son type sql et rajouter un ORM gears !!
-- styling CSS as on http://30boxes.com/signup
-- Passer tous les YAHOO.util.Dom.setStyle dans les CSS !
-- un outil pour déterminer les dépendances
-- http://wufoo.com/
-- un Javascript function editor ?? (qui JSlint ;) )
-- Rendering templating engine ? (prédéfinir une liste de 'types' à prévisualiser)
-	utilisé dans le UneditableField, InPlaceEditField
-- get inspired by: http://www.rememberthemilk.com/signup/
-- radio button
-- include templating engine (http://code.google.com/p/trimpath/wiki/JavaScriptTemplates)
-- Faire un composant grid (partir du datatable de YUI ?) mais qui prend une définition de "group" en paramètres
-  pour faire un éditeur avec les in place edits
-- Un "SorterField" pour trier
-- Slider Field (type: integer ?)
-- Array Field (list of objects) (grid)
-- indicateur de solidité du mot de passe
-- Date: integrate DateJs dans un datejs field
-- GeoLocation (with google maps ?)
-- Password: export in SHA1 or MD5
-- add "minlength" and "maxlength" properties on StringField
-- Option qui met le texte du tooltip à droite au lieu de l'icone
-- CAPTCHA !! (http://ajaxian.com/archives/jquery-validation-plugin-v12-updated)
-- Server-side validation
-- Field novaluedisplay: text qui doit être ajouté lorsqu'il n'y a pas de valeur
-- server side image generator field
 - Faire un HTML properties group que l'on peut ajouter à tous les elements dom de la page !!!!!
    * avec un hover qui met une bordurer comme l'inspecteur de firebug.
-- n-Related Select Boxes: http://pengoworks.com/qforms/docs/examples/n-related_selectboxes.htm
-- grafiti field: http://blog.nihilogic.dk/2008/04/saving-canvas-data-to-image-file.html
-
+- inputEx: chaque champ défini son type sql et rajouter un ORM gears !!
+- un outil pour déterminer les dépendances

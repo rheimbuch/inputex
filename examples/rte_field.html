@@ -55,6 +55,40 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
+			var div = YAHOO.util.Dom.get('container2');
+			var htmlField = new inputEx.RTEField({parentEl: div, name: 'test2'});
+			var button1 = inputEx.cn('button', null, null, "SetValue");
+			div.appendChild(button1);
+			YAHOO.util.Event.addListener(button1, "click" ,function() { 
+				htmlField.setValue('RTEField can contain<br ><b>HTML</b> !'); 
+			});
+			var button2 = inputEx.cn('button', null, null, "GetValue");
+			div.appendChild(button2);
+			YAHOO.util.Event.addListener(button2, "click" ,function() { 
+				alert(htmlField.getValue());
+			});
+		</textarea>
+		</form>
+	</div>
+
+</div>
+
+
+
+
+<!-- Example 3 -->
+<div class='exampleDiv'>
+
+	<p class="title">Using the SimpleEditor</p>
+	
+	<p>Use the following code to create a SimpleEditor widget</p>
+
+	<div class='demoContainer' id='container3'></div>
+
+	<div class='codeContainer'>
+		<form>
+		<textarea name="code" class="JScript">
+			new inputEx.RTEField({parentEl: 'container3', name: 'rteField3', type: 'simple'});
 		</textarea>
 		</form>
 	</div>
@@ -93,19 +127,20 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	// Example 2
 	var div = YAHOO.util.Dom.get('container2');
 	var htmlField = new inputEx.RTEField({parentEl: div, name: 'test2'});
-	
 	var button1 = inputEx.cn('button', null, null, "SetValue");
 	div.appendChild(button1);
 	YAHOO.util.Event.addListener(button1, "click" ,function() { 
 		htmlField.setValue('RTEField can contain<br ><b>HTML</b> !'); 
 	});
-	
 	var button2 = inputEx.cn('button', null, null, "GetValue");
 	div.appendChild(button2);
 	YAHOO.util.Event.addListener(button2, "click" ,function() { 
 		alert(htmlField.getValue());
 	});
 });
+
+	// Example 3
+	new inputEx.RTEField({parentEl: 'container3', name: 'rteField3', type: 'simple'});
 
 </script>
 

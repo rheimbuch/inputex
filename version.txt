@@ -17,6 +17,7 @@ not released yet
 	- VERSION added in inputEx object
 	- use YAHOO.lang.isMethods instead of typeof
 	- RTEField: added SimpleEditor support and "opts" option to configure the toolbar (added by Dav Glass)
+		* added a SimpleEditor example on the RTEField page
 
 
 version 0.1.0
