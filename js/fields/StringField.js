@@ -105,6 +105,14 @@ inputEx.StringField.prototype.enable = function() {
    this.el.disabled = false;
 };
 
+/**
+ * Set the focus to this field
+ */
+inputEx.StringField.prototype.focus = function() {
+   if(!!this.el && YAHOO.lang.isFunction(this.el.focus) ) {
+      this.el.focus();
+   }
+};
 
 /**
  * Register this class as "string" type

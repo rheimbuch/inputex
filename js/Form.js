@@ -1,4 +1,8 @@
-﻿/**
+﻿(function () {
+   
+var util = YAHOO.util, lang = YAHOO.lang, Event = YAHOO.util.Event;
+   
+/**
  * @class Create a group of fields within a FORM tag
  * @extends inputEx.Group
  * @constructor
@@ -70,7 +74,7 @@ inputEx.Form.prototype.initEvents = function() {
    inputEx.Form.superclass.initEvents.call(this);
 
    // Handle the submit event
-   YAHOO.util.Event.addListener(this.form, 'submit', this.options.onSubmit || this.onSubmit,this,true);
+   Event.addListener(this.form, 'submit', this.options.onSubmit || this.onSubmit,this,true);
 };
    
 /**
@@ -80,10 +84,10 @@ inputEx.Form.prototype.initEvents = function() {
  */
 inputEx.Form.prototype.onSubmit = function(e) {
 	if ( !this.validate() ) {
-		YAHOO.util.Event.stopEvent(e);
+		Event.stopEvent(e);
 	} 
 	if(this.options.ajax) {
-		YAHOO.util.Event.stopEvent(e);
+		Event.stopEvent(e);
 	   this.asyncRequest();
 	}
 };
@@ -93,18 +97,18 @@ inputEx.Form.prototype.onSubmit = function(e) {
  */
 inputEx.Form.prototype.asyncRequest = function() { 
 	//this.showMask();
-	var postData = "value="+YAHOO.lang.JSON.stringify(this.getValue());
-   YAHOO.util.Connect.asyncRequest(this.options.ajax.method, this.options.ajax.uri, { 
+	var postData = "value="+lang.JSON.stringify(this.getValue());
+   util.Connect.asyncRequest(this.options.ajax.method, this.options.ajax.uri, { 
       success: function(o) {
          //this.hideMask();
-         if( YAHOO.lang.isFunction(this.options.ajax.callback.success) ) {
+         if( lang.isFunction(this.options.ajax.callback.success) ) {
             this.options.ajax.callback.success.call(this.options.ajax.callback.scope,o);
          }
       }, 
       
       failure: function(o) {
          //this.hideMask();
-         if( YAHOO.lang.isFunction(this.options.ajax.callback.failure) ) {
+         if( lang.isFunction(this.options.ajax.callback.failure) ) {
             this.options.ajax.callback.failure.call(this.options.ajax.callback.scope,o);
          }
       }, 
@@ -152,3 +156,8 @@ inputEx.Form.prototype.hideMask = function() {
 * Register this class as "form" type
 */
 inputEx.registerType("form", inputEx.Form);
+
+
+})();
+
+

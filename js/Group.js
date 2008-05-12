@@ -207,6 +207,15 @@ inputEx.Group.prototype.close = function() {
  	      this.inputs[i].close();
    }
 };
+
+/**
+ * Set the focus to the first input in the group
+ */
+inputEx.Group.prototype.focus = function() {
+   if( this.inputs.length > 0 ) {
+      this.inputs[0].focus();
+   }
+};
    
 /**
  * Register this class as "group" type

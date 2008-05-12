@@ -258,7 +258,12 @@ inputEx.Field.prototype = {
     * Enable the field
     */
 	enable: function() {
-	}
+	},
 
+   /**
+    * Focus the field
+    */
+   focus: function() {
+   }
 
 };
