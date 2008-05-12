@@ -14,6 +14,9 @@ version 0.1.1b:
 
 not released yet
 
+ 	- ListField: set the focus to the added element
+	- Added the inputEx.Group.prototype.getFieldByName method
+	- Added a focus method to set the focus on inputs
 	- Moved the two functions (Array.prototype compact & indexOf) into the inputEx namespace as static functions
 	- VERSION added in inputEx object
 	- use YAHOO.lang.isMethods instead of typeof

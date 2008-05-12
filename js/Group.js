@@ -216,6 +216,14 @@ inputEx.Group.prototype.focus = function() {
       this.inputs[0].focus();
    }
 };
+
+/**
+ * Return the sub-field instance by its name
+ */
+inputEx.Group.prototype.getFieldByName = function(fieldName) {
+   if( !this.inputsNames.hasOwnProperty(fieldName) ) return null;
+   return this.inputsNames[fieldName];
+};
    
 /**
  * Register this class as "group" type

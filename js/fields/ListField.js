@@ -93,6 +93,7 @@ inputEx.ListField.prototype.getValue = function() {
    
 /**
  * Adds an element
+ * @return {inputEx.Field} SubField added instance
  */
 inputEx.ListField.prototype.addElement = function(value) {
 
@@ -101,6 +102,8 @@ inputEx.ListField.prototype.addElement = function(value) {
       
    // Adds it to the local list
    this.subFields.push(subFieldEl);
+   
+   return subFieldEl;
 };
 
 /**
@@ -111,7 +114,10 @@ inputEx.ListField.prototype.onAddButton = function(e) {
    YAHOO.util.Event.stopEvent(e);
    
    // Add a field with no value: 
-   this.addElement();
+   var subFieldEl = this.addElement();
+   
+   // Focus on this field
+   subFieldEl.focus();
    
    // Fire updated !
    this.fireUpdatedEvt();

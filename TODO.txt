@@ -57,11 +57,9 @@ Nice form CSS :  http://30boxes.com/signup, http://www.rememberthemilk.com/signu
 Optimization :
 --------------
 
-- CSS sprite images
-- passer les inputEx.macclass.prototype.maFunc en YAHOO.extend(, ,{ maFunc: ...}) (doc issue)
-- switch to jGrouseDoc ? (or implement better things in JsDocToolkit)
 - enclose components in anonymous functions
-- use prototype={} or YAHOO.extend(...,...,{ methods: });
+- CSS sprite images
+- use prototype={} or YAHOO.extend(...,...,{ methods: }); (doc issue)
 
 Existing Fields enhancements :
 ------------------------------
@@ -84,7 +82,6 @@ Existing Fields enhancements :
 	* Server-side validation ?
 
 - ListField:
-	* setFocus inside an added element
 	* make buttons '+' and '-' optional so we have a sortable field
 
 - AutoCompleteField:
