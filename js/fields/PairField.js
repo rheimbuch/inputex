@@ -1,3 +1,7 @@
+(function() {
+
+   var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Dom = YAHOO.util.Dom;
+
 /**
  * @class A meta field to put 2 fields on the same line
  * @extends inputEx.Field
@@ -10,21 +14,24 @@ inputEx.PairField = function(options) {
    inputEx.PairField.superclass.constructor.call(this, options);
 };
 
-YAHOO.extend( inputEx.PairField, inputEx.Field);
-
+lang.extend( inputEx.PairField, inputEx.Field, 
+/**
+ * @scope inputEx.PairField.prototype   
+ */   
+{
 
 /**
  * float left hack
  */
-inputEx.PairField.prototype.render = function() {
+render: function() {
    inputEx.PairField.superclass.render.call(this);
    this.divEl.appendChild( inputEx.cn('div', null, {clear: "both"}) );
-};
+},
    
 /**
  * Render the 2 subfields
  */
-inputEx.PairField.prototype.renderComponent = function() {
+renderComponent: function() {
       
    var leftType = 'string';
    if(this.options.leftFieldOptions.type) { leftType = this.options.leftFieldOptions.type; }
@@ -37,45 +44,46 @@ inputEx.PairField.prototype.renderComponent = function() {
    this.elLeft = new leftFieldClass(this.options.leftFieldOptions.inputParams || {});
    this.elRight = new rightFieldClass(this.options.rightFieldOptions.inputParams || {});
 
-   YAHOO.util.Dom.setStyle(this.elLeft.getEl(), "float", "left");
+   Dom.setStyle(this.elLeft.getEl(), "float", "left");
 
    // Append it to the main element
    this.divEl.appendChild(this.elLeft.getEl());
    var span = inputEx.cn('span', null, null, " : ");
-   YAHOO.util.Dom.setStyle(span, "float", "left");
+   Dom.setStyle(span, "float", "left");
    this.divEl.appendChild(span);
    this.divEl.appendChild(this.elRight.getEl());
    	
-   YAHOO.util.Dom.setStyle(this.elRight.getEl(), "float", "left");
+   Dom.setStyle(this.elRight.getEl(), "float", "left");
       
-};
+},
 
-/*
-inputEx.PairField.prototype.initEvents = function() {
-};*/
    
-inputEx.PairField.prototype.validate = function() {
+validate: function() {
    return (this.elLeft.validate() && this.elRight.validate());
-};
+},
    
 /**
  * Set value
  * @param {Array} val [leftValue, rightValue]
  */
-inputEx.PairField.prototype.setValue = function(val) {
+setValue: function(val) {
    this.elLeft.setValue(val[0]);
    this.elRight.setValue(val[1]);
-};
+},
 
 /**
  * Specific getValue 
  * @return {Array} A 2-element array [leftValue, rightValue]
  */   
-inputEx.PairField.prototype.getValue = function() {
+getValue: function() {
    return [this.elLeft.getValue(),this.elRight.getValue()];
-};
+}
+
+});
 
 /**
  * Register this class as "pair" type
  */
 inputEx.registerType("pair", inputEx.PairField);
+
+})();

@@ -163,39 +163,59 @@ div.inputEx-ListField-ArrowDown {
  * inputEx.Group
  */
 
-td.inputEx-Group-label {
-   padding: 3px;
-   vertical-align: top;
-}
- 
-table.inputEx-Group-Options {
-    margin-left: 20px;
+
+div.inputEx-Group fieldset {
+   /*padding:10px;*/
 }
 
-div.inputEx-Group-Options-Label {
-   cursor: pointer;
+div.inputEx-Group div.inputEx-Group-GroupItem {
+   margin: 2px;
 }
 
-div.inputEx-Group-Options-Label img {
+div.inputEx-Group div.inputEx-Group-GroupItem div.inputEx-Group-label {
+   float: left;
+   width: 100px;
+}
+
+div.inputEx-Group div.inputEx-Group-GroupItem div.inputEx-Group-field {
+   float: left;
+   /*clear: both;*/
+}
+
+div.inputEx-Group div.inputEx-Group-collapseImg {
    width: 14px;
    height: 14px;
    background-image: url(../images/sprite-menu.gif);
    background-color: transparent;
    background-repeat: no-repeat;
    background-attachment: scroll;
-}
-div.inputEx-Group-Options-Label-Collapsed img {
-   background-position: -8px -315px;
+   float: left;
 }
 
-div.inputEx-Group-Options-Label-Collapsed:hover img {
-   background-position: -8px -395px;
+
+div.inputEx-Group fieldset.inputEx-Expanded legend ,
+div.inputEx-Group fieldset.inputEx-Collapsed legend {
+   cursor: pointer;
 }
-div.inputEx-Group-Options-Label-Expanded img {
-   background-position: -8px 4px;
+
+div.inputEx-Group fieldset.inputEx-Expanded legend div.inputEx-Group-collapseImg {
+   background-position: -8px 2px;
 }
-div.inputEx-Group-Options-Label-Expanded:hover img {
-   background-position: -8px -76px;
+
+div.inputEx-Group fieldset.inputEx-Expanded legend:hover div.inputEx-Group-collapseImg {
+   background-position: -8px -78px;
+}
+
+div.inputEx-Group fieldset.inputEx-Collapsed legend div.inputEx-Group-collapseImg {
+   background-position: -8px -317px;
+}
+
+div.inputEx-Group fieldset.inputEx-Collapsed legend:hover div.inputEx-Group-collapseImg {
+   background-position: -8px -397px;
+}
+
+div.inputEx-Group fieldset.inputEx-Collapsed div.inputEx-Group-GroupItem {
+   display: none;
 }
 
 /**
@@ -261,4 +281,15 @@ div.inputEx-AutoComplete div.inputEx-AutoComplete-List div.inputEx-AutoComplete-
 
 div.inputEx-AutoComplete div.inputEx-AutoComplete-List div.inputEx-AutoComplete-ItemHovered {
    background-color: #4173CC;
+}
+
+/**
+ * DateField
+ */
+div.inputEx-DateField input {
+	border: 1px solid #B5B8C8;
+   background: #FFFFFF url(../images/calendar.gif) no-repeat scroll left -1px;
+   width: 90px;
+   height:19px;
+   padding:1px 0pt 0pt 20px;
 }

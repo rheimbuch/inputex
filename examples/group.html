@@ -107,12 +107,71 @@
 
 
 
+<!-- Example 4 -->
+<div class='exampleDiv'>
+
+	<p class="title">Collapsible</p>
+	
+	<p>Collapsible</p>
+
+	<div class='demoContainer' id='container4'></div>
+
+	<div class='codeContainer'>
+		<form>
+		<textarea name="code" class="JScript" cols="60" rows="1">
+			new inputEx.Group({parentEl: 'container4', fields: contactFormFields, legend: 'User Informations', collapsible: true});
+		</textarea>
+		</form>
+	</div>
+
+</div>
+
+
+
+<!-- Example 5 -->
+<div class='exampleDiv'>
+
+	<p class="title">Composition</p>
+	
+	<p>Composition</p>
+
+	<div class='demoContainer' id='container5'></div>
+
+	<div class='codeContainer'>
+		<form>
+		<textarea name="code" class="JScript" cols="60" rows="1">
+			contactFormFields.push({
+				type: 'group',
+				inputParams: {
+					name: 'phone',
+					collapsible: true,
+					legend: 'Phone number',
+					fields: [
+						{label: 'Home', inputParams: {name: 'home' } },
+						{label: 'Business', inputParams: {name: 'business' } },
+						{label: 'Mobile', inputParams: {name: 'mobile' } },
+						{label: 'Fax', inputParams: {name: 'fax' } }
+					]
+				}
+			})
+			var field5 = new inputEx.Group({parentEl: 'container5', fields: contactFormFields});
+			var button5 = inputEx.cn('button', null, null, 'Get value');
+			YAHOO.util.Dom.get('container5').appendChild(button5);
+			YAHOO.util.Event.addListener(button5, "click", function() {
+				alert( YAHOO.lang.JSON.stringify(field5.getValue()) );
+			});
+		</textarea>
+		</form>
+	</div>
+
+</div>
 
 <!-- YUI Library -->
 <script type="text/javascript" src="../lib/yui/yahoo/yahoo-min.js"></script> 
 <script type="text/javascript" src="../lib/yui/dom/dom-min.js"></script> 
 <script type="text/javascript" src="../lib/yui/event/event-min.js"></script>
 <script type="text/javascript" src="../lib/yui/container/container-min.js"></script>
+<script type="text/javascript" src="../lib/yui/json/json-min.js"></script>
 
 
 <!-- YUI For the  Rich text editor -->
@@ -143,13 +202,13 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 
 	// Example 1
 	var contactFormFields = [ 
-			{label: 'Title', type: 'select', optional: true, inputParams: {name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
+			{label: 'Title', type: 'select', inputParams: {name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
 			{label: 'Firstname', inputParams: {name: 'firstname', required: true, value:'Jacques' } }, 
 			{label: 'Lastname', inputParams: {name: 'lastname', value:'Dupont' } }, 
-			{label: 'Email', type:'email', optional: true, inputParams: {name: 'email'}}, 
-			{label: 'Website', type:'url', optional: true, inputParams: {name:'website'}} 
+			{label: 'Email', type:'email', inputParams: {name: 'email'}}, 
+			{label: 'Website', type:'url', inputParams: {name:'website'}} 
 	];
-	new inputEx.Group({parentEl: 'container1', fields: contactFormFields});
+	new inputEx.Group({parentEl: 'container1', fields: contactFormFields, legend: 'User Informations'});
 	
 	
 	// Example 2
@@ -172,6 +231,33 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	group.updatedEvt.subscribe(function() {
 		logDiv.innerHTML += "Updated at "+(new Date())+"<br />";
 	});
+	
+	
+	// Example 4
+	new inputEx.Group({parentEl: 'container4', fields: contactFormFields, legend: 'User Informations', collapsible: true});
+	
+	// Example 5
+	contactFormFields.push({
+		type: 'group',
+		inputParams: {
+			name: 'phone',
+			collapsible: true,
+			legend: 'Phone number',
+			fields: [
+				{label: 'Home', inputParams: {name: 'home' } },
+				{label: 'Business', inputParams: {name: 'business' } },
+				{label: 'Mobile', inputParams: {name: 'mobile' } },
+				{label: 'Fax', inputParams: {name: 'fax' } }
+			]
+		}
+	})
+	var field5 = new inputEx.Group({parentEl: 'container5', fields: contactFormFields});
+	var button5 = inputEx.cn('button', null, null, 'Get value');
+	YAHOO.util.Dom.get('container5').appendChild(button5);
+	YAHOO.util.Event.addListener(button5, "click", function() {
+		alert( YAHOO.lang.JSON.stringify(field5.getValue()) );
+	});
+	
 	
 });
 

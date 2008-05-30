@@ -1,3 +1,7 @@
+(function() {
+
+   var inputEx = YAHOO.inputEx;
+
 /**
  * @class Create a select field
  * options:
@@ -9,12 +13,16 @@
 inputEx.SelectField = function(options) {
 	inputEx.SelectField.superclass.constructor.call(this,options);
  };
-YAHOO.lang.extend(inputEx.SelectField, inputEx.Field);
+YAHOO.lang.extend(inputEx.SelectField, inputEx.Field, 
+/**
+ * @scope inputEx.SelectField.prototype   
+ */   
+{
    
 /**
  * Build a select tag with options
  */
-inputEx.SelectField.prototype.renderComponent = function() {
+renderComponent: function() {
 
    this.el = inputEx.cn('select', {name: this.options.name || ''});
       
@@ -26,19 +34,19 @@ inputEx.SelectField.prototype.renderComponent = function() {
       this.el.appendChild(this.optionEls[i]);
    }
    this.divEl.appendChild(this.el);
-};   
+},  
    
 /**
  * Register the "change" event
  */
-inputEx.SelectField.prototype.initEvents = function() {
+initEvents: function() {
    YAHOO.util.Event.addListener(this.el,"change", this.onChange, this, true);
-};
+},
    
 /**
  * Set the value
  */
-inputEx.SelectField.prototype.setValue = function(value) {
+setValue: function(value) {
    var index = 0;
    var option;
    for(var i = 0 ; i < this.options.selectValues.length ; i++) {
@@ -47,17 +55,20 @@ inputEx.SelectField.prototype.setValue = function(value) {
 		 option.selected = "selected";
       }
    }
-};
+},
    
 /**
  * Return the value
  */
-inputEx.SelectField.prototype.getValue = function() {
+getValue: function() {
    return this.options.selectValues[this.el.selectedIndex];
-};
+}
+
+});
 
 /**
  * Register this class as "select" type
  */
 inputEx.registerType("select", inputEx.SelectField);
 
+})();

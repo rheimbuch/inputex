@@ -1,3 +1,6 @@
+(function() {
+   var inputEx = YAHOO.inputEx, Dom = YAHOO.util.Dom, lang = YAHOO.lang, util = YAHOO.util;
+
 /** 
  * @class An abstract class that contains the shared features for all fields
  * @constructor
@@ -25,7 +28,7 @@ inputEx.Field = function(options) {
 	this.render();
 	
 	// Set the initial value
-	if(!YAHOO.lang.isUndefined(this.options.value)) {
+	if(!lang.isUndefined(this.options.value)) {
 		this.setValue(this.options.value);
 	}
 	
@@ -34,7 +37,7 @@ inputEx.Field = function(options) {
 	 * @param {Any} value The new value of the field
 	 * @desc YAHOO custom event fired when the field is "updated"<br /> subscribe with: this.updatedEvt.subscribe(function(e, params) { var value = params[0]; console.log("updated",value, this.updatedEvt); }, this, true);
 	 */
-	this.updatedEvt = new YAHOO.util.CustomEvent('updated', this);
+	this.updatedEvt = new util.CustomEvent('updated', this);
 	
 	// initialize behaviour events
 	this.initEvents();
@@ -44,8 +47,8 @@ inputEx.Field = function(options) {
 	
 	// append it immediatly to the parent DOM element
 	if(this.options.parentEl) {
-	   if( YAHOO.lang.isString(this.options.parentEl) ) {
-	     YAHOO.util.Dom.get(this.options.parentEl).appendChild(this.getEl());  
+	   if( lang.isString(this.options.parentEl) ) {
+	     Dom.get(this.options.parentEl).appendChild(this.getEl());  
 	   }
 	   else {
 	      this.options.parentEl.appendChild(this.getEl());
@@ -154,10 +157,10 @@ inputEx.Field.prototype = {
 	setClassFromState: function() {
 	
 	   if( this.previousState ) {
-		   YAHOO.util.Dom.removeClass(this.getEl(), 'inputEx-'+this.previousState );
+		   Dom.removeClass(this.getEl(), 'inputEx-'+this.previousState );
 	   }
 	   this.previousState = this.getState();
-	   YAHOO.util.Dom.addClass(this.getEl(), 'inputEx-'+this.previousState );
+	   Dom.addClass(this.getEl(), 'inputEx-'+this.previousState );
 	
 	   this.setToolTipMessage();
 	},
@@ -222,7 +225,7 @@ inputEx.Field.prototype = {
     * @param {Event} e The original event
     */
 	onFocus: function(e) {
-	   YAHOO.util.Dom.addClass(this.getEl(), 'inputEx-focused');
+	   Dom.addClass(this.getEl(), 'inputEx-focused');
 	},
 
    /**
@@ -230,7 +233,7 @@ inputEx.Field.prototype = {
     * @param {Event} e The original event
     */
 	onBlur: function(e) {
-	   YAHOO.util.Dom.removeClass(this.getEl(), 'inputEx-focused');
+	   Dom.removeClass(this.getEl(), 'inputEx-focused');
 	},
 
    /**
@@ -264,6 +267,23 @@ inputEx.Field.prototype = {
     * Focus the field
     */
    focus: function() {
+   },
+   
+   /**
+    * Purge all event listeners and remove the component from the dom
+    */
+   destroy: function() {
+      var el = this.getEl();
+      
+      // Remove from DOM
+      if(Dom.inDocument(el)) {
+         el.parentEl.removeChild(el);
+      }
+      
+      // recursively purge element
+      util.Event.purgeElement(el, true);
    }
 
 };
+
+})();

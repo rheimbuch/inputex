@@ -1,3 +1,6 @@
+(function() {
+   var inputEx = YAHOO.inputEx;
+
 /**
  * @class inputEx.FrenchDate
  * @extends inputEx.DateField
@@ -15,3 +18,5 @@ inputEx.messages.invalidDate = "Date invalide, ex: 27/03/2008";
  * Register this class as "date" type
  */
 inputEx.registerType("date_fr", inputEx.FrenchDate);
+
+})();

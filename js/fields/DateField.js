@@ -1,3 +1,7 @@
+(function() {
+
+   var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Event = YAHOO.util.Event, Dom = YAHOO.util.Dom;
+
 /**
  * @class A Date Field. Add the folowing options: 
  *		- dateFormat: default to 'm/d/Y'
@@ -13,12 +17,21 @@ inputEx.DateField = function(options) {
 	inputEx.DateField.superclass.constructor.call(this,options);
 };
 
-YAHOO.lang.extend(inputEx.DateField, inputEx.StringField);
+lang.extend(inputEx.DateField, inputEx.StringField, 
+/**
+ * @scope inputEx.DateField.prototype   
+ */   
+{
+   
+   setOptions: function() {
+	   this.options.className = this.options.className || 'inputEx-DateField';
+   	inputEx.DateField.superclass.setOptions.call(this);
+   },
    
 /**
  * Specific Date validation
  */
-inputEx.DateField.prototype.validate = function() {
+validate: function() {
    var value = this.el.value;
    var ladate = value.split("/");
    if( ladate.length != 3) { return false; }
@@ -31,14 +44,14 @@ inputEx.DateField.prototype.validate = function() {
    var unedate = new Date(Y,m,d);
    var annee = unedate.getFullYear();
    return ((unedate.getDate() == d) && (unedate.getMonth() == m) && (annee == Y));
-};
+},
 
    
 /**
  * Format the date according to options.dateFormat
  * param {Date} val Date to set
  */
-inputEx.DateField.prototype.setValue = function(val) {
+setValue: function(val) {
 
    // Don't try to parse a date if there is no date
    if( val === '' ) {
@@ -60,12 +73,12 @@ inputEx.DateField.prototype.setValue = function(val) {
    }
 
    this.el.value = str;
-};
+},
    
 /**
  * Return value in DATETIME format (use getFormattedValue() to have 04/10/2002-like format)
  */
-inputEx.DateField.prototype.getValue = function() {
+getValue: function() {
    // Hack to validate if field not required and empty
    if (this.el.value === '') { return '';}
    var ladate = this.el.value.split("/");
@@ -74,9 +87,9 @@ inputEx.DateField.prototype.getValue = function() {
    var Y = parseInt(ladate[ inputEx.indexOf('Y',formatSplit) ],10);
    var m = parseInt(ladate[ inputEx.indexOf('m',formatSplit) ],10)-1;
    return (new Date(Y,m,d));
-};
+}
    
-
+});
 
 // Specific message for the container
 inputEx.messages.invalidDate = "Invalid date, ex: 03/27/2008";
@@ -85,3 +98,5 @@ inputEx.messages.invalidDate = "Invalid date, ex: 03/27/2008";
  * Register this class as "date" type
  */
 inputEx.registerType("date", inputEx.DateField);
+
+})();

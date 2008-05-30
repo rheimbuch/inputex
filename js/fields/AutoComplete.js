@@ -1,19 +1,26 @@
+(function() {
+
+   var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Event = YAHOO.util.Event, Dom = YAHOO.util.Dom;
+
 /**
  * @class An autocomplete module
  * @constructor
  * @extends inputEx.StringField
- */
- 
+ */ 
 inputEx.AutoComplete = function(options) {
    inputEx.AutoComplete.superclass.constructor.call(this, options);
 };
 
-YAHOO.extend(inputEx.AutoComplete, inputEx.StringField);
+lang.extend(inputEx.AutoComplete, inputEx.StringField, 
+/**
+ * @scope inputEx.AutoComplete.prototype   
+ */   
+{
 
 /**
  * Adds autocomplete options
  */
-inputEx.AutoComplete.prototype.setOptions = function() {
+setOptions: function() {
    
    this.options.className = this.options.className || 'inputEx-Field inputEx-AutoComplete';
    
@@ -23,38 +30,38 @@ inputEx.AutoComplete.prototype.setOptions = function() {
    this.options.timerDelay = this.options.timerDelay || 300;
    this.options.query = this.options.query || null;
    this.options.queryMinLength = this.options.queryMinLength || 2;
-   this.options.displayEl = this.options.displayEl || function(val) { return inputEx.cn('div', null, null, val); };
-};
+   //this.options.displayEl = this.options.displayEl || function(val) { return inputEx.cn('div', null, null, val); };
+},
 
 /**
  * Render the hidden list element
  */
-inputEx.AutoComplete.prototype.renderComponent = function() {
+renderComponent: function() {
    
    inputEx.AutoComplete.superclass.renderComponent.call(this);
    
    // Render the list :
    this.listEl = inputEx.cn('div', {className: 'inputEx-AutoComplete-List'}, {display: 'none'});
    this.divEl.appendChild(this.listEl);
-};
+},
 
 /**
  * Register some additional events
  */
-inputEx.AutoComplete.prototype.initEvents = function() {
+initEvents: function() {
    inputEx.AutoComplete.superclass.initEvents.call(this);
    
-   YAHOO.util.Event.addListener(this.listEl, "click", this.validateItem, this, true);
-   YAHOO.util.Event.addListener(this.listEl, "mouseover", this.onListMouseOver, this, true);
+   Event.addListener(this.listEl, "click", this.validateItem, this, true);
+   Event.addListener(this.listEl, "mouseover", this.onListMouseOver, this, true);
    
-   YAHOO.util.Event.addListener(this.el, "keydown", this.onKeyDown, this, true);
-};
+   Event.addListener(this.el, "keydown", this.onKeyDown, this, true);
+},
 
 
 /**
  * Listen for up/down keys
  */
-inputEx.AutoComplete.prototype.onKeyDown = function(e) {
+onKeyDown: function(e) {
    
    // up/down keys
    if( e.keyCode == 40 || e.keyCode == 38) {
@@ -73,22 +80,22 @@ inputEx.AutoComplete.prototype.onKeyDown = function(e) {
             
       if(liItem) {
          this.highlightItem(liItem);
-         YAHOO.util.Event.stopEvent(e);
+         Event.stopEvent(e);
       }
    }
    
-};
+},
 
 
 /**
  * Start the typing timer on Input
  */
-inputEx.AutoComplete.prototype.onInput = function(e) { 
+onInput: function(e) { 
    inputEx.AutoComplete.superclass.onInput.call(this, e);
    
    // Key enter
    if(e.keyCode == 13) {
-      YAHOO.util.Event.stopEvent(e);
+      Event.stopEvent(e);
       this.validateItem();
 	   return;
    }
@@ -114,12 +121,12 @@ inputEx.AutoComplete.prototype.onInput = function(e) {
       this.hideList();
    }
    
-};
+},
 
 /**
  * Validate the item
  */
-inputEx.AutoComplete.prototype.validateItem = function() {
+validateItem: function() {
    
    var pos = -1;
    for(var i = 0 ; i < this.listEl.childNodes.length ; i++) {
@@ -132,33 +139,33 @@ inputEx.AutoComplete.prototype.validateItem = function() {
    
    this.setValue( this.options.displayAutocompleted.call(this, this.listValues[pos]) );
    this.hideList();
-};
+},
 
 /**
  * Hide the list
  */
-inputEx.AutoComplete.prototype.hideList = function() {
+hideList: function() {
    this.listEl.style.display = 'none';
-};
+},
 
 /**
  * Show the list
  */
-inputEx.AutoComplete.prototype.showList = function() {
+showList: function() {
  this.listEl.style.display = '';
-};
+},
 
 /**
  * Run the query function
  */
-inputEx.AutoComplete.prototype.queryList = function(value) {
+queryList: function(value) {
    this.options.query.call(this, value);
-};
+},
 
 /**
  * Function to populate the list
  */
-inputEx.AutoComplete.prototype.updateList = function(list) {
+updateList: function(list) {
    
    this.listValues = list;
    
@@ -167,81 +174,88 @@ inputEx.AutoComplete.prototype.updateList = function(list) {
    // Call a rendering function:
    for(var i = 0 ; i < list.length ; i++) {
       var el = inputEx.cn('div', {className: 'inputEx-AutoComplete-Item'});
-      el.appendChild( this.options.displayEl.call(this,list[i]) );
+      
+      //el.appendChild( this.options.displayEl.call(this,list[i]) );
+      inputEx.renderVisu(this.options.visuItem, list[i], el);
+      
       this.listEl.appendChild(el);
    }
    
    // Make the list visible
    this.showList();
-};
+},
 
 /**
  * The timer is used to wait a little before sending the request, so that we don't send too much requests.
  */
-inputEx.AutoComplete.prototype.resetTimer = function() {
+resetTimer: function() {
    if( this.timer ) {
       clearTimeout(this.timer);
    }
    var that = this;
    this.timer = setTimeout(function() { that.timerEnd(); }, this.options.timerDelay);
-};
+},
 
 
-inputEx.AutoComplete.prototype.stopTimer = function() {
+stopTimer: function() {
    if( this.timer ) {
       clearTimeout(this.timer);
    }
-};
+},
 
 /**
  * Send the request when the timer ends.
  */
-inputEx.AutoComplete.prototype.timerEnd = function() {
+timerEnd: function() {
    var value = this.getValue().replace(/^\s+/g, '').replace(/\s+$/g, ''); 
 	
    this.queryList(value);
-};
+},
 
 
 
-inputEx.AutoComplete.prototype.onBlur = function(e) {
+onBlur: function(e) {
    inputEx.AutoComplete.superclass.onBlur.call(this, e);
    //console.log("blur",e);
    
    // TODO: we must do something like this
    // but it is fired before the click event !
    //this.hideList();
-};
+},
 
 
 /**
  * Set the highlighted item
  */
-inputEx.AutoComplete.prototype.highlightItem = function(liItem) {
+highlightItem: function(liItem) {
    this.toggleHighlightItem(this.highlightedItem, false);
    this.toggleHighlightItem(liItem, true);
    this.highlightedItem = liItem;
-};
+},
 
 
 /**
  * Hightlight or unhighlight an item from the list
  */
-inputEx.AutoComplete.prototype.toggleHighlightItem = function(liItem, highlight) {
+toggleHighlightItem: function(liItem, highlight) {
    if(highlight) {
-     YAHOO.util.Dom.addClass(liItem, this.options.highlightClass);
+     Dom.addClass(liItem, this.options.highlightClass);
    }
    else {
-     YAHOO.util.Dom.removeClass(liItem, this.options.highlightClass);
+     Dom.removeClass(liItem, this.options.highlightClass);
    }
-};
+},
 
 /**
  * Highlight the overed item
  */ 
-inputEx.AutoComplete.prototype.onListMouseOver = function(e) {
-   var target = YAHOO.util.Event.getTarget(e);
-   if( YAHOO.util.Dom.hasClass(target, 'inputEx-AutoComplete-Item') ) {
+onListMouseOver: function(e) {
+   var target = Event.getTarget(e);
+   if( Dom.hasClass(target, 'inputEx-AutoComplete-Item') ) {
       this.highlightItem(target);
    }
-};
+}
+
+});
+
+})();

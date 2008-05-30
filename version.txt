@@ -14,6 +14,21 @@ version 0.1.1b:
 
 not released yet
 
+	- Added DateTimeField (type: datetime)
+	- Added IntegerField (type: integer) and removed the "numbersOnly" option from StringField
+	- Added NumberField (type: number)
+	- Added TimeField	(type: time)
+	- TypeField: implemented setValue, the builder can now "load" a group config
+	- Added a "destroy" method on Field
+	- bugfix: URL are case sensitive
+	- moved the namespace from inputEx to YAHOO.inputEx (declared using YAHOO.namespace) => breaks namespace
+	- enclosed components in anonymous functions with shortcuts
+	- use YAHOO.lang.extend(...,...,{ methods: }) to save some bytes => breaks the API doc generation
+	- moved build/inputex-all.js to build/inputex.js for YUI loader
+	- TypeField/FormBuilder update: includes more options for more fields
+	- Group: removed 'optional' option.  You should instead use a sub-group (that can be collapsible as before)
+	- Group: wrapped in a "fieldset" tag, collapsible option (+example), 
+				use 'CSS float left' instead of tables to position elements => breaks old CSS for groups
  	- UrlField: make favicon optional otherwise it breaks https
  	- ListField: set the focus to the added element
 	- Added the inputEx.Group.prototype.getFieldByName method

@@ -1,3 +1,7 @@
+(function() {
+
+   var inputEx = YAHOO.inputEx;
+
 /**
  * @class Create a password field. Options:
  * -minLength
@@ -8,13 +12,16 @@
 inputEx.PasswordField = function(options) {
 	inputEx.PasswordField.superclass.constructor.call(this,options);
 };
-YAHOO.lang.extend(inputEx.PasswordField, inputEx.StringField);
-
+YAHOO.lang.extend(inputEx.PasswordField, inputEx.StringField, 
+/**
+ * @scope inputEx.PasswordField.prototype   
+ */  
+{
 
 /**
  * Add the password regexp, and the minLength (+set messges)
  */
-inputEx.PasswordField.prototype.setOptions = function() {
+setOptions: function() {
    
    inputEx.PasswordField.superclass.setOptions.call(this);
    
@@ -22,12 +29,12 @@ inputEx.PasswordField.prototype.setOptions = function() {
    //   minLength || 5 not possible because 0 falsy value...
    this.options.minLength = (this.options.minLength == undefined) ? 5 : this.options.minLength;
 	this.options.messages.invalid = inputEx.messages.invalidPassword[0]+this.options.minLength+inputEx.messages.invalidPassword[1];
-};
+},
 
 /**
  * Set the el type to 'password'
  */
-inputEx.PasswordField.prototype.renderComponent = function() {
+renderComponent: function() {
    // IE doesn't want to set the "type" property to 'password' if the node has a parent
    // even if the parent is not in the DOM yet !!
       
@@ -42,21 +49,21 @@ inputEx.PasswordField.prototype.renderComponent = function() {
 
 	// Append it to the main element
 	this.divEl.appendChild(this.el);
-};
+},
    
 /**
  * Set this field as the confirmation for the targeted password field:
  */
-inputEx.PasswordField.prototype.setConfirmationField = function(passwordField) {
+setConfirmationField: function(passwordField) {
    this.options.confirmPasswordField = passwordField;
    this.options.messages.invalid = inputEx.messages.invalidPasswordConfirmation;
    this.options.confirmPasswordField.options.confirmationPasswordField = this;
-};
+},
 
 /**
  * The validation adds the confirmation password field support
  */
-inputEx.PasswordField.prototype.validate = function() {
+validate: function() {
    if(this.options.confirmPasswordField) {
       return (this.options.confirmPasswordField.getValue() == this.getValue());
    }
@@ -65,17 +72,19 @@ inputEx.PasswordField.prototype.validate = function() {
       var lengthValid = this.getValue().length >= this.options.minLength;
       return superValid && lengthValid;
    }
-};
+},
 
 /**
  * Update the state of the confirmation field
  */
-inputEx.PasswordField.prototype.onInput = function(e) {
+onInput: function(e) {
    inputEx.PasswordField.superclass.onInput.call(this,e);
    if(this.options.confirmationPasswordField) {
       this.options.confirmationPasswordField.setClassFromState();
    }
-};
+}
+
+});
 
 // Specific message for the password field
 inputEx.messages.invalidPassword = ["The password schould contain at least "," numbers or caracters"];
@@ -85,3 +94,5 @@ inputEx.messages.invalidPasswordConfirmation = "Passwords are different !";
  * Register this class as "password" type
  */
 inputEx.registerType("password", inputEx.PasswordField);
+
+})();

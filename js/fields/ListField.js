@@ -1,3 +1,7 @@
+(function() {
+
+   var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Event = YAHOO.util.Event, Dom = YAHOO.util.Dom;
+
 /**
  * @class   Meta field to create a list of other fields
  * @extends inputEx.Field
@@ -13,24 +17,28 @@ inputEx.ListField = function(options) {
    
    inputEx.ListField.superclass.constructor.call(this, options);
 };
-YAHOO.extend(inputEx.ListField,inputEx.Field);
+lang.extend(inputEx.ListField,inputEx.Field, 
+/**
+ * @scope inputEx.ListField.prototype   
+ */   
+{
    
 /**
  * Set the ListField classname
  */
-inputEx.ListField.prototype.setOptions = function() {
+setOptions: function() {
    inputEx.ListField.superclass.setOptions.call(this);
    this.options.className='inputEx-Field inputEx-ListField';
-   this.options.sortable = YAHOO.lang.isUndefined(this.options.sortable) ? false : this.options.sortable;
+   this.options.sortable = lang.isUndefined(this.options.sortable) ? false : this.options.sortable;
    
    this.options.elementType = this.options.elementType || {type: 'string'};
    
-};
+},
    
 /**
  * Render the addButton 
  */
-inputEx.ListField.prototype.renderComponent = function() {
+renderComponent: function() {
       
    // Add element button
    this.addButton = inputEx.cn('img', {src: inputEx.spacerUrl, className: 'inputEx-ListField-addButton'});
@@ -42,21 +50,21 @@ inputEx.ListField.prototype.renderComponent = function() {
    // Div element to contain the children
    this.childContainer = inputEx.cn('div', {className: 'inputEx-ListField-childContainer'});
    this.divEl.appendChild(this.childContainer);
-};
+},
    
 /**
  * Handle the click event on the add button
  */
-inputEx.ListField.prototype.initEvents = function() {
-   YAHOO.util.Event.addListener(this.addButton, 'click', this.onAddButton, this, true);
-};
+initEvents: function() {
+   Event.addListener(this.addButton, 'click', this.onAddButton, this, true);
+},
    
 /**
  * Set the value of all the subfields
  */
-inputEx.ListField.prototype.setValue = function(value) {
+setValue: function(value) {
    
-   if(!YAHOO.lang.isArray(value) ) {
+   if(!lang.isArray(value) ) {
       // TODO: throw exceptions ?
       return;
    }
@@ -78,24 +86,24 @@ inputEx.ListField.prototype.setValue = function(value) {
          this.removeElement(value.length);
       }
    }
-};
+},
    
 /**
  * Return the array of values
  */
-inputEx.ListField.prototype.getValue = function() {
+getValue: function() {
    var values = [];
    for(var i = 0 ; i < this.subFields.length ; i++) {
       values[i] = this.subFields[i].getValue();
    }
    return values;
-};
+},
    
 /**
  * Adds an element
  * @return {inputEx.Field} SubField added instance
  */
-inputEx.ListField.prototype.addElement = function(value) {
+addElement: function(value) {
 
    // Render the subField
    var subFieldEl = this.renderSubField(value);
@@ -104,14 +112,14 @@ inputEx.ListField.prototype.addElement = function(value) {
    this.subFields.push(subFieldEl);
    
    return subFieldEl;
-};
+},
 
 /**
  * Add a new element to the list and fire updated event
  * @param {Event} e The original click event
  */
-inputEx.ListField.prototype.onAddButton = function(e) {
-   YAHOO.util.Event.stopEvent(e);
+onAddButton: function(e) {
+   Event.stopEvent(e);
    
    // Add a field with no value: 
    var subFieldEl = this.addElement();
@@ -121,32 +129,32 @@ inputEx.ListField.prototype.onAddButton = function(e) {
    
    // Fire updated !
    this.fireUpdatedEvt();
-};
+},
    
 /**
  * Adds a new line to the List Field
  * @return  {inputEx.Field} instance of the created field (inputEx.Field or derivative)
  */
-inputEx.ListField.prototype.renderSubField = function(value) {
+renderSubField: function(value) {
       
    // Div that wraps the deleteButton + the subField
    var newDiv = inputEx.cn('div');
       
    // Delete button
    var delButton = inputEx.cn('img', {src: inputEx.spacerUrl, className: 'inputEx-ListField-delButton'});
-   YAHOO.util.Event.addListener( delButton, 'click', this.onDelete, this, true);
+   Event.addListener( delButton, 'click', this.onDelete, this, true);
    newDiv.appendChild( delButton );
       
    // Instanciate the new subField
-   var opts = YAHOO.lang.merge({}, this.options.elementType);
+   var opts = lang.merge({}, this.options.elementType);
    if(!opts.inputParams) opts.inputParams = {};
    if(value) opts.inputParams.value = value;
    
    var el = inputEx.buildField(opts);
    
    var subFieldEl = el.getEl();
-   YAHOO.util.Dom.setStyle(subFieldEl, 'margin-left', '4px');
-   YAHOO.util.Dom.setStyle(subFieldEl, 'float', 'left');
+   Dom.setStyle(subFieldEl, 'margin-left', '4px');
+   Dom.setStyle(subFieldEl, 'float', 'left');
    newDiv.appendChild( subFieldEl );
    
    // Subscribe the onChange event to resend it 
@@ -155,9 +163,9 @@ inputEx.ListField.prototype.renderSubField = function(value) {
    // Arrows to order:
    if(this.options.sortable) {
       var arrowUp = inputEx.cn('div', {className: 'inputEx-ListField-Arrow inputEx-ListField-ArrowUp'});
-      YAHOO.util.Event.addListener(arrowUp, 'click', this.onArrowUp, this, true);
+      Event.addListener(arrowUp, 'click', this.onArrowUp, this, true);
       var arrowDown = inputEx.cn('div', {className: 'inputEx-ListField-Arrow inputEx-ListField-ArrowDown'});
-      YAHOO.util.Event.addListener(arrowDown, 'click', this.onArrowDown, this, true);
+      Event.addListener(arrowDown, 'click', this.onArrowDown, this, true);
       newDiv.appendChild( arrowUp );
       newDiv.appendChild( arrowDown );
    }
@@ -168,15 +176,15 @@ inputEx.ListField.prototype.renderSubField = function(value) {
    this.childContainer.appendChild(newDiv);
       
    return el;
-};
+},
    
 /**
  * Switch a subField with its previous one
  * Called when the user clicked on the up arrow of a sortable list
  * @param {Event} e Original click event
  */
-inputEx.ListField.prototype.onArrowUp = function(e) {
-   var childElement = YAHOO.util.Event.getTarget(e).parentNode;
+onArrowUp: function(e) {
+   var childElement = Event.getTarget(e).parentNode;
    
    var previousChildNode = null;
    var nodeIndex = -1;
@@ -206,21 +214,21 @@ inputEx.ListField.prototype.onArrowUp = function(e) {
          this.arrowAnim.stop(true);
       }
       this.arrowAnim = new YAHOO.util.ColorAnim(insertedEl, {backgroundColor: { from: '#eeee33' , to: '#eeeeee' }}, 0.4);
-      this.arrowAnim.onComplete.subscribe(function() { YAHOO.util.Dom.setStyle(insertedEl, 'background-color', ''); });
+      this.arrowAnim.onComplete.subscribe(function() { Dom.setStyle(insertedEl, 'background-color', ''); });
       this.arrowAnim.animate();
       
       // Fire updated !
       this.fireUpdatedEvt();
    }
-};
+},
 
 /**
  * Switch a subField with its next one
  * Called when the user clicked on the down arrow of a sortable list
  * @param {Event} e Original click event
  */
-inputEx.ListField.prototype.onArrowDown = function(e) {
-   var childElement = YAHOO.util.Event.getTarget(e).parentNode;
+onArrowDown: function(e) {
+   var childElement = Event.getTarget(e).parentNode;
    
    var nodeIndex = -1;
    var nextChildNode = null;
@@ -237,7 +245,7 @@ inputEx.ListField.prototype.onArrowDown = function(e) {
       // Remove the line
       var removedEl = this.childContainer.removeChild(childElement);
       // Adds it after the nextChildNode
-      var insertedEl = YAHOO.util.Dom.insertAfter(removedEl, nextChildNode);
+      var insertedEl = Dom.insertAfter(removedEl, nextChildNode);
       
       // Swap this.subFields elements (i,i+1)
       var temp = this.subFields[nodeIndex];
@@ -249,23 +257,23 @@ inputEx.ListField.prototype.onArrowDown = function(e) {
          this.arrowAnim.stop(true);
       }
       this.arrowAnim = new YAHOO.util.ColorAnim(insertedEl, {backgroundColor: { from: '#eeee33' , to: '#eeeeee' }}, 1);
-      this.arrowAnim.onComplete.subscribe(function() { YAHOO.util.Dom.setStyle(insertedEl, 'background-color', ''); });
+      this.arrowAnim.onComplete.subscribe(function() { Dom.setStyle(insertedEl, 'background-color', ''); });
       this.arrowAnim.animate();
       
       // Fire updated !
       this.fireUpdatedEvt();
    }
-};
+},
    
 /**
  * Called when the user clicked on a delete button.
  */
-inputEx.ListField.prototype.onDelete = function(e, params) {
+onDelete: function(e, params) {
       
-   YAHOO.util.Event.stopEvent(e);
+   Event.stopEvent(e);
       
    // Get the wrapping div element
-   var elementDiv = YAHOO.util.Event.getTarget(e).parentNode;
+   var elementDiv = Event.getTarget(e).parentNode;
       
    // Get the index of the subField
    var index = -1;
@@ -286,12 +294,12 @@ inputEx.ListField.prototype.onDelete = function(e, params) {
    }
       
    this.updatedEvt.fire(this.getValue());
-};
+},
    
 /**
  * Remove the line from the dom and the subField from the list.
  */
-inputEx.ListField.prototype.removeElement = function(index) {
+removeElement: function(index) {
    var elementDiv = this.subFields[index].getEl().parentNode;
       
    this.subFields[index] = undefined;
@@ -299,10 +307,13 @@ inputEx.ListField.prototype.removeElement = function(index) {
       
    // Remove the element
    elementDiv.parentNode.removeChild(elementDiv);
-};
+}
+
+});
 
 /**
  * Register this class as "list" type
  */
 inputEx.registerType("list", inputEx.ListField);
 
+})();

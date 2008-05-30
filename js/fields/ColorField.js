@@ -1,3 +1,7 @@
+(function() {
+
+   var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Event = YAHOO.util.Event, Dom = YAHOO.util.Dom;
+
 /**
  * @class Create a Color picker input field
  * @extends inputEx.Field
@@ -7,10 +11,13 @@
 inputEx.ColorField = function(options) {
 	inputEx.ColorField.superclass.constructor.call(this,options);
 };
-YAHOO.lang.extend(inputEx.ColorField, inputEx.Field);
-
+lang.extend(inputEx.ColorField, inputEx.Field, 
+/**
+ * @scope inputEx.ColorField.prototype   
+ */
+{
    
-inputEx.ColorField.prototype.renderComponent = function() {
+renderComponent: function() {
       
    // A hidden input field to store the color code 
    this.el = inputEx.cn('input', {
@@ -27,29 +34,29 @@ inputEx.ColorField.prototype.renderComponent = function() {
    // Elements are bound to divEl
    this.divEl.appendChild(this.el);
    this.divEl.appendChild(this.colorEl);
-};
+},
    
-inputEx.ColorField.prototype.initEvents = function() {
-   YAHOO.util.Event.addListener(this.colorEl, "click", this.toggleColorPopUp, this, true);
-   YAHOO.util.Event.addListener(this.colorEl, "blur", this.closeColorPopUp, this, true);
-};
+initEvents: function() {
+   Event.addListener(this.colorEl, "click", this.toggleColorPopUp, this, true);
+   Event.addListener(this.colorEl, "blur", this.closeColorPopUp, this, true);
+},
    
-inputEx.ColorField.prototype.toggleColorPopUp = function() {
+toggleColorPopUp: function() {
    if( this.visible ) {	this.colorPopUp.style.display = 'none'; }
    else { this.colorPopUp.style.display = 'block'; }
    this.visible = !this.visible;
-};
+},
 
-inputEx.ColorField.prototype.close = function() {
+close: function() {
    this.closeColorPopUp();
-};
+},
 
-inputEx.ColorField.prototype.closeColorPopUp = function() {
+closeColorPopUp: function() {
 	this.colorPopUp.style.display = 'none';
 	this.visible = false;
-};
+},
    
-inputEx.ColorField.prototype.renderPopUp = function() {
+renderPopUp: function() {
 
   // display or not the title
   this.displayTitle = this.options.displayTitle || false;
@@ -89,21 +96,21 @@ inputEx.ColorField.prototype.renderPopUp = function() {
    this.colorPopUp.appendChild(body);
 
    this.divEl.appendChild(this.colorPopUp);
-};
+},
    
-inputEx.ColorField.prototype.setValue = function(value) {
+setValue: function(value) {
    this.el.value = value;
-   YAHOO.util.Dom.setStyle(this.colorEl, 'background-color', this.el.value);
-};
+   Dom.setStyle(this.colorEl, 'background-color', this.el.value);
+},
    
-inputEx.ColorField.prototype.setDefaultColors = function(index) {
+setDefaultColors: function(index) {
 	return inputEx.ColorField.palettes[index-1];
-};
+},
       
 /**
  * This creates a color grid
  */
-inputEx.ColorField.prototype.renderColorGrid = function() {
+renderColorGrid: function() {
 	var table = inputEx.cn('table');
 	var tbody = inputEx.cn('tbody');
 	for(var i = 0; i<this.squaresPerColumn; i++) {
@@ -122,7 +129,7 @@ inputEx.ColorField.prototype.renderColorGrid = function() {
    		 else {
    		   // create active squares
    	      inputEx.sn(square, null, {backgroundColor: '#'+this.colors[i*this.squaresPerLine+j], cursor: 'pointer'});
-   			YAHOO.util.Event.addListener(square, "mousedown", this.onColorClick, this, true );
+   			Event.addListener(square, "mousedown", this.onColorClick, this, true );
    		 }   
           line.appendChild(square);
    	}
@@ -133,14 +140,14 @@ inputEx.ColorField.prototype.renderColorGrid = function() {
    }
    table.appendChild(tbody);
    return table;
-};
+},
    
-inputEx.ColorField.prototype.onColorClick = function(e) {
+onColorClick: function(e) {
       
-	var square = YAHOO.util.Event.getTarget(e);//e.target;
+	var square = Event.getTarget(e);//e.target;
    	
-	var couleur = YAHOO.util.Dom.getStyle(square,'background-color'); 
-	YAHOO.util.Dom.setStyle(this.colorEl,'background-color',couleur);
+	var couleur = Dom.getStyle(square,'background-color'); 
+	Dom.setStyle(this.colorEl,'background-color',couleur);
    	
 	// set hidden field value
 	// Convertit une chaine du style "rgb(255,142,0)" en hexadecimal du style "#FF8E00"
@@ -179,8 +186,9 @@ inputEx.ColorField.prototype.onColorClick = function(e) {
    	
    // Fire updated
    this.fireUpdatedEvt();
-};
-   
+}
+  
+}); 
 
 // Specific message for the container
 inputEx.messages.selectColor = "Select a color :";
@@ -200,3 +208,5 @@ inputEx.ColorField.palettes = [
  * Register this class as "color" type
  */
 inputEx.registerType("color", inputEx.ColorField);
+
+})();

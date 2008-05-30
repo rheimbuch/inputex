@@ -1,3 +1,7 @@
+(function() {
+
+   var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Event = YAHOO.util.Event, Dom = YAHOO.util.Dom;
+
 /**
  * @class Meta field providing in place editing (the editor appears when you click on the formatted value). Options:
  * - formatDom
@@ -11,106 +15,110 @@ inputEx.InPlaceEdit = function(options) {
    inputEx.InPlaceEdit.superclass.constructor.call(this, options);
 };
 
-YAHOO.extend(inputEx.InPlaceEdit, inputEx.Field);
+lang.extend(inputEx.InPlaceEdit, inputEx.Field, 
+/**
+ * @scope inputEx.InPlaceEdit.prototype   
+ */   
+{
 
-/**
- * Override render to create 2 divs: the visualization one, and the edit in place form
- */
-inputEx.InPlaceEdit.prototype.render = function() {
+   /**
+    * Override render to create 2 divs: the visualization one, and the edit in place form
+    */
+   render: function() {
       
-	// Create a DIV element to wrap the editing el and the image
-	this.divEl = inputEx.cn('div', {className: this.options.className});
+	   // Create a DIV element to wrap the editing el and the image
+	   this.divEl = inputEx.cn('div', {className: this.options.className});
    	
-   this.renderVisuDiv();
+      this.renderVisuDiv();
 	   
-	this.renderEditor();
-};
+	   this.renderEditor();
+   },
    
-/**
- * Render the editor
- */
-inputEx.InPlaceEdit.prototype.renderEditor = function() {
+   /**
+    * Render the editor
+    */
+   renderEditor: function() {
       
-   this.editorContainer = inputEx.cn('div', null, {display: 'none'});
+      this.editorContainer = inputEx.cn('div', null, {display: 'none'});
       
-   // Render the editor field
-   this.editorField = inputEx.buildField(this.options.editorField);
+      // Render the editor field
+      this.editorField = inputEx.buildField(this.options.editorField);
    
-   this.editorContainer.appendChild( this.editorField.getEl() );
-   YAHOO.util.Dom.setStyle(this.editorField.getEl(), 'float', 'left');
+      this.editorContainer.appendChild( this.editorField.getEl() );
+      Dom.setStyle(this.editorField.getEl(), 'float', 'left');
       
-   this.okButton = inputEx.cn('input', {type: 'button', value: 'Ok'});
-   YAHOO.util.Dom.setStyle(this.okButton, 'float', 'left');
-   this.editorContainer.appendChild(this.okButton);
+      this.okButton = inputEx.cn('input', {type: 'button', value: 'Ok'});
+      Dom.setStyle(this.okButton, 'float', 'left');
+      this.editorContainer.appendChild(this.okButton);
       
-   this.cancelLink = inputEx.cn('a', null, null, "cancel");
-   this.cancelLink.href = ""; // IE required (here, not in the cn fct)
-   YAHOO.util.Dom.setStyle(this.cancelLink, 'float', 'left');
-   this.editorContainer.appendChild(this.cancelLink);
+      this.cancelLink = inputEx.cn('a', null, null, "cancel");
+      this.cancelLink.href = ""; // IE required (here, not in the cn fct)
+      Dom.setStyle(this.cancelLink, 'float', 'left');
+      this.editorContainer.appendChild(this.cancelLink);
       
-   // Line breaker
-   this.editorContainer.appendChild( inputEx.cn('div',null, {clear: 'both'}) );
+      // Line breaker
+      this.editorContainer.appendChild( inputEx.cn('div',null, {clear: 'both'}) );
       
-   this.divEl.appendChild(this.editorContainer);
-};
+      this.divEl.appendChild(this.editorContainer);
+   },
       
-inputEx.InPlaceEdit.prototype.onVisuMouseOver = function() {
-   if(this.colorAnim) {
-      this.colorAnim.stop(true);
-   }
-   inputEx.sn(this.formattedContainer, null, {backgroundColor: '#eeee33' });
-};
+   onVisuMouseOver: function() {
+      if(this.colorAnim) {
+         this.colorAnim.stop(true);
+      }
+      inputEx.sn(this.formattedContainer, null, {backgroundColor: '#eeee33' });
+   },
    
-inputEx.InPlaceEdit.prototype.onVisuMouseOut = function() {
-   // Start animation
-   if(this.colorAnim) {
-      this.colorAnim.stop(true);
-   }
-   this.colorAnim = new YAHOO.util.ColorAnim(this.formattedContainer, {backgroundColor: { from: '#eeee33' , to: '#eeeeee' }}, 1);
-   this.colorAnim.onComplete.subscribe(function() { YAHOO.util.Dom.setStyle(this.formattedContainer, 'background-color', ''); }, this, true);
-   this.colorAnim.animate();
-};
+   onVisuMouseOut: function() {
+      // Start animation
+      if(this.colorAnim) {
+         this.colorAnim.stop(true);
+      }
+      this.colorAnim = new YAHOO.util.ColorAnim(this.formattedContainer, {backgroundColor: { from: '#eeee33' , to: '#eeeeee' }}, 1);
+      this.colorAnim.onComplete.subscribe(function() { Dom.setStyle(this.formattedContainer, 'background-color', ''); }, this, true);
+      this.colorAnim.animate();   
+   },
    
-/**
- * Create the div that will contain the visualization of the value
- */
-inputEx.InPlaceEdit.prototype.renderVisuDiv = function() {
-   this.formattedContainer = inputEx.cn('div', {className: 'inputEx-InPlaceEdit-formattedContainer'});
+   /**
+    * Create the div that will contain the visualization of the value
+    */
+   renderVisuDiv: function() {
+      this.formattedContainer = inputEx.cn('div', {className: 'inputEx-InPlaceEdit-formattedContainer'});
       
-   if( YAHOO.lang.isFunction(this.options.formatDom) ) {
-      this.formattedContainer.appendChild( this.options.formatDom(this.options.value) );
-   }
-   else if( YAHOO.lang.isFunction(this.options.formatValue) ) {
-      this.formattedContainer.innerHTML = this.options.formatValue(this.options.value);
-   }
-   else {
-      this.formattedContainer.innerHTML = YAHOO.lang.isUndefined(this.options.value) ? inputEx.messages.emptyInPlaceEdit: this.options.value;
-   }
+      if( lang.isFunction(this.options.formatDom) ) {
+         this.formattedContainer.appendChild( this.options.formatDom(this.options.value) );
+      }
+      else if( lang.isFunction(this.options.formatValue) ) {
+         this.formattedContainer.innerHTML = this.options.formatValue(this.options.value);
+      }
+      else {
+         this.formattedContainer.innerHTML = lang.isUndefined(this.options.value) ? inputEx.messages.emptyInPlaceEdit: this.options.value;
+      }
       
-   this.divEl.appendChild(this.formattedContainer);
-};
+      this.divEl.appendChild(this.formattedContainer);
+   },
    
-inputEx.InPlaceEdit.prototype.initEvents = function() {  
-   YAHOO.util.Event.addListener(this.formattedContainer, "click", this.openEditor, this, true);
+initEvents: function() {  
+   Event.addListener(this.formattedContainer, "click", this.openEditor, this, true);
             
    // For color animation
-   YAHOO.util.Event.addListener(this.formattedContainer, 'mouseover', this.onVisuMouseOver, this, true);
-   YAHOO.util.Event.addListener(this.formattedContainer, 'mouseout', this.onVisuMouseOut, this, true);
+   Event.addListener(this.formattedContainer, 'mouseover', this.onVisuMouseOver, this, true);
+   Event.addListener(this.formattedContainer, 'mouseout', this.onVisuMouseOut, this, true);
          
    // Editor: 
-   YAHOO.util.Event.addListener(this.okButton, 'click', this.onOkEditor, this, true);
-   YAHOO.util.Event.addListener(this.cancelLink, 'click', this.onCancelEditor, this, true);
+   Event.addListener(this.okButton, 'click', this.onOkEditor, this, true);
+   Event.addListener(this.cancelLink, 'click', this.onCancelEditor, this, true);
          
    if(this.editorField.el) {
       // Register some listeners
-      YAHOO.util.Event.addListener(this.editorField.el, "keyup", this.onKeyUp, this, true);
-      YAHOO.util.Event.addListener(this.editorField.el, "keydown", this.onKeyDown, this, true);
+      Event.addListener(this.editorField.el, "keyup", this.onKeyUp, this, true);
+      Event.addListener(this.editorField.el, "keydown", this.onKeyDown, this, true);
       // BLur
-      YAHOO.util.Event.addListener(this.editorField.el, "blur", this.onCancelEditor, this, true);
+      Event.addListener(this.editorField.el, "blur", this.onCancelEditor, this, true);
    }
-};
+},
    
-inputEx.InPlaceEdit.prototype.onKeyUp = function(e) {
+onKeyUp: function(e) {
    // Enter
    if( e.keyCode == 13) {
       this.onOkEditor();
@@ -119,16 +127,16 @@ inputEx.InPlaceEdit.prototype.onKeyUp = function(e) {
    if( e.keyCode == 27) {
       this.onCancelEditor(e);
    }
-};
+},
    
-inputEx.InPlaceEdit.prototype.onKeyDown = function(e) {
+onKeyDown: function(e) {
    // Tab
    if(e.keyCode == 9) {
       this.onOkEditor();
    }
-};
+},
    
-inputEx.InPlaceEdit.prototype.onOkEditor = function() {
+onOkEditor: function() {
    var newValue = this.editorField.getValue();
    this.setValue(newValue);
       
@@ -137,62 +145,55 @@ inputEx.InPlaceEdit.prototype.onOkEditor = function() {
       
    var that = this;
    setTimeout(function() {that.updatedEvt.fire(newValue);}, 50);      
-};
+},
    
-inputEx.InPlaceEdit.prototype.onCancelEditor = function(e) {
-   YAHOO.util.Event.stopEvent(e);
+onCancelEditor: function(e) {
+   Event.stopEvent(e);
    this.editorContainer.style.display = 'none';
    this.formattedContainer.style.display = '';
-};
+},
    
    
-inputEx.InPlaceEdit.prototype.openEditor = function() {
+openEditor: function() {
    var value = this.getValue();
    this.editorContainer.style.display = '';
    this.formattedContainer.style.display = 'none';
    
-   if(!YAHOO.lang.isUndefined(value)) {
+   if(!lang.isUndefined(value)) {
       this.editorField.setValue(value);   
    }
       
    // Set focus in the element !
-   if(this.editorField.el && YAHOO.lang.isFunction(this.editorField.el.focus) ) {
-      this.editorField.el.focus();
-   }
+   this.editorField.focus();
    
    // Select the content
-   if(this.editorField.el && YAHOO.lang.isFunction(this.editorField.el.setSelectionRange) && (!!value && !!value.length)) {
+   if(this.editorField.el && lang.isFunction(this.editorField.el.setSelectionRange) && (!!value && !!value.length)) {
       this.editorField.el.setSelectionRange(0,value.length);
    }
       
-};
+},
    
-inputEx.InPlaceEdit.prototype.getValue = function() {
-	return this.value;
-};
+   /**
+    * Returned the previously stored value
+    */
+   getValue: function() {
+	   return this.value;
+   },
 
+   /**
+    * Set the value and update the display
+    */
+   setValue: function(value) {   
+      // Store the value
+	   this.value = value;
+   
+      if(lang.isUndefined(value) || value == "") {
+         this.value = "(Edit me)";
+      }
+      inputEx.renderVisu(this.options.visu, this.value, this.formattedContainer);
+   }
 
-inputEx.InPlaceEdit.prototype.setValue = function(value) {
-      
-   // Store the value
-	this.value = value;
-   	
-   if(YAHOO.lang.isUndefined(value) || value == "") {
-      this.value = "(Edit me)";
-   }
-   	
-	// TODO: Display Value only 
-   if(YAHOO.lang.isFunction(this.options.formatDom)) {
-      this.formattedContainer.innerHTML = "";
-      this.formattedContainer.appendChild( this.options.formatDom(this.value) );
-   }
-   else if( YAHOO.lang.isFunction(this.options.formatValue) ) {
-      this.formattedContainer.innerHTML = this.options.formatValue(this.value);
-   }
-   else {
-      this.formattedContainer.innerHTML = this.value;
-   }
-};
+});
   
 inputEx.messages.emptyInPlaceEdit = "(click to edit)";
 
@@ -201,3 +202,4 @@ inputEx.messages.emptyInPlaceEdit = "(click to edit)";
  */
 inputEx.registerType("inplaceedit", inputEx.InPlaceEdit);
 
+})();

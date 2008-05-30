@@ -1,3 +1,7 @@
+(function() {
+
+   var inputEx = YAHOO.inputEx;
+
 /**
  * @class inputEx.FrenchPhone
  * @extends inputEx.Field
@@ -8,3 +12,5 @@ inputEx.FrenchPhone = function(options) {
 	this.options.messages.invalid = "Numéro de téléphone non valide, ex: 06 12 34 56 78";
 };
 YAHOO.lang.extend(inputEx.FrenchPhone, inputEx.Field);
+
+})();

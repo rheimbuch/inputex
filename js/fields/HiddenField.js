@@ -1,3 +1,7 @@
+(function() {
+
+   var inputEx = YAHOO.inputEx;
+
 /**
  * @class Create a hidden input, inherits from inputEx.Field
  * @extends inputEx.Field
@@ -8,36 +12,44 @@ inputEx.HiddenField = function(options) {
 	inputEx.HiddenField.superclass.constructor.call(this,options);
 };
 
-YAHOO.lang.extend(inputEx.HiddenField, inputEx.Field);
+YAHOO.lang.extend(inputEx.HiddenField, inputEx.Field, 
+/**
+ * @scope inputEx.HiddenField.prototype   
+ */   
+{
    
 /**
  * Doesn't render much...
  */
-inputEx.HiddenField.prototype.render = function() {
+render: function() {
    this.type = inputEx.HiddenField;
 	this.divEl = inputEx.cn('div');
-};
+},
 
 /**
  * No events to register
  *
-inputEx.HiddenField.prototype.initEvents = function() {};*/
+initEvents: function() {},*/
 
 /**
  * Stores the value in a local variable
  */
-inputEx.HiddenField.prototype.setValue = function(val) {
+setValue: function(val) {
    this.value = val;
-};
+},
 
 /**
  * Get the previously stored value
  */
-inputEx.HiddenField.prototype.getValue = function() {
+getValue: function() {
    return this.value;
-};
+}
+
+});
    
 /**
  * Register this class as "hidden" type
  */
 inputEx.registerType("hidden", inputEx.HiddenField);
+
+})();

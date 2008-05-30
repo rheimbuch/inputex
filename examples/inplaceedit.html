@@ -55,27 +55,26 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			var tennisPlayerFields = [
-				{label: 'Firstname', inputParams: {name: 'firstname' } }, 
-				{label: 'Lastname', inputParams: {name: 'lastname' } }, 
-				{label: 'Photo', type:'url', inputParams: {name:'picUrl'} }
-			];
 			new inputEx.InPlaceEdit({
 				parentEl: 'container2', 
 				editorField:{
 					type:'group', 
 					inputParams: {
-						fields: tennisPlayerFields
+						fields: [
+							{label: 'Firstname', inputParams: {name: 'firstname' } }, 
+							{label: 'Lastname', inputParams: {name: 'lastname' } }, 
+							{label: 'Photo', type:'url', inputParams: {name:'picUrl'} }
+						]
 					} 
-				}, 
-				formatValue: function(val) {
-					if( YAHOO.lang.isUndefined(val) ) return inputEx.messages.emptyInPlaceEdit;
-					return '<img src="'+val.picUrl+'"><br /><b>'+val.firstname+' '+val.lastname+'</b>';
 				},
+				visu: {visuType: 'func', func: function(val) {
+					if( YAHOO.lang.isUndefined(val) ) return inputEx.messages.emptyInPlaceEdit;
+					return '<img src="'+val.picUrl+'" style="width: 128px; height: 128px;"><br /><b>'+val.firstname+' '+val.lastname+'</b>';
+				}},
 				value: {
-						firstname: 'Roger',
-						lastname: 'Federer',
-						picUrl: 'http://d.yimg.com/us.yimg.com/p/ap/20080426/thumb.f0f4641fab454271b5d015201d52de9e.monte_carlo_tennis_open_clp115.jpg'
+						firstname: 'Lena',
+						lastname: '???',
+						picUrl: 'http://www.limsi.fr/Individu/vezien/lena.jpg'
 				}
 			});
 		</textarea>
@@ -96,6 +95,7 @@
 <script src="../js/inputex.js"  type='text/javascript'></script>
 <script src="../js/Field.js"  type='text/javascript'></script>
 <script src="../js/Group.js"  type='text/javascript'></script>
+<script src="../js/Visus.js"  type='text/javascript'></script>
 <script src="../js/fields/StringField.js"  type='text/javascript'></script>
 <script src="../js/fields/SelectField.js"  type='text/javascript'></script>
 <script src="../js/fields/EmailField.js"  type='text/javascript'></script>
@@ -117,27 +117,26 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	new inputEx.InPlaceEdit({parentEl: 'container1', editorField:{type:'string', inputParams: {} } });
 	
 	// Example 2
-	var tennisPlayerFields = [
-		{label: 'Firstname', inputParams: {name: 'firstname' } }, 
-		{label: 'Lastname', inputParams: {name: 'lastname' } }, 
-		{label: 'Photo', type:'url', inputParams: {name:'picUrl'} }
-	];
 	new inputEx.InPlaceEdit({
 		parentEl: 'container2', 
 		editorField:{
 			type:'group', 
 			inputParams: {
-				fields: tennisPlayerFields
+				fields: [
+					{label: 'Firstname', inputParams: {name: 'firstname' } }, 
+					{label: 'Lastname', inputParams: {name: 'lastname' } }, 
+					{label: 'Photo', type:'url', inputParams: {name:'picUrl'} }
+				]
 			} 
-		}, 
-		formatValue: function(val) {
-			if( YAHOO.lang.isUndefined(val) ) return inputEx.messages.emptyInPlaceEdit;
-			return '<img src="'+val.picUrl+'"><br /><b>'+val.firstname+' '+val.lastname+'</b>';
 		},
+		visu: {visuType: 'func', func: function(val) {
+			if( YAHOO.lang.isUndefined(val) ) return inputEx.messages.emptyInPlaceEdit;
+			return '<img src="'+val.picUrl+'" style="width: 128px; height: 128px;"><br /><b>'+val.firstname+' '+val.lastname+'</b>';
+		}},
 		value: {
-				firstname: 'Roger',
-				lastname: 'Federer',
-				picUrl: 'http://d.yimg.com/us.yimg.com/p/ap/20080426/thumb.f0f4641fab454271b5d015201d52de9e.monte_carlo_tennis_open_clp115.jpg'
+				firstname: 'Lena',
+				lastname: '???',
+				picUrl: 'http://www.limsi.fr/Individu/vezien/lena.jpg'
 		}
 	});
 	

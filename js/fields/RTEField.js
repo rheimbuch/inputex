@@ -1,3 +1,7 @@
+(function() {
+
+   var inputEx = YAHOO.inputEx, lang = YAHOO.lang;
+
 /**
  * @class Wrapper for the Rich Text Editor from YUI
  * @extends inputEx.Field
@@ -7,12 +11,15 @@
 inputEx.RTEField = function(options) {
    inputEx.RTEField.superclass.constructor.call(this,options);
 };
-YAHOO.lang.extend(inputEx.RTEField, inputEx.Field);
-   
+lang.extend(inputEx.RTEField, inputEx.Field, 
+/**
+ * @scope inputEx.RTEField.prototype   
+ */  
+{   
 /**
  * Render the field
  */
-inputEx.RTEField.prototype.render = function() {
+render: function() {
       
    // Create a DIV element to wrap the editing el and the image
    this.divEl = inputEx.cn('div', {className: this.options.className});
@@ -38,7 +45,7 @@ inputEx.RTEField.prototype.render = function() {
    var o = this.options.opts;
    //Walk it to set the new config object
    for (var i in o) {
-        if (YAHOO.lang.hasOwnProperty(o, i)) {
+        if (lang.hasOwnProperty(o, i)) {
             _def[i] = o[i];
         }
    }
@@ -52,22 +59,27 @@ inputEx.RTEField.prototype.render = function() {
    } else {
     alert('Editor is not on the page');
    }
-};
+},
 
-inputEx.RTEField.prototype.setValue = function(value) {
+setValue: function(value) {
    if(this.editor)
       this.editor.setEditorHTML(value);
-};
+},
 
 
-inputEx.RTEField.prototype.getValue = function() {
+getValue: function() {
+   // this is awful: TODO find the bug
    try {
       return this.editor.getEditorHTML();
    }
    catch(ex) {}
-};
+}
+
+});
 
 /**
  * Register this class as "html" type
  */
 inputEx.registerType("html", inputEx.RTEField);
+
+})();

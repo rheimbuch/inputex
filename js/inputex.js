@@ -1,24 +1,25 @@
 /** 
- * @fileoverview Main inputEx file. It create an "inputEx" object in the global scope. 
- *   Schould be included first before all other inputEx files
+ * @fileoverview Main inputEx file. Define inputEx namespace in YAHOO.inputEx
  */
-
-/**
- * Define firebug functions as empty functions if firebug is not present
- */
-/*if (!window.console || !console.firebug) {
-    var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml",
-    "group", "groupEnd", "time", "timeEnd", "count", "trace", "profile", "profileEnd"];
-
-    window.console = {};
-    for (var i = 0; i < names.length; ++i) {
-        window.console[names[i]] = function() {};
-    }
-}*/
+(function() {
+ 
+ var lang = YAHOO.lang;
+ 
 /**
  * @namespace The inputEx global namespace object.
  */
-var inputEx =  {
+YAHOO.namespace("inputEx");
+
+/**
+ * @namespace The inputEx global namespace object.
+ */
+inputEx = YAHOO.inputEx;
+
+lang.augmentObject(YAHOO.inputEx, 
+/**
+ * @scope inputEx
+ */   
+{
    
    VERSION: "0.1.1b",
    
@@ -83,10 +84,10 @@ var inputEx =  {
     * @static
     */
    registerType: function(type, field) {
-      if(!YAHOO.lang.isString(type)) {
+      if(!lang.isString(type)) {
          throw new Error("inputEx.registerType: first argument must be a string");
       }
-      if(!YAHOO.lang.isFunction(field)) {
+      if(!lang.isFunction(field)) {
          throw new Error("inputEx.registerType: second argument must be a function");
       }
       this.typeClasses[type] = field;
@@ -98,7 +99,7 @@ var inputEx =  {
     * @static
     */
    getFieldClass: function(type) {
-      if(YAHOO.lang.isFunction(this.typeClasses[type])) {
+      if(lang.isFunction(this.typeClasses[type])) {
          return this.typeClasses[type];
       }
       return null;
@@ -158,7 +159,7 @@ var inputEx =  {
       if(domAttributes){
          for(var i in domAttributes){
             var domAttribute = domAttributes[i];
-            if( YAHOO.lang.isFunction(domAttribute) ){
+            if( lang.isFunction(domAttribute) ){
                continue;
             }
             /*if(YAHOO.env.ua.ie && i=="type" && (el.tagName=="INPUT"||el.tagName=="SELECT") ){
@@ -185,7 +186,7 @@ var inputEx =  {
 
       if(styleAttributes){
          for(var i in styleAttributes){
-            if( YAHOO.lang.isFunction(styleAttributes[i]) ){
+            if( lang.isFunction(styleAttributes[i]) ){
                continue;
             }
             if(el.style[i]!=styleAttributes[i]){
@@ -240,11 +241,13 @@ var inputEx =  {
    compactArray: function(arr) {
       var n = [], l=arr.length,i;
       for(i = 0 ; i < l ; i++) {
-         if( !YAHOO.lang.isNull(arr[i]) && !YAHOO.lang.isUndefined(arr[i]) ) {
+         if( !lang.isNull(arr[i]) && !lang.isUndefined(arr[i]) ) {
             n.push(arr[i]);
          }
       }
       return n;
    }
    
-};
+});
+
+})();
