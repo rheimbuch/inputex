@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>inputEx Documentation - HiddenField.js</title>
+<title>inputEx Documentation - DateTimeField.js</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="JsDoc Toolkit 2.0.0" />
 <link href="css/reset-fonts-grids.css" type="text/css" rel="stylesheet" media="all" /> 
@@ -18,7 +18,7 @@
 			
 			
 			<h3>
-				<a href="./index.html">inputEx Documentation</a> &gt; HiddenField.js
+				<a href="./index.html">inputEx Documentation</a> &gt; DateTimeField.js
 				<span class="subtitle">0.2.0</span>
 			</h3>
 		
@@ -27,63 +27,74 @@
 			<div id="yui-main">
 				<div class="yui-b">
 <div class="summary description">
-	<p>This is the source view for HiddenField.js</p>
+	<p>This is the source view for DateTimeField.js</p>
 </div>
 										
 <form>
 	<textarea name="code" class="JScript">(function() {
 
-   var inputEx = YAHOO.inputEx;
+   var inputEx = YAHOO.inputEx, Event = YAHOO.util.Event, lang = YAHOO.lang;
 
 /**
- * @class Create a hidden input, inherits from inputEx.Field
+ * @class A field limited to number inputs (floating)
  * @extends inputEx.Field
  * @constructor
  * @param {Object} options inputEx.Field options object
  */
-inputEx.HiddenField = function(options) {
-	inputEx.HiddenField.superclass.constructor.call(this,options);
+inputEx.DateTimeField = function(options) {
+   inputEx.DateTimeField.superclass.constructor.call(this,options);
 };
-
-YAHOO.lang.extend(inputEx.HiddenField, inputEx.Field, 
+YAHOO.lang.extend(inputEx.DateTimeField, inputEx.Field, 
 /**
- * @scope inputEx.HiddenField.prototype   
- */   
+ * @scope inputEx.DateTimeField.prototype   
+ */
 {
+
+   render: function() {
+      inputEx.DateTimeField.superclass.render.call(this);
+      this.divEl.appendChild(inputEx.cn('div', null, {clear: 'both'}, ''));
+   },
+
+   renderComponent: function() {
+      
+      this.dateField = new inputEx.DateField({name: 'date'});
+      var el = this.dateField.getEl();
+      YAHOO.util.Dom.setStyle(el,'float', 'left');
+      YAHOO.util.Dom.setStyle(el,'margin-right', '10px');
+      this.divEl.appendChild(el);
+      
+      this.timeField = new inputEx.TimeField({name: 'time'});
+      var el = this.timeField.getEl();
+      YAHOO.util.Dom.setStyle(el,'float', 'left');
+      this.divEl.appendChild(el);
+
+   },
    
-/**
- * Doesn't render much...
- */
-render: function() {
-   this.type = inputEx.HiddenField;
-	this.divEl = inputEx.cn('div');
-},
+   getValue: function() {
+      var d = this.dateField.getValue();
+      if( d == '' ) return null;
+      var a = this.timeField.getValue().split(':');
+      
+      d.setHours(a[0]);
+      d.setMinutes(a[1]);
+      d.setSeconds(a[2]);
+      
+      return d;
+   },
 
-/**
- * No events to register
- *
-initEvents: function() {},*/
-
-/**
- * Stores the value in a local variable
- */
-setValue: function(val) {
-   this.value = val;
-},
-
-/**
- * Get the previously stored value
- */
-getValue: function() {
-   return this.value;
-}
+   setValue: function(val) {
+      this.dateField.setValue(val);
+      this.timeField.setValue( ([val.getHours(), val.getMinutes(), val.getSeconds()]).join(':') );
+   }
 
 });
-   
+
+
+
 /**
- * Register this class as "hidden" type
+ * Register this class as "time" type
  */
-inputEx.registerType("hidden", inputEx.HiddenField);
+inputEx.registerType("datetime", inputEx.DateTimeField);
 
 })();</textarea>
 </form>
@@ -283,8 +294,8 @@ inputEx.registerType("hidden", inputEx.HiddenField);
 								<li>
 								<a href="DateField.js.html">DateField.js</a></li>
 							
+								<li class="selected">
 								
-								<li>
 								<a href="DateTimeField.js.html">DateTimeField.js</a></li>
 							
 								
@@ -315,8 +326,8 @@ inputEx.registerType("hidden", inputEx.HiddenField);
 								<li>
 								<a href="Group.js.html">Group.js</a></li>
 							
-								<li class="selected">
 								
+								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
 							
 								

@@ -3,7 +3,7 @@
 <head>
 <title>inputEx Documentation - inputEx.TypeField</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-<meta name="generator" content="JsDoc Toolkit 1.4.1" />
+<meta name="generator" content="JsDoc Toolkit 2.0.0" />
 <link href="css/reset-fonts-grids.css" type="text/css" rel="stylesheet" media="all" /> 
 <link href="css/dpSyntaxHighlighter.css" type="text/css" rel="stylesheet" media="all" />
 <link href="css/style.css" type="text/css" rel="stylesheet" media="all" />
@@ -19,7 +19,7 @@
 			
 			<h3>
 				<a href="./index.html">inputEx Documentation</a> &gt; inputEx.TypeField
-				<span class="subtitle">1.0.0</span>
+				<span class="subtitle">0.2.0</span>
 			</h3>
 		
 		</div>
@@ -29,7 +29,7 @@
 
 <!-- Class -->
 <h2>
-	Class <b>inputEx.TypeField</b>
+	Static Class <b>inputEx.TypeField</b>
 	<span class="extends"> - extends <a href="inputEx.Field.html">inputEx.Field</a></span><br/>
 </h2>
 
@@ -41,34 +41,28 @@
 
 -->
 <!-- class description -->
-<div class="summary description">
-Creates a type field with all the types in inpuEx.typeClasses.
+<div class="summary description">Creates a type field with all the types in inpuEx.typeClasses.
 
 The value of a type field is following this format:
  
   {
      label: 'Enter your Birthdate',
      type: 'date',
-     optional: false,
-     inputParams: {name: 'birthdate',required: true, noicon: true, ...typeGroupOptionValues.. }
+     inputParams: {name: 'birthdate',required: true, tooltipIcon: false, ...typeGroupOptionValues.. }
   }</div>
 
 <!--
-
-
-
 
 <hr>
 -->
 
 
 <!-- ========= CONSTRUCTOR ======== -->
-
 <div class="section constructor details">
 	<h3 id="constructor">Constructor</h3>
 	<div class="content">
 		<div class="detail">
-			<a name="inputEx.TypeField"> </a>
+			<a name="TypeField"> </a>
 			
 				<strong>inputEx.TypeField</strong>
 				<code>( options )</code>
@@ -97,7 +91,6 @@ The value of a type field is following this format:
 		</div>
 	</div>	
 </div>
-
 <!-- ========= CONSTRUCTOR END ======== -->
 
 
@@ -105,12 +98,375 @@ The value of a type field is following this format:
 
 <!-- ============ Properties START ========= -->
 
+<a name="field_detail"> </a> 
+<div class="section field details">
+	<h3 id="properties">Properties</h3>
+	<div class="content">
+		
+			<div>
+				
+				<h4>
+					
+					
+					<a name="options">options</a> 
+					<code>- Object</code>
+					
+				</h4>
+				
+				<div class="detail">
+					<div class="description">
+						All the field constructors use a unique parameter "options".
+<ul>
+	  <li>name: the name of the field</li>
+	  <li>required: boolean, the field cannot be null if true</li>
+	  <li>tooltipIcon: show an icon next to the field and display an error in a tooltip (default false)</li>
+  <li>className: CSS class name for the div wrapper (default 'inputEx-Field')</li>
+  <li>value: initial value</li>
+  <li>parentEl: HTMLElement or String id, append the field to this DOM element</li>
+</ul>
+						
+					</div>
+				</div>
+			</div>
+			<hr>
+		
+	</div>
+</div>
+
 <!-- ============ Properties END ========== -->
 
 
 
 
 <!-- ============ METHOD DETAIL START ======= -->
+
+	<a name="method_detail"> </a> 
+
+	<div class="section method details">
+		<h3 id="methods">Methods</h3>
+		<div class="content">
+
+		
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+			<div>
+				<h4><a name="method_getValue">getValue</a></h4>
+			
+				<div class="detail">
+					<code><b>getValue</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Return the config for a entry in an Group
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_initEvents">initEvents</a></h4>
+			
+				<div class="detail">
+					<code><b>initEvents</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Adds 2 event listeners: 
+ - on the button to toggel the propertiesPanel
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+					
+		
+					
+		
+			<div>
+				<h4><a name="method_onChangeGroupOptions">onChangeGroupOptions</a></h4>
+			
+				<div class="detail">
+					<code><b>onChangeGroupOptions</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+					
+		
+			<div>
+				<h4><a name="method_onTogglePropertiesPanel">onTogglePropertiesPanel</a></h4>
+			
+				<div class="detail">
+					<code><b>onTogglePropertiesPanel</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_rebuildGroupOptions">rebuildGroupOptions</a></h4>
+			
+				<div class="detail">
+					<code><b>rebuildGroupOptions</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+					
+		
+			<div>
+				<h4><a name="method_renderComponent">renderComponent</a></h4>
+			
+				<div class="detail">
+					<code><b>renderComponent</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Very specific component rendering
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_renderPropertiesPanel">renderPropertiesPanel</a></h4>
+			
+				<div class="detail">
+					<code><b>renderPropertiesPanel</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+					
+		
+					
+		
+					
+		
+			<div>
+				<h4><a name="method_setValue">setValue</a></h4>
+			
+				<div class="detail">
+					<code><b>setValue</b>(value)</code> 
+				</div>
+				
+				<div class="description">
+					
+					Set the value of the label, typeProperties and group
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>value</code>
+						 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+					
+		
+			<div>
+				<h4><a name="method_updateFieldValue">updateFieldValue</a></h4>
+			
+				<div class="detail">
+					<code><b>updateFieldValue</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+					
+
+				</div>
+			</div>
+
 
 <!-- ============ METHOD DETAIL END ========== -->
 
@@ -127,43 +483,41 @@ The value of a type field is following this format:
 			<div class="content">
 				<code>
 					
-						<a href="inputEx.Field.html#close">close</a>,
-					
-						<a href="inputEx.Field.html#disable">disable</a>,
-					
-						<a href="inputEx.Field.html#enable">enable</a>,
-					
 						<a href="inputEx.Field.html#fireUpdatedEvt">fireUpdatedEvt</a>,
-					
-						<a href="inputEx.Field.html#getEl">getEl</a>,
-					
-						<a href="inputEx.Field.html#getState">getState</a>,
-					
-						<a href="inputEx.Field.html#getStateString">getStateString</a>,
-					
-						<a href="inputEx.Field.html#getValue">getValue</a>,
-					
-						<a href="inputEx.Field.html#initEvents">initEvents</a>,
-					
-						<a href="inputEx.Field.html#onBlur">onBlur</a>,
-					
-						<a href="inputEx.Field.html#onChange">onChange</a>,
-					
-						<a href="inputEx.Field.html#onFocus">onFocus</a>,
-					
-						<a href="inputEx.Field.html#render">render</a>,
-					
-						<a href="inputEx.Field.html#renderComponent">renderComponent</a>,
-					
-						<a href="inputEx.Field.html#setClassFromState">setClassFromState</a>,
-					
-						<a href="inputEx.Field.html#setOptions">setOptions</a>,
 					
 						<a href="inputEx.Field.html#setToolTipMessage">setToolTipMessage</a>,
 					
-						<a href="inputEx.Field.html#setValue">setValue</a>,
+						<a href="inputEx.Field.html#onBlur">onBlur</a>,
+					
+						<a href="inputEx.Field.html#enable">enable</a>,
+					
+						<a href="inputEx.Field.html#setOptions">setOptions</a>,
+					
+						<a href="inputEx.Field.html#focus">focus</a>,
+					
+						<a href="inputEx.Field.html#getEl">getEl</a>,
+					
+						<a href="inputEx.Field.html#disable">disable</a>,
+					
+						<a href="inputEx.Field.html#onChange">onChange</a>,
+					
+						<a href="inputEx.Field.html#setClassFromState">setClassFromState</a>,
+					
+						<a href="inputEx.Field.html#getState">getState</a>,
 					
 						<a href="inputEx.Field.html#validate">validate</a>,
+					
+						<a href="inputEx.Field.html#updatedEvt">updatedEvt</a>,
+					
+						<a href="inputEx.Field.html#destroy">destroy</a>,
+					
+						<a href="inputEx.Field.html#getStateString">getStateString</a>,
+					
+						<a href="inputEx.Field.html#render">render</a>,
+					
+						<a href="inputEx.Field.html#close">close</a>,
+					
+						<a href="inputEx.Field.html#onFocus">onFocus</a>,
 							
 				</code>
 			</div>
@@ -231,10 +585,6 @@ The value of a type field is following this format:
 							
 								
 								<li>
-									<a href="Array.html">Array</a></li>
-							
-								
-								<li>
 									<a href="inputEx.html">inputEx</a></li>
 							
 								
@@ -252,6 +602,10 @@ The value of a type field is following this format:
 								
 								<li>
 									<a href="inputEx.DateField.html">inputEx.DateField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.DateTimeField.html">inputEx.DateTimeField</a></li>
 							
 								
 								<li>
@@ -287,11 +641,19 @@ The value of a type field is following this format:
 							
 								
 								<li>
+									<a href="inputEx.IntegerField.html">inputEx.IntegerField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.IPv4Field.html">inputEx.IPv4Field</a></li>
 							
 								
 								<li>
 									<a href="inputEx.ListField.html">inputEx.ListField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.NumberField.html">inputEx.NumberField</a></li>
 							
 								
 								<li>
@@ -311,11 +673,19 @@ The value of a type field is following this format:
 							
 								
 								<li>
+									<a href="inputEx.SliderField.html">inputEx.SliderField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.StringField.html">inputEx.StringField</a></li>
 							
 								
 								<li>
 									<a href="inputEx.Textarea.html">inputEx.Textarea</a></li>
+							
+								
+								<li>
+									<a href="inputEx.TimeField.html">inputEx.TimeField</a></li>
 							
 								
 								<li>
@@ -363,6 +733,10 @@ The value of a type field is following this format:
 							
 								
 								<li>
+								<a href="DateTimeField.js.html">DateTimeField.js</a></li>
+							
+								
+								<li>
 								<a href="EmailField.js.html">EmailField.js</a></li>
 							
 								
@@ -403,11 +777,23 @@ The value of a type field is following this format:
 							
 								
 								<li>
+								<a href="IntegerField.js.html">IntegerField.js</a></li>
+							
+								
+								<li>
 								<a href="IPv4Field.js.html">IPv4Field.js</a></li>
 							
 								
 								<li>
+								<a href="json-schema.js.html">json-schema.js</a></li>
+							
+								
+								<li>
 								<a href="ListField.js.html">ListField.js</a></li>
+							
+								
+								<li>
+								<a href="NumberField.js.html">NumberField.js</a></li>
 							
 								
 								<li>
@@ -427,11 +813,19 @@ The value of a type field is following this format:
 							
 								
 								<li>
+								<a href="SliderField.js.html">SliderField.js</a></li>
+							
+								
+								<li>
 								<a href="StringField.js.html">StringField.js</a></li>
 							
 								
 								<li>
 								<a href="Textarea.js.html">Textarea.js</a></li>
+							
+								
+								<li>
+								<a href="TimeField.js.html">TimeField.js</a></li>
 							
 								
 								<li>
@@ -453,6 +847,10 @@ The value of a type field is following this format:
 								<li>
 								<a href="UrlField.js.html">UrlField.js</a></li>
 							
+								
+								<li>
+								<a href="Visus.js.html">Visus.js</a></li>
+							
 						</ul>
 					</div>
 					
@@ -464,7 +862,7 @@ The value of a type field is following this format:
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 1.4.1 on Wed, 07 May 2008 10:26:30 GMT.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 30 May 2008 16:20:54 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

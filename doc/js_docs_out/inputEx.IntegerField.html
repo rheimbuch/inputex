@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>inputEx Documentation - HiddenField.js</title>
+<title>inputEx Documentation - inputEx.IntegerField</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="JsDoc Toolkit 2.0.0" />
 <link href="css/reset-fonts-grids.css" type="text/css" rel="stylesheet" media="all" /> 
@@ -18,7 +18,7 @@
 			
 			
 			<h3>
-				<a href="./index.html">inputEx Documentation</a> &gt; HiddenField.js
+				<a href="./index.html">inputEx Documentation</a> &gt; inputEx.IntegerField
 				<span class="subtitle">0.2.0</span>
 			</h3>
 		
@@ -26,70 +26,381 @@
 		<div id="bd">
 			<div id="yui-main">
 				<div class="yui-b">
-<div class="summary description">
-	<p>This is the source view for HiddenField.js</p>
+
+<!-- Class -->
+<h2>
+	Static Class <b>inputEx.IntegerField</b>
+	<span class="extends"> - extends <a href="inputEx.StringField.html">inputEx.StringField</a></span><br/>
+</h2>
+
+<!-- Known subsclasses-->
+
+
+<!--
+
+
+-->
+<!-- class description -->
+<div class="summary description">A field limited to number inputs</div>
+
+<!--
+
+<hr>
+-->
+
+
+<!-- ========= CONSTRUCTOR ======== -->
+<div class="section constructor details">
+	<h3 id="constructor">Constructor</h3>
+	<div class="content">
+		<div class="detail">
+			<a name="IntegerField"> </a>
+			
+				<strong>inputEx.IntegerField</strong>
+				<code>( options )</code>
+				<ul>
+					
+					
+				</ul>
+	
+				<!-- CONSTRUCTOR PARAMETERS START -->
+				
+					<div class="description">
+						<dl>
+							<dt>Parameters:</dt>
+							
+								<dd>
+									<code>options<i>&nbsp;&lt;Object&gt;&nbsp;</i></code>
+									 - inputEx.Field options object 
+								</dd>
+							
+						</dl>
+					</div>		
+				
+				<!-- CONSTRUCTOR PARAMETERS END -->
+			
+			
+		</div>
+	</div>	
 </div>
-										
-<form>
-	<textarea name="code" class="JScript">(function() {
+<!-- ========= CONSTRUCTOR END ======== -->
 
-   var inputEx = YAHOO.inputEx;
 
-/**
- * @class Create a hidden input, inherits from inputEx.Field
- * @extends inputEx.Field
- * @constructor
- * @param {Object} options inputEx.Field options object
- */
-inputEx.HiddenField = function(options) {
-	inputEx.HiddenField.superclass.constructor.call(this,options);
-};
 
-YAHOO.lang.extend(inputEx.HiddenField, inputEx.Field, 
-/**
- * @scope inputEx.HiddenField.prototype   
- */   
-{
-   
-/**
- * Doesn't render much...
- */
-render: function() {
-   this.type = inputEx.HiddenField;
-	this.divEl = inputEx.cn('div');
-},
 
-/**
- * No events to register
- *
-initEvents: function() {},*/
+<!-- ============ Properties START ========= -->
 
-/**
- * Stores the value in a local variable
- */
-setValue: function(val) {
-   this.value = val;
-},
-
-/**
- * Get the previously stored value
- */
-getValue: function() {
-   return this.value;
-}
-
-});
-   
-/**
- * Register this class as "hidden" type
- */
-inputEx.registerType("hidden", inputEx.HiddenField);
-
-})();</textarea>
-</form>
+<a name="field_detail"> </a> 
+<div class="section field details">
+	<h3 id="properties">Properties</h3>
+	<div class="content">
+		
+			<div>
+				
+				<h4>
 					
 					
+					<a name="options">options</a> 
+					<code>- Object</code>
+					
+				</h4>
+				
+				<div class="detail">
+					<div class="description">
+						All the field constructors use a unique parameter "options".
+<ul>
+	  <li>name: the name of the field</li>
+	  <li>required: boolean, the field cannot be null if true</li>
+	  <li>tooltipIcon: show an icon next to the field and display an error in a tooltip (default false)</li>
+  <li>className: CSS class name for the div wrapper (default 'inputEx-Field')</li>
+  <li>value: initial value</li>
+  <li>parentEl: HTMLElement or String id, append the field to this DOM element</li>
+</ul>
+						
 					</div>
+				</div>
+			</div>
+			<hr>
+		
+	</div>
+</div>
+
+<!-- ============ Properties END ========== -->
+
+
+
+
+<!-- ============ METHOD DETAIL START ======= -->
+
+	<a name="method_detail"> </a> 
+
+	<div class="section method details">
+		<h3 id="methods">Methods</h3>
+		<div class="content">
+
+		
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+			<div>
+				<h4><a name="method_getValue">getValue</a></h4>
+			
+				<div class="detail">
+					<code><b>getValue</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_initEvents">initEvents</a></h4>
+			
+				<div class="detail">
+					<code><b>initEvents</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+					
+		
+					
+		
+					
+		
+			<div>
+				<h4><a name="method_onInput">onInput</a></h4>
+			
+				<div class="detail">
+					<code><b>onInput</b>(e)</code> 
+				</div>
+				
+				<div class="description">
+					
+					onInput is called 50ms after a "keypress" event
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>e</code>
+						 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+			<div>
+				<h4><a name="method_setValue">setValue</a></h4>
+			
+				<div class="detail">
+					<code><b>setValue</b>(value)</code> 
+				</div>
+				
+				<div class="description">
+					
+					
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>value</code>
+						 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+					
+		
+					
+
+				</div>
+			</div>
+
+
+<!-- ============ METHOD DETAIL END ========== -->
+
+
+
+
+<!-- ========== INHERITED METHODS SUMMARY =========== -->
+
+
+	
+	
+		<div class="section field inheritance">
+			<h4>Methods inherited from class <a href="inputEx.Field.html">inputEx.Field</a>:</h4>
+			<div class="content">
+				<code>
+					
+						<a href="inputEx.Field.html#fireUpdatedEvt">fireUpdatedEvt</a>,
+					
+						<a href="inputEx.Field.html#setToolTipMessage">setToolTipMessage</a>,
+					
+						<a href="inputEx.Field.html#onBlur">onBlur</a>,
+					
+						<a href="inputEx.Field.html#getEl">getEl</a>,
+					
+						<a href="inputEx.Field.html#onChange">onChange</a>,
+					
+						<a href="inputEx.Field.html#setClassFromState">setClassFromState</a>,
+					
+						<a href="inputEx.Field.html#getState">getState</a>,
+					
+						<a href="inputEx.Field.html#updatedEvt">updatedEvt</a>,
+					
+						<a href="inputEx.Field.html#destroy">destroy</a>,
+					
+						<a href="inputEx.Field.html#getStateString">getStateString</a>,
+					
+						<a href="inputEx.Field.html#render">render</a>,
+					
+						<a href="inputEx.Field.html#close">close</a>,
+					
+						<a href="inputEx.Field.html#onFocus">onFocus</a>,
+							
+				</code>
+			</div>
+		</div>
+	
+		<div class="section field inheritance">
+			<h4>Methods inherited from class <a href="inputEx.StringField.html">inputEx.StringField</a>:</h4>
+			<div class="content">
+				<code>
+					
+						<a href="inputEx.StringField.html#focus">focus</a>,
+					
+						<a href="inputEx.StringField.html#renderComponent">renderComponent</a>,
+					
+						<a href="inputEx.StringField.html#setOptions">setOptions</a>,
+					
+						<a href="inputEx.StringField.html#disable">disable</a>,
+					
+						<a href="inputEx.StringField.html#enable">enable</a>,
+					
+						<a href="inputEx.StringField.html#validate">validate</a>,
+							
+				</code>
+			</div>
+		</div>
+	
+	<br/>
+	
+
+<br/>
+
+<!-- ========== END INHERITED METHODS SUMMARY =========== -->
+
+
+
+<!-- ============ EVENT DETAIL START ======= -->
+
+
+
+
+</div>
 			</div>
 			
 			<div class="yui-b">
@@ -191,8 +502,8 @@ inputEx.registerType("hidden", inputEx.HiddenField);
 								<li>
 									<a href="inputEx.InPlaceEdit.html">inputEx.InPlaceEdit</a></li>
 							
+								<li class="selected">
 								
-								<li>
 									<a href="inputEx.IntegerField.html">inputEx.IntegerField</a></li>
 							
 								
@@ -315,8 +626,8 @@ inputEx.registerType("hidden", inputEx.HiddenField);
 								<li>
 								<a href="Group.js.html">Group.js</a></li>
 							
-								<li class="selected">
 								
+								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
 							
 								
@@ -414,7 +725,7 @@ inputEx.registerType("hidden", inputEx.HiddenField);
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 30 May 2008 16:20:53 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 30 May 2008 16:20:54 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

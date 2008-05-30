@@ -3,7 +3,7 @@
 <head>
 <title>inputEx Documentation - AutoComplete.js</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-<meta name="generator" content="JsDoc Toolkit 1.4.1" />
+<meta name="generator" content="JsDoc Toolkit 2.0.0" />
 <link href="css/reset-fonts-grids.css" type="text/css" rel="stylesheet" media="all" /> 
 <link href="css/dpSyntaxHighlighter.css" type="text/css" rel="stylesheet" media="all" />
 <link href="css/style.css" type="text/css" rel="stylesheet" media="all" />
@@ -19,7 +19,7 @@
 			
 			<h3>
 				<a href="./index.html">inputEx Documentation</a> &gt; AutoComplete.js
-				<span class="subtitle">1.0.0</span>
+				<span class="subtitle">0.2.0</span>
 			</h3>
 		
 		</div>
@@ -31,22 +31,29 @@
 </div>
 										
 <form>
-	<textarea name="code" class="JScript">/**
+	<textarea name="code" class="JScript">(function() {
+
+   var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Event = YAHOO.util.Event, Dom = YAHOO.util.Dom;
+
+/**
  * @class An autocomplete module
  * @constructor
  * @extends inputEx.StringField
- */
- 
+ */ 
 inputEx.AutoComplete = function(options) {
    inputEx.AutoComplete.superclass.constructor.call(this, options);
 };
 
-YAHOO.extend(inputEx.AutoComplete, inputEx.StringField);
+lang.extend(inputEx.AutoComplete, inputEx.StringField, 
+/**
+ * @scope inputEx.AutoComplete.prototype   
+ */   
+{
 
 /**
  * Adds autocomplete options
  */
-inputEx.AutoComplete.prototype.setOptions = function() {
+setOptions: function() {
    
    this.options.className = this.options.className || 'inputEx-Field inputEx-AutoComplete';
    
@@ -56,38 +63,38 @@ inputEx.AutoComplete.prototype.setOptions = function() {
    this.options.timerDelay = this.options.timerDelay || 300;
    this.options.query = this.options.query || null;
    this.options.queryMinLength = this.options.queryMinLength || 2;
-   this.options.displayEl = this.options.displayEl || function(val) { return inputEx.cn('div', null, null, val); };
-};
+   //this.options.displayEl = this.options.displayEl || function(val) { return inputEx.cn('div', null, null, val); };
+},
 
 /**
  * Render the hidden list element
  */
-inputEx.AutoComplete.prototype.renderComponent = function() {
+renderComponent: function() {
    
    inputEx.AutoComplete.superclass.renderComponent.call(this);
    
    // Render the list :
    this.listEl = inputEx.cn('div', {className: 'inputEx-AutoComplete-List'}, {display: 'none'});
    this.divEl.appendChild(this.listEl);
-};
+},
 
 /**
  * Register some additional events
  */
-inputEx.AutoComplete.prototype.initEvents = function() {
+initEvents: function() {
    inputEx.AutoComplete.superclass.initEvents.call(this);
    
-   YAHOO.util.Event.addListener(this.listEl, "click", this.validateItem, this, true);
-   YAHOO.util.Event.addListener(this.listEl, "mouseover", this.onListMouseOver, this, true);
+   Event.addListener(this.listEl, "click", this.validateItem, this, true);
+   Event.addListener(this.listEl, "mouseover", this.onListMouseOver, this, true);
    
-   YAHOO.util.Event.addListener(this.el, "keydown", this.onKeyDown, this, true);
-};
+   Event.addListener(this.el, "keydown", this.onKeyDown, this, true);
+},
 
 
 /**
  * Listen for up/down keys
  */
-inputEx.AutoComplete.prototype.onKeyDown = function(e) {
+onKeyDown: function(e) {
    
    // up/down keys
    if( e.keyCode == 40 || e.keyCode == 38) {
@@ -106,22 +113,22 @@ inputEx.AutoComplete.prototype.onKeyDown = function(e) {
             
       if(liItem) {
          this.highlightItem(liItem);
-         YAHOO.util.Event.stopEvent(e);
+         Event.stopEvent(e);
       }
    }
    
-};
+},
 
 
 /**
  * Start the typing timer on Input
  */
-inputEx.AutoComplete.prototype.onInput = function(e) { 
+onInput: function(e) { 
    inputEx.AutoComplete.superclass.onInput.call(this, e);
    
    // Key enter
    if(e.keyCode == 13) {
-      YAHOO.util.Event.stopEvent(e);
+      Event.stopEvent(e);
       this.validateItem();
 	   return;
    }
@@ -147,12 +154,12 @@ inputEx.AutoComplete.prototype.onInput = function(e) {
       this.hideList();
    }
    
-};
+},
 
 /**
  * Validate the item
  */
-inputEx.AutoComplete.prototype.validateItem = function() {
+validateItem: function() {
    
    var pos = -1;
    for(var i = 0 ; i < this.listEl.childNodes.length ; i++) {
@@ -165,33 +172,33 @@ inputEx.AutoComplete.prototype.validateItem = function() {
    
    this.setValue( this.options.displayAutocompleted.call(this, this.listValues[pos]) );
    this.hideList();
-};
+},
 
 /**
  * Hide the list
  */
-inputEx.AutoComplete.prototype.hideList = function() {
+hideList: function() {
    this.listEl.style.display = 'none';
-};
+},
 
 /**
  * Show the list
  */
-inputEx.AutoComplete.prototype.showList = function() {
+showList: function() {
  this.listEl.style.display = '';
-};
+},
 
 /**
  * Run the query function
  */
-inputEx.AutoComplete.prototype.queryList = function(value) {
+queryList: function(value) {
    this.options.query.call(this, value);
-};
+},
 
 /**
  * Function to populate the list
  */
-inputEx.AutoComplete.prototype.updateList = function(list) {
+updateList: function(list) {
    
    this.listValues = list;
    
@@ -200,85 +207,91 @@ inputEx.AutoComplete.prototype.updateList = function(list) {
    // Call a rendering function:
    for(var i = 0 ; i < list.length ; i++) {
       var el = inputEx.cn('div', {className: 'inputEx-AutoComplete-Item'});
-      el.appendChild( this.options.displayEl.call(this,list[i]) );
+      
+      //el.appendChild( this.options.displayEl.call(this,list[i]) );
+      inputEx.renderVisu(this.options.visuItem, list[i], el);
+      
       this.listEl.appendChild(el);
    }
    
    // Make the list visible
    this.showList();
-};
+},
 
 /**
  * The timer is used to wait a little before sending the request, so that we don't send too much requests.
  */
-inputEx.AutoComplete.prototype.resetTimer = function() {
+resetTimer: function() {
    if( this.timer ) {
       clearTimeout(this.timer);
    }
    var that = this;
    this.timer = setTimeout(function() { that.timerEnd(); }, this.options.timerDelay);
-};
+},
 
 
-inputEx.AutoComplete.prototype.stopTimer = function() {
+stopTimer: function() {
    if( this.timer ) {
       clearTimeout(this.timer);
    }
-};
+},
 
 /**
  * Send the request when the timer ends.
  */
-inputEx.AutoComplete.prototype.timerEnd = function() {
+timerEnd: function() {
    var value = this.getValue().replace(/^\s+/g, '').replace(/\s+$/g, ''); 
 	
    this.queryList(value);
-};
+},
 
 
 
-inputEx.AutoComplete.prototype.onBlur = function(e) {
+onBlur: function(e) {
    inputEx.AutoComplete.superclass.onBlur.call(this, e);
    //console.log("blur",e);
    
    // TODO: we must do something like this
    // but it is fired before the click event !
    //this.hideList();
-};
+},
 
 
 /**
  * Set the highlighted item
  */
-inputEx.AutoComplete.prototype.highlightItem = function(liItem) {
+highlightItem: function(liItem) {
    this.toggleHighlightItem(this.highlightedItem, false);
    this.toggleHighlightItem(liItem, true);
    this.highlightedItem = liItem;
-};
+},
 
 
 /**
  * Hightlight or unhighlight an item from the list
  */
-inputEx.AutoComplete.prototype.toggleHighlightItem = function(liItem, highlight) {
+toggleHighlightItem: function(liItem, highlight) {
    if(highlight) {
-     YAHOO.util.Dom.addClass(liItem, this.options.highlightClass);
+     Dom.addClass(liItem, this.options.highlightClass);
    }
    else {
-     YAHOO.util.Dom.removeClass(liItem, this.options.highlightClass);
+     Dom.removeClass(liItem, this.options.highlightClass);
    }
-};
+},
 
 /**
  * Highlight the overed item
  */ 
-inputEx.AutoComplete.prototype.onListMouseOver = function(e) {
-   var target = YAHOO.util.Event.getTarget(e);
-   if( YAHOO.util.Dom.hasClass(target, 'inputEx-AutoComplete-Item') ) {
+onListMouseOver: function(e) {
+   var target = Event.getTarget(e);
+   if( Dom.hasClass(target, 'inputEx-AutoComplete-Item') ) {
       this.highlightItem(target);
    }
-};
-</textarea>
+}
+
+});
+
+})();</textarea>
 </form>
 					
 					
@@ -330,10 +343,6 @@ inputEx.AutoComplete.prototype.onListMouseOver = function(e) {
 							
 								
 								<li>
-									<a href="Array.html">Array</a></li>
-							
-								
-								<li>
 									<a href="inputEx.html">inputEx</a></li>
 							
 								
@@ -351,6 +360,10 @@ inputEx.AutoComplete.prototype.onListMouseOver = function(e) {
 								
 								<li>
 									<a href="inputEx.DateField.html">inputEx.DateField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.DateTimeField.html">inputEx.DateTimeField</a></li>
 							
 								
 								<li>
@@ -386,11 +399,19 @@ inputEx.AutoComplete.prototype.onListMouseOver = function(e) {
 							
 								
 								<li>
+									<a href="inputEx.IntegerField.html">inputEx.IntegerField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.IPv4Field.html">inputEx.IPv4Field</a></li>
 							
 								
 								<li>
 									<a href="inputEx.ListField.html">inputEx.ListField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.NumberField.html">inputEx.NumberField</a></li>
 							
 								
 								<li>
@@ -410,11 +431,19 @@ inputEx.AutoComplete.prototype.onListMouseOver = function(e) {
 							
 								
 								<li>
+									<a href="inputEx.SliderField.html">inputEx.SliderField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.StringField.html">inputEx.StringField</a></li>
 							
 								
 								<li>
 									<a href="inputEx.Textarea.html">inputEx.Textarea</a></li>
+							
+								
+								<li>
+									<a href="inputEx.TimeField.html">inputEx.TimeField</a></li>
 							
 								
 								<li>
@@ -462,6 +491,10 @@ inputEx.AutoComplete.prototype.onListMouseOver = function(e) {
 							
 								
 								<li>
+								<a href="DateTimeField.js.html">DateTimeField.js</a></li>
+							
+								
+								<li>
 								<a href="EmailField.js.html">EmailField.js</a></li>
 							
 								
@@ -502,11 +535,23 @@ inputEx.AutoComplete.prototype.onListMouseOver = function(e) {
 							
 								
 								<li>
+								<a href="IntegerField.js.html">IntegerField.js</a></li>
+							
+								
+								<li>
 								<a href="IPv4Field.js.html">IPv4Field.js</a></li>
 							
 								
 								<li>
+								<a href="json-schema.js.html">json-schema.js</a></li>
+							
+								
+								<li>
 								<a href="ListField.js.html">ListField.js</a></li>
+							
+								
+								<li>
+								<a href="NumberField.js.html">NumberField.js</a></li>
 							
 								
 								<li>
@@ -526,11 +571,19 @@ inputEx.AutoComplete.prototype.onListMouseOver = function(e) {
 							
 								
 								<li>
+								<a href="SliderField.js.html">SliderField.js</a></li>
+							
+								
+								<li>
 								<a href="StringField.js.html">StringField.js</a></li>
 							
 								
 								<li>
 								<a href="Textarea.js.html">Textarea.js</a></li>
+							
+								
+								<li>
+								<a href="TimeField.js.html">TimeField.js</a></li>
 							
 								
 								<li>
@@ -552,6 +605,10 @@ inputEx.AutoComplete.prototype.onListMouseOver = function(e) {
 								<li>
 								<a href="UrlField.js.html">UrlField.js</a></li>
 							
+								
+								<li>
+								<a href="Visus.js.html">Visus.js</a></li>
+							
 						</ul>
 					</div>
 					
@@ -563,7 +620,7 @@ inputEx.AutoComplete.prototype.onListMouseOver = function(e) {
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 1.4.1 on Wed, 07 May 2008 10:26:29 GMT.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 30 May 2008 16:20:53 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

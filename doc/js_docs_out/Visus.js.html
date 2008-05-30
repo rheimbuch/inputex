@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>inputEx Documentation - HiddenField.js</title>
+<title>inputEx Documentation - Visus.js</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="JsDoc Toolkit 2.0.0" />
 <link href="css/reset-fonts-grids.css" type="text/css" rel="stylesheet" media="all" /> 
@@ -18,7 +18,7 @@
 			
 			
 			<h3>
-				<a href="./index.html">inputEx Documentation</a> &gt; HiddenField.js
+				<a href="./index.html">inputEx Documentation</a> &gt; Visus.js
 				<span class="subtitle">0.2.0</span>
 			</h3>
 		
@@ -27,63 +27,103 @@
 			<div id="yui-main">
 				<div class="yui-b">
 <div class="summary description">
-	<p>This is the source view for HiddenField.js</p>
+	<p>This is the source view for Visus.js</p>
 </div>
 										
 <form>
 	<textarea name="code" class="JScript">(function() {
-
-   var inputEx = YAHOO.inputEx;
-
+   
+   var inputEx = YAHOO.inputEx, lang = YAHOO.lang;
 /**
- * @class Create a hidden input, inherits from inputEx.Field
- * @extends inputEx.Field
- * @constructor
- * @param {Object} options inputEx.Field options object
+ * Contains the various visualization methods
  */
-inputEx.HiddenField = function(options) {
-	inputEx.HiddenField.superclass.constructor.call(this,options);
+inputEx.visus = {
+  
+  /**
+   * Use the trimpath-template engine
+   * see http://code.google.com/p/trimpath/wiki/JavaScriptTemplates for syntax
+   * options = {visuType: 'trimpath', template: "String template"}
+   */
+  trimpath: function(options, data) {
+      if(!TrimPath) { alert('TrimPath is not on the page. Please load inputex/lib/trimpath-template.js'); return; }
+      var tpl = TrimPath.parseTemplate(options.template);
+     	var ret = tpl.process(data);
+     	return ret;
+  },
+  
+  /**
+   * Use a rendering function
+   * options = {visuType: 'func', func: function(data) { ...code here...} }
+   */
+  "func": function(options, data) {
+     return options.func(data);
+  },
+  
+  /**
+   * Use YAHOO.lang.dump
+   * options = {visuType: 'dump'}
+   */
+  dump: function(options, data) {
+     return lang.dump(data);
+  }
+   
 };
 
-YAHOO.lang.extend(inputEx.HiddenField, inputEx.Field, 
 /**
- * @scope inputEx.HiddenField.prototype   
- */   
-{
+ * render data with multiple facets
+ * @static
+ * @param {Object} config
+ * @param {Object} data
+ * @param {HTMLElement || String} parentEl optional Set the result as content of parentEl
+ * @return {HTMLElement || String} the rendered string or domnode
+ */
+inputEx.renderVisu = function(visuOptions,data, parentEl) {
    
-/**
- * Doesn't render much...
- */
-render: function() {
-   this.type = inputEx.HiddenField;
-	this.divEl = inputEx.cn('div');
-},
-
-/**
- * No events to register
- *
-initEvents: function() {},*/
-
-/**
- * Stores the value in a local variable
- */
-setValue: function(val) {
-   this.value = val;
-},
-
-/**
- * Get the previously stored value
- */
-getValue: function() {
-   return this.value;
-}
-
-});
+   var opts = visuOptions || {};
+   var visuType = opts.visuType || 'dump';
    
-/**
- * Register this class as "hidden" type
- */
-inputEx.registerType("hidden", inputEx.HiddenField);
+   if( !inputEx.visus.hasOwnProperty(visuType) ) {
+      throw new Error("inputEx: no visu for visuType: "+visuType);
+   }
+   
+   var f = inputEx.visus[visuType];
+   if( !lang.isFunction(f) ) {
+      throw new Error("inputEx: no visu for visuType: "+visuType);
+   }
+   
+   var v = null;
+   try {
+      v = f(opts,data);
+   }
+   catch(ex) {
+      throw new Error("inputEx: error while running visu "+visuType+" : "+ex.message);
+      return;
+   }
+   
+   // Get the node
+   var node = null;
+   if(parentEl) {
+      if(lang.isString(parentEl)) {
+         node = YAHOO.util.Dom.get(parentEl);
+      }
+      else {
+         node = parentEl;
+      }
+   }
+   
+   // Insert it
+   if(node) {
+      if(YAHOO.lang.isObject(v) && v.tagName ) {
+         node.innerHTML = "";
+         node.appendChild(v);
+      }
+      else {
+         node.innerHTML = v;
+      }
+   }
+   
+   return v;
+};
 
 })();</textarea>
 </form>
@@ -315,8 +355,8 @@ inputEx.registerType("hidden", inputEx.HiddenField);
 								<li>
 								<a href="Group.js.html">Group.js</a></li>
 							
-								<li class="selected">
 								
+								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
 							
 								
@@ -399,8 +439,8 @@ inputEx.registerType("hidden", inputEx.HiddenField);
 								<li>
 								<a href="UrlField.js.html">UrlField.js</a></li>
 							
+								<li class="selected">
 								
-								<li>
 								<a href="Visus.js.html">Visus.js</a></li>
 							
 						</ul>

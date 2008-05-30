@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>inputEx Documentation - HiddenField.js</title>
+<title>inputEx Documentation - NumberField.js</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="JsDoc Toolkit 2.0.0" />
 <link href="css/reset-fonts-grids.css" type="text/css" rel="stylesheet" media="all" /> 
@@ -18,7 +18,7 @@
 			
 			
 			<h3>
-				<a href="./index.html">inputEx Documentation</a> &gt; HiddenField.js
+				<a href="./index.html">inputEx Documentation</a> &gt; NumberField.js
 				<span class="subtitle">0.2.0</span>
 			</h3>
 		
@@ -27,63 +27,57 @@
 			<div id="yui-main">
 				<div class="yui-b">
 <div class="summary description">
-	<p>This is the source view for HiddenField.js</p>
+	<p>This is the source view for NumberField.js</p>
 </div>
 										
 <form>
-	<textarea name="code" class="JScript">(function() {
+	<textarea name="code" class="JScript">/**
+ * options: maxDigits, comma-separated,
+ *
+ */
+(function() {
 
-   var inputEx = YAHOO.inputEx;
+   var inputEx = YAHOO.inputEx, Event = YAHOO.util.Event, lang = YAHOO.lang;
 
 /**
- * @class Create a hidden input, inherits from inputEx.Field
- * @extends inputEx.Field
+ * @class A field limited to number inputs (floating)
+ * @extends inputEx.IntegerField
  * @constructor
  * @param {Object} options inputEx.Field options object
  */
-inputEx.HiddenField = function(options) {
-	inputEx.HiddenField.superclass.constructor.call(this,options);
+inputEx.NumberField = function(options) {
+   inputEx.NumberField.superclass.constructor.call(this,options);
 };
-
-YAHOO.lang.extend(inputEx.HiddenField, inputEx.Field, 
+YAHOO.lang.extend(inputEx.NumberField, inputEx.StringField, 
 /**
- * @scope inputEx.HiddenField.prototype   
- */   
+ * @scope inputEx.NumberField.prototype   
+ */
 {
+   /**
+    * Return a parsed float (javascript type number)
+    */
+   getValue: function() {
+      return parseFloat(this.el.value);
+   },
    
-/**
- * Doesn't render much...
- */
-render: function() {
-   this.type = inputEx.HiddenField;
-	this.divEl = inputEx.cn('div');
-},
-
-/**
- * No events to register
- *
-initEvents: function() {},*/
-
-/**
- * Stores the value in a local variable
- */
-setValue: function(val) {
-   this.value = val;
-},
-
-/**
- * Get the previously stored value
- */
-getValue: function() {
-   return this.value;
-}
+   /**
+    * Check if the entered number is a float
+    */
+   validate: function() { 
+      var v = this.getValue();
+      if(isNaN(v)) return false;
+      var s = String(v);
+	   return s.match(/^(\+?((([0-9]+(\.)?)|([0-9]*\.[0-9]+))([eE][+-]?[0-9]+)?))$/);
+   }
 
 });
-   
+
+
+
 /**
- * Register this class as "hidden" type
+ * Register this class as "number" type
  */
-inputEx.registerType("hidden", inputEx.HiddenField);
+inputEx.registerType("number", inputEx.NumberField);
 
 })();</textarea>
 </form>
@@ -315,8 +309,8 @@ inputEx.registerType("hidden", inputEx.HiddenField);
 								<li>
 								<a href="Group.js.html">Group.js</a></li>
 							
-								<li class="selected">
 								
+								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
 							
 								
@@ -343,8 +337,8 @@ inputEx.registerType("hidden", inputEx.HiddenField);
 								<li>
 								<a href="ListField.js.html">ListField.js</a></li>
 							
+								<li class="selected">
 								
-								<li>
 								<a href="NumberField.js.html">NumberField.js</a></li>
 							
 								

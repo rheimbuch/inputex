@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>inputEx Documentation - HiddenField.js</title>
+<title>inputEx Documentation - json-schema.js</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="JsDoc Toolkit 2.0.0" />
 <link href="css/reset-fonts-grids.css" type="text/css" rel="stylesheet" media="all" /> 
@@ -18,7 +18,7 @@
 			
 			
 			<h3>
-				<a href="./index.html">inputEx Documentation</a> &gt; HiddenField.js
+				<a href="./index.html">inputEx Documentation</a> &gt; json-schema.js
 				<span class="subtitle">0.2.0</span>
 			</h3>
 		
@@ -27,64 +27,82 @@
 			<div id="yui-main">
 				<div class="yui-b">
 <div class="summary description">
-	<p>This is the source view for HiddenField.js</p>
+	<p>This is the source view for json-schema.js</p>
 </div>
 										
 <form>
 	<textarea name="code" class="JScript">(function() {
-
-   var inputEx = YAHOO.inputEx;
-
 /**
- * @class Create a hidden input, inherits from inputEx.Field
- * @extends inputEx.Field
- * @constructor
- * @param {Object} options inputEx.Field options object
- */
-inputEx.HiddenField = function(options) {
-	inputEx.HiddenField.superclass.constructor.call(this,options);
-};
-
-YAHOO.lang.extend(inputEx.HiddenField, inputEx.Field, 
-/**
- * @scope inputEx.HiddenField.prototype   
- */   
-{
-   
-/**
- * Doesn't render much...
- */
-render: function() {
-   this.type = inputEx.HiddenField;
-	this.divEl = inputEx.cn('div');
-},
-
-/**
- * No events to register
+ * Conversion between inputEx json format and JSON Schema
+ * based on "Json Schema Proposal Second Draft" at
+ * http://groups.google.com/group/json-schema/web/json-schema-proposal---second-draft
  *
-initEvents: function() {},*/
-
-/**
- * Stores the value in a local variable
+ * The proposal is still under discussion and the implementation is very minimalist.
+ *
  */
-setValue: function(val) {
-   this.value = val;
-},
-
-/**
- * Get the previously stored value
- */
-getValue: function() {
-   return this.value;
-}
-
-});
+   var inputEx = YAHOO.inputEx;
    
-/**
- * Register this class as "hidden" type
- */
-inputEx.registerType("hidden", inputEx.HiddenField);
-
+   /**
+    * Convert a json schema to a inputEx group object config
+    * @param {Object} jsonSchema The evaled JSON schema
+    * @param {String} groupName optional, used for the "object" json schema type
+    */
+   inputEx.importJsonSchema = function(jsonSchema, groupName) {
+      var ret = { fields: [] };
+      
+      if(groupName) ret.name = groupName;
+      
+      for(var key in jsonSchema.properties) {
+         if(jsonSchema.properties.hasOwnProperty(key)) {
+            var p = jsonSchema.properties[key];
+            var field = { label: key, inputParams: { name: key} };
+            if(p.type) {
+               field.type = p.type;
+               
+               if(p.type == "object") {
+                  field.type = "group";
+                  field.inputParams = inputEx.importJsonSchema(p, key);
+               }
+               else if(p.type == "string" && (!!p.options) ) {
+                  field.type = "select";
+                  field.inputParams.selectOptions = [];
+                  field.inputParams.selectValues = [];
+                  for(var i = 0 ; i < p.options.length ; i++) {
+                     var o = p.options[i];
+                     field.inputParams.selectOptions.push(o.label);
+                     field.inputParams.selectValues.push(o.value);
+                  }
+               }
+               else if(p.type == "string") {
+                  if( p.format ) {
+                     if(p.format == "html") {
+                        field.type = "html";
+                     }
+                     else if(p.format == "date") {
+                        field.type = "date";
+                        field.inputParams.tooltipIcon = true;
+                     }
+                  }
+               }
+            }
+            else if(p["$ref"]) {
+               
+            }
+            ret.fields.push(field);
+         }
+      }
+      
+      return ret;
+   };
+   
+   /**
+    * Export inputEx group definition given by the builder to a json schema
+    * @param {Object} groupDef value returned by the group builder
+    */
+   inputEx.exportJsonSchema = function(groupDef) {
+   };
+   
+   
 })();</textarea>
 </form>
 					
@@ -315,8 +333,8 @@ inputEx.registerType("hidden", inputEx.HiddenField);
 								<li>
 								<a href="Group.js.html">Group.js</a></li>
 							
-								<li class="selected">
 								
+								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
 							
 								
@@ -335,8 +353,8 @@ inputEx.registerType("hidden", inputEx.HiddenField);
 								<li>
 								<a href="IPv4Field.js.html">IPv4Field.js</a></li>
 							
+								<li class="selected">
 								
-								<li>
 								<a href="json-schema.js.html">json-schema.js</a></li>
 							
 								

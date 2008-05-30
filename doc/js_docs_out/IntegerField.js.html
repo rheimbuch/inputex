@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>inputEx Documentation - HiddenField.js</title>
+<title>inputEx Documentation - IntegerField.js</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="JsDoc Toolkit 2.0.0" />
 <link href="css/reset-fonts-grids.css" type="text/css" rel="stylesheet" media="all" /> 
@@ -18,7 +18,7 @@
 			
 			
 			<h3>
-				<a href="./index.html">inputEx Documentation</a> &gt; HiddenField.js
+				<a href="./index.html">inputEx Documentation</a> &gt; IntegerField.js
 				<span class="subtitle">0.2.0</span>
 			</h3>
 		
@@ -27,63 +27,73 @@
 			<div id="yui-main">
 				<div class="yui-b">
 <div class="summary description">
-	<p>This is the source view for HiddenField.js</p>
+	<p>This is the source view for IntegerField.js</p>
 </div>
 										
 <form>
 	<textarea name="code" class="JScript">(function() {
 
-   var inputEx = YAHOO.inputEx;
+   var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Event = YAHOO.util.Event;
 
 /**
- * @class Create a hidden input, inherits from inputEx.Field
- * @extends inputEx.Field
+ * @class A field limited to number inputs
+ * @extends inputEx.StringField
  * @constructor
  * @param {Object} options inputEx.Field options object
  */
-inputEx.HiddenField = function(options) {
-	inputEx.HiddenField.superclass.constructor.call(this,options);
+inputEx.IntegerField = function(options) {
+   inputEx.IntegerField.superclass.constructor.call(this,options);
 };
-
-YAHOO.lang.extend(inputEx.HiddenField, inputEx.Field, 
+YAHOO.lang.extend(inputEx.IntegerField, inputEx.StringField, 
 /**
- * @scope inputEx.HiddenField.prototype   
- */   
+ * @scope inputEx.IntegerField.prototype   
+ */
 {
+
+   initEvents: function() {	
+      inputEx.IntegerField.superclass.initEvents.call(this);
+
+      // The "input" event doesn't exist in IE so we use the "keypress" with a setTimeout to wait until the new value has been set
+      //Event.addListener(this.el, "input", this.onInput, this, true);
+      var that = this;
+      Event.addListener(this.el, "keypress", function(e) { setTimeout(function() { that.onInput(e); },50); });
+      
+   },
+
+   /**
+    * onInput is called 50ms after a "keypress" event
+    */
+   onInput: function(e) {
+	   this.setValue( this.getValue() );
+      this.setClassFromState();
+   },
    
-/**
- * Doesn't render much...
- */
-render: function() {
-   this.type = inputEx.HiddenField;
-	this.divEl = inputEx.cn('div');
-},
-
-/**
- * No events to register
- *
-initEvents: function() {},*/
-
-/**
- * Stores the value in a local variable
- */
-setValue: function(val) {
-   this.value = val;
-},
-
-/**
- * Get the previously stored value
- */
-getValue: function() {
-   return this.value;
-}
+   setValue: function(value) {
+      
+      if( isNaN(value) ) {
+         this.el.value = "";
+      }
+      else if( lang.isNumber(value) ) {
+         this.el.value = Math.floor(value);
+      }
+      else if(lang.isString(value) ) {
+        this.el.value = value.replace(/[^0-9]/g,'');
+      }
+      
+   },
+   
+   getValue: function() {
+      return parseInt(this.el.value, 10);
+   }
 
 });
-   
+
+
+
 /**
- * Register this class as "hidden" type
+ * Register this class as "integer" type
  */
-inputEx.registerType("hidden", inputEx.HiddenField);
+inputEx.registerType("integer", inputEx.IntegerField);
 
 })();</textarea>
 </form>
@@ -315,8 +325,8 @@ inputEx.registerType("hidden", inputEx.HiddenField);
 								<li>
 								<a href="Group.js.html">Group.js</a></li>
 							
-								<li class="selected">
 								
+								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
 							
 								
@@ -327,8 +337,8 @@ inputEx.registerType("hidden", inputEx.HiddenField);
 								<li>
 								<a href="inputex.js.html">inputex.js</a></li>
 							
+								<li class="selected">
 								
-								<li>
 								<a href="IntegerField.js.html">IntegerField.js</a></li>
 							
 								
