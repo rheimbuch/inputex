@@ -8,7 +8,7 @@
 rm -f inputex.js inputex-min.js inputex-min.css
 
 # Concatenate all the js files
-cat ../js/inputex.js ../js/Field.js ../js/Group.js ../js/Form.js ../js/fields/StringField.js ../js/fields/AutoComplete.js ../js/fields/CheckBox.js ../js/fields/ColorField.js ../js/fields/DateField.js ../js/fields/EmailField.js ../js/fields/HiddenField.js ../js/fields/InPlaceEdit.js ../js/fields/IPv4Field.js ../js/fields/ListField.js ../js/fields/PairField.js ../js/fields/PasswordField.js ../js/fields/RTEField.js ../js/fields/SelectField.js ../js/fields/Textarea.js ../js/fields/UneditableField.js ../js/fields/UpperCaseField.js ../js/fields/UrlField.js > inputex.js
+cat ../js/inputex.js ../js/Visus.js ../js/json-schema.js ../js/Field.js ../js/Group.js ../js/Form.js ../js/fields/StringField.js ../js/fields/AutoComplete.js ../js/fields/CheckBox.js ../js/fields/ColorField.js ../js/fields/DateField.js ../js/fields/EmailField.js ../js/fields/HiddenField.js ../js/fields/InPlaceEdit.js ../js/fields/IntegerField.js ../js/fields/IPv4Field.js ../js/fields/ListField.js ../js/fields/NumberField.js ../js/fields/PairField.js ../js/fields/PasswordField.js ../js/fields/RTEField.js ../js/fields/SelectField.js ../js/fields/Textarea.js ../js/fields/TimeField.js ../js/fields/DateTimeField.js ../js/fields/UneditableField.js ../js/fields/UpperCaseField.js ../js/fields/UrlField.js > inputex.js
 
 # Minify using yui compressor
 java -jar ../../../Outils/yuicompressor-2.2.5/build/yuicompressor-2.2.5.jar inputex.js -o inputex-min.js --charset utf8
