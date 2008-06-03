@@ -1,5 +1,7 @@
 (function() {
 /**
+ * WARNING: the json-schema methods are experimental.
+ *
  * Conversion between inputEx json format and JSON Schema
  * based on "Json Schema Proposal Second Draft" at
  * http://groups.google.com/group/json-schema/web/json-schema-proposal---second-draft
@@ -61,13 +63,5 @@
       
       return ret;
    };
-   
-   /**
-    * Export inputEx group definition given by the builder to a json schema
-    * @param {Object} groupDef value returned by the group builder
-    */
-   inputEx.exportJsonSchema = function(groupDef) {
-   };
-   
    
 })();

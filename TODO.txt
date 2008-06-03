@@ -8,23 +8,14 @@
 
 - re-tabulate files
 
-- Small visualization system
-	=> used in UneditableField, InPlaceEditField and Autocompleter
-	extandable: example with Trimpath JST http://code.google.com/p/trimpath/wiki/JavaScriptTemplates
-	* examples for template functions
- 	* doc for templating
+- Doc:
+	* templating within inputEx
+		- Small visualization system
+			=> used in UneditableField, InPlaceEditField and Autocompleter
+			extandable: example with Trimpath JST http://code.google.com/p/trimpath/wiki/JavaScriptTemplates
+	* Added Fields
 
-- JSON Schema support: 
-	http://groups.google.com/group/json-schema/web/json-schema-proposal---second-draft
-	* convert a json schema into an inputEx field
-	* convert an inputEx type definition to a JSON schema
-
-- Doc avec JsDocToolkit 2 
- 	* Refaire ma template
-
-- Added a DatePickerField
-
-- Added a Calendar Widget (for the date picker, much lighter than YUI calendar)
+- Field description for groups
 
 
 Architecture/Code/various: 
@@ -82,6 +73,9 @@ Existing Fields enhancements :
 - ListField:
 	* make buttons '+' and '-' optional so we have a sortable field (or an editable list with N elements)
 	* implement minItems and maxItems options
+
+- SliderField:
+	* implement all the options !!
 
 - Field:
 	* Put the status text in a floating div instead of the tooltip (allows to put it on the right or bottom of the field)

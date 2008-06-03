@@ -96,8 +96,8 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
 
 
 /**
- * Register this class as "date" type
+ * Register this class as "datepicker" type
  */
-//inputEx.registerType("date", inputEx.DatePickerField);
+inputEx.registerType("datepicker", inputEx.DatePickerField);
 
 })();

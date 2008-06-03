@@ -404,3 +404,26 @@ div.inputEx-Calendar a.calnavright {
     cursor:pointer;
     background:url('../images/calrt.gif') no-repeat;
 }
+
+
+/**
+ * SliderField
+ */
+div.inputEx-SliderField {  
+}
+
+div.inputEx-SliderField div.inputEx-SliderField-bg {
+   position: relative;
+   background:url('../images/slider-bg-h.gif') 5px 0 no-repeat;
+   height:28px;
+   width:228px;
+}
+
+div.inputEx-SliderField div.inputEx-SliderField-thumb {
+   background: url('../images/thumb-n.gif') 0px 0px no-repeat;
+   cursor: pointer;
+   position: absolute;
+   top: 4px;
+   width: 17px;
+   height: 21px;
+}

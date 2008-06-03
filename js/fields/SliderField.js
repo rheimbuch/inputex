@@ -16,26 +16,41 @@ YAHOO.lang.extend(inputEx.SliderField, inputEx.Field,
  * @scope inputEx.SliderField.prototype   
  */  
 {
-       
-/**
- * render a slider widget
- */
-render: function() {
-   this.divEl = inputEx.cn('div');
+   /**
+    * Set the classname to 'inputEx-SliderField'
+    */
+   setOptions: function() {
+	   this.options.className = this.options.className || 'inputEx-SliderField';
+      inputEx.SliderField.superclass.setOptions.call(this);
+   },
+      
+   /**
+    * render a slider widget
+    */
+   render: function() {
+      this.divEl = inputEx.cn('div', {className: this.options.className});
             
-   this.sliderbg = inputEx.cn('div');
-   this.sliderthumb = inputEx.cn('div');
+      if(!inputEx.SliderField.instanceNbr) { inputEx.SliderField.instanceNbr = 0;}
+      this.id = "inputEx-Slider-"+inputEx.SliderField.instanceNbr;
+      inputEx.SliderField.instanceNbr+=1;
             
-   this.sliderbg.appendChild(this.sliderthumb);
-   this.divEl.appendChild(this.sliderbg);
+      this.sliderbg = inputEx.cn('div', {id: this.id, className: 'inputEx-SliderField-bg'});
+      this.sliderthumb = inputEx.cn('div', {className: 'inputEx-SliderField-thumb'} );
             
-   this.slider = YAHOO.widget.Slider.getHorizSlider(this.sliderbg, this.sliderthumb, 0, 200); 
+      this.sliderbg.appendChild(this.sliderthumb);
+      this.divEl.appendChild(this.sliderbg);
             
-}/*,
+      this.slider = YAHOO.widget.Slider.getHorizSlider(this.sliderbg, this.sliderthumb, 0, 200);       
+   },
         
-setValue: function(val) {},
-        
-getValue: function() {}*/
+   //setValue: function(val) {},
+
+   /**
+    * Get the value from the slider
+    */
+   getValue: function() {
+      return this.slider.getValue();
+   }
     
 });
 
