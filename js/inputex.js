@@ -63,6 +63,11 @@ lang.augmentObject(YAHOO.inputEx,
    },
    
    /**
+    * @namespace inputEx widget namespace
+    */
+   widget: {},
+   
+   /**
     * Associative array containing common regular expressions
     */
    regexps: {

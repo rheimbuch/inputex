@@ -22,8 +22,9 @@
 - Doc avec JsDocToolkit 2 
  	* Refaire ma template
 
-- DatePickerField
-	* intégrer le minical de clicrdv dans YAHOO.inputEx.widget.calendar
+- Added a DatePickerField
+
+- Added a Calendar Widget (for the date picker, much lighter than YUI calendar)
 
 
 Architecture/Code/various: 

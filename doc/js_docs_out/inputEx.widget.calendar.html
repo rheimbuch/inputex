@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>inputEx Documentation - inputEx.Field</title>
+<title>inputEx Documentation - inputEx.widget.calendar</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="JsDoc Toolkit 2.0.0" />
 <link href="css/reset-fonts-grids.css" type="text/css" rel="stylesheet" media="all" /> 
@@ -18,7 +18,7 @@
 			
 			
 			<h3>
-				<a href="./index.html">inputEx Documentation</a> &gt; inputEx.Field
+				<a href="./index.html">inputEx Documentation</a> &gt; inputEx.widget.calendar
 				<span class="subtitle">0.2.0</span>
 			</h3>
 		
@@ -29,52 +29,11 @@
 
 <!-- Class -->
 <h2>
-	Static Class <b>inputEx.Field</b>
+	Static Class <b>inputEx.widget.calendar</b>
 	
 </h2>
 
 <!-- Known subsclasses-->
-
-	<dl class="subclasses">
-		<dt>Known Subclasses:</dt>
-		<dd>
-			
-				<a href="inputEx.Group.html">inputEx.Group</a>
-			
-				<a href="inputEx.TypeField.html">inputEx.TypeField</a>
-			
-				<a href="inputEx.HiddenField.html">inputEx.HiddenField</a>
-			
-				<a href="inputEx.SelectField.html">inputEx.SelectField</a>
-			
-				<a href="inputEx.StringField.html">inputEx.StringField</a>
-			
-				<a href="inputEx.PairField.html">inputEx.PairField</a>
-			
-				<a href="inputEx.InPlaceEdit.html">inputEx.InPlaceEdit</a>
-			
-				<a href="inputEx.SliderField.html">inputEx.SliderField</a>
-			
-				<a href="inputEx.DateTimeField.html">inputEx.DateTimeField</a>
-			
-				<a href="inputEx.Textarea.html">inputEx.Textarea</a>
-			
-				<a href="inputEx.ColorField.html">inputEx.ColorField</a>
-			
-				<a href="inputEx.ListField.html">inputEx.ListField</a>
-			
-				<a href="inputEx.FrenchPhone.html">inputEx.FrenchPhone</a>
-			
-				<a href="inputEx.TimeField.html">inputEx.TimeField</a>
-			
-				<a href="inputEx.CheckBox.html">inputEx.CheckBox</a>
-			
-				<a href="inputEx.RTEField.html">inputEx.RTEField</a>
-			
-				<a href="inputEx.UneditableField.html">inputEx.UneditableField</a>
-			
-		</dd>
-	</dl>
 
 
 <!--
@@ -82,7 +41,7 @@
 
 -->
 <!-- class description -->
-<div class="summary description">An abstract class that contains the shared features for all fields</div>
+<div class="summary description">inputEx.widget.calendar</div>
 
 <!--
 
@@ -96,13 +55,16 @@
 	<h3 id="constructor">Constructor</h3>
 	<div class="content">
 		<div class="detail">
-			<a name="Field"> </a>
+			<a name="calendar"> </a>
 			
-				<strong>inputEx.Field</strong>
-				<code>( options )</code>
+				<strong>inputEx.widget.calendar</strong>
+				<code>( id,container,config )</code>
 				<ul>
 					
-					
+					inputEx.widget.calendar is used to display a popup to select dates.  This popup shows 1 to n calendars,
+each one representing a month. Week days can be allowed or disabled for the selection. Selection
+is performed on consecutive allowed days within the same calendar. calendar returns an array of
+selected dates as param attached to event "changeSelectedDates".
 				</ul>
 	
 				<!-- CONSTRUCTOR PARAMETERS START -->
@@ -112,8 +74,18 @@
 							<dt>Parameters:</dt>
 							
 								<dd>
-									<code>options<i>&nbsp;&lt;Object&gt;&nbsp;</i></code>
-									 - Options object (see options property) 
+									<code>id<i>&nbsp;&lt;String&gt;&nbsp;</i></code>
+									 - The id attributed to the future constructed calendar 
+								</dd>
+							
+								<dd>
+									<code>container<i>&nbsp;&lt;String&gt;&nbsp;</i></code>
+									 - The dom element of the container (typically a div) to render the calendar 
+								</dd>
+							
+								<dd>
+									<code>config<i>&nbsp;&lt;Object&gt;&nbsp;</i></code>
+									 - Optional. The config objet to override specific defaultConfig properties 
 								</dd>
 							
 						</dl>
@@ -133,41 +105,6 @@
 
 <!-- ============ Properties START ========= -->
 
-<a name="field_detail"> </a> 
-<div class="section field details">
-	<h3 id="properties">Properties</h3>
-	<div class="content">
-		
-			<div>
-				
-				<h4>
-					
-					
-					<a name="options">options</a> 
-					<code>- Object</code>
-					
-				</h4>
-				
-				<div class="detail">
-					<div class="description">
-						All the field constructors use a unique parameter "options".
-<ul>
-	  <li>name: the name of the field</li>
-	  <li>required: boolean, the field cannot be null if true</li>
-	  <li>tooltipIcon: show an icon next to the field and display an error in a tooltip (default false)</li>
-  <li>className: CSS class name for the div wrapper (default 'inputEx-Field')</li>
-  <li>value: initial value</li>
-  <li>parentEl: HTMLElement or String id, append the field to this DOM element</li>
-</ul>
-						
-					</div>
-				</div>
-			</div>
-			<hr>
-		
-	</div>
-</div>
-
 <!-- ============ Properties END ========== -->
 
 
@@ -184,272 +121,15 @@
 		
 		
 			<div>
-				<h4><a name="method_close">close</a></h4>
+				<h4><a name="method_addMonths">addMonths</a></h4>
 			
 				<div class="detail">
-					<code><b>close</b>()</code> 
+					<code><b>addMonths</b>(count)</code> 
 				</div>
 				
 				<div class="description">
 					
-					Close the field and eventually opened popups...
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-			<div>
-				<h4><a name="method_destroy">destroy</a></h4>
-			
-				<div class="detail">
-					<code><b>destroy</b>()</code> 
-				</div>
-				
-				<div class="description">
-					
-					Purge all event listeners and remove the component from the dom
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-			<div>
-				<h4><a name="method_disable">disable</a></h4>
-			
-				<div class="detail">
-					<code><b>disable</b>()</code> 
-				</div>
-				
-				<div class="description">
-					
-					Disable the field
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-			<div>
-				<h4><a name="method_enable">enable</a></h4>
-			
-				<div class="detail">
-					<code><b>enable</b>()</code> 
-				</div>
-				
-				<div class="description">
-					
-					Enable the field
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-			<div>
-				<h4><a name="method_fireUpdatedEvt">fireUpdatedEvt</a></h4>
-			
-				<div class="detail">
-					<code><b>fireUpdatedEvt</b>()</code> 
-				</div>
-				
-				<div class="description">
-					
-					Fire the "updated" event (only if the field validated)
-Escape the stack using a setTimeout
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-			<div>
-				<h4><a name="method_focus">focus</a></h4>
-			
-				<div class="detail">
-					<code><b>focus</b>()</code> 
-				</div>
-				
-				<div class="description">
-					
-					Focus the field
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-			<div>
-				<h4><a name="method_getEl">getEl</a></h4>
-			
-				<div class="detail">
-					<code><i>&lt;HTMLElement&gt;</i>&nbsp;<b>getEl</b>()</code> 
-				</div>
-				
-				<div class="description">
-					
-					The default render creates a div to put in the messages
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-					<div class="description">
-					<b>Returns:</b>
-						<ul>
-							<code><i>&lt;HTMLElement&gt;</i>&nbsp;</code>divEl The main DIV wrapper 
-						</ul>
-					
-					</div>
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-			<div>
-				<h4><a name="method_getState">getState</a></h4>
-			
-				<div class="detail">
-					<code><i>&lt;String&gt;</i>&nbsp;<b>getState</b>()</code> 
-				</div>
-				
-				<div class="description">
-					
-					Returns the current state (given its value)
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-					<div class="description">
-					<b>Returns:</b>
-						<ul>
-							<code><i>&lt;String&gt;</i>&nbsp;</code>One of the following states: 'empty', 'required', 'valid' or 'invalid' 
-						</ul>
-					
-					</div>
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-			<div>
-				<h4><a name="method_getStateString">getStateString</a></h4>
-			
-				<div class="detail">
-					<code><b>getStateString</b>(state)</code> 
-				</div>
-				
-				<div class="description">
-					
-					Get the string for the given state
+					Switch reference pageDate of 'count' months in the future. Fires 'changePage' event.
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -462,8 +142,8 @@ Escape the stack using a setTimeout
 				<div class="description">
 				<b>Parameters:</b>
 					<ul>
-						<code>state</code>
-						 
+						<code>count&nbsp;<i>&lt;Number&gt;</i>&nbsp;</code>
+						 - Number of months to add to current pageDate 
 					</ul>
 					
 				</div>
@@ -480,15 +160,258 @@ Escape the stack using a setTimeout
 					
 		
 			<div>
-				<h4><a name="method_getValue">getValue</a></h4>
+				<h4><a name="method_gotoDate">gotoDate</a></h4>
 			
 				<div class="detail">
-					<code><i>&lt;Any&gt;</i>&nbsp;<b>getValue</b>()</code> 
+					<code><b>gotoDate</b>(e)</code> 
 				</div>
 				
 				<div class="description">
 					
-					Return the value of the input
+					Go to date
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>e&nbsp;<i>&lt;date&gt;</i>&nbsp;</code>
+						 - The intercepted event. 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_gotoToday">gotoToday</a></h4>
+			
+				<div class="detail">
+					<code><b>gotoToday</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Go to today
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_hide">hide</a></h4>
+			
+				<div class="detail">
+					<code><b>hide</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Hide calendar
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_initCal">initCal</a></h4>
+			
+				<div class="detail">
+					<code><i>&lt;domNode&gt;</i>&nbsp;<b>initCal</b>(cal_position)</code> 
+				</div>
+				
+				<div class="description">
+					
+					Creates dom for one calendar, represented by its 'cal_position'
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>cal_position&nbsp;<i>&lt;Number&gt;</i>&nbsp;</code>
+						 - The position of the calendar in the panel : 0 for the calendar on the left, and 1, 2, ..., n for the others from left to right 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+					<div class="description">
+					<b>Returns:</b>
+						<ul>
+							<code><i>&lt;domNode&gt;</i>&nbsp;</code>table Dom node 'table' : one calendar 
+						</ul>
+					
+					</div>
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_initCalBody">initCalBody</a></h4>
+			
+				<div class="detail">
+					<code><i>&lt;domNode&gt;</i>&nbsp;<b>initCalBody</b>(cal_position)</code> 
+				</div>
+				
+				<div class="description">
+					
+					Creates dom tbody for one calendar. This function does NOT display dates (empty cells) : this.updateCalBody performs this.
+Initialize listeners on tbody to perform dates selection.
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>cal_position&nbsp;<i>&lt;Number&gt;</i>&nbsp;</code>
+						 - The position of the calendar in the panel : 0 for the calendar on the left, and 1, 2, ..., n for the others from left to right 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+					<div class="description">
+					<b>Returns:</b>
+						<ul>
+							<code><i>&lt;domNode&gt;</i>&nbsp;</code>tbody Dom node 'tbody' : body for one calendar 
+						</ul>
+					
+					</div>
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_initCalHeader">initCalHeader</a></h4>
+			
+				<div class="detail">
+					<code><i>&lt;domNode&gt;</i>&nbsp;<b>initCalHeader</b>(cal_position)</code> 
+				</div>
+				
+				<div class="description">
+					
+					Creates dom header for one calendar. This header contains week days labels ('Mo','Tu', ...) and navigation links for 'side' calendars.
+This function does NOT display label for month and year : this.updateMonthHeader performs this.
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>cal_position&nbsp;<i>&lt;Number&gt;</i>&nbsp;</code>
+						 - The position of the calendar in the panel : 0 for the calendar on the left, and 1, 2, ..., n for the others from left to right 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+					<div class="description">
+					<b>Returns:</b>
+						<ul>
+							<code><i>&lt;domNode&gt;</i>&nbsp;</code>thead Dom node 'thead' : header for one calendar 
+						</ul>
+					
+					</div>
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_initCals">initCals</a></h4>
+			
+				<div class="detail">
+					<code><i>&lt;domNode&gt;</i>&nbsp;<b>initCals</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Creates dom for the requested number of calendars to display (1 month = 1 cal) and return
+them in a list (<ul /> node).
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -504,7 +427,7 @@ Escape the stack using a setTimeout
 					<div class="description">
 					<b>Returns:</b>
 						<ul>
-							<code><i>&lt;Any&gt;</i>&nbsp;</code>value of the field 
+							<code><i>&lt;domNode&gt;</i>&nbsp;</code>ul Dom node 'ul' : list of calendars 
 						</ul>
 					
 					</div>
@@ -526,7 +449,8 @@ Escape the stack using a setTimeout
 				
 				<div class="description">
 					
-					Initialize events of the Input
+					Create custom events used within calendar or to communicate with other widgets, and
+add some listeners to them.
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -548,15 +472,45 @@ Escape the stack using a setTimeout
 					
 		
 			<div>
-				<h4><a name="method_onBlur">onBlur</a></h4>
+				<h4><a name="method_markSelectedCell">markSelectedCell</a></h4>
 			
 				<div class="detail">
-					<code><b>onBlur</b>(e)</code> 
+					<code><b>markSelectedCell</b>()</code> 
 				</div>
 				
 				<div class="description">
 					
-					Function called on the blur event
+					Update all calendars' cells to display new selection
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_nextDates">nextDates</a></h4>
+			
+				<div class="detail">
+					<code><b>nextDates</b>(offset)</code> 
+				</div>
+				
+				<div class="description">
+					
+					Go to next dates (go to the future), with same configuration as previous selection (same disabled weekDays and dates number)
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -569,8 +523,8 @@ Escape the stack using a setTimeout
 				<div class="description">
 				<b>Parameters:</b>
 					<ul>
-						<code>e&nbsp;<i>&lt;Event&gt;</i>&nbsp;</code>
-						 - The original event 
+						<code>offset&nbsp;<i>&lt;Number&gt;</i>&nbsp;</code>
+						 - (optional)  How many dates to skip including today (1 => go to tomorrow, 7 => go to next week, etc...) 
 					</ul>
 					
 				</div>
@@ -587,15 +541,15 @@ Escape the stack using a setTimeout
 					
 		
 			<div>
-				<h4><a name="method_onChange">onChange</a></h4>
+				<h4><a name="method_nextPage">nextPage</a></h4>
 			
 				<div class="detail">
-					<code><b>onChange</b>(e)</code> 
+					<code><b>nextPage</b>(e)</code> 
 				</div>
 				
 				<div class="description">
 					
-					onChange event handler
+					Go to next page (go to the future).
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -609,7 +563,7 @@ Escape the stack using a setTimeout
 				<b>Parameters:</b>
 					<ul>
 						<code>e&nbsp;<i>&lt;Event&gt;</i>&nbsp;</code>
-						 - The original event 
+						 - The intercepted event. 
 					</ul>
 					
 				</div>
@@ -626,15 +580,183 @@ Escape the stack using a setTimeout
 					
 		
 			<div>
-				<h4><a name="method_onFocus">onFocus</a></h4>
+				<h4><a name="method_onCellClick">onCellClick</a></h4>
 			
 				<div class="detail">
-					<code><b>onFocus</b>(e)</code> 
+					<code><b>onCellClick</b>(e)</code> 
 				</div>
 				
 				<div class="description">
 					
-					Function called on the focus event
+					
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>e</code>
+						 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_onChangePage">onChangePage</a></h4>
+			
+				<div class="detail">
+					<code><b>onChangePage</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Event handler for page changing. Remove any cell selection and update calendars (months/dates).
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_onMinicalMouseOut">onMinicalMouseOut</a></h4>
+			
+				<div class="detail">
+					<code><b>onMinicalMouseOut</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Listen if mouse out of the minical. If so, starts (or reset) a timer for auto-close.
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_onMinicalMouseOver">onMinicalMouseOver</a></h4>
+			
+				<div class="detail">
+					<code><b>onMinicalMouseOver</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Listen if mouse over of the minical. If so, disable any timer for auto-close.
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_previousDates">previousDates</a></h4>
+			
+				<div class="detail">
+					<code><b>previousDates</b>(offset)</code> 
+				</div>
+				
+				<div class="description">
+					
+					Go to previous dates (go to the past), with same configuration as previous selection(same disabled weekDays and dates number)
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>offset&nbsp;<i>&lt;Number&gt;</i>&nbsp;</code>
+						 - (optional)  How many dates to skip including today (1 => go to yesterday, 7 => go to last week, etc...) 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_previousPage">previousPage</a></h4>
+			
+				<div class="detail">
+					<code><b>previousPage</b>(e)</code> 
+				</div>
+				
+				<div class="description">
+					
+					Go to previous page (go to the past).
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -648,11 +770,41 @@ Escape the stack using a setTimeout
 				<b>Parameters:</b>
 					<ul>
 						<code>e&nbsp;<i>&lt;Event&gt;</i>&nbsp;</code>
-						 - The original event 
+						 - The intercepted event. 
 					</ul>
 					
 				</div>
 				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_publishSelectedDates">publishSelectedDates</a></h4>
+			
+				<div class="detail">
+					<code><b>publishSelectedDates</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Fires an event ('changeSelectedDates') with array of selected dates as param.
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
 				<!-- METHOD PARAMETERS END -->
 				<!-- ADDITIONAL ATTRIBUTES START -->
 				
@@ -668,12 +820,12 @@ Escape the stack using a setTimeout
 				<h4><a name="method_render">render</a></h4>
 			
 				<div class="detail">
-					<code><b>render</b>()</code> 
+					<code><b>render</b>(id,container)</code> 
 				</div>
 				
 				<div class="description">
 					
-					Default render of the dom element. Create a divEl that wraps the field.
+					Perform dom node creation : create the main panel of calendar and its calendars
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -683,6 +835,20 @@ Escape the stack using a setTimeout
 				
 			<!-- METHOD PARAMETERS START -->
 			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>id&nbsp;<i>&lt;String&gt;</i>&nbsp;</code>
+						 - The id attributed to the future constructed calendar 
+					</ul>
+					
+					<ul>
+						<code>container&nbsp;<i>&lt;String&gt;</i>&nbsp;</code>
+						 - The dom element of the container (typically a <div />) to render the calendar 
+					</ul>
+					
+				</div>
+				
 				<!-- METHOD PARAMETERS END -->
 				<!-- ADDITIONAL ATTRIBUTES START -->
 				
@@ -695,15 +861,15 @@ Escape the stack using a setTimeout
 					
 		
 			<div>
-				<h4><a name="method_renderComponent">renderComponent</a></h4>
+				<h4><a name="method_resetTimer">resetTimer</a></h4>
 			
 				<div class="detail">
-					<code><b>renderComponent</b>()</code> 
+					<code><b>resetTimer</b>(delay)</code> 
 				</div>
 				
 				<div class="description">
 					
-					Render the interface component into this.divEl
+					The timer is used to wait a little before hiding minical when mouse outside it
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -713,36 +879,15 @@ Escape the stack using a setTimeout
 				
 			<!-- METHOD PARAMETERS START -->
 			
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-			<div>
-				<h4><a name="method_setClassFromState">setClassFromState</a></h4>
-			
-				<div class="detail">
-					<code><b>setClassFromState</b>()</code> 
-				</div>
-				
 				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>delay&nbsp;<i>&lt;Number&gt;</i>&nbsp;</code>
+						 - (optional) Delay in ms to set to the timer 
+					</ul>
 					
-					Set the styles for valid/invalide state
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
 				</div>
 				
-			<!-- METHOD PARAMETERS START -->
-			
 				<!-- METHOD PARAMETERS END -->
 				<!-- ADDITIONAL ATTRIBUTES START -->
 				
@@ -758,72 +903,12 @@ Escape the stack using a setTimeout
 				<h4><a name="method_setOptions">setOptions</a></h4>
 			
 				<div class="detail">
-					<code><b>setOptions</b>()</code> 
+					<code><b>setOptions</b>(options)</code> 
 				</div>
 				
 				<div class="description">
 					
-					Set the default values of the options
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-			<div>
-				<h4><a name="method_setToolTipMessage">setToolTipMessage</a></h4>
-			
-				<div class="detail">
-					<code><b>setToolTipMessage</b>()</code> 
-				</div>
-				
-				<div class="description">
-					
-					Set the tooltip message
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-			<div>
-				<h4><a name="method_setValue">setValue</a></h4>
-			
-				<div class="detail">
-					<code><b>setValue</b>(value)</code> 
-				</div>
-				
-				<div class="description">
-					
-					Function to set the value
+					Add config properties to calendar, provided by _config parameter or default config.
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -836,8 +921,8 @@ Escape the stack using a setTimeout
 				<div class="description">
 				<b>Parameters:</b>
 					<ul>
-						<code>value&nbsp;<i>&lt;Any&gt;</i>&nbsp;</code>
-						 - The new value 
+						<code>options&nbsp;<i>&lt;Object&gt;</i>&nbsp;</code>
+						 - Optional. The config objet to override specific defaultConfig properties 
 					</ul>
 					
 				</div>
@@ -854,15 +939,45 @@ Escape the stack using a setTimeout
 					
 		
 			<div>
-				<h4><a name="method_updatedEvt">updatedEvt</a></h4>
+				<h4><a name="method_show">show</a></h4>
 			
 				<div class="detail">
-					<code><b>updatedEvt</b>(value)</code> 
+					<code><b>show</b>()</code> 
 				</div>
 				
 				<div class="description">
 					
-					YAHOO custom event fired when the field is "updated"<br /> subscribe with: this.updatedEvt.subscribe(function(e, params) { var value = params[0]; console.log("updated",value, this.updatedEvt); }, this, true);
+					Show calendar
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_subtractMonths">subtractMonths</a></h4>
+			
+				<div class="detail">
+					<code><b>subtractMonths</b>(count)</code> 
+				</div>
+				
+				<div class="description">
+					
+					Switch reference pageDate of 'count' months in the past. Fires 'changePage' event.
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -875,8 +990,8 @@ Escape the stack using a setTimeout
 				<div class="description">
 				<b>Parameters:</b>
 					<ul>
-						<code>value&nbsp;<i>&lt;Any&gt;</i>&nbsp;</code>
-						 - The new value of the field 
+						<code>count&nbsp;<i>&lt;Number&gt;</i>&nbsp;</code>
+						 - Number of months to subtract to current pageDate 
 					</ul>
 					
 				</div>
@@ -893,15 +1008,15 @@ Escape the stack using a setTimeout
 					
 		
 			<div>
-				<h4><a name="method_validate">validate</a></h4>
+				<h4><a name="method_timerEnd">timerEnd</a></h4>
 			
 				<div class="detail">
-					<code><i>&lt;Boolean&gt;</i>&nbsp;<b>validate</b>()</code> 
+					<code><b>timerEnd</b>()</code> 
 				</div>
 				
 				<div class="description">
 					
-					Validation of the field
+					Hide minical when autoCloseDelay reached
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -914,13 +1029,212 @@ Escape the stack using a setTimeout
 				<!-- METHOD PARAMETERS END -->
 				<!-- ADDITIONAL ATTRIBUTES START -->
 				
-					<div class="description">
-					<b>Returns:</b>
-						<ul>
-							<code><i>&lt;Boolean&gt;</i>&nbsp;</code>field validation status (true/false) 
-						</ul>
+				
 					
-					</div>
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_toggle">toggle</a></h4>
+			
+				<div class="detail">
+					<code><b>toggle</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Toggle calendar
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_update">update</a></h4>
+			
+				<div class="detail">
+					<code><b>update</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Perform a global update of all calendars displays
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_updateBody">updateBody</a></h4>
+			
+				<div class="detail">
+					<code><b>updateBody</b>(cal_position)</code> 
+				</div>
+				
+				<div class="description">
+					
+					Display dates in one single calendar body.
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>cal_position&nbsp;<i>&lt;Number&gt;</i>&nbsp;</code>
+						 - The position of the calendar in the panel : 0 for the calendar on the left, and 1, 2, ..., n for the others from left to right 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_updateLastSelection">updateLastSelection</a></h4>
+			
+				<div class="detail">
+					<code><b>updateLastSelection</b>(selectedCellId)</code> 
+				</div>
+				
+				<div class="description">
+					
+					Update last selection : store last selected date and cellId
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>selectedCellId</code>
+						 - Id of selected cell 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_updateMonthHeader">updateMonthHeader</a></h4>
+			
+				<div class="detail">
+					<code><b>updateMonthHeader</b>(cal_position)</code> 
+				</div>
+				
+				<div class="description">
+					
+					Displays label for month and year in one single calendar.
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>cal_position&nbsp;<i>&lt;Number&gt;</i>&nbsp;</code>
+						 - The position of the calendar in the panel : 0 for the calendar on the left, and 1, 2, ..., n for the others from left to right 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_updateSelectedDates">updateSelectedDates</a></h4>
+			
+				<div class="detail">
+					<code><b>updateSelectedDates</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Update all calendars' cells to display new selection
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
 				
 				
 					
@@ -1040,8 +1354,8 @@ Escape the stack using a setTimeout
 								<li>
 									<a href="inputEx.EmailField.html">inputEx.EmailField</a></li>
 							
-								<li class="selected">
 								
+								<li>
 									<a href="inputEx.Field.html">inputEx.Field</a></li>
 							
 								
@@ -1140,8 +1454,8 @@ Escape the stack using a setTimeout
 								<li>
 									<a href="inputEx.widget.html">inputEx.widget</a></li>
 							
+								<li class="selected">
 								
-								<li>
 									<a href="inputEx.widget.calendar.html">inputEx.widget.calendar</a></li>
 							
 								
@@ -1307,7 +1621,7 @@ Escape the stack using a setTimeout
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Tue, 03 Jun 2008 10:14:02 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Tue, 03 Jun 2008 10:14:03 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>
