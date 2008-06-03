@@ -9,5 +9,9 @@ inputEx.messages = {
 	selectColor: "S&eacute;lectionnez une couleur :",
 	invalidPassword: ["Le mot de passe doit contenir au moins "," caract&egrave;res (lettres ou chiffres)"],
 	invalidPasswordConfirmation: "Les mots de passe entrés ne sont pas identiques !",
-	invalidDate: "Date non valide, ex: 25/01/2007"
+	invalidDate: "Date non valide, ex: 25/01/2007",
+   monthNames: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+   dayNames: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
+   calendarNavLeft: "Mois précédent",
+   calendarNavRight: "Mois suivant"
 };

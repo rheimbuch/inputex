@@ -22,9 +22,14 @@
 - Doc avec JsDocToolkit 2 
  	* Refaire ma template
 
+- DatePickerField
+	* intégrer le minical de clicrdv dans YAHOO.inputEx.widget.calendar
+
 
 Architecture/Code/various: 
 --------------------------
+
+- remove inputEx namespace (use YAHOO.inputEx only)
 
 - use the YUI Loader
 
@@ -64,10 +69,7 @@ Existing Fields enhancements :
 ------------------------------
 
 - PlageField
-	* le "lundi" (select) de "16"h"00" à "18"h"00"
-
-- DateField
-	* intégrer le minical de clicrdv dans YAHOO.inputEx.widget.calendar
+	* ex: le "lundi" (select) de "16"h"00" à "18"h"00"
 
 - IntegerField:
 	* implement radix option
@@ -107,6 +109,8 @@ Existing Fields enhancements :
 
 New Fields :
 ------------
+
+- birthdateField : with select tags (faster to choose in past)
 
 - ObjectField : (from inputExHTML) is a list of pairfields where the left field is a key and the right field is a TypeField ?
 

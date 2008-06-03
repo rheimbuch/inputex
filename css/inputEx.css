@@ -288,8 +288,119 @@ div.inputEx-AutoComplete div.inputEx-AutoComplete-List div.inputEx-AutoComplete-
  */
 div.inputEx-DateField input {
 	border: 1px solid #B5B8C8;
-   background: #FFFFFF url(../images/calendar.gif) no-repeat scroll left -1px;
+   background: #FFFFFF url(../images/calendar.gif) no-repeat scroll right -1px;
    width: 90px;
    height:19px;
-   padding:1px 0pt 0pt 20px;
+   padding:1px 20px 0pt 1px;
+}
+
+/**
+ * DatePicker
+ */
+div.inputEx-DatePickerField input {
+   cursor: pointer;
+}
+
+
+/**
+ * Calendar Widget
+ */
+div.inputEx-Calendar {
+    overflow:visible;
+    font-family:Arial,sans-serif;
+    font-size:8pt;
+    text-align:center;
+    position:absolute; /* necessary for the container to wrap its content */
+}
+
+div.inputEx-Calendar div.inputEx-Calendar-outer-container {
+    /* create transparent shadow */
+    padding-right:2px;
+    padding-bottom:1px;
+    padding-left:2px;
+    background-image:url('../images/gray_shadow.png');
+}
+
+div.inputEx-Calendar div.inputEx-Calendar-inner-container {
+    padding:8px;
+    background-color: #EEEEEE;
+    border:1px solid #AAAAAA;
+}
+
+div.inputEx-Calendar ul.inputEx-Calendar-cal-list {
+    list-style-type:none;
+    padding:0px;
+    margin: 3px 3px 3px 0px;
+}
+
+div.inputEx-Calendar ul.inputEx-Calendar-cal-list li {
+    float:left;
+    display:block;
+    margin:0px 0px 10px 13px;
+}
+
+div.inputEx-Calendar ul.inputEx-Calendar-cal-list li table {
+    border-collapse:collapse;
+}
+
+div.inputEx-Calendar ul.inputEx-Calendar-cal-list li table th.calhead {
+    background-color:#FFFFFF;
+    border:1px solid #E0E0E0;
+    line-height:13px;
+    font-weight:bold;
+    text-align:center;
+    cursor:default;
+}
+
+div.inputEx-Calendar ul.inputEx-Calendar-cal-list li table th.calweekdaycell {
+    font-weight:normal;
+    color:#666666;
+    cursor:pointer;
+    text-align:center;
+}
+
+div.inputEx-Calendar ul.inputEx-Calendar-cal-list li table td {
+    background-color:#FFFFFF;
+    border:1px solid #E0E0E0;
+    padding:2px 3px 2px 3px;
+    cursor:pointer;
+    text-align: center;
+}
+
+/* Display of days out of month (oom) */
+div.inputEx-Calendar ul.inputEx-Calendar-cal-list li table td.oom {
+    background-color:#CCCCCC;
+    color:#888888;
+}
+
+/* Highlight today */
+div.inputEx-Calendar ul.inputEx-Calendar-cal-list li table td.today {
+    background-color:#FFFF00;
+    font-weight:bold;
+}
+
+
+div.inputEx-Calendar ul.inputEx-Calendar-cal-list li table td:hover {
+    background-color:#426FD9;
+    color:#FFFFFF;
+}
+
+div.inputEx-Calendar ul.inputEx-Calendar-cal-list li table td.selected {
+    background-color:#B3D4FF;
+}
+
+div.inputEx-Calendar a.calnavleft {
+    position:absolute;
+    left:24px;
+    top:13px;
+    cursor:pointer;
+    background:url('../images/callt.gif') no-repeat;
+}
+
+div.inputEx-Calendar a.calnavright {
+    position:absolute;
+    right:23px;
+    top:13px;
+    cursor:pointer;
+    background:url('../images/calrt.gif') no-repeat;
 }
