@@ -32,9 +32,9 @@
 										
 <form>
 	<textarea name="code" class="JScript">(function() {
-
+	
    var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Dom = YAHOO.util.Dom;
-
+	
 /**
  * @class A meta field to put 2 fields on the same line
  * @extends inputEx.Field
@@ -46,79 +46,81 @@ inputEx.PairField = function(options) {
    options.rightFieldOptions = options.rightFieldOptions || {};
    inputEx.PairField.superclass.constructor.call(this, options);
 };
-
+	
 lang.extend( inputEx.PairField, inputEx.Field, 
 /**
  * @scope inputEx.PairField.prototype   
  */   
 {
-
-/**
- * float left hack
- */
-render: function() {
-   inputEx.PairField.superclass.render.call(this);
-   this.divEl.appendChild( inputEx.cn('div', null, {clear: "both"}) );
-},
-   
-/**
- * Render the 2 subfields
- */
-renderComponent: function() {
-      
-   var leftType = 'string';
-   if(this.options.leftFieldOptions.type) { leftType = this.options.leftFieldOptions.type; }
-   var leftFieldClass = inputEx.getFieldClass(leftType);
-      
-   var rightType = 'string';
-   if(this.options.rightFieldOptions.type) { rightType = this.options.rightFieldOptions.type; }
-   var rightFieldClass = inputEx.getFieldClass(rightType);
-   
-   this.elLeft = new leftFieldClass(this.options.leftFieldOptions.inputParams || {});
-   this.elRight = new rightFieldClass(this.options.rightFieldOptions.inputParams || {});
-
-   Dom.setStyle(this.elLeft.getEl(), "float", "left");
-
-   // Append it to the main element
-   this.divEl.appendChild(this.elLeft.getEl());
-   var span = inputEx.cn('span', null, null, " : ");
-   Dom.setStyle(span, "float", "left");
-   this.divEl.appendChild(span);
-   this.divEl.appendChild(this.elRight.getEl());
-   	
-   Dom.setStyle(this.elRight.getEl(), "float", "left");
-      
-},
-
-   
-validate: function() {
-   return (this.elLeft.validate() && this.elRight.validate());
-},
-   
-/**
- * Set value
- * @param {Array} val [leftValue, rightValue]
- */
-setValue: function(val) {
-   this.elLeft.setValue(val[0]);
-   this.elRight.setValue(val[1]);
-},
-
-/**
- * Specific getValue 
- * @return {Array} A 2-element array [leftValue, rightValue]
- */   
-getValue: function() {
-   return [this.elLeft.getValue(),this.elRight.getValue()];
-}
-
+	
+	/**
+	 * Insert a breaker (div with clear:both css attribute)
+	 */
+	render: function() {
+	   inputEx.PairField.superclass.render.call(this);
+	   this.divEl.appendChild( inputEx.cn('div', null, {clear: "both"}) );
+	},
+	   
+	/**
+	 * Render the two subfields
+	 */
+	renderComponent: function() {
+	      
+	   var leftType = 'string';
+	   if(this.options.leftFieldOptions.type) { leftType = this.options.leftFieldOptions.type; }
+	   var leftFieldClass = inputEx.getFieldClass(leftType);
+	      
+	   var rightType = 'string';
+	   if(this.options.rightFieldOptions.type) { rightType = this.options.rightFieldOptions.type; }
+	   var rightFieldClass = inputEx.getFieldClass(rightType);
+	   
+	   this.elLeft = new leftFieldClass(this.options.leftFieldOptions.inputParams || {});
+	   this.elRight = new rightFieldClass(this.options.rightFieldOptions.inputParams || {});
+	
+	   Dom.setStyle(this.elLeft.getEl(), "float", "left");
+	
+	   // Append it to the main element
+	   this.divEl.appendChild(this.elLeft.getEl());
+	   var span = inputEx.cn('span', null, null, " : ");
+	   Dom.setStyle(span, "float", "left");
+	   this.divEl.appendChild(span);
+	   this.divEl.appendChild(this.elRight.getEl());
+	   	
+	   Dom.setStyle(this.elRight.getEl(), "float", "left");
+	      
+	},
+	
+	/**
+	 * Apply a AND operator on both field validations
+	 */
+	validate: function() {
+	   return (this.elLeft.validate() && this.elRight.validate());
+	},
+	   
+	/**
+	 * Set the value
+	 * @param {Array} val [leftValue, rightValue]
+	 */
+	setValue: function(val) {
+	   this.elLeft.setValue(val[0]);
+	   this.elRight.setValue(val[1]);
+	},
+	
+	/**
+	 * Specific getValue 
+	 * @return {Array} A 2-element array [leftValue, rightValue]
+	 */   
+	getValue: function() {
+	   return [this.elLeft.getValue(),this.elRight.getValue()];
+	}
+	
 });
-
+	
 /**
  * Register this class as "pair" type
  */
 inputEx.registerType("pair", inputEx.PairField);
-
+	
 })();</textarea>
 </form>
 					
@@ -159,6 +161,10 @@ inputEx.registerType("pair", inputEx.PairField);
 							
 								
 								<li>
+								<a href="visualization.html">Visualization</a></li>
+							
+								
+								<li>
 								<a href="examples.html">Examples</a></li>
 							
 								
@@ -168,10 +174,6 @@ inputEx.registerType("pair", inputEx.PairField);
 					<div class="module">
 						<h4>Classes <a href="treeview.html">(treeview)</a></h4>
 						<ul class="content">
-							
-								
-								<li>
-									<a href="Date.html">Date</a></li>
 							
 								
 								<li>
@@ -308,6 +310,10 @@ inputEx.registerType("pair", inputEx.PairField);
 								
 								<li>
 									<a href="inputEx.widget.calendar.html">inputEx.widget.calendar</a></li>
+							
+								
+								<li>
+									<a href="inputEx.widget.DateEx.html">inputEx.widget.DateEx</a></li>
 							
 								
 						</ul>
@@ -472,7 +478,7 @@ inputEx.registerType("pair", inputEx.PairField);
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Tue, 03 Jun 2008 13:07:46 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 04 Jun 2008 16:22:18 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

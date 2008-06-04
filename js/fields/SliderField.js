@@ -47,6 +47,7 @@ YAHOO.lang.extend(inputEx.SliderField, inputEx.Field,
 
    /**
     * Get the value from the slider
+    * @return {int} The integer value
     */
    getValue: function() {
       return this.slider.getValue();

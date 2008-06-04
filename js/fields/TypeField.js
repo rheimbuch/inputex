@@ -27,6 +27,7 @@ YAHOO.lang.extend(inputEx.TypeField, inputEx.Field,
    
    /**
     * Set the value of the label, typeProperties and group
+    * @param {Object} value Type object configuration
     */
    setValue: function(value) {
       
@@ -46,6 +47,7 @@ YAHOO.lang.extend(inputEx.TypeField, inputEx.Field,
    
    /**
     * Return the config for a entry in an Group
+    * @return {Object} Type object configuration
     */
    getValue: function() {
       
@@ -68,7 +70,7 @@ YAHOO.lang.extend(inputEx.TypeField, inputEx.Field,
    },
    
    /**
-    * Very specific component rendering
+    * Render an inPlaceEdit for label and the properties panel
     */
    renderComponent: function() {
       
@@ -92,6 +94,9 @@ YAHOO.lang.extend(inputEx.TypeField, inputEx.Field,
       this.updateFieldValue();
    },
    
+   /**
+    * Render the popup that will contain the property form
+    */
    renderPropertiesPanel: function() {
       
       this.propertyPanel = inputEx.cn('div', {className: "inputEx-TypeField-PropertiesPanel"}, {display: 'none'});
@@ -155,10 +160,16 @@ YAHOO.lang.extend(inputEx.TypeField, inputEx.Field,
       this.inplaceEditLabel.updatedEvt.subscribe(this.onChangeGroupOptions, this, true);
    },
    
+   /**
+    * Toggle the property panel
+    */
    onTogglePropertiesPanel: function() {
-      this.propertyPanel.style.display = this.propertyPanel.style.display == 'none' ? '' : 'none';
+      this.propertyPanel.style.display = (this.propertyPanel.style.display == 'none') ? '' : 'none';
    },
    
+   /**
+    * Regenerate the property form
+    */
    rebuildGroupOptions: function() {
       // Get value is directly the class !!
       var classO = inputEx.getFieldClass( this.group ? this.getValue().type : "string");
@@ -199,6 +210,9 @@ YAHOO.lang.extend(inputEx.TypeField, inputEx.Field,
       this.updateFieldValue();
    },
    
+   /**
+    * Update the fieldValue with the changed properties
+    */
    onChangeGroupOptions: function() {
       
       this.updateFieldValue();
@@ -207,7 +221,9 @@ YAHOO.lang.extend(inputEx.TypeField, inputEx.Field,
       this.fireUpdatedEvt();
    },
    
-   
+   /**
+    * Update the fieldValue
+    */
    updateFieldValue: function() {
    
       // Close previous field

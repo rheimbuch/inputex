@@ -30,6 +30,7 @@ lang.extend(inputEx.UrlField, inputEx.StringField,
    
    /**
     * Validate after setValue to display the favicon
+    * @param {String} value The url string
     */
    setValue: function(value) {
 	   this.el.value = value;
@@ -52,6 +53,7 @@ lang.extend(inputEx.UrlField, inputEx.StringField,
    
    /**
     * Validate the field with an url regexp and set the favicon url
+    * @return {Boolean} Validation state
     */
    validate: function() {
       var url = this.getValue().match(inputEx.regexps.url);   

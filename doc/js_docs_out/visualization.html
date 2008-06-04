@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>inputEx Documentation - Date</title>
+<title>inputEx Documentation - Visualization</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="JsDoc Toolkit 2.0.0" />
 <link href="css/reset-fonts-grids.css" type="text/css" rel="stylesheet" media="all" /> 
@@ -18,357 +18,119 @@
 			
 			
 			<h3>
-				<a href="./index.html">inputEx Documentation</a> &gt; Date
+				<a href="./index.html">inputEx Documentation</a> &gt; Visualization
 				<span class="subtitle">0.2.0</span>
 			</h3>
 		
 		</div>
 		<div id="bd">
 			<div id="yui-main">
-				<div class="yui-b">
+				<div class="yui-b"><div class="page">
+<h2>Visualization/Templating in inputEx</h2>
 
-<!-- Class -->
-<h2>
-	Class <b>Date</b>
+<br />
+
+<h3>Introduction</h3>
+
+<p>The use of a template engine in inputEx first appeared for the Autocompleter, InPlaceEdit and Uneditable fields.<br />
+	 It has also proven very useful in projects that use inputEx.</p>
+
+
+<p>The library itself doesn't include a template engine, but provides a standard way to use different engines and define your templates within field configurations. It is also very simple to add interfaces to other template engines.</p>
+
+
+<h3>Rendering</h3>
+
+<p>The fields should use the <strong>inputEx.renderVisu</strong> method to use templates:</p>
+
+<div style="margin-left: 20px;">
+	<hr />
+		<h4><a name="method_renderVisu">renderVisu</a></h4>
 	
-</h2>
-
-<!-- Known subsclasses-->
-
-
-<!--
-
-
--->
-<!-- class description -->
-
-
-<!--
-
-<hr>
--->
-
-
-<!-- ========= CONSTRUCTOR ======== -->
-
-<!-- ========= CONSTRUCTOR END ======== -->
-
-
-
-
-<!-- ============ Properties START ========= -->
-
-<!-- ============ Properties END ========== -->
-
-
-
-
-<!-- ============ METHOD DETAIL START ======= -->
-
-	<a name="method_detail"> </a> 
-
-	<div class="section method details">
-		<h3 id="methods">Methods</h3>
-		<div class="content">
+		<div class="detail">
+			<code><i>static</i>&nbsp;<i>&lt;HTMLElement || String&gt;</i>&nbsp;<b>renderVisu</b>(visuOptions,data,parentEl)</code> 
+		</div>
 
 		
+		<div class="description">
+			
+			Render 'data' using a visualization function described by 'visuOptions'
+		</div>
 		
-			<div>
-				<h4><a name="method_AddDays">AddDays</a></h4>
-			
-				<div class="detail">
-					<code><b>AddDays</b>(amount)</code> 
-				</div>
-				
-				<div class="description">
-					
-					
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<div class="description">
-				<b>Parameters:</b>
-					<ul>
-						<code>amount</code>
-						 
-					</ul>
-					
-				</div>
-				
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-			<div>
-				<h4><a name="method_AddMonths">AddMonths</a></h4>
-			
-				<div class="detail">
-					<code><b>AddMonths</b>(amount)</code> 
-				</div>
-				
-				<div class="description">
-					
-					
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<div class="description">
-				<b>Parameters:</b>
-					<ul>
-						<code>amount</code>
-						 
-					</ul>
-					
-				</div>
-				
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-			<div>
-				<h4><a name="method_AddWeeks">AddWeeks</a></h4>
-			
-				<div class="detail">
-					<code><b>AddWeeks</b>(amount)</code> 
-				</div>
-				
-				<div class="description">
-					
-					
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<div class="description">
-				<b>Parameters:</b>
-					<ul>
-						<code>amount</code>
-						 
-					</ul>
-					
-				</div>
-				
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-			<div>
-				<h4><a name="method_findMonthEnd">findMonthEnd</a></h4>
-			
-				<div class="detail">
-					<code><b>findMonthEnd</b>()</code> 
-				</div>
-				
-				<div class="description">
-					
-					
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-			<div>
-				<h4><a name="method_findMonthStart">findMonthStart</a></h4>
-			
-				<div class="detail">
-					<code><b>findMonthStart</b>()</code> 
-				</div>
-				
-				<div class="description">
-					
-					
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-			<div>
-				<h4><a name="method_getMidnight">getMidnight</a></h4>
-			
-				<div class="detail">
-					<code><b>getMidnight</b>()</code> 
-				</div>
-				
-				<div class="description">
-					
-					
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-			<div>
-				<h4><a name="method_GetMonday">GetMonday</a></h4>
-			
-				<div class="detail">
-					<code><b>GetMonday</b>()</code> 
-				</div>
-				
-				<div class="description">
-					
-					
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-			<div>
-				<h4><a name="method_getToday">getToday</a></h4>
-			
-				<div class="detail">
-					<code><i>static</i>&nbsp;<b>getToday</b>()</code> 
-				</div>
-				
-				<div class="description">
-					
-					Date Extensions:
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
+	<!-- METHOD PARAMETERS START -->
+	
+		<div class="description">
+		<b>Parameters:</b>
+			<ul>
+				<code>visuOptions&nbsp;<i>&lt;Object&gt;</i>&nbsp;</code>
 
-				</div>
+				 - The visu parameters {visuType: 'myType', ...args...} 
+			</ul>
+			
+			<ul>
+				<code>data&nbsp;<i>&lt;Object&gt;</i>&nbsp;</code>
+				 - The input data to send to the template 
+			</ul>
+			
+			<ul>
+				<code>parentEl&nbsp;<i>&lt;HTMLElement || String&gt;</i>&nbsp;</code>
+
+				 - optional Set the result as content of parentEl 
+			</ul>
+			
+		</div>
+		
+		<!-- METHOD PARAMETERS END -->
+		<!-- ADDITIONAL ATTRIBUTES START -->
+		
+			<div class="description">
+			<b>Returns:</b>
+				<ul>
+					<code><i>&lt;HTMLElement || String&gt;</i>&nbsp;</code>Either the inserted HTMLElement or the String set to parentEl.innerHTML 
+				</ul>
+
+			
 			</div>
+		
+		
+			
+				<!-- ADDITIONAL ATTRIBUTES  END -->
+				<hr>
+				</div>
 
 
-<!-- ============ METHOD DETAIL END ========== -->
 
-
-
-
-<!-- ========== INHERITED METHODS SUMMARY =========== -->
-
-
+<p>Templating methods are stored in the <strong>inputEx.visus</strong> object. Methods can return either a HTMLElement or a String, since inputEx.renderVisu handle both.</p>
 	
+<p>inputEx.visus contains 3 default methods (you can add your own) :</p>
+
+<ul>
+	<li><strong>dump</strong>: uses <a href="http://developer.yahoo.com/yui/docs/YAHOO.lang.html#method_dump">YAHOO.lang.dump</a> to generate a string from any object</li>
+	<li><strong>trimpath</strong>: use <a href="http://code.google.com/p/trimpath/wiki/JavaScriptTemplates">Trimpath JST template engine</a> (requires lib/trimpath-template-v.v.v.js)</li>
+	<li><strong>func</strong>: any function, useful for building interactive templates, cannot be described in json</li>
+</ul>
+
+
+<p>inputEx.Visus methods are functions that take 2 parameters :</p>
+
+<ul>
+	<li>options: template object passed to Object containing the "visuType" property and template specific parameters</li>
+	<li>data: the data sent to the template</li>
+</ul>
+
+<br />
+
+<h3>Examples</h3>
+
+<p>Check the following examples to see template usage:</p>
+
+<ul>
+	<li><a href="../../examples/autocomplete.html">Autocompleter</a></li>
+	<li><a href="../../examples/inplaceedit.html">InPlaceEdit</a></li>
+	<li><a href="../../examples/uneditable_field.html">UneditableField</a></li>
+</ul>
 	
-	<br/>
-	
-
-<br/>
-
-<!-- ========== END INHERITED METHODS SUMMARY =========== -->
-
-
-
-<!-- ============ EVENT DETAIL START ======= -->
-
-
-
-
-</div>
+	</div></div>
 			</div>
 			
 			<div class="yui-b">
@@ -402,6 +164,10 @@
 								<li>
 								<a href="internationalization.html">Internationalization</a></li>
 							
+								<li class="selected">
+								
+								<a href="visualization.html">Visualization</a></li>
+							
 								
 								<li>
 								<a href="examples.html">Examples</a></li>
@@ -413,10 +179,6 @@
 					<div class="module">
 						<h4>Classes <a href="treeview.html">(treeview)</a></h4>
 						<ul class="content">
-							
-								<li class="selected">
-								
-									<a href="Date.html">Date</a></li>
 							
 								
 								<li>
@@ -553,6 +315,10 @@
 								
 								<li>
 									<a href="inputEx.widget.calendar.html">inputEx.widget.calendar</a></li>
+							
+								
+								<li>
+									<a href="inputEx.widget.DateEx.html">inputEx.widget.DateEx</a></li>
 							
 								
 						</ul>
@@ -717,7 +483,7 @@
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Tue, 03 Jun 2008 13:07:46 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 04 Jun 2008 16:22:20 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

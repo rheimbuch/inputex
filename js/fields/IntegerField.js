@@ -29,12 +29,17 @@ YAHOO.lang.extend(inputEx.IntegerField, inputEx.StringField,
 
    /**
     * onInput is called 50ms after a "keypress" event
+    * @param {Event} e The original input event
     */
    onInput: function(e) {
 	   this.setValue( this.getValue() );
       this.setClassFromState();
    },
    
+   /**
+    * Set the integer value
+    * @param {int} value The value to set
+    */
    setValue: function(value) {
       
       if( isNaN(value) ) {
@@ -49,6 +54,10 @@ YAHOO.lang.extend(inputEx.IntegerField, inputEx.StringField,
       
    },
    
+   /**
+    * Get the value
+    * @return {int} The integer value
+    */
    getValue: function() {
       return parseInt(this.el.value, 10);
    }

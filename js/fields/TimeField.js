@@ -16,12 +16,17 @@ YAHOO.lang.extend(inputEx.TimeField, inputEx.Field,
  * @scope inputEx.TimeField.prototype   
  */
 {
-
+   /**
+    * Insert a breaker (a div with clear:both css attributes)
+    */
    render: function() {
       inputEx.TimeField.superclass.render.call(this);
       this.divEl.appendChild(inputEx.cn('div', null, {clear: 'both'}, ''));
    },
 
+   /**
+    * Render three select fields (hour, minutes, seconds)
+    */
    renderComponent: function() {
       
       var h = [];
@@ -54,10 +59,18 @@ YAHOO.lang.extend(inputEx.TimeField, inputEx.Field,
       this.divEl.appendChild(el);
    },
    
+   /**
+    * Returns a string like HH:MM:SS
+    * @return {String} Hour string
+    */
    getValue: function() {
       return ([this.hoursField.getValue(), this.minutesField.getValue(), this.secondsField.getValue()]).join(':');
    },
 
+   /**
+    * Set the value 
+    * @param {String} str Hour string (format HH:MM:SS)
+    */
    setValue: function(str) {
       var a = str.split(':');
       this.hoursField.setValue(a[0]);

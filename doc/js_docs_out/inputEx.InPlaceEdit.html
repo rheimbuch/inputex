@@ -167,7 +167,7 @@
 				<h4><a name="method_getValue">getValue</a></h4>
 			
 				<div class="detail">
-					<code><b>getValue</b>()</code> 
+					<code><i>&lt;Any&gt;</i>&nbsp;<b>getValue</b>()</code> 
 				</div>
 				
 				<div class="description">
@@ -184,6 +184,14 @@
 			
 				<!-- METHOD PARAMETERS END -->
 				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+					<div class="description">
+					<b>Returns:</b>
+						<ul>
+							<code><i>&lt;Any&gt;</i>&nbsp;</code>The value of the subfield 
+						</ul>
+					
+					</div>
 				
 				
 					
@@ -202,7 +210,7 @@
 				
 				<div class="description">
 					
-					
+					Adds the events for the editor and color animations
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -234,7 +242,7 @@
 				
 				<div class="description">
 					
-					
+					Close the editor on cancel (cancel button, blur event or escape key)
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -247,8 +255,8 @@
 				<div class="description">
 				<b>Parameters:</b>
 					<ul>
-						<code>e</code>
-						 
+						<code>e&nbsp;<i>&lt;Event&gt;</i>&nbsp;</code>
+						 - The original event (click, blur or keydown) 
 					</ul>
 					
 				</div>
@@ -277,7 +285,7 @@
 				
 				<div class="description">
 					
-					
+					Handle the tabulation key to close the editor
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -290,8 +298,8 @@
 				<div class="description">
 				<b>Parameters:</b>
 					<ul>
-						<code>e</code>
-						 
+						<code>e&nbsp;<i>&lt;Event&gt;</i>&nbsp;</code>
+						 - The original keydown event 
 					</ul>
 					
 				</div>
@@ -316,7 +324,7 @@
 				
 				<div class="description">
 					
-					
+					Handle some keys events to close the editor
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -329,8 +337,8 @@
 				<div class="description">
 				<b>Parameters:</b>
 					<ul>
-						<code>e</code>
-						 
+						<code>e&nbsp;<i>&lt;Event&gt;</i>&nbsp;</code>
+						 - The original keyup event 
 					</ul>
 					
 				</div>
@@ -355,7 +363,7 @@
 				
 				<div class="description">
 					
-					
+					Validate the editor (ok button, enter key or tabulation key)
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -380,12 +388,12 @@
 				<h4><a name="method_onVisuMouseOut">onVisuMouseOut</a></h4>
 			
 				<div class="detail">
-					<code><b>onVisuMouseOut</b>()</code> 
+					<code><b>onVisuMouseOut</b>(e)</code> 
 				</div>
 				
 				<div class="description">
 					
-					
+					Start the color animation when hovering the field
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -395,6 +403,15 @@
 				
 			<!-- METHOD PARAMETERS START -->
 			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>e&nbsp;<i>&lt;Event&gt;</i>&nbsp;</code>
+						 - The original mouseout event 
+					</ul>
+					
+				</div>
+				
 				<!-- METHOD PARAMETERS END -->
 				<!-- ADDITIONAL ATTRIBUTES START -->
 				
@@ -410,12 +427,12 @@
 				<h4><a name="method_onVisuMouseOver">onVisuMouseOver</a></h4>
 			
 				<div class="detail">
-					<code><b>onVisuMouseOver</b>()</code> 
+					<code><b>onVisuMouseOver</b>(e)</code> 
 				</div>
 				
 				<div class="description">
 					
-					
+					Set the color when hovering the field
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -425,6 +442,15 @@
 				
 			<!-- METHOD PARAMETERS START -->
 			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>e&nbsp;<i>&lt;Event&gt;</i>&nbsp;</code>
+						 - The original mouseover event 
+					</ul>
+					
+				</div>
+				
 				<!-- METHOD PARAMETERS END -->
 				<!-- ADDITIONAL ATTRIBUTES START -->
 				
@@ -445,7 +471,7 @@
 				
 				<div class="description">
 					
-					
+					Display the editor
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -586,8 +612,8 @@
 				<div class="description">
 				<b>Parameters:</b>
 					<ul>
-						<code>value</code>
-						 
+						<code>value&nbsp;<i>&lt;Any&gt;</i>&nbsp;</code>
+						 - The value to set 
 					</ul>
 					
 				</div>
@@ -626,41 +652,41 @@
 			<div class="content">
 				<code>
 					
-						<a href="inputEx.Field.html#fireUpdatedEvt">fireUpdatedEvt</a>,
-					
-						<a href="inputEx.Field.html#renderComponent">renderComponent</a>,
-					
-						<a href="inputEx.Field.html#setToolTipMessage">setToolTipMessage</a>,
-					
-						<a href="inputEx.Field.html#onBlur">onBlur</a>,
-					
-						<a href="inputEx.Field.html#enable">enable</a>,
-					
-						<a href="inputEx.Field.html#setOptions">setOptions</a>,
-					
 						<a href="inputEx.Field.html#focus">focus</a>,
 					
 						<a href="inputEx.Field.html#getEl">getEl</a>,
+					
+						<a href="inputEx.Field.html#validate">validate</a>,
+					
+						<a href="inputEx.Field.html#fireUpdatedEvt">fireUpdatedEvt</a>,
+					
+						<a href="inputEx.Field.html#close">close</a>,
+					
+						<a href="inputEx.Field.html#onBlur">onBlur</a>,
+					
+						<a href="inputEx.Field.html#onFocus">onFocus</a>,
+					
+						<a href="inputEx.Field.html#getStateString">getStateString</a>,
+					
+						<a href="inputEx.Field.html#setClassFromState">setClassFromState</a>,
 					
 						<a href="inputEx.Field.html#disable">disable</a>,
 					
 						<a href="inputEx.Field.html#onChange">onChange</a>,
 					
-						<a href="inputEx.Field.html#setClassFromState">setClassFromState</a>,
+						<a href="inputEx.Field.html#updatedEvt">updatedEvt</a>,
 					
 						<a href="inputEx.Field.html#getState">getState</a>,
 					
-						<a href="inputEx.Field.html#validate">validate</a>,
+						<a href="inputEx.Field.html#setOptions">setOptions</a>,
 					
-						<a href="inputEx.Field.html#updatedEvt">updatedEvt</a>,
+						<a href="inputEx.Field.html#renderComponent">renderComponent</a>,
 					
 						<a href="inputEx.Field.html#destroy">destroy</a>,
 					
-						<a href="inputEx.Field.html#getStateString">getStateString</a>,
+						<a href="inputEx.Field.html#setToolTipMessage">setToolTipMessage</a>,
 					
-						<a href="inputEx.Field.html#close">close</a>,
-					
-						<a href="inputEx.Field.html#onFocus">onFocus</a>,
+						<a href="inputEx.Field.html#enable">enable</a>,
 							
 				</code>
 			</div>
@@ -716,6 +742,10 @@
 							
 								
 								<li>
+								<a href="visualization.html">Visualization</a></li>
+							
+								
+								<li>
 								<a href="examples.html">Examples</a></li>
 							
 								
@@ -725,10 +755,6 @@
 					<div class="module">
 						<h4>Classes <a href="treeview.html">(treeview)</a></h4>
 						<ul class="content">
-							
-								
-								<li>
-									<a href="Date.html">Date</a></li>
 							
 								
 								<li>
@@ -865,6 +891,10 @@
 								
 								<li>
 									<a href="inputEx.widget.calendar.html">inputEx.widget.calendar</a></li>
+							
+								
+								<li>
+									<a href="inputEx.widget.DateEx.html">inputEx.widget.DateEx</a></li>
 							
 								
 						</ul>
@@ -1029,7 +1059,7 @@
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Tue, 03 Jun 2008 13:07:47 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 04 Jun 2008 16:22:19 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

@@ -49,13 +49,19 @@ lang.extend(inputEx.StringField, inputEx.Field,
       this.divEl.appendChild(this.el);
    },
 	
-
+   /**
+    * Register the change, focus and blur events
+    */
    initEvents: function() {	
 	   Event.addListener(this.el, "change", this.onChange, this, true);
 	   Event.addListener(this.el, "focus", this.onFocus, this, true);
 	   Event.addListener(this.el, "blur", this.onBlur, this, true);	   
    },
 
+   /**
+    * Return the string value
+    * @param {String} The string value
+    */
    getValue: function() { 
 	   return this.el.value;
    },

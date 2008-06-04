@@ -17,11 +17,17 @@ YAHOO.lang.extend(inputEx.DateTimeField, inputEx.Field,
  */
 {
 
+   /**
+    * Insert a 'breaker' (div with 'clear: both' css attribute)
+    */
    render: function() {
       inputEx.DateTimeField.superclass.render.call(this);
       this.divEl.appendChild(inputEx.cn('div', null, {clear: 'both'}, ''));
    },
 
+   /**
+    * Render a DateField and a TimeField
+    */
    renderComponent: function() {
       
       this.dateField = new inputEx.DateField({name: 'date'});
@@ -37,6 +43,10 @@ YAHOO.lang.extend(inputEx.DateTimeField, inputEx.Field,
 
    },
    
+   /**
+    * Concat the values to return a date
+    * @return {Date} The javascript Date object
+    */
    getValue: function() {
       var d = this.dateField.getValue();
       if( d == '' ) return null;
@@ -49,6 +59,10 @@ YAHOO.lang.extend(inputEx.DateTimeField, inputEx.Field,
       return d;
    },
 
+   /**
+    * Set the value of both subfields
+    * @param {Date} val Date to set
+    */
    setValue: function(val) {
       this.dateField.setValue(val);
       this.timeField.setValue( ([val.getHours(), val.getMinutes(), val.getSeconds()]).join(':') );

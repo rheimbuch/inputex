@@ -31,6 +31,7 @@ lang.extend(inputEx.Form, inputEx.Group,
          this.options.ajax.uri = this.options.ajax.uri || 'default.php';
          this.options.ajax.callback = this.options.ajax.callback || {};
          this.options.ajax.callback.scope = this.options.ajax.callback.scope || this;
+         this.options.ajax.showMask = lang.isUndefined(this.options.ajax.showMask) ? false : this.options.ajax.showMask;
       }
    },
    
@@ -100,18 +101,19 @@ lang.extend(inputEx.Form, inputEx.Group,
     * Send the form value in JSON through an ajax request
     */
    asyncRequest: function() { 
-	   //this.showMask();
+      
+      if(this.options.ajax.showMask) { this.showMask(); }
 	   var postData = "value="+lang.JSON.stringify(this.getValue());
       util.Connect.asyncRequest(this.options.ajax.method, this.options.ajax.uri, { 
          success: function(o) {
-            //this.hideMask();
+            if(this.options.ajax.showMask) { this.hideMask(); }
             if( lang.isFunction(this.options.ajax.callback.success) ) {
                this.options.ajax.callback.success.call(this.options.ajax.callback.scope,o);
             }
          }, 
       
          failure: function(o) {
-            //this.hideMask();
+            if(this.options.ajax.showMask) { this.hideMask(); }
             if( lang.isFunction(this.options.ajax.callback.failure) ) {
                this.options.ajax.callback.failure.call(this.options.ajax.callback.scope,o);
             }
@@ -119,41 +121,40 @@ lang.extend(inputEx.Form, inputEx.Group,
       
          scope:this 
       }, postData);
-   }
+   },
   
-/**
- * Create a Mask over the form
- *
-renderMask = function() {
-   if(this.maskRendered) return;
+   /**
+    * Create a Mask over the form
+    */
+   renderMask: function() {
+      if(this.maskRendered) return;
    
-   Dom.setStyle(this.divEl, "position", "relative");
-   this.formMask = inputEx.cn('div', {className: 'inputEx-Form-Mask'}, 
-      {
-         display: 'none', 
-         width: Dom.getStyle(this.divEl,"width"),
-         height: Dom.getStyle(this.divEl,"height"),
-      }, 
-      "<div/><center><br /><img src='../images/spinner.gif'/><br /><span>Envoi en cours...</span></center>");
-   this.divEl.appendChild(this.formMask);
-   this.maskRendered = true;
-},*/
+      Dom.setStyle(this.divEl, "position", "relative");
+      this.formMask = inputEx.cn('div', {className: 'inputEx-Form-Mask'}, 
+         {
+            display: 'none', 
+            width: Dom.getStyle(this.divEl,"width"),
+            height: Dom.getStyle(this.divEl,"height"),
+         }, 
+         "<div/><center><br /><img src='../images/spinner.gif'/><br /><span>Envoi en cours...</span></center>");
+      this.divEl.appendChild(this.formMask);
+      this.maskRendered = true;
+   },
 
-/**
- * Show the form mask
- *
-showMask = function() {
-   this.renderMask();
-   this.formMask.style.display = '';
-},
-*/
+   /**
+    * Show the form mask
+    */
+   showMask: function() {
+      this.renderMask();
+      this.formMask.style.display = '';
+   },
 
-/**
- * Hide the form mask
- *
-hideMask = function() {
-   this.formMask.style.display = 'none';
-}*/
+   /**
+    * Hide the form mask
+    */
+   hideMask: function() {
+      this.formMask.style.display = 'none';
+   }
 
 });
 

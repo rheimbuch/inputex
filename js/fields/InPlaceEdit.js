@@ -61,15 +61,23 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
       
       this.divEl.appendChild(this.editorContainer);
    },
-      
-   onVisuMouseOver: function() {
+   
+   /**
+    * Set the color when hovering the field
+    * @param {Event} e The original mouseover event
+    */
+   onVisuMouseOver: function(e) {
       if(this.colorAnim) {
          this.colorAnim.stop(true);
       }
       inputEx.sn(this.formattedContainer, null, {backgroundColor: '#eeee33' });
    },
    
-   onVisuMouseOut: function() {
+   /**
+    * Start the color animation when hovering the field
+    * @param {Event} e The original mouseout event
+    */
+   onVisuMouseOut: function(e) {
       // Start animation
       if(this.colorAnim) {
          this.colorAnim.stop(true);
@@ -97,84 +105,106 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
       
       this.divEl.appendChild(this.formattedContainer);
    },
-   
-initEvents: function() {  
-   Event.addListener(this.formattedContainer, "click", this.openEditor, this, true);
+
+   /**
+    * Adds the events for the editor and color animations
+    */
+   initEvents: function() {  
+      Event.addListener(this.formattedContainer, "click", this.openEditor, this, true);
             
-   // For color animation
-   Event.addListener(this.formattedContainer, 'mouseover', this.onVisuMouseOver, this, true);
-   Event.addListener(this.formattedContainer, 'mouseout', this.onVisuMouseOut, this, true);
+      // For color animation
+      Event.addListener(this.formattedContainer, 'mouseover', this.onVisuMouseOver, this, true);
+      Event.addListener(this.formattedContainer, 'mouseout', this.onVisuMouseOut, this, true);
          
-   // Editor: 
-   Event.addListener(this.okButton, 'click', this.onOkEditor, this, true);
-   Event.addListener(this.cancelLink, 'click', this.onCancelEditor, this, true);
+      // Editor: 
+      Event.addListener(this.okButton, 'click', this.onOkEditor, this, true);
+      Event.addListener(this.cancelLink, 'click', this.onCancelEditor, this, true);
          
-   if(this.editorField.el) {
-      // Register some listeners
-      Event.addListener(this.editorField.el, "keyup", this.onKeyUp, this, true);
-      Event.addListener(this.editorField.el, "keydown", this.onKeyDown, this, true);
-      // BLur
-      Event.addListener(this.editorField.el, "blur", this.onCancelEditor, this, true);
-   }
-},
+      if(this.editorField.el) {
+         // Register some listeners
+         Event.addListener(this.editorField.el, "keyup", this.onKeyUp, this, true);
+         Event.addListener(this.editorField.el, "keydown", this.onKeyDown, this, true);
+         // BLur
+         Event.addListener(this.editorField.el, "blur", this.onCancelEditor, this, true);
+      }
+   },
    
-onKeyUp: function(e) {
-   // Enter
-   if( e.keyCode == 13) {
-      this.onOkEditor();
-   }
-   // Escape
-   if( e.keyCode == 27) {
-      this.onCancelEditor(e);
-   }
-},
+   /**
+    * Handle some keys events to close the editor
+    * @param {Event} e The original keyup event
+    */
+   onKeyUp: function(e) {
+      // Enter
+      if( e.keyCode == 13) {
+         this.onOkEditor();
+      }
+      // Escape
+      if( e.keyCode == 27) {
+         this.onCancelEditor(e);
+      }
+   },
    
-onKeyDown: function(e) {
-   // Tab
-   if(e.keyCode == 9) {
-      this.onOkEditor();
-   }
-},
+   /**
+    * Handle the tabulation key to close the editor
+    * @param {Event} e The original keydown event
+    */
+   onKeyDown: function(e) {
+      // Tab
+      if(e.keyCode == 9) {
+         this.onOkEditor();
+      }
+   },
    
-onOkEditor: function() {
-   var newValue = this.editorField.getValue();
-   this.setValue(newValue);
+   /**
+    * Validate the editor (ok button, enter key or tabulation key)
+    */
+   onOkEditor: function() {
+      var newValue = this.editorField.getValue();
+      this.setValue(newValue);
       
-   this.editorContainer.style.display = 'none';
-   this.formattedContainer.style.display = '';
+      this.editorContainer.style.display = 'none';
+      this.formattedContainer.style.display = '';
       
-   var that = this;
-   setTimeout(function() {that.updatedEvt.fire(newValue);}, 50);      
-},
+      var that = this;
+      setTimeout(function() {that.updatedEvt.fire(newValue);}, 50);      
+   },
+
    
-onCancelEditor: function(e) {
-   Event.stopEvent(e);
-   this.editorContainer.style.display = 'none';
-   this.formattedContainer.style.display = '';
-},
+   /**
+    * Close the editor on cancel (cancel button, blur event or escape key)
+    * @param {Event} e The original event (click, blur or keydown)
+    */
+   onCancelEditor: function(e) {
+      Event.stopEvent(e);
+      this.editorContainer.style.display = 'none';
+      this.formattedContainer.style.display = '';
+   },
    
+   /**
+    * Display the editor
+    */
+   openEditor: function() {
+      var value = this.getValue();
+      this.editorContainer.style.display = '';
+      this.formattedContainer.style.display = 'none';
    
-openEditor: function() {
-   var value = this.getValue();
-   this.editorContainer.style.display = '';
-   this.formattedContainer.style.display = 'none';
-   
-   if(!lang.isUndefined(value)) {
-      this.editorField.setValue(value);   
-   }
+      if(!lang.isUndefined(value)) {
+         this.editorField.setValue(value);   
+      }
       
-   // Set focus in the element !
-   this.editorField.focus();
+      // Set focus in the element !
+      this.editorField.focus();
    
-   // Select the content
-   if(this.editorField.el && lang.isFunction(this.editorField.el.setSelectionRange) && (!!value && !!value.length)) {
-      this.editorField.el.setSelectionRange(0,value.length);
-   }
+      // Select the content
+      if(this.editorField.el && lang.isFunction(this.editorField.el.setSelectionRange) && (!!value && !!value.length)) {
+         this.editorField.el.setSelectionRange(0,value.length);
+      }
       
-},
+   },
    
    /**
     * Returned the previously stored value
+    * @return {Any} The value of the subfield
     */
    getValue: function() {
 	   return this.value;
@@ -182,6 +212,7 @@ openEditor: function() {
 
    /**
     * Set the value and update the display
+    * @param {Any} value The value to set
     */
    setValue: function(value) {   
       // Store the value

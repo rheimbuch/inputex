@@ -174,7 +174,7 @@
 				<h4><a name="method_addElement">addElement</a></h4>
 			
 				<div class="detail">
-					<code><i>&lt;inputEx.Field&gt;</i>&nbsp;<b>addElement</b>(value)</code> 
+					<code><i>&lt;inputEx.Field&gt;</i>&nbsp;<b>addElement</b>(The)</code> 
 				</div>
 				
 				<div class="description">
@@ -192,8 +192,8 @@
 				<div class="description">
 				<b>Parameters:</b>
 					<ul>
-						<code>value</code>
-						 
+						<code>The&nbsp;<i>&lt;Any&gt;</i>&nbsp;</code>
+						 - initial value of the subfield to create 
 					</ul>
 					
 				</div>
@@ -239,7 +239,7 @@
 				<h4><a name="method_getValue">getValue</a></h4>
 			
 				<div class="detail">
-					<code><b>getValue</b>()</code> 
+					<code><i>&lt;Array&gt;</i>&nbsp;<b>getValue</b>()</code> 
 				</div>
 				
 				<div class="description">
@@ -256,6 +256,14 @@
 			
 				<!-- METHOD PARAMETERS END -->
 				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+					<div class="description">
+					<b>Returns:</b>
+						<ul>
+							<code><i>&lt;Array&gt;</i>&nbsp;</code>The array 
+						</ul>
+					
+					</div>
 				
 				
 					
@@ -422,7 +430,7 @@ Called when the user clicked on the up arrow of a sortable list
 				<h4><a name="method_onDelete">onDelete</a></h4>
 			
 				<div class="detail">
-					<code><b>onDelete</b>(e,params)</code> 
+					<code><b>onDelete</b>(e)</code> 
 				</div>
 				
 				<div class="description">
@@ -440,13 +448,8 @@ Called when the user clicked on the up arrow of a sortable list
 				<div class="description">
 				<b>Parameters:</b>
 					<ul>
-						<code>e</code>
-						 
-					</ul>
-					
-					<ul>
-						<code>params</code>
-						 
+						<code>e&nbsp;<i>&lt;Event&gt;</i>&nbsp;</code>
+						 - The original click event 
 					</ul>
 					
 				</div>
@@ -486,8 +489,8 @@ Called when the user clicked on the up arrow of a sortable list
 				<div class="description">
 				<b>Parameters:</b>
 					<ul>
-						<code>index</code>
-						 
+						<code>index&nbsp;<i>&lt;integer&gt;</i>&nbsp;</code>
+						 - The index of the element to remove 
 					</ul>
 					
 				</div>
@@ -539,7 +542,7 @@ Called when the user clicked on the up arrow of a sortable list
 				<h4><a name="method_renderSubField">renderSubField</a></h4>
 			
 				<div class="detail">
-					<code><i>&lt;inputEx.Field&gt;</i>&nbsp;<b>renderSubField</b>(value)</code> 
+					<code><i>&lt;inputEx.Field&gt;</i>&nbsp;<b>renderSubField</b>(The)</code> 
 				</div>
 				
 				<div class="description">
@@ -557,8 +560,8 @@ Called when the user clicked on the up arrow of a sortable list
 				<div class="description">
 				<b>Parameters:</b>
 					<ul>
-						<code>value</code>
-						 
+						<code>The&nbsp;<i>&lt;Any&gt;</i>&nbsp;</code>
+						 - initial value of the subfield to create 
 					</ul>
 					
 				</div>
@@ -638,8 +641,8 @@ Called when the user clicked on the up arrow of a sortable list
 				<div class="description">
 				<b>Parameters:</b>
 					<ul>
-						<code>value</code>
-						 
+						<code>value&nbsp;<i>&lt;Array&gt;</i>&nbsp;</code>
+						 - The list of values to set 
 					</ul>
 					
 				</div>
@@ -678,39 +681,39 @@ Called when the user clicked on the up arrow of a sortable list
 			<div class="content">
 				<code>
 					
-						<a href="inputEx.Field.html#fireUpdatedEvt">fireUpdatedEvt</a>,
-					
-						<a href="inputEx.Field.html#setToolTipMessage">setToolTipMessage</a>,
-					
-						<a href="inputEx.Field.html#onBlur">onBlur</a>,
-					
-						<a href="inputEx.Field.html#enable">enable</a>,
-					
 						<a href="inputEx.Field.html#focus">focus</a>,
 					
 						<a href="inputEx.Field.html#getEl">getEl</a>,
+					
+						<a href="inputEx.Field.html#validate">validate</a>,
+					
+						<a href="inputEx.Field.html#fireUpdatedEvt">fireUpdatedEvt</a>,
+					
+						<a href="inputEx.Field.html#close">close</a>,
+					
+						<a href="inputEx.Field.html#onBlur">onBlur</a>,
+					
+						<a href="inputEx.Field.html#onFocus">onFocus</a>,
+					
+						<a href="inputEx.Field.html#getStateString">getStateString</a>,
+					
+						<a href="inputEx.Field.html#setClassFromState">setClassFromState</a>,
 					
 						<a href="inputEx.Field.html#disable">disable</a>,
 					
 						<a href="inputEx.Field.html#onChange">onChange</a>,
 					
-						<a href="inputEx.Field.html#setClassFromState">setClassFromState</a>,
-					
-						<a href="inputEx.Field.html#getState">getState</a>,
-					
-						<a href="inputEx.Field.html#validate">validate</a>,
+						<a href="inputEx.Field.html#render">render</a>,
 					
 						<a href="inputEx.Field.html#updatedEvt">updatedEvt</a>,
 					
+						<a href="inputEx.Field.html#getState">getState</a>,
+					
 						<a href="inputEx.Field.html#destroy">destroy</a>,
 					
-						<a href="inputEx.Field.html#getStateString">getStateString</a>,
+						<a href="inputEx.Field.html#setToolTipMessage">setToolTipMessage</a>,
 					
-						<a href="inputEx.Field.html#render">render</a>,
-					
-						<a href="inputEx.Field.html#close">close</a>,
-					
-						<a href="inputEx.Field.html#onFocus">onFocus</a>,
+						<a href="inputEx.Field.html#enable">enable</a>,
 							
 				</code>
 			</div>
@@ -766,6 +769,10 @@ Called when the user clicked on the up arrow of a sortable list
 							
 								
 								<li>
+								<a href="visualization.html">Visualization</a></li>
+							
+								
+								<li>
 								<a href="examples.html">Examples</a></li>
 							
 								
@@ -775,10 +782,6 @@ Called when the user clicked on the up arrow of a sortable list
 					<div class="module">
 						<h4>Classes <a href="treeview.html">(treeview)</a></h4>
 						<ul class="content">
-							
-								
-								<li>
-									<a href="Date.html">Date</a></li>
 							
 								
 								<li>
@@ -915,6 +918,10 @@ Called when the user clicked on the up arrow of a sortable list
 								
 								<li>
 									<a href="inputEx.widget.calendar.html">inputEx.widget.calendar</a></li>
+							
+								
+								<li>
+									<a href="inputEx.widget.DateEx.html">inputEx.widget.DateEx</a></li>
 							
 								
 						</ul>
@@ -1079,7 +1086,7 @@ Called when the user clicked on the up arrow of a sortable list
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Tue, 03 Jun 2008 13:07:47 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 04 Jun 2008 16:22:19 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

@@ -17,14 +17,16 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
  * @scope inputEx.DatePickerField.prototype   
  */   
 {
-   
+   /**
+    * Set the default date picker CSS classes
+    */
    setOptions: function() {
 	   this.options.className = this.options.className || 'inputEx-DateField inputEx-DatePickerField';
    	inputEx.DatePickerField.superclass.setOptions.call(this);
    },
    
    /**
-    * Render an 'INPUT' DOM node
+    * Render the input field and the minical container
     */
    renderComponent: function() {
       // Attributes of the input field
@@ -47,7 +49,9 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
       this.divEl.appendChild(this.minicalContainer);
    },
    
-   
+   /**
+    * Render the minical using the inputEx calendar widget
+    */
    initMinical : function() {
        var date = (this.value instanceof Date) ? this.value : new Date();
    	// Create a minical
@@ -74,13 +78,18 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
       }, this, true);
    },
 
+   /**
+    * Listen for the click event on the field
+    */
    initEvents : function() {
       inputEx.DatePickerField.superclass.initEvents.call(this);
-      
       Event.addListener(this.el,'click',this.onClickField,this,true);
    },
    
-   
+   /**
+    * Handle the click event
+    * @param {Event} e The original click event
+    */
    onClickField: function(e) {
       // Lazy initializing of minical
       if (!this.minicalEl) {

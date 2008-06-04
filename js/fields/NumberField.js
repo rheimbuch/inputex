@@ -22,6 +22,7 @@ YAHOO.lang.extend(inputEx.NumberField, inputEx.StringField,
 {
    /**
     * Return a parsed float (javascript type number)
+    * @return {Number} The parsed float
     */
    getValue: function() {
       return parseFloat(this.el.value);

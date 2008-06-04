@@ -166,6 +166,30 @@
 
 </div>
 
+
+
+
+<!-- Example 6 -->
+<div class='exampleDiv'>
+
+	<p class="title">Field descriptions</p>
+	
+	<p>Specify field descriptions</p>
+
+	<div class='demoContainer' id='container6'></div>
+
+	<div class='codeContainer'>
+		<form>
+		<textarea name="code" class="JScript">
+		</textarea>
+		</form>
+	</div>
+
+</div>
+
+
+
+
 <!-- YUI Library -->
 <script type="text/javascript" src="../lib/yui/yahoo/yahoo-min.js"></script> 
 <script type="text/javascript" src="../lib/yui/dom/dom-min.js"></script> 
@@ -258,6 +282,16 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 		alert( YAHOO.lang.JSON.stringify(field5.getValue()) );
 	});
 	
+	
+	// Example 6
+	var descriptedFields = [ 
+			{label: 'Title', type: 'select', description: 'Select your gender', inputParams: {name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
+			{label: 'Firstname', description: 'Your firstname', inputParams: {name: 'firstname', required: true, value:'Jacques' } }, 
+			{label: 'Lastname', description: 'Your lastname', inputParams: {name: 'lastname', value:'Dupont' } }, 
+			{label: 'Email', type:'email', description: 'Your email. We wont send you any commercial information.', inputParams: {name: 'email'}}, 
+			{label: 'Website', type:'url', description: 'Your blog url', inputParams: {name:'website'}} 
+	];
+	new inputEx.Group({parentEl: 'container6', fields: descriptedFields, legend: 'User Informations'});
 	
 });
 

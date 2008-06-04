@@ -22,7 +22,7 @@ YAHOO.lang.extend(inputEx.UneditableField, inputEx.Field,
  */
 {
    /**
-    * Create the main HTMLElement
+    * Minimal rendering
     */
    render: function() {
       this.divEl = inputEx.cn('div');
@@ -30,6 +30,7 @@ YAHOO.lang.extend(inputEx.UneditableField, inputEx.Field,
    
    /**
     * Store the value and update the visu
+    * @param {Any} val The value that will be sent to the visu
     */
    setValue: function(val) {
       this.value = val;
@@ -38,6 +39,7 @@ YAHOO.lang.extend(inputEx.UneditableField, inputEx.Field,
    
    /**
     * Return the stored value
+    * @return {Any} The previously stored value
     */
    getValue: function() {
       return this.value;

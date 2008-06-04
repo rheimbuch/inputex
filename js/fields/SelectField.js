@@ -19,50 +19,52 @@ YAHOO.lang.extend(inputEx.SelectField, inputEx.Field,
  */   
 {
    
-/**
- * Build a select tag with options
- */
-renderComponent: function() {
+   /**
+    * Build a select tag with options
+    */
+   renderComponent: function() {
 
-   this.el = inputEx.cn('select', {name: this.options.name || ''});
+      this.el = inputEx.cn('select', {name: this.options.name || ''});
       
-   if (this.options.multiple) {this.el.multiple = true; this.el.size = this.options.selectValues.length;}
+      if (this.options.multiple) {this.el.multiple = true; this.el.size = this.options.selectValues.length;}
       
-   this.optionEls = [];
-   for( var i = 0 ; i < this.options.selectValues.length ; i++) {
-      this.optionEls[i] = inputEx.cn('option', {value: this.options.selectValues[i]}, null, (this.options.selectOptions) ? this.options.selectOptions[i] : this.options.selectValues[i]);
-      this.el.appendChild(this.optionEls[i]);
-   }
-   this.divEl.appendChild(this.el);
-},  
-   
-/**
- * Register the "change" event
- */
-initEvents: function() {
-   YAHOO.util.Event.addListener(this.el,"change", this.onChange, this, true);
-},
-   
-/**
- * Set the value
- */
-setValue: function(value) {
-   var index = 0;
-   var option;
-   for(var i = 0 ; i < this.options.selectValues.length ; i++) {
-      if(value === this.options.selectValues[i]) {
-         option = this.el.childNodes[i];
-		 option.selected = "selected";
+      this.optionEls = [];
+      for( var i = 0 ; i < this.options.selectValues.length ; i++) {
+         this.optionEls[i] = inputEx.cn('option', {value: this.options.selectValues[i]}, null, (this.options.selectOptions) ? this.options.selectOptions[i] : this.options.selectValues[i]);
+         this.el.appendChild(this.optionEls[i]);
       }
-   }
-},
+      this.divEl.appendChild(this.el);
+   },  
    
-/**
- * Return the value
- */
-getValue: function() {
-   return this.options.selectValues[this.el.selectedIndex];
-}
+   /**
+    * Register the "change" event
+    */
+   initEvents: function() {
+      YAHOO.util.Event.addListener(this.el,"change", this.onChange, this, true);
+   },
+   
+   /**
+    * Set the value
+    * @param {String} value The value to set
+    */
+   setValue: function(value) {
+      var index = 0;
+      var option;
+      for(var i = 0 ; i < this.options.selectValues.length ; i++) {
+         if(value === this.options.selectValues[i]) {
+            option = this.el.childNodes[i];
+		      option.selected = "selected";
+         }
+      }
+   },
+   
+   /**
+    * Return the value
+    * @return {Any} the selected value from the selectValues array
+    */
+   getValue: function() {
+      return this.options.selectValues[this.el.selectedIndex];
+   }
 
 });
 

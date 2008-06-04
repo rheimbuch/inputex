@@ -18,32 +18,29 @@ YAHOO.lang.extend(inputEx.HiddenField, inputEx.Field,
  */   
 {
    
-/**
- * Doesn't render much...
- */
-render: function() {
-   this.type = inputEx.HiddenField;
-	this.divEl = inputEx.cn('div');
-},
+   /**
+    * Doesn't render much...
+    */
+   render: function() {
+      this.type = inputEx.HiddenField;
+	   this.divEl = inputEx.cn('div');
+   },
 
-/**
- * No events to register
- *
-initEvents: function() {},*/
+   /**
+    * Stores the value in a local variable
+    * @param {Any} val The value to set
+    */
+   setValue: function(val) {
+      this.value = val;
+   },
 
-/**
- * Stores the value in a local variable
- */
-setValue: function(val) {
-   this.value = val;
-},
-
-/**
- * Get the previously stored value
- */
-getValue: function() {
-   return this.value;
-}
+   /**
+    * Get the previously stored value
+    * @return {Any} the previously stored value
+    */
+   getValue: function() {
+      return this.value;
+   }
 
 });
    

@@ -37,12 +37,12 @@ inputEx.visus = {
 };
 
 /**
- * render data with multiple facets
+ * Render 'data' using a visualization function described by 'visuOptions'
  * @static
- * @param {Object} config
- * @param {Object} data
+ * @param {Object} visuOptions The visu parameters {visuType: 'myType', ...args...}
+ * @param {Object} data The input data to send to the template
  * @param {HTMLElement || String} parentEl optional Set the result as content of parentEl
- * @return {HTMLElement || String} the rendered string or domnode
+ * @return {HTMLElement || String} Either the inserted HTMLElement or the String set to parentEl.innerHTML
  */
 inputEx.renderVisu = function(visuOptions,data, parentEl) {
    

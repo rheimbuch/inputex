@@ -17,10 +17,18 @@ YAHOO.lang.extend(inputEx.UpperCaseField, inputEx.StringField,
  */   
 {
 
+   /**
+    * Set the value and call toUpperCase
+    * @param {String} val The string
+    */
    setValue: function(val) {
       this.el.value = val.toUpperCase();
    },
 
+   /**
+    * Call setvalue on input to update the field with upper case value
+    * @param {Event} e The original 'input' event
+    */
    onInput: function(e) { 
    	this.setValue( (this.getValue()) );
    	this.setClassFromState();

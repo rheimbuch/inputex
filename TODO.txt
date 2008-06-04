@@ -6,17 +6,14 @@
         |_|                         
 
 
-- re-tabulate files
-
 - Doc:
-	* templating within inputEx
-		- Small visualization system
-			=> used in UneditableField, InPlaceEditField and Autocompleter
-			extandable: example with Trimpath JST http://code.google.com/p/trimpath/wiki/JavaScriptTemplates
-	* Added Fields
-
+	* templating
+	* options in constructor
+	* bug: options property in all classes :S
+	
 - Field description for groups
 
+- Autocomplete is broken
 
 Architecture/Code/various: 
 --------------------------
@@ -28,7 +25,7 @@ Architecture/Code/various:
 - Unify meta Fields: Use "subfield" or "subfields" as properties for the created subfield
 	(InPlaceEdit,ListField,Autocomplete,Group,Form,TreeField,PairField...)
 
-- ColorAnims: color must be CSS skinnable
+- ColorAnims: color must be CSS skinnable or in options
 
 - Make inputEx.Field extend YAHOO.widget.Element:
    * events => EventProvider
@@ -109,7 +106,7 @@ New Fields :
 
 - ObjectField : (from inputExHTML) is a list of pairfields where the left field is a key and the right field is a TypeField ?
 
-- Slider Field (type: range )
+- RangeField (type: range, slider fields with 2 thumbs)
 
 - Function Field (for fun things with persevere)
 

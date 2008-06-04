@@ -39,9 +39,9 @@
 		<dt>Known Subclasses:</dt>
 		<dd>
 			
-				<a href="inputEx.FrenchDate.html">inputEx.FrenchDate</a>
-			
 				<a href="inputEx.DatePickerField.html">inputEx.DatePickerField</a>
+			
+				<a href="inputEx.FrenchDate.html">inputEx.FrenchDate</a>
 			
 		</dd>
 	</dl>
@@ -176,7 +176,7 @@
 				<h4><a name="method_getValue">getValue</a></h4>
 			
 				<div class="detail">
-					<code><b>getValue</b>()</code> 
+					<code><i>&lt;Date&gt;</i>&nbsp;<b>getValue</b>()</code> 
 				</div>
 				
 				<div class="description">
@@ -193,6 +193,14 @@
 			
 				<!-- METHOD PARAMETERS END -->
 				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+					<div class="description">
+					<b>Returns:</b>
+						<ul>
+							<code><i>&lt;Date&gt;</i>&nbsp;</code>The javascript Date object 
+						</ul>
+					
+					</div>
 				
 				
 					
@@ -225,7 +233,7 @@
 				
 				<div class="description">
 					
-					
+					Adds the 'inputEx-DateField' default className
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -258,7 +266,6 @@
 				<div class="description">
 					
 					Format the date according to options.dateFormat
-param {Date} val Date to set
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -271,8 +278,8 @@ param {Date} val Date to set
 				<div class="description">
 				<b>Parameters:</b>
 					<ul>
-						<code>val</code>
-						 
+						<code>val&nbsp;<i>&lt;Date&gt;</i>&nbsp;</code>
+						 - Date to set 
 					</ul>
 					
 				</div>
@@ -299,7 +306,7 @@ param {Date} val Date to set
 				
 				<div class="description">
 					
-					Specific Date validation
+					Specific Date validation depending of the 'format' option
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -339,31 +346,31 @@ param {Date} val Date to set
 			<div class="content">
 				<code>
 					
-						<a href="inputEx.Field.html#fireUpdatedEvt">fireUpdatedEvt</a>,
-					
-						<a href="inputEx.Field.html#setToolTipMessage">setToolTipMessage</a>,
-					
-						<a href="inputEx.Field.html#onBlur">onBlur</a>,
-					
 						<a href="inputEx.Field.html#getEl">getEl</a>,
 					
-						<a href="inputEx.Field.html#onChange">onChange</a>,
-					
-						<a href="inputEx.Field.html#setClassFromState">setClassFromState</a>,
-					
-						<a href="inputEx.Field.html#getState">getState</a>,
-					
-						<a href="inputEx.Field.html#updatedEvt">updatedEvt</a>,
-					
-						<a href="inputEx.Field.html#destroy">destroy</a>,
-					
-						<a href="inputEx.Field.html#getStateString">getStateString</a>,
-					
-						<a href="inputEx.Field.html#render">render</a>,
+						<a href="inputEx.Field.html#fireUpdatedEvt">fireUpdatedEvt</a>,
 					
 						<a href="inputEx.Field.html#close">close</a>,
 					
+						<a href="inputEx.Field.html#onBlur">onBlur</a>,
+					
 						<a href="inputEx.Field.html#onFocus">onFocus</a>,
+					
+						<a href="inputEx.Field.html#getStateString">getStateString</a>,
+					
+						<a href="inputEx.Field.html#setClassFromState">setClassFromState</a>,
+					
+						<a href="inputEx.Field.html#onChange">onChange</a>,
+					
+						<a href="inputEx.Field.html#render">render</a>,
+					
+						<a href="inputEx.Field.html#updatedEvt">updatedEvt</a>,
+					
+						<a href="inputEx.Field.html#getState">getState</a>,
+					
+						<a href="inputEx.Field.html#destroy">destroy</a>,
+					
+						<a href="inputEx.Field.html#setToolTipMessage">setToolTipMessage</a>,
 							
 				</code>
 			</div>
@@ -376,13 +383,13 @@ param {Date} val Date to set
 					
 						<a href="inputEx.StringField.html#initEvents">initEvents</a>,
 					
-						<a href="inputEx.StringField.html#focus">focus</a>,
-					
-						<a href="inputEx.StringField.html#renderComponent">renderComponent</a>,
-					
 						<a href="inputEx.StringField.html#disable">disable</a>,
 					
 						<a href="inputEx.StringField.html#enable">enable</a>,
+					
+						<a href="inputEx.StringField.html#renderComponent">renderComponent</a>,
+					
+						<a href="inputEx.StringField.html#focus">focus</a>,
 							
 				</code>
 			</div>
@@ -438,6 +445,10 @@ param {Date} val Date to set
 							
 								
 								<li>
+								<a href="visualization.html">Visualization</a></li>
+							
+								
+								<li>
 								<a href="examples.html">Examples</a></li>
 							
 								
@@ -447,10 +458,6 @@ param {Date} val Date to set
 					<div class="module">
 						<h4>Classes <a href="treeview.html">(treeview)</a></h4>
 						<ul class="content">
-							
-								
-								<li>
-									<a href="Date.html">Date</a></li>
 							
 								
 								<li>
@@ -587,6 +594,10 @@ param {Date} val Date to set
 								
 								<li>
 									<a href="inputEx.widget.calendar.html">inputEx.widget.calendar</a></li>
+							
+								
+								<li>
+									<a href="inputEx.widget.DateEx.html">inputEx.widget.DateEx</a></li>
 							
 								
 						</ul>
@@ -751,7 +762,7 @@ param {Date} val Date to set
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Tue, 03 Jun 2008 13:07:46 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 04 Jun 2008 16:22:19 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

@@ -222,7 +222,7 @@ inputEx.Field.prototype = {
 
    /**
     * Function called on the focus event
-    * @param {Event} e The original event
+    * @param {Event} e The original 'focus' event
     */
 	onFocus: function(e) {
 	   Dom.addClass(this.getEl(), 'inputEx-focused');
@@ -230,7 +230,7 @@ inputEx.Field.prototype = {
 
    /**
     * Function called on the blur event
-    * @param {Event} e The original event
+    * @param {Event} e The original 'blur' event
     */
 	onBlur: function(e) {
 	   Dom.removeClass(this.getEl(), 'inputEx-focused');
@@ -238,7 +238,7 @@ inputEx.Field.prototype = {
 
    /**
     * onChange event handler
-    * @param {Event} e The original event
+    * @param {Event} e The original 'change' event
     */
 	onChange: function(e) {
 	   this.setClassFromState();
