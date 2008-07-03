@@ -34,14 +34,14 @@
 		<form>
 		<textarea name="code" class="JScript">
 			var exampleDiv = YAHOO.util.Dom.get('container1');
-			var group = new inputEx.Group({
+			var group = new YAHOO.inputEx.Group({
 				 	fields: [ 
 						{label: '', type: 'hidden', inputParams: {name: 'id', value: 12 } }, 
 						{label: 'Firstname', inputParams: {name: 'firstname', required: true, value:'Jacques' } } 
 					], 
 					parentEl: exampleDiv
 			});
-			var button=inputEx.cn('button',null,null, 'Get Value'); 
+			var button=YAHOO.inputEx.cn('button',null,null, 'Get Value'); 
 			exampleDiv.appendChild(button); 
 			YAHOO.util.Event.addListener(button, 'click', function(){ alert(YAHOO.lang.JSON.stringify(group.getValue()) ); });
 		</textarea>
@@ -68,18 +68,18 @@
 
 YAHOO.util.Event.addListener(window, 'load', function() {
 	// Required for the tooltips
-	inputEx.spacerUrl = "../images/space.gif";
+	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
 	var exampleDiv = YAHOO.util.Dom.get('container1');
-	var group = new inputEx.Group({
+	var group = new YAHOO.inputEx.Group({
 		 	fields: [ 
 				{label: '', type: 'hidden', inputParams: {name: 'id', value: 12 } }, 
 				{label: 'Firstname', inputParams: {name: 'firstname', required: true, value:'Jacques' } } 
 			], 
 			parentEl: exampleDiv
 	});
-	var button=inputEx.cn('button',null,null, 'Get Value'); 
+	var button=YAHOO.inputEx.cn('button',null,null, 'Get Value'); 
 	exampleDiv.appendChild(button); 
 	YAHOO.util.Event.addListener(button, 'click', function(){ alert(YAHOO.lang.JSON.stringify(group.getValue()) ); });
 	

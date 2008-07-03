@@ -1,13 +1,13 @@
 (function() {
    
-   var inputEx = YAHOO.inputEx,Event = YAHOO.util.Event, Dom = YAHOO.util.Dom, Y = YAHOO.util;
+   var inputEx = YAHOO.inputEx,Event = YAHOO.util.Event, Dom = YAHOO.util.Dom, Lang = YAHOO.lang, Y = YAHOO.util;
   
 /**
  * @namespace Date Extensions for the calendar widget
  */ 
 inputEx.widget.DateEx = {};
 
-Y.lang.augmentObject(inputEx.widget.DateEx, 
+Lang.augmentObject(inputEx.widget.DateEx, 
 /**
  * @scope inputEx.widget.DateEx
  */

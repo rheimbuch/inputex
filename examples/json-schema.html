@@ -57,7 +57,7 @@
 <script>
 
 // Required for the tooltips
-inputEx.spacerUrl = "../images/space.gif";
+YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 YAHOO.util.Event.addListener(window, "load", function() {
 	
@@ -109,10 +109,10 @@ YAHOO.util.Event.addListener(window, "load", function() {
 	  }
 	};
 	
-	var m = inputEx.importJsonSchema(myJsonSchema);
+	var m = YAHOO.inputEx.importJsonSchema(myJsonSchema);
 	m.parentEl = 'formContainer';
 	
-	var f = new inputEx.Group(m);
+	var f = new YAHOO.inputEx.Group(m);
 		
 	
 	console.log(YAHOO.lang.JSON.stringify(value) );

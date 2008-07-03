@@ -35,7 +35,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			new inputEx.UneditableField({
+			new YAHOO.inputEx.UneditableField({
 				name: 'date', 
 				value: new Date(), 
 				parentEl: 'container1'});
@@ -58,7 +58,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			new inputEx.UneditableField({
+			new YAHOO.inputEx.UneditableField({
 				name: 'date', 
 				value: 'http://neyric.com/images/diabolo.png', 
 				visu: {visuType: 'func', func: function(value){ return inputEx.cn('img',{src:value},{border: '2px solid black'}); } },
@@ -94,19 +94,19 @@
 
 YAHOO.util.Event.addListener(window, 'load', function() {
 	// Required for the tooltips
-	inputEx.spacerUrl = "../images/space.gif";
+	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
-	new inputEx.UneditableField({
+	new YAHOO.inputEx.UneditableField({
 		name: 'date', 
 		value: new Date(), 
 		parentEl: 'container1'});
 		
 	// Example 2
-	new inputEx.UneditableField({
+	new YAHOO.inputEx.UneditableField({
 		name: 'date', 
 		value: 'http://neyric.com/images/diabolo.png', 
-		visu: {visuType: 'func', func: function(value){ return inputEx.cn('img',{src:value},{border: '2px solid black'}); } },
+		visu: {visuType: 'func', func: function(value){ return YAHOO.inputEx.cn('img',{src:value},{border: '2px solid black'}); } },
 		parentEl: 'container2' 
 	});
 });

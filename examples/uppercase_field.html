@@ -35,7 +35,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			new inputEx.UpperCaseField({parentEl: 'container1', value: 'i was lowercase'});
+			new YAHOO.inputEx.UpperCaseField({parentEl: 'container1', value: 'i was lowercase'});
 		</textarea>
 		</form>
 	</div>
@@ -66,10 +66,10 @@
 
 YAHOO.util.Event.addListener(window, 'load', function() {
 	// Required for the tooltips
-	inputEx.spacerUrl = "../images/space.gif";
+	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
-	new inputEx.UpperCaseField({parentEl: 'container1', value: 'i was lowercase'});
+	new YAHOO.inputEx.UpperCaseField({parentEl: 'container1', value: 'i was lowercase'});
 	
 });
 

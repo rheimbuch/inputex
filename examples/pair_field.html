@@ -81,20 +81,20 @@
 
 YAHOO.util.Event.addListener(window, 'load', function() {
 	// Required for the tooltips
-	inputEx.spacerUrl = "../images/space.gif";
+	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 
 	// Example 1
-	new inputEx.PairField({parentEl: 'container1', tooltipIcon: true});
+	new YAHOO.inputEx.PairField({parentEl: 'container1', tooltipIcon: true});
 
 	// Example 2
-	var field = new inputEx.PairField({
+	var field = new YAHOO.inputEx.PairField({
 		parentEl: 'container2',
 		tooltipIcon: true,
 		leftFieldOptions: {type: 'string', inputParams: {name: 'key'} },
     rightFieldOptions: { type: 'text', inputParams: {name: 'function'} }
 	});
-	var button = inputEx.cn('button', null, null, "getValue");
+	var button = YAHOO.inputEx.cn('button', null, null, "getValue");
 	YAHOO.util.Event.addListener(button, 'click', function() {
 		alert( YAHOO.lang.JSON.stringify(field.getValue()) );
 	});

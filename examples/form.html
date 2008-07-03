@@ -35,7 +35,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			new inputEx.Form( { 
+			new YAHOO.inputEx.Form( { 
 				fields: [ 
 					{label: 'Title', type: 'select', optional: true, inputParams: {name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
 					{label: 'Firstname', inputParams: {name: 'firstname', required: true, value:'Jacques' } }, 
@@ -65,7 +65,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			new inputEx.Form( { 
+			new YAHOO.inputEx.Form( { 
 				fields: [ 
 					{label: 'Title', type: 'select', inputParams: {name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
 					{label: 'Firstname', inputParams: {name: 'firstname', required: true, value:'Jacques' } }, 
@@ -118,10 +118,10 @@
 
 YAHOO.util.Event.addListener(window, 'load', function() {
 	// Required for the tooltips
-	inputEx.spacerUrl = "../images/space.gif";
+	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
-	new inputEx.Form( { 
+	new YAHOO.inputEx.Form( { 
 		fields: [ 
 			{label: 'Title', type: 'select', optional: true, inputParams: {name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
 			{label: 'Firstname', inputParams: {name: 'firstname', required: true, value:'Jacques' } }, 
@@ -134,7 +134,7 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	});
 	
 	// Example 2
-	new inputEx.Form( { 
+	new YAHOO.inputEx.Form( { 
 		fields: [ 
 			{label: 'Title', type: 'select', inputParams: {name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
 			{label: 'Firstname', inputParams: {name: 'firstname', required: true, value:'Jacques' } }, 

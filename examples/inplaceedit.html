@@ -35,7 +35,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			new inputEx.InPlaceEdit({parentEl: 'container1', editorField:{type:'string', inputParams: {} } });
+			new YAHOO.inputEx.InPlaceEdit({parentEl: 'container1', editorField:{type:'string', inputParams: {} } });
 		</textarea>
 		</form>
 	</div>
@@ -55,7 +55,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			new inputEx.InPlaceEdit({
+			new YAHOO.inputEx.InPlaceEdit({
 				parentEl: 'container2', 
 				editorField:{
 					type:'group', 
@@ -111,13 +111,13 @@
 
 YAHOO.util.Event.addListener(window, 'load', function() {
 	// Required for the tooltips
-	inputEx.spacerUrl = "../images/space.gif";
+	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
-	new inputEx.InPlaceEdit({parentEl: 'container1', editorField:{type:'string', inputParams: {} } });
+	new YAHOO.inputEx.InPlaceEdit({parentEl: 'container1', editorField:{type:'string', inputParams: {} } });
 	
 	// Example 2
-	new inputEx.InPlaceEdit({
+	new YAHOO.inputEx.InPlaceEdit({
 		parentEl: 'container2', 
 		editorField:{
 			type:'group', 
@@ -130,7 +130,7 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 			} 
 		},
 		visu: {visuType: 'func', func: function(val) {
-			if( YAHOO.lang.isUndefined(val) ) return inputEx.messages.emptyInPlaceEdit;
+			if( YAHOO.lang.isUndefined(val) ) return YAHOO.inputEx.messages.emptyInPlaceEdit;
 			return '<img src="'+val.picUrl+'" style="width: 128px; height: 128px;"><br /><b>'+val.firstname+' '+val.lastname+'</b>';
 		}},
 		value: {

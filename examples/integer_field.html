@@ -34,7 +34,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			new inputEx.IntegerField({parentEl: 'container1', tooltipIcon: true});
+			new YAHOO.inputEx.IntegerField({parentEl: 'container1', tooltipIcon: true});
 		</textarea>
 		</form>
 	</div>
@@ -59,10 +59,10 @@
 
 YAHOO.util.Event.addListener(window, 'load', function() {
 	// Required for the tooltips
-	inputEx.spacerUrl = "../images/space.gif";
+	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
-	new inputEx.IntegerField({parentEl: 'container1', tooltipIcon: true});
+	new YAHOO.inputEx.IntegerField({parentEl: 'container1', tooltipIcon: true});
 	
 });
 

@@ -60,11 +60,11 @@
 
 YAHOO.util.Event.addListener(window, 'load', function() {
 	// Required for the tooltips
-	inputEx.spacerUrl = "../images/space.gif";
+	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
-	field = new inputEx.NumberField({parentEl: 'container1', tooltipIcon: true});
-	var button = inputEx.cn('button', null, null, 'getValue');
+	field = new YAHOO.inputEx.NumberField({parentEl: 'container1', tooltipIcon: true});
+	var button = YAHOO.inputEx.cn('button', null, null, 'getValue');
 	YAHOO.util.Event.addListener(button, "click",function() {
 		alert(field.getValue());
 	});

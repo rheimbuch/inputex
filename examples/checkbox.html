@@ -127,8 +127,8 @@
 		<form>
 		<textarea name="code" class="JScript" cols="60" rows="1">
 			var el = YAHOO.util.Dom.get('container5');
-			var field = new inputEx.CheckBox({parentEl: el });
-			var logDiv = inputEx.cn('div', null, null, "Log :<br />");
+			var field = new YAHOO.inputEx.CheckBox({parentEl: el });
+			var logDiv = YAHOO.inputEx.cn('div', null, null, "Log :<br />");
 			el.appendChild(logDiv);
 			field.updatedEvt.subscribe(function() {
 				logDiv.innerHTML += "Updated at "+(new Date())+"<br />";
@@ -155,36 +155,36 @@
 
 YAHOO.util.Event.addListener(window, 'load', function() {
 	// Required for the tooltips
-	inputEx.spacerUrl = "../images/space.gif";
+	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
-	new inputEx.CheckBox({parentEl: 'container1'});
+	new YAHOO.inputEx.CheckBox({parentEl: 'container1'});
 	
 	
 	// Example 2
-	new inputEx.CheckBox({label: 'Check me !', parentEl: 'container2', value: false});
+	new YAHOO.inputEx.CheckBox({label: 'Check me !', parentEl: 'container2', value: false});
 	
 	
 	// Example 3
 	var exampleDiv = YAHOO.util.Dom.get('container3');
-	var field1 = new inputEx.CheckBox({label: 'I return true/false', parentEl: exampleDiv});
-	var button = inputEx.cn('button', null, null, 'getValue()');
+	var field1 = new YAHOO.inputEx.CheckBox({label: 'I return true/false', parentEl: exampleDiv});
+	var button = YAHOO.inputEx.cn('button', null, null, 'getValue()');
 	exampleDiv.appendChild(button); 
 	YAHOO.util.Event.addListener(button, 'click', function() { alert(field1.getValue()); });
 	
 	
 	// Example 4
 	var exampleDiv = YAHOO.util.Dom.get('container4');
-	var field2 = new inputEx.CheckBox({sentValues: ['Yes', 'No'], label: 'Do you agree ?', parentEl: exampleDiv, value: 'No'});
-	var button = inputEx.cn('button', null, null, 'getValue()');
+	var field2 = new YAHOO.inputEx.CheckBox({sentValues: ['Yes', 'No'], label: 'Do you agree ?', parentEl: exampleDiv, value: 'No'});
+	var button = YAHOO.inputEx.cn('button', null, null, 'getValue()');
 	exampleDiv.appendChild(button); 
 	YAHOO.util.Event.addListener(button, 'click', function() { alert(field2.getValue()); });
 	
 	
 	// Example 5
 	var el = YAHOO.util.Dom.get('container5');
-	var field = new inputEx.CheckBox({parentEl: el });
-	var logDiv = inputEx.cn('div', null, null, "Log :<br />");
+	var field = new YAHOO.inputEx.CheckBox({parentEl: el });
+	var logDiv = YAHOO.inputEx.cn('div', null, null, "Log :<br />");
 	el.appendChild(logDiv);
 	field.updatedEvt.subscribe(function() {
 		logDiv.innerHTML += "Updated at "+(new Date())+"<br />";

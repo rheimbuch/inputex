@@ -34,8 +34,8 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			field = new inputEx.DateTimeField({parentEl: 'container1', tooltipIcon: true, value: new Date()});
-			var button = inputEx.cn('button', null, null, 'getValue');
+			field = new YAHOO.inputEx.DateTimeField({parentEl: 'container1', tooltipIcon: true, value: new Date()});
+			var button = YAHOO.inputEx.cn('button', null, null, 'getValue');
 			YAHOO.util.Event.addListener(button, "click",function() {
 				alert(field.getValue());
 			});
@@ -67,11 +67,11 @@
 
 YAHOO.util.Event.addListener(window, 'load', function() {
 	// Required for the tooltips
-	inputEx.spacerUrl = "../images/space.gif";
+	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
-	field = new inputEx.DateTimeField({parentEl: 'container1', tooltipIcon: true, value: new Date()});
-	var button = inputEx.cn('button', null, null, 'getValue');
+	field = new YAHOO.inputEx.DateTimeField({parentEl: 'container1', tooltipIcon: true, value: new Date()});
+	var button = YAHOO.inputEx.cn('button', null, null, 'getValue');
 	YAHOO.util.Event.addListener(button, "click",function() {
 		alert(field.getValue());
 	});

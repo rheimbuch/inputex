@@ -56,7 +56,7 @@
 		<form>
 		<textarea name="code" class="JScript" cols="60" rows="1">
 			var el = YAHOO.util.Dom.get('container2');
-			var field = new inputEx.ColorField({parentEl: el });
+			var field = new YAHOO.inputEx.ColorField({parentEl: el });
 			var logDiv = inputEx.cn('div', null, null, "Log :<br />");
 			el.appendChild(logDiv);
 			field.updatedEvt.subscribe(function() {
@@ -90,16 +90,16 @@
 
 YAHOO.util.Event.addListener(window, 'load', function() {
 	// Required for the tooltips
-	inputEx.spacerUrl = "../images/space.gif";
+	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
-	new inputEx.ColorField({parentEl: 'container1'});
+	new YAHOO.inputEx.ColorField({parentEl: 'container1'});
 	
 	
 	// Example 2
 	var el = YAHOO.util.Dom.get('container2');
-	var field = new inputEx.ColorField({parentEl: el });
-	var logDiv = inputEx.cn('div', null, null, "Log :<br />");
+	var field = new YAHOO.inputEx.ColorField({parentEl: el });
+	var logDiv = YAHOO.inputEx.cn('div', null, null, "Log :<br />");
 	el.appendChild(logDiv);
 	field.updatedEvt.subscribe(function() {
 		logDiv.innerHTML += "Updated at "+(new Date())+"<br />";

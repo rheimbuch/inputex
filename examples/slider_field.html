@@ -33,7 +33,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			sliderField = new inputEx.SliderField({parentEl: 'container1'});
+			sliderField = new YAHOO.inputEx.SliderField({parentEl: 'container1'});
 		</textarea>
 		</form>
 	</div>
@@ -60,10 +60,10 @@
 var sliderField = null;
 YAHOO.util.Event.addListener(window, 'load', function() {
 	// Required for the tooltips
-	inputEx.spacerUrl = "../images/space.gif";
+	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
-	sliderField = new inputEx.SliderField({parentEl: 'container1'});
+	sliderField = new YAHOO.inputEx.SliderField({parentEl: 'container1'});
 	
 });
 

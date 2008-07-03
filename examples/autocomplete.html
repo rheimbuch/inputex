@@ -36,22 +36,22 @@
 		<form>
 		<textarea name="code" class="JScript">
 			var el = YAHOO.util.Dom.get('container1');
-			var field = new inputEx.AutoComplete({parentEl: el, 
+			var field = new YAHOO.inputEx.AutoComplete({parentEl: el, 
 				visuItem: { visuType: 'func', func: function(val) {
-					 return inputEx.cn('div', null, null, val.firstname+' '+val.lastname);
+					 return YAHOO.inputEx.cn('div', null, null, val.firstname+' '+val.lastname);
 				}}, 
 				query: function(val) {
 				   this.updateList([
-							{firstname: 'Eric', lastname: 'Abouaf', email: 'eric@clicrdv.com'},
-			        {firstname: 'Antoine', lastname: 'Puymirat', email: 'antoine@clicrdv.com'},
-			        {firstname: 'Maxime', lastname: 'Rety', email: 'maxime@clicrdv.com'}
+							{firstname: 'Alan', lastname: 'Turing', email: 'alan@turing.com'},
+			        {firstname: 'Thomas', lastname: 'Edison', email: 'thomas@edison.com'},
+			        {firstname: 'Leonardo', lastname: 'da Vinci', email: 'leonardo@davinci.com'}
 			     ]);
 				},
 				displayAutocompleted: function(val) {
 					return val.email;
 				} 
 			});
-			var logDiv = inputEx.cn('div', null, null, "<br />");
+			var logDiv = YAHOO.inputEx.cn('div', null, null, "<br />");
 			el.appendChild(logDiv);
 			field.updatedEvt.subscribe(function() {
 				logDiv.innerHTML += "Updated at "+(new Date())+"<br />";
@@ -80,26 +80,26 @@
 
 YAHOO.util.Event.addListener(window, 'load', function() {
 	// Required for the tooltips
-	inputEx.spacerUrl = "../images/space.gif";
+	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
 	var el = YAHOO.util.Dom.get('container1');
-	var field = new inputEx.AutoComplete({parentEl: el, 
+	var field = new YAHOO.inputEx.AutoComplete({parentEl: el, 
 		visuItem: { visuType: 'func', func: function(val) {
-			 return inputEx.cn('div', null, null, val.firstname+' '+val.lastname);
+			 return YAHOO.inputEx.cn('div', null, null, val.firstname+' '+val.lastname);
 		}}, 
 		query: function(val) {
 		   this.updateList([
-					{firstname: 'Eric', lastname: 'Abouaf', email: 'eric@clicrdv.com'},
-	        {firstname: 'Antoine', lastname: 'Puymirat', email: 'antoine@clicrdv.com'},
-	        {firstname: 'Maxime', lastname: 'Rety', email: 'maxime@clicrdv.com'}
+					{firstname: 'Alan', lastname: 'Turing', email: 'alan@turing.com'},
+	        {firstname: 'Thomas', lastname: 'Edison', email: 'thomas@edison.com'},
+	        {firstname: 'Leonardo', lastname: 'da Vinci', email: 'leonardo@davinci.com'}
 	     ]);
 		},
 		displayAutocompleted: function(val) {
 			return val.email;
 		} 
 	});
-	var logDiv = inputEx.cn('div', null, null, "<br />");
+	var logDiv = YAHOO.inputEx.cn('div', null, null, "<br />");
 	el.appendChild(logDiv);
 	field.updatedEvt.subscribe(function() {
 		logDiv.innerHTML += "Updated at "+(new Date())+"<br />";

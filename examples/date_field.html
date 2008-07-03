@@ -35,7 +35,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			new inputEx.DateField({parentEl: 'container1', value: new Date(), tooltipIcon: true});
+			new YAHOO.inputEx.DateField({parentEl: 'container1', value: new Date(), tooltipIcon: true});
 		</textarea>
 		</form>
 	</div>
@@ -55,7 +55,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-   	new inputEx.DateField({value: '02/30/2008', parentEl: 'container2', tooltipIcon: true});
+   	new YAHOO.inputEx.DateField({value: '02/30/2008', parentEl: 'container2', tooltipIcon: true});
 		</textarea>
 		</form>
 	</div>
@@ -76,8 +76,8 @@
 		<form>
 		<textarea name="code" class="JScript">
    	var exampleDiv = YAHOO.util.Dom.get('container3');
-   	var dateField = new inputEx.DateField({value: new Date(), dateFormat: 'd/m/Y', parentEl: exampleDiv, tooltipIcon: true}); 
-   	var button = inputEx.cn('button', null, null, 'getValue()'); 
+   	var dateField = new YAHOO.inputEx.DateField({value: new Date(), dateFormat: 'd/m/Y', parentEl: exampleDiv, tooltipIcon: true}); 
+   	var button = YAHOO.inputEx.cn('button', null, null, 'getValue()'); 
    	exampleDiv.appendChild(button); 
    	YAHOO.util.Event.addListener(button, 'click', function() { alert(dateField.getValue()); });
 		</textarea>
@@ -110,18 +110,18 @@
 
 YAHOO.util.Event.addListener(window, 'load', function() {
 	// Required for the tooltips
-	inputEx.spacerUrl = "../images/space.gif";
+	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
-	new inputEx.DateField({parentEl: 'container1', value: new Date(), tooltipIcon: true});
+	new YAHOO.inputEx.DateField({parentEl: 'container1', value: new Date(), tooltipIcon: true});
 	
 	// Example 2
-	new inputEx.DateField({value: '02/30/2008', parentEl: 'container2', tooltipIcon: true});
+	new YAHOO.inputEx.DateField({value: '02/30/2008', parentEl: 'container2', tooltipIcon: true});
 	
 	// Example 3
 	var exampleDiv = YAHOO.util.Dom.get('container3');
-	var dateField = new inputEx.DateField({value: new Date(), dateFormat: 'd/m/Y', parentEl: exampleDiv, tooltipIcon: true}); 
-	var button = inputEx.cn('button', null, null, 'getValue()'); 
+	var dateField = new YAHOO.inputEx.DateField({value: new Date(), dateFormat: 'd/m/Y', parentEl: exampleDiv, tooltipIcon: true}); 
+	var button = YAHOO.inputEx.cn('button', null, null, 'getValue()'); 
 	exampleDiv.appendChild(button); 
 	YAHOO.util.Event.addListener(button, 'click', function() { alert(dateField.getValue()); });
 	

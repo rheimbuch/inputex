@@ -35,7 +35,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			new inputEx.StringField({parentEl: 'container1' });
+			new YAHOO.inputEx.StringField({parentEl: 'container1' });
 		</textarea>
 		</form>
 	</div>
@@ -55,7 +55,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript" cols="60" rows="1">
-			new inputEx.StringField({value: 'inputEx rocks', parentEl: 'container2'});
+			new YAHOO.inputEx.StringField({value: 'inputEx rocks', parentEl: 'container2'});
 		</textarea>
 		</form>
 	</div>
@@ -75,7 +75,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript" cols="60" rows="1">
-			new inputEx.StringField({size: 40, value: 'size is set to 40 (default is 20)', parentEl: 'container3'});
+			new YAHOO.inputEx.StringField({size: 40, value: 'size is set to 40 (default is 20)', parentEl: 'container3'});
 		</textarea>
 		</form>
 	</div>
@@ -95,7 +95,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript" cols="60" rows="1">
-			new inputEx.StringField({value: 'test', tooltipIcon: true, parentEl: 'container4'});
+			new YAHOO.inputEx.StringField({value: 'test', tooltipIcon: true, parentEl: 'container4'});
 		</textarea>
 		</form>
 	</div>
@@ -115,7 +115,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript" cols="60" rows="1">
-			new inputEx.StringField({required: true, tooltipIcon: true, parentEl: 'container5'});
+			new YAHOO.inputEx.StringField({required: true, tooltipIcon: true, parentEl: 'container5'});
 		</textarea>
 		</form>
 	</div>
@@ -135,7 +135,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript" cols="60" rows="1">
-			new inputEx.StringField({numbersOnly: true, parentEl: 'container6'});
+			new YAHOO.inputEx.StringField({numbersOnly: true, parentEl: 'container6'});
 		</textarea>
 		</form>
 	</div>
@@ -156,7 +156,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript" cols="60" rows="1">
-			new inputEx.StringField({tooltipIcon: true,regexp: inputEx.regexps.email, value: 'wrong@email', parentEl: 'container7'});
+			new YAHOO.inputEx.StringField({tooltipIcon: true,regexp: inputEx.regexps.email, value: 'wrong@email', parentEl: 'container7'});
 		</textarea>
 		</form>
 	</div>
@@ -177,7 +177,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript" cols="60" rows="1">
-			var field = new inputEx.StringField({value: 'This field is disabled', parentEl: 'container8'});
+			var field = new YAHOO.inputEx.StringField({value: 'This field is disabled', parentEl: 'container8'});
 			field.disable();
 		</textarea>
 		</form>
@@ -200,7 +200,7 @@
 		<form>
 		<textarea name="code" class="JScript" cols="60" rows="1">
 			var el = YAHOO.util.Dom.get('container9');
-			var field = new inputEx.StringField({parentEl: el });
+			var field = new YAHOO.inputEx.StringField({parentEl: el });
 			var logDiv = inputEx.cn('div', null, null, "Log :<br />");
 			el.appendChild(logDiv);
 			field.updatedEvt.subscribe(function() {
@@ -235,37 +235,37 @@
 
 YAHOO.util.Event.addListener(window, 'load', function() {
 	// Required for the tooltips
-	inputEx.spacerUrl = "../images/space.gif";
+	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
-	new inputEx.StringField({parentEl: 'container1' });
+	new YAHOO.inputEx.StringField({parentEl: 'container1' });
 
 	// Example 2
-	new inputEx.StringField({value: 'inputEx rocks', parentEl: 'container2'});
+	new YAHOO.inputEx.StringField({value: 'inputEx rocks', parentEl: 'container2'});
 
 	// Example 3
-	new inputEx.StringField({size: 40, value: 'size is set to 40 (default is 20)', parentEl: 'container3'});
+	new YAHOO.inputEx.StringField({size: 40, value: 'size is set to 40 (default is 20)', parentEl: 'container3'});
 
 	// Example 4
-	new inputEx.StringField({value: 'test', tooltipIcon: true, parentEl: 'container4'});
+	new YAHOO.inputEx.StringField({value: 'test', tooltipIcon: true, parentEl: 'container4'});
 	
 	// Example 5
-	new inputEx.StringField({required: true, tooltipIcon: true, parentEl: 'container5'});
+	new YAHOO.inputEx.StringField({required: true, tooltipIcon: true, parentEl: 'container5'});
 	
 	// Example 6
-	new inputEx.StringField({numbersOnly: true, parentEl: 'container6'});
+	new YAHOO.inputEx.StringField({numbersOnly: true, parentEl: 'container6'});
 	
 	// Example 7
-	new inputEx.StringField({tooltipIcon: true,regexp: inputEx.regexps.email, value: 'wrong@email', parentEl: 'container7'});
+	new YAHOO.inputEx.StringField({tooltipIcon: true,regexp: YAHOO.inputEx.regexps.email, value: 'wrong@email', parentEl: 'container7'});
 	
 	// Example 8
-	var field = new inputEx.StringField({value: 'This field is disabled', parentEl: 'container8'});
+	var field = new YAHOO.inputEx.StringField({value: 'This field is disabled', parentEl: 'container8'});
 	field.disable();
 	
 	// Example 9
 	var el = YAHOO.util.Dom.get('container9');
-	var field = new inputEx.StringField({parentEl: el });
-	var logDiv = inputEx.cn('div', null, null, "Log :<br />");
+	var field = new YAHOO.inputEx.StringField({parentEl: el });
+	var logDiv = YAHOO.inputEx.cn('div', null, null, "Log :<br />");
 	el.appendChild(logDiv);
 	field.updatedEvt.subscribe(function() {
 		logDiv.innerHTML += "Updated at "+(new Date())+"<br />";

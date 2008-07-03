@@ -35,7 +35,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			new inputEx.Textarea({parentEl: 'container1', value: 'Textarea can contain\nmultiline text !\n'});
+			new YAHOO.inputEx.Textarea({parentEl: 'container1', value: 'Textarea can contain\nmultiline text !\n'});
 		</textarea>
 		</form>
 	</div>
@@ -57,15 +57,15 @@
 		<form>
 		<textarea name="code" class="JScript">
 			var div = YAHOO.util.Dom.get('container2');
-			var textField = new inputEx.Textarea({parentEl: div});
+			var textField = new YAHOO.inputEx.Textarea({parentEl: div});
 
-			var button1 = inputEx.cn('button', null, null, "SetValue");
+			var button1 = YAHOO.inputEx.cn('button', null, null, "SetValue");
 			div.appendChild(button1);
 			YAHOO.util.Event.addListener(button1, "click" ,function() { 
 				textField.setValue('Textarea can contain\nmultiline text !\n'); 
 			});
 
-			var button2 = inputEx.cn('button', null, null, "GetValue");
+			var button2 = YAHOO.inputEx.cn('button', null, null, "GetValue");
 			div.appendChild(button2);
 			YAHOO.util.Event.addListener(button2, "click" ,function() { 
 				alert(textField.getValue());
@@ -99,23 +99,23 @@
 
 YAHOO.util.Event.addListener(window, 'load', function() {
 	// Required for the tooltips
-	inputEx.spacerUrl = "../images/space.gif";
+	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
-	new inputEx.Textarea({parentEl: 'container1', value: 'Textarea can contain\nmultiline text !\n'});
+	new YAHOO.inputEx.Textarea({parentEl: 'container1', value: 'Textarea can contain\nmultiline text !\n'});
 	
 	
 	// Example 2
 	var div = YAHOO.util.Dom.get('container2');
-	var textField = new inputEx.Textarea({parentEl: div});
+	var textField = new YAHOO.inputEx.Textarea({parentEl: div});
 	
-	var button1 = inputEx.cn('button', null, null, "SetValue");
+	var button1 = YAHOO.inputEx.cn('button', null, null, "SetValue");
 	div.appendChild(button1);
 	YAHOO.util.Event.addListener(button1, "click" ,function() { 
 		textField.setValue('Textarea can contain\nmultiline text !\n'); 
 	});
 	
-	var button2 = inputEx.cn('button', null, null, "GetValue");
+	var button2 = YAHOO.inputEx.cn('button', null, null, "GetValue");
 	div.appendChild(button2);
 	YAHOO.util.Event.addListener(button2, "click" ,function() { 
 		alert(textField.getValue());

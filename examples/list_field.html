@@ -36,24 +36,24 @@
 		<form>
 		<textarea name="code" class="JScript">
 			var exampleDiv = YAHOO.util.Dom.get('container1');
-			var field = new inputEx.ListField({
+			var field = new YAHOO.inputEx.ListField({
 				name: 'websiteUrl', 
 				listLabel: 'Websites',
 				elementType: {type: 'url'},
 				value: ['http://www.neyric.com', 'http://www.ajaxian.com', 'http://www.google.com', 'http://www.yahoo.com'], 
 				parentEl: exampleDiv
 			});
-			var button = inputEx.cn('button', null, null, 'getValue()');
+			var button = YAHOO.inputEx.cn('button', null, null, 'getValue()');
 			exampleDiv.appendChild(button); 
 			YAHOO.util.Event.addListener(button, 'click', function() { alert( YAHOO.lang.JSON.stringify(field.getValue())); });  
-			var button2 = inputEx.cn('button', null, null, 'setValue()');
+			var button2 = YAHOO.inputEx.cn('button', null, null, 'setValue()');
 			exampleDiv.appendChild(button2); 
 			YAHOO.util.Event.addListener(button2, 'click', function() {
 				field.setValue(['http://www.sncf.com',
 												'http://www.clicrdv.com',
 												'http://www.neyric.com',
 												'http://javascript.neyric.com/wireit']);
-			var button3 = inputEx.cn('button', null, null, 'Clear');
+			var button3 = YAHOO.inputEx.cn('button', null, null, 'Clear');
 			exampleDiv.appendChild(button3); 
 			YAHOO.util.Event.addListener(button3, 'click', function() {
 				field.setValue([]);
@@ -77,7 +77,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			var field2 = new inputEx.ListField({
+			var field2 = new YAHOO.inputEx.ListField({
 				listLabel: 'Reorder example',
 				elementType: {type: 'string'},
 				value: ['one', 'two', 'three', 'four'], 
@@ -109,8 +109,8 @@
 		<form>
 		<textarea name="code" class="JScript" cols="60" rows="1">
 			var el = YAHOO.util.Dom.get('container3');
-			var field = new inputEx.ListField({parentEl: el, value: ["one", "two", "three", "four"], sortable: true });
-			var logDiv = inputEx.cn('div', null, null, "Log :<br />");
+			var field = new YAHOO.inputEx.ListField({parentEl: el, value: ["one", "two", "three", "four"], sortable: true });
+			var logDiv = YAHOO.inputEx.cn('div', null, null, "Log :<br />");
 			el.appendChild(logDiv);
 			field.updatedEvt.subscribe(function() {
 				logDiv.innerHTML += "Updated at "+(new Date())+"<br />";
@@ -140,21 +140,21 @@
 
 YAHOO.util.Event.addListener(window, 'load', function() {
 	// Required for the tooltips
-	inputEx.spacerUrl = "../images/space.gif";
+	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
 	var exampleDiv = YAHOO.util.Dom.get('container1');
-	var field = new inputEx.ListField({
+	var field = new YAHOO.inputEx.ListField({
 		name: 'websiteUrl', 
 		listLabel: 'Websites',
 		elementType: {type: 'url'},
 		value: ['http://www.neyric.com', 'http://www.ajaxian.com', 'http://www.google.com', 'http://www.yahoo.com'], 
 		parentEl: exampleDiv
 	});
-	var button = inputEx.cn('button', null, null, 'getValue()');
+	var button = YAHOO.inputEx.cn('button', null, null, 'getValue()');
 	exampleDiv.appendChild(button); 
 	YAHOO.util.Event.addListener(button, 'click', function() { alert( YAHOO.lang.JSON.stringify(field.getValue())); });  
-	var button2 = inputEx.cn('button', null, null, 'setValue()');
+	var button2 = YAHOO.inputEx.cn('button', null, null, 'setValue()');
 	exampleDiv.appendChild(button2); 
 	YAHOO.util.Event.addListener(button2, 'click', function() {
 		field.setValue(['http://www.sncf.com',
@@ -162,21 +162,21 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 										'http://www.neyric.com',
 										'http://javascript.neyric.com/wireit']);			
 	});
-	var button3 = inputEx.cn('button', null, null, 'Clear');
+	var button3 = YAHOO.inputEx.cn('button', null, null, 'Clear');
 	exampleDiv.appendChild(button3); 
 	YAHOO.util.Event.addListener(button3, 'click', function() {
 		field.setValue([]);
 	});
 	
 	// Example 2
-	var field2 = new inputEx.ListField({
+	var field2 = new YAHOO.inputEx.ListField({
 		listLabel: 'Reorder example',
 		elementType: {type: 'string'},
 		value: ['one', 'two', 'three', 'four'], 
 		parentEl: 'container2',
 		sortable: true
 	});
-	var buttonGetValue = inputEx.cn('button', null, null, 'getValue()');
+	var buttonGetValue = YAHOO.inputEx.cn('button', null, null, 'getValue()');
 	YAHOO.util.Dom.get('container2').appendChild(buttonGetValue); 
 	YAHOO.util.Event.addListener(buttonGetValue, 'click', function() { 
 		alert( YAHOO.lang.JSON.stringify(field2.getValue())); 
@@ -185,8 +185,8 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	
 	// Example 3
 	var el3 = YAHOO.util.Dom.get('container3');
-	var field3 = new inputEx.ListField({parentEl: el3, value: ["one", "two", "three", "four"], sortable: true });
-	var logDiv = inputEx.cn('div', null, null, "Log :<br />");
+	var field3 = new YAHOO.inputEx.ListField({parentEl: el3, value: ["one", "two", "three", "four"], sortable: true });
+	var logDiv = YAHOO.inputEx.cn('div', null, null, "Log :<br />");
 	el3.appendChild(logDiv);
 	field3.updatedEvt.subscribe(function() {
 		logDiv.innerHTML += "Updated at "+(new Date())+"<br />";

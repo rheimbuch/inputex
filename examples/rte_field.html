@@ -35,7 +35,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			new inputEx.RTEField({parentEl: 'container1', name: 'rteField'});
+			new YAHOO.inputEx.RTEField({parentEl: 'container1', name: 'rteField'});
 		</textarea>
 		</form>
 	</div>
@@ -56,13 +56,13 @@
 		<form>
 		<textarea name="code" class="JScript">
 			var div = YAHOO.util.Dom.get('container2');
-			var htmlField = new inputEx.RTEField({parentEl: div, name: 'test2'});
-			var button1 = inputEx.cn('button', null, null, "SetValue");
+			var htmlField = new YAHOO.inputEx.RTEField({parentEl: div, name: 'test2'});
+			var button1 = YAHOO.inputEx.cn('button', null, null, "SetValue");
 			div.appendChild(button1);
 			YAHOO.util.Event.addListener(button1, "click" ,function() { 
 				htmlField.setValue('RTEField can contain<br ><b>HTML</b> !'); 
 			});
-			var button2 = inputEx.cn('button', null, null, "GetValue");
+			var button2 = YAHOO.inputEx.cn('button', null, null, "GetValue");
 			div.appendChild(button2);
 			YAHOO.util.Event.addListener(button2, "click" ,function() { 
 				alert(htmlField.getValue());
@@ -88,7 +88,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			new inputEx.RTEField({parentEl: 'container3', name: 'rteField3', type: 'simple'});
+			new YAHOO.inputEx.RTEField({parentEl: 'container3', name: 'rteField3', type: 'simple'});
 		</textarea>
 		</form>
 	</div>
@@ -119,20 +119,20 @@
 
 YAHOO.util.Event.addListener(window, 'load', function() {
 	// Required for the tooltips
-	inputEx.spacerUrl = "../images/space.gif";
+	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
-	new inputEx.RTEField({parentEl: 'container1', name: 'rteField'});
+	new YAHOO.inputEx.RTEField({parentEl: 'container1', name: 'rteField'});
 	
 	// Example 2
 	var div = YAHOO.util.Dom.get('container2');
-	var htmlField = new inputEx.RTEField({parentEl: div, name: 'test2'});
-	var button1 = inputEx.cn('button', null, null, "SetValue");
+	var htmlField = new YAHOO.inputEx.RTEField({parentEl: div, name: 'test2'});
+	var button1 = YAHOO.inputEx.cn('button', null, null, "SetValue");
 	div.appendChild(button1);
 	YAHOO.util.Event.addListener(button1, "click" ,function() { 
 		htmlField.setValue('RTEField can contain<br ><b>HTML</b> !'); 
 	});
-	var button2 = inputEx.cn('button', null, null, "GetValue");
+	var button2 = YAHOO.inputEx.cn('button', null, null, "GetValue");
 	div.appendChild(button2);
 	YAHOO.util.Event.addListener(button2, "click" ,function() { 
 		alert(htmlField.getValue());
@@ -140,7 +140,7 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 });
 
 	// Example 3
-	new inputEx.RTEField({parentEl: 'container3', name: 'rteField3', type: 'simple'});
+	new YAHOO.inputEx.RTEField({parentEl: 'container3', name: 'rteField3', type: 'simple'});
 
 </script>
 

@@ -1,6 +1,6 @@
 ﻿(function () {
    
-var util = YAHOO.util, lang = YAHOO.lang, Event = YAHOO.util.Event;
+var util = YAHOO.util, lang = YAHOO.lang, Event = YAHOO.util.Event, inputEx = YAHOO.inputEx;
    
 /**
  * @class Create a group of fields within a FORM tag

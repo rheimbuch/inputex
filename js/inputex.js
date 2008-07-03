@@ -10,12 +10,9 @@
  */
 YAHOO.namespace("inputEx");
 
-/**
- * @namespace The inputEx global namespace object.
- */
-inputEx = YAHOO.inputEx;
+   var inputEx = YAHOO.inputEx;
 
-lang.augmentObject(YAHOO.inputEx, 
+lang.augmentObject(inputEx, 
 /**
  * @scope inputEx
  */   
