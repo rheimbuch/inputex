@@ -55,6 +55,8 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
       Event.addListener(this.listEl, "mouseover", this.onListMouseOver, this, true);
    
       Event.addListener(this.el, "keydown", this.onKeyDown, this, true);
+      
+      Event.addListener(this.el, "input", this.onInput, this, true);
    },
 
    /**
@@ -83,6 +85,14 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
             Event.stopEvent(e);
          }
       }   
+      
+      // Key enter
+      if(e.keyCode == 13) {
+         this.validateItem();
+         this.fireUpdatedEvt();
+         Event.stopEvent(e);
+	      return;
+      }
    },
 
 
@@ -91,18 +101,6 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
     * @param {Event} e The original input event
     */
    onInput: function(e) { 
-      inputEx.AutoComplete.superclass.onInput.call(this, e);
-   
-      // Key enter
-      if(e.keyCode == 13) {
-         Event.stopEvent(e);
-         this.validateItem();
-	      return;
-      }
-   
-      if( e.keyCode == 40 || e.keyCode == 38) {
-         return;
-      }
    
       /**
        * If this is a normal key, make the query
@@ -124,7 +122,6 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
      * Called when the user clicked on an item or pressed the enter key
      */
     validateItem: function() {
-   
        var pos = -1;
        for(var i = 0 ; i < this.listEl.childNodes.length ; i++) {
           if(this.listEl.childNodes[i]==this.highlightedItem) {
