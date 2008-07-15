@@ -187,7 +187,7 @@ lang.extend(inputEx.Group, inputEx.Field,
       if(!oValues) return;
 	   for (var i = 0 ; i < this.inputs.length ; i++) {
 	      if(this.inputs[i].options.name && !lang.isUndefined(oValues[this.inputs[i].options.name]) ) {
-		      this.inputs[i].setValue(oValues[this.inputs[i].options.name] || '');
+	         this.inputs[i].setValue(oValues[this.inputs[i].options.name]);
 		      this.inputs[i].setClassFromState();
 	      }
       }

@@ -115,7 +115,7 @@ YAHOO.lang.extend(inputEx.TypeField, inputEx.Field,
             //{label: "Optional?", type: "boolean", inputParams: {name: "optional", value: false} },
             {label: "Name", type: "string", inputParams:{name: "name"} },
             {label: "Required?", type: "boolean", inputParams: {name: "required", value: false} },
-            {label: "Dont display icon", type: "boolean", inputParams: {name: "tooltipIcon", value: false} }
+            {label: "Display icon", type: "boolean", inputParams: {name: "tooltipIcon", value: false} }
          ]});
          var groupEl = this.typePropertiesGroup.getEl();
          this.propertyPanel.appendChild( groupEl );
@@ -301,7 +301,7 @@ if(inputEx.RTEField) {
 
 if(inputEx.UrlField) {
    inputEx.UrlField.groupOptions = [
-      { label: 'Display favicon', type: 'boolean', inputParams: {name:'favicon', checked: true}}
+      { label: 'Display favicon', type: 'boolean', inputParams: {name:'favicon', value: true}}
    ];
 }
 
@@ -337,14 +337,14 @@ if(inputEx.NumberField) {
 inputEx.StringField.groupOptions = [];
 
 inputEx.TypeField.groupOptions = [
-   //{ label: 'default value field', type: 'boolean', inputParams: {name:'createValueField', checked: false}}
+   //{ label: 'default value field', type: 'boolean', inputParams: {name:'createValueField', value: false}}
 ];
 
 
 if(inputEx.Group) {
    inputEx.Group.groupOptions = [
       {label: '', type: 'list', inputParams:{ listLabel: 'Fields', name: 'fields', elementType: {type: 'type' } } },
-      { label: 'Collapsible', type: 'boolean', inputParams: {name:'collapsible', checked: false}},
+      { label: 'Collapsible', type: 'boolean', inputParams: {name:'collapsible', value: false}},
       { label: 'Legend', inputParams: {name:'legend'}}
    ];
 }
@@ -367,7 +367,7 @@ if(inputEx.Form) {
             } 
          } 
       }   ,
-         { label: 'Collapsible', type: 'boolean', inputParams: {name:'collapsible', checked: false}},
+         { label: 'Collapsible', type: 'boolean', inputParams: {name:'collapsible', value: false}},
          { label: 'Legend', inputParams: {name:'legend'}}
    ];
 }

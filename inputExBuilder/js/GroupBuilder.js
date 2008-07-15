@@ -1,13 +1,13 @@
 /**
  * @class 
- * @inherits inputEx.Group
+ * @inherits YAHOO.inputEx.Group
  */
-inputEx.GroupBuilder = function(options) {
-   options.fields = inputEx.Group.groupOptions;
-   inputEx.GroupBuilder.superclass.constructor.call(this, options);
+YAHOO.inputEx.GroupBuilder = function(options) {
+   options.fields = YAHOO.inputEx.Group.groupOptions;
+   YAHOO.inputEx.GroupBuilder.superclass.constructor.call(this, options);
 };
 
-YAHOO.extend(inputEx.GroupBuilder, inputEx.Group, {
+YAHOO.extend(YAHOO.inputEx.GroupBuilder, YAHOO.inputEx.Group, {
    
    initEvents: function() {
       // Update the preview event
@@ -17,7 +17,7 @@ YAHOO.extend(inputEx.GroupBuilder, inputEx.Group, {
    rebuildPreview: function() {      
       var value = this.getValue();
 
-      this._group = new inputEx.Group(value);
+      this._group = new YAHOO.inputEx.Group(value);
       
       var groupContainer = YAHOO.util.Dom.get('groupContainer');
       groupContainer.innerHTML = "";
@@ -28,7 +28,7 @@ YAHOO.extend(inputEx.GroupBuilder, inputEx.Group, {
    },
    
    setValue: function(value) {
-      inputEx.GroupBuilder.superclass.setValue.call(this, value);
+      YAHOO.inputEx.GroupBuilder.superclass.setValue.call(this, value);
       this.rebuildPreview();
    }
    
@@ -36,7 +36,7 @@ YAHOO.extend(inputEx.GroupBuilder, inputEx.Group, {
 
 
 YAHOO.util.Event.addListener(window, 'load', function() {
-   new inputEx.GroupBuilder({parentEl: 'container', value: {
+   new YAHOO.inputEx.GroupBuilder({parentEl: 'container', value: {
    	"fields" : [
    		{
    			"type" : "string",
@@ -124,4 +124,4 @@ YAHOO.util.Event.addListener(window, 'load', function() {
    });
 });
 
-inputEx.spacerUrl = "../images/space.gif";
+YAHOO.inputEx.spacerUrl = "../images/space.gif";
