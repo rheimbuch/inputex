@@ -18,7 +18,7 @@
 <script src="parser.js"></script>
 <script>
 
-inputEx.RdfBuilder = {
+YAHOO.inputEx.RdfBuilder = {
 	
 	foafNS: "http://xmlns.com/foaf/0.1/",
 	inputexNS: "http://javascript.neyric.com/inputex/",
@@ -63,13 +63,19 @@ inputEx.RdfBuilder = {
 		     var propertyName = properties[i].predicate;
 		     var fittingField = this.rdf.Match(null, groups[0].subject, null, propertyName);
 		     if( fittingField.length > 0) {
-					var temp = fittingField[0].predicate.split('/');
-					var type = temp[temp.length-1];
+					var temp = fittingField[0].predicate.split('/'); // temp predicate string to extract inputEx type
 
-					var field = { type: type, inputParams: {value: properties[i].object }  };
-					field.inputParams.formatValue = function(v) { 
-						return "<img src='"+v+"' />";
+					var field = { 
+						type: temp[temp.length-1], 
+						inputParams: {
+							value: properties[i].object, 
+							visu: {
+								visuType: 'func', 
+								func: function(value){ return YAHOO.inputEx.cn('img',{src:value},{border: '2px solid black'}); } 
+							} 
+						}
 					};
+					
 					group.fields.push(field);
 		     }
 		  }
@@ -78,13 +84,13 @@ inputEx.RdfBuilder = {
 			var d = YAHOO.util.Dom.get('formContainer');
 			group.parentEl = d;
 			d.innerHTML = "";
-			new inputEx.Group(group);
+			new YAHOO.inputEx.Group(group);
 	}
 	
 };
 
 YAHOO.util.Event.addListener(window, "load", function() {
-	inputEx.RdfBuilder.build("proxy.php?url=http://www.mybloglog.com/buzz/members/neyric/foaf/", 
+	YAHOO.inputEx.RdfBuilder.build("proxy.php?url=http://www.mybloglog.com/buzz/members/neyric/foaf/", 
 													 'foaf-lens.rdf');
 	
 });
