@@ -50,7 +50,7 @@
 <script type="text/javascript" src="ObjectField.js"></script>
 <script>
 
-inputEx.spacerUrl = "../images/space.gif";
+YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 YAHOO.util.Event.addListener(window, "load", function() {
 	
@@ -60,7 +60,7 @@ YAHOO.util.Event.addListener(window, "load", function() {
      val.cssStyles.position = "absolute";
 		 val.cssStyles.top = "30px";
 		 val.cssStyles.left = "450px";
-     var el = inputEx.cn(val.tagName, val.attributes, val.cssStyles, val.innerHTML);
+     var el = YAHOO.inputEx.cn(val.tagName, val.attributes, val.cssStyles, val.innerHTML);
 
 		 document.body.appendChild(el);
 
@@ -69,7 +69,7 @@ YAHOO.util.Event.addListener(window, "load", function() {
      new YAHOO.util.DD(resize._wrap); 
   };
 	
-	form = new inputEx.Form({
+	form = new YAHOO.inputEx.Form({
 		parentEl: 'htmlFormContainer',
 		fields: [
 	      {label: 'Tag', type: 'select', inputParams: {name: 'tagName', 

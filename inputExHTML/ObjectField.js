@@ -4,7 +4,7 @@
  * @constructor
  * @param {Object} options inputEx.Field options object
  */
-inputEx.ObjectField = function(options) {
+YAHOO.inputEx.ObjectField = function(options) {
 	options.elementType = {
 		type: 'pair', 
 		inputParams: {
@@ -12,37 +12,38 @@ inputEx.ObjectField = function(options) {
 			rightFieldOptions: {type:'string', inputParams: {size: 10} } 
 		} 
 	};
-	inputEx.ObjectField.superclass.constructor.call(this, options);
+	YAHOO.inputEx.ObjectField.superclass.constructor.call(this, options);
 };
 
-YAHOO.extend(inputEx.ObjectField, inputEx.ListField);
+YAHOO.extend(YAHOO.inputEx.ObjectField, YAHOO.inputEx.ListField, {
 
-/**
- * Convert the array of 2d elements to an javascript object 
- */
-inputEx.ObjectField.prototype.getValue = function() {
-	var v = inputEx.ObjectField.superclass.getValue.call(this);
-	var obj = {};
-	for(var i = 0 ; i < v.length ; i++) {
-		obj[ v[i][0] ] = v[i][1];
-	}
-	return obj;
-};
+   /**
+    * Convert the array of 2d elements to an javascript object 
+    */
+   getValue: function() {
+   	var v = YAHOO.inputEx.ObjectField.superclass.getValue.call(this);
+   	var obj = {};
+   	for(var i = 0 ; i < v.length ; i++) {
+   		obj[ v[i][0] ] = v[i][1];
+   	}
+   	return obj;
+   },
 
-/**
- * Convert the object into a list of pairs
- */
-inputEx.ObjectField.prototype.setValue = function(v) {
-	var val = [];
-	for(var key in v) {
-		if( v.hasOwnProperty(key) ) {
-			val.push([key, v[key]]);
-		}
-	}
-	inputEx.ObjectField.superclass.setValue.call(this,val);
-};
+   /**
+    * Convert the object into a list of pairs
+    */
+   setValue: function(v) {
+   	var val = [];
+   	for(var key in v) {
+   		if( v.hasOwnProperty(key) ) {
+   			val.push([key, v[key]]);
+   		}
+   	}
+   	YAHOO.inputEx.ObjectField.superclass.setValue.call(this,val);
+   }
+});
 
 /**
  * Register this class as "object" type
  */
-inputEx.registerType('object', inputEx.ObjectField);
+YAHOO.inputEx.registerType('object', YAHOO.inputEx.ObjectField);
