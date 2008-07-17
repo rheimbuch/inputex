@@ -3,11 +3,13 @@
    var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Event = YAHOO.util.Event, Dom = YAHOO.util.Dom;
 	
 /**
- * @class A Date Field. Add the folowing options: 
- *		- dateFormat: default to 'm/d/Y'
+ * @class A Date Field. 
  * @extends inputEx.StringField
  * @constructor
- * @param {Object} options inputEx.Field options object
+ * @param {Object} options Add the folowing options: 
+ * <ul>
+ *	   <li>dateFormat: default to 'm/d/Y'</li>
+ * </ul>
  */
 inputEx.DateField = function(options) {
    if(!options) { var options = {}; }

@@ -6,7 +6,16 @@
  * @class An autocomplete module
  * @constructor
  * @extends inputEx.StringField
- */ 
+ * @param {Object} options Added options for Autocompleter
+ * <ul>
+ *	  <li>highlightClass: the CSS className added to highlight selected item</li>
+ *	  <li>timerDelay: number of milliseconds to wait before sending the request (default is 300)</li>
+ *	  <li>query: function called for the querying</li>
+ *   <li>visuItem: the visualization object to display each item</li>
+ *   <li>displayAutocompleted: method taht should return the string set to the field when an item is selected</li>
+ *   <li>queryMinLength: minimum number of letters to type before sending the query (default is 2)</li>
+ * </ul>
+ */
 inputEx.AutoComplete = function(options) {
    inputEx.AutoComplete.superclass.constructor.call(this, options);
 };
@@ -30,7 +39,6 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
       this.options.timerDelay = this.options.timerDelay || 300;
       this.options.query = this.options.query || null;
       this.options.queryMinLength = this.options.queryMinLength || 2;
-      //this.options.displayEl = this.options.displayEl || function(val) { return inputEx.cn('div', null, null, val); };
    },
 
    /**

@@ -4,14 +4,13 @@
 
 /**
  * @class Create a textarea input
- * Added options:
+ * @extends inputEx.Field
+ * @constructor
+ * @param {Object} options Added options:
  * <ul>
  *	   <li>rows: rows attribute</li>
  *	   <li>cols: cols attribute</li>
  * </ul>
- * @extends inputEx.Field
- * @constructor
- * @param {Object} options inputEx.Field options object
  */
 inputEx.Textarea = function(options) {
 	inputEx.Textarea.superclass.constructor.call(this,options);

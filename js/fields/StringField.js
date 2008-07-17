@@ -6,8 +6,8 @@
  * @class Basic string field (equivalent to the input type "text")
  * @extends inputEx.Field
  * @constructor
- * @param {Object} options inputEx.Field options object
- * options:<ul>
+ * @param {Object} options Added options:
+ * <ul>
  *	  <li>regexp: regular expression used to validate (otherwise it always validate)</li>
  *   <li>size: size attribute of the input</li>
  * </ul>

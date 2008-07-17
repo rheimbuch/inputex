@@ -4,20 +4,20 @@
 /** 
  * @class An abstract class that contains the shared features for all fields
  * @constructor
- * @param {Object} options Options object (see options property)
+ * @param {Object} options Configuration object
+ * <ul>
+ *	  <li>name: the name of the field</li>
+ *	  <li>required: boolean, the field cannot be null if true</li>
+ *	  <li>tooltipIcon: show an icon next to the field and display an error in a tooltip (default false)</li>
+ *   <li>className: CSS class name for the div wrapper (default 'inputEx-Field')</li>
+ *   <li>value: initial value</li>
+ *   <li>parentEl: HTMLElement or String id, append the field to this DOM element</li>
+ * </ul>
  */
 inputEx.Field = function(options) {
 	
 	/**
-	 * All the field constructors use a unique parameter "options".
-	 * <ul>
-    *	  <li>name: the name of the field</li>
-    *	  <li>required: boolean, the field cannot be null if true</li>
-    *	  <li>tooltipIcon: show an icon next to the field and display an error in a tooltip (default false)</li>
-    *   <li>className: CSS class name for the div wrapper (default 'inputEx-Field')</li>
-    *   <li>value: initial value</li>
-    *   <li>parentEl: HTMLElement or String id, append the field to this DOM element</li>
-    * </ul>
+	 * Configuration object to set the options for this class and the parent classes. See constructor details for options added by this class.
 	 */
 	this.options = options || {};
 	

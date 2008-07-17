@@ -6,7 +6,7 @@
  * @class A field limited to number inputs
  * @extends inputEx.StringField
  * @constructor
- * @param {Object} options inputEx.Field options object
+ * @param {Object} options inputEx.StringField options object
  */
 inputEx.IntegerField = function(options) {
    inputEx.IntegerField.superclass.constructor.call(this,options);

@@ -6,7 +6,7 @@
  * @class A field limited to number inputs (floating)
  * @extends inputEx.Field
  * @constructor
- * @param {Object} options inputEx.Field options object
+ * @param {Object} options No added options
  */
 inputEx.DateTimeField = function(options) {
    inputEx.DateTimeField.superclass.constructor.call(this,options);

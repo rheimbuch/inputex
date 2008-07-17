@@ -6,7 +6,11 @@
  * @class Wrapper for the Rich Text Editor from YUI
  * @extends inputEx.Field
  * @constructor
- * @param {Object} options inputEx.Field options object
+ * @param {Object} options Added options:
+ * <ul>
+ *   <li>opts: the options to be added when calling the RTE constructor (see YUI RTE)</li>
+ *   <li>type: if == 'simple', the field will use the SimpleEditor. Any other value will use the Editor class.</li>
+ * </ul>
  */
 inputEx.RTEField = function(options) {
    inputEx.RTEField.superclass.constructor.call(this,options);

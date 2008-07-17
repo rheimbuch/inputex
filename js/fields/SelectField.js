@@ -4,11 +4,14 @@
 
 /**
  * @class Create a select field
- * options:
- *		- selectValues: contains the list of options values
  * @extends inputEx.Field
  * @constructor
- * @param {Object} options inputEx.Field options object
+ * @param {Object} options Added options:
+ * <ul>
+ *	   <li>selectValues: contains the list of options values</li>
+ *	   <li>selectOptions: list of option element texts</li>
+ *    <li>multiple: boolean to allow multiple selections</li>
+ * </ul>
  */
 inputEx.SelectField = function(options) {
 	inputEx.SelectField.superclass.constructor.call(this,options);

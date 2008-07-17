@@ -6,7 +6,7 @@
  * @class A DatePicker Field.
  * @extends inputEx.DateField
  * @constructor
- * @param {Object} options inputEx.Field options object
+ * @param {Object} options No added option for this field (same as DateField)
  */
 inputEx.DatePickerField = function(options) {
 	inputEx.DatePickerField.superclass.constructor.call(this,options);

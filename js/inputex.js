@@ -10,7 +10,10 @@
  */
 YAHOO.namespace("inputEx");
 
-   var inputEx = YAHOO.inputEx;
+/**
+ * Test de documentation inputEx
+ */
+var inputEx = YAHOO.inputEx;
 
 lang.augmentObject(inputEx, 
 /**
@@ -253,3 +256,10 @@ lang.augmentObject(inputEx,
 });
 
 })();
+
+
+/**
+ * The main inputEx namespace
+ */
+var inputEx = YAHOO.inputEx;
+// this previous line is just for documentation purposes. It should be removed from the production files

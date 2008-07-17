@@ -6,7 +6,11 @@
  * @class   Meta field to create a list of other fields
  * @extends inputEx.Field
  * @constructor
- * @param {Object} options inputEx.Field options object
+ * @param {Object} options Added options:
+ * <ul>
+ *   <li>sortable: </li>
+ *   <li>elementType: an element type definition (default is {type: 'string'})</li>
+ * </ul>
  */
 inputEx.ListField = function(options) {
 	   

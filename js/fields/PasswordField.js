@@ -8,6 +8,10 @@
  * @extends inputEx.StringField
  * @constructor
  * @param {Object} options inputEx.Field options object
+ * <ul>
+ *   <li>minLength: the minimum size for the password</li>
+ *   <li>confirmPasswordField: the PasswordField instance to compare to when using 2 password fields for password creation (please use the setConfirmationField method)</li>
+ * </ul>
  */
 inputEx.PasswordField = function(options) {
 	inputEx.PasswordField.superclass.constructor.call(this,options);

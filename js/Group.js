@@ -6,7 +6,12 @@
  * @class Handle a group of fields
  * @extends inputEx.Field
  * @constructor
- * @param {Object} options with legend,collapsible,fields: Array of input fields : { label: 'Enter the value:' , type: 'text' or fieldClass: inputEx.Field, optional: true/false, inputParams: {inputparams object} }
+ * @param {Object} options The following options are added for Groups and subclasses:
+ * <ul>
+ *   <li>fields: Array of input fields declared like { label: 'Enter the value:' , type: 'text' or fieldClass: inputEx.Field, optional: true/false, inputParams: {inputparams object} }</li>
+ *   <li>legend: The legend for the fieldset (default is an empty string)</li>
+ *   <li>collapsible: Boolean to make the group collapsible (default is false)</li>
+ * </ul>
  */
 inputEx.Group = function(options) {
    inputEx.Group.superclass.constructor.call(this,options);

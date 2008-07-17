@@ -6,7 +6,12 @@ var util = YAHOO.util, lang = YAHOO.lang, Event = YAHOO.util.Event, inputEx = YA
  * @class Create a group of fields within a FORM tag
  * @extends inputEx.Group
  * @constructor
- * @param {Object} options inputEx.Field options object
+ * @param {Object} options The following options are added for Forms:
+ * <ul>
+ *   <li>buttons: list of button definition objects {value: 'Click Me', type: 'submit'}</li>
+ *   <li>ajax: send the form through an ajax request (submit button should be present): {method: 'POST', uri: 'myScript.php', callback: same as YAHOO.util.Connect.asyncRequest callback}</li>
+ *   <li>showMask: adds a mask over the form while the request is running (default is false)</li>
+ * </ul>
  */
 inputEx.Form = function(options) { 
    inputEx.Form.superclass.constructor.call(this, options);

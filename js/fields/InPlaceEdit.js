@@ -3,13 +3,14 @@
    var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Event = YAHOO.util.Event, Dom = YAHOO.util.Dom;
 
 /**
- * @class Meta field providing in place editing (the editor appears when you click on the formatted value). Options:
- * - formatDom
- * - formatValue
- * - ou texte...
+ * @class Meta field providing in place editing (the editor appears when you click on the formatted value). 
  * @extends inputEx.Field
  * @constructor
- * @param {Object} options inputEx.Field options object
+ * @param {Object} options Added options:
+ * <ul>
+ *   <li>formatDom</li>
+ *   <li>formatValue</li>
+ * </ul>
  */
 inputEx.InPlaceEdit = function(options) {
    inputEx.InPlaceEdit.superclass.constructor.call(this, options);

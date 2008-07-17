@@ -6,7 +6,13 @@
  * @class Create a Color picker input field
  * @extends inputEx.Field
  * @constructor
- * @param {Object} options inputEx.Field options object
+ * @param {Object} options Added options for ColorField :
+ * <ul>
+ *   <li>displayTitle: boolean to display a prompt message</li>
+ *   <li>auto: default color grid to be used</li>
+ *   <li>colors: list of colors to choose from</li>
+ *   <li>ratio: (default is [16,9])</li>
+ * </ul>
  */
 inputEx.ColorField = function(options) {
 	inputEx.ColorField.superclass.constructor.call(this,options);

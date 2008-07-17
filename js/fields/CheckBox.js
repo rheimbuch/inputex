@@ -3,14 +3,13 @@
 	var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Event = YAHOO.util.Event, Dom = YAHOO.util.Dom;
 	
 /**
- * @class Create a checkbox. Here are the added options :
- * <ul>
- *    <li>checked: boolean, initial state</li>
- *    <li>sentValues: couple of values that schould be returned by the getValue. (default: [true, false])</li>
- * </ul>
+ * @class Create a checkbox.
  * @extends inputEx.Field
  * @constructor
- * @param {Object} options inputEx.Field options object
+ * @param {Object} options Added options for CheckBoxes:
+ * <ul>
+ *   <li>sentValues: 2D vector of values for checked/unchecked states (default is [true, false])</li>
+ * </ul>
  */
 inputEx.CheckBox = function(options) {
 	inputEx.CheckBox.superclass.constructor.call(this,options);

@@ -6,7 +6,11 @@
  * @class A meta field to put 2 fields on the same line
  * @extends inputEx.Field
  * @constructor
- * @param {Object} options inputEx.Field options object
+ * @param {Object} options Added options:
+ * <ul>
+ *    <li>leftFieldOptions: the left field type definition object (same as groups)</li>
+ *    <li>rightFieldOptions: the right field type definition object (same as groups)</li>
+ * </ul>
  */
 inputEx.PairField = function(options) {
    options.leftFieldOptions = options.leftFieldOptions || {};

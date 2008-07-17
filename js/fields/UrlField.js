@@ -7,6 +7,9 @@
  * @extends inputEx.StringField
  * @constructor
  * @param {Object} options inputEx.Field options object
+ * <ul>
+ *   <li>favicon: boolean whether the domain favicon.ico should be displayed or not (default is true, set to false for https)</li>
+ * </ul>
  */
 inputEx.UrlField = function(options) {
    inputEx.UrlField.superclass.constructor.call(this,options);
