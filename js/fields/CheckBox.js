@@ -56,6 +56,11 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 	 */
 	initEvents: function() {
 	   Event.addListener(this.el, "change", this.onChange, this, true);	
+	   
+	   // Awful Hack to work in IE6 and below (the checkbox doesn't fire the change event)
+	   if( YAHOO.env.ua.ie && parseInt(YAHOO.env.ua.ie,10) < 7 ) {
+	      Event.addListener(this.el, "click", function() { this.fireUpdatedEvt(); }, this, true);	
+	   }
 	},
 	   
 	/**

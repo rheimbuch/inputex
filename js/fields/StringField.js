@@ -55,7 +55,7 @@ lang.extend(inputEx.StringField, inputEx.Field,
    initEvents: function() {	
 	   Event.addListener(this.el, "change", this.onChange, this, true);
 	   Event.addListener(this.el, "focus", this.onFocus, this, true);
-	   Event.addListener(this.el, "blur", this.onBlur, this, true);	   
+	   Event.addListener(this.el, "blur", this.onBlur, this, true);	  
    },
 
    /**
