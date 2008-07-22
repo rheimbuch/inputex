@@ -204,7 +204,7 @@
 			var logDiv = inputEx.cn('div', null, null, "Log :<br />");
 			el.appendChild(logDiv);
 			field.updatedEvt.subscribe(function() {
-				logDiv.innerHTML += "Updated at "+(new Date())+"<br />";
+				logDiv.innerHTML += "Updated at "+(new Date())+" with value: "+val+"<br />";
 			});
 		</textarea>
 		</form>

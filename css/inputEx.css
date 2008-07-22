@@ -422,7 +422,7 @@ div.inputEx-SliderField div.inputEx-SliderField-bg {
    position: relative;
    background:url('../images/slider-bg-h.gif') 5px 0 no-repeat;
    height:28px;
-   width:228px;
+   /*width:228px;*/
 }
 
 div.inputEx-SliderField div.inputEx-SliderField-thumb {

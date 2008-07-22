@@ -41,6 +41,45 @@
 </div>
 
 
+<!-- Example 2 -->
+<div class='exampleDiv'>
+
+	<p class="title">Updated Event</p>
+	
+	<p>The updated event</p>
+
+	<div class='demoContainer' id='container2'></div>
+
+	<div class='codeContainer'>
+		<form>
+		<textarea name="code" class="JScript">
+		</textarea>
+		</form>
+	</div>
+
+</div>
+
+
+
+<!-- Example 3 -->
+<div class='exampleDiv'>
+
+	<p class="title">Boundaries</p>
+	
+	<p>Set the min/max values</p>
+
+	<div class='demoContainer' id='container3'></div>
+
+	<div class='codeContainer'>
+		<form>
+		<textarea name="code" class="JScript">
+		</textarea>
+		</form>
+	</div>
+
+</div>
+
+
 <!-- YUI Library -->
 <script type="text/javascript" src="../lib/yui/yahoo/yahoo-min.js"></script> 
 <script type="text/javascript" src="../lib/yui/dom/dom-min.js"></script> 
@@ -57,13 +96,26 @@
 <script src="../js/fields/SliderField.js"  type='text/javascript'></script>
 
 <script>
-var sliderField = null;
 YAHOO.util.Event.addListener(window, 'load', function() {
 	// Required for the tooltips
 	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
-	sliderField = new YAHOO.inputEx.SliderField({parentEl: 'container1'});
+	var sliderField = new YAHOO.inputEx.SliderField({parentEl: 'container1'});
+	
+	
+	// Example 2
+	var el = YAHOO.util.Dom.get('container2');
+	var field = new YAHOO.inputEx.SliderField({parentEl: el, displayValue: false}); 
+	var logDiv = inputEx.cn('div', null, null, "Log :<br />"); 
+	el.appendChild(logDiv); 
+	field.updatedEvt.subscribe(function(e,val) { 
+	    logDiv.innerHTML += "Updated at "+(new Date())+" with value: "+val+"<br />";
+	});
+	
+	
+	// Example 3
+	var sliderField = new YAHOO.inputEx.SliderField({parentEl: 'container3', minValue: 50, maxValue: 500});
 	
 });
 

@@ -316,6 +316,14 @@ if(inputEx.SelectField) {
    ];
 }
 
+
+if(inputEx.SliderField) {
+   inputEx.SliderField.groupOptions = [
+      { label: 'Min. value',  type: 'integer', inputParams: {name: 'minValue', value: 0} },
+      { label: 'Max. value', type: 'integer', inputParams: {name: 'maxValue', value: 100} }
+   ];
+}
+
 if(inputEx.ListField) {
    inputEx.ListField.groupOptions = [
       { label: 'of type', type: 'type', inputParams: {required: true, name: 'elementType'} },

@@ -22,6 +22,7 @@ YAHOO.inputEx.RdfBuilder = {
 	
 	foafNS: "http://xmlns.com/foaf/0.1/",
 	inputexNS: "http://javascript.neyric.com/inputex/",
+	iexfNS: "http://javascript.neyric.com/inputex/fields/",
 	rdfNS: "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
 	
 	build: function(rdfFile, lensFile, parentEl) {
@@ -29,26 +30,94 @@ YAHOO.inputEx.RdfBuilder = {
 		this._tempLensFile = lensFile;
 		
 		// Get the RDF source file
-		this.rdf = new RDF();
+		this.rdfData = new RDF();
 		var that=this;
-		this.rdf.getRDFURL(rdfFile, function() { that.fileCallback(); });
+		this.rdfData.getRDFURL(rdfFile, function() { that.dataFileCallback(); });
 	},
 	
-	fileCallback: function() {
+	dataFileCallback: function() {
 		var that = this;
 		// Get the Lens RDF file
-		this.rdf.getRDFURL(this._tempLensFile, function () { that.lensCallback(); });
+		this.rdfLens = new RDF();
+		this.rdfLens.getRDFURL(this._tempLensFile, function () { that.lensCallback(); });
+	},
+	
+
+	getValueFromData: function() {
+		
+	},
+	
+	
+	getSubFields: function(subject, type) {
+		
+		var ret = { inputParams: {}, type: type };
+		
+		console.log("getSubFields called with subject ", subject, " , type: ", type);
+		
+		if(type == "group") {
+			ret.inputParams.fields = [];
+		}
+		
+		var properties = this.rdfLens.Match(null, subject, null, null);  
+	
+		
+		for(var i = 0 ; i < properties.length ; i++) {
+			var predicate = properties[i].predicate;
+			
+			// If it is a sub-field
+			if( predicate.match(this.iexfNS) ) {
+				//console.log(predicate, "est un sous-champ", predicate.substr(this.iexfNS.length), properties[i] );
+				ret.inputParams.fields.push( this.getSubFields(properties[i].object, predicate.substr(this.iexfNS.length)) );
+			}
+			// If it is an attribute, add it to the ret
+			else if ( predicate.match(this.inputexNS) ) {
+				var attrName = predicate.substr(this.inputexNS.length);
+				ret.inputParams[attrName] = properties[i].object;
+			}
+			
+		}
+		
+		return ret;
+	
+	},
+	
+	/**
+	 * Build the form parameter from the lens alone
+	 */
+	buildFormDefinition: function() {
+		
+		console.log( this.rdfLens.getTriples()  );
+		console.log("=========================");
+		
+		// Search for the top level group definition in the Lens:
+		var groups = this.rdfLens.Match(null, null, this.rdfNS+"type", this.iexfNS+"group");
+		var topLevelGroup = groups[0];
+		var groupDef = this.getSubFields(topLevelGroup.subject, "group");
+		console.log("group Definition", groupDef);
+		
+		// Build the form
+		/*var d = YAHOO.util.Dom.get('formContainer');
+		groupDef.parentEl = d;
+		d.innerHTML = "";
+		new YAHOO.inputEx.Group(groupDef);*/
+		
 	},
 	
 	lensCallback: function() {
 		
-		   console.log( this.rdf.toNTriples()  );
+		/*   console.log( this.rdfData.toNTriples()  );
+			console.log(topLevelGroup);*/
 			
+			this.buildFormDefinition();
+			
+			return;
 			 
 		   var group = { fields: [] };
 
 		   // Find all defined groups in the lens
 		   var groups = this.rdf.Match(null, null, this.rdfNS+"type", this.inputexNS+"Group");
+		
+		//console.log(groups);
 
 		  // on fait le premier pour l'instant:
 		  var type0 = groups[0].subject.split('#')[1];
