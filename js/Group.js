@@ -14,7 +14,6 @@
  * </ul>
  */
 inputEx.Group = function(options) {
-   alert("youhou");
    inputEx.Group.superclass.constructor.call(this,options);
 };
 lang.extend(inputEx.Group, inputEx.Field, 
