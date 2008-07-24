@@ -14,6 +14,7 @@
  * </ul>
  */
 inputEx.Group = function(options) {
+   alert("youhou");
    inputEx.Group.superclass.constructor.call(this,options);
 };
 lang.extend(inputEx.Group, inputEx.Field, 
@@ -67,9 +68,9 @@ lang.extend(inputEx.Group, inputEx.Field,
          inputEx.sn(this.fieldset,{className:'inputEx-Expanded'});
       }
    
-      if(this.options.legend != '') {
+      /*if(this.options.legend !== '') {
          this.legend.innerHTML += (" "+this.options.legend);
-      }
+      }*/
    
       this.fieldset.appendChild(this.legend);
   	   
@@ -189,7 +190,9 @@ lang.extend(inputEx.Group, inputEx.Field,
     * Set the values of each field from a key/value hash object
     */
    setValue: function(oValues) {
-      if(!oValues) return;
+      if(!oValues) {
+         return;
+      }
 	   for (var i = 0 ; i < this.inputs.length ; i++) {
 	      if(this.inputs[i].options.name && !lang.isUndefined(oValues[this.inputs[i].options.name]) ) {
 	         this.inputs[i].setValue(oValues[this.inputs[i].options.name]);
@@ -235,7 +238,9 @@ lang.extend(inputEx.Group, inputEx.Field,
     * @param {String} fieldName The name property
     */
    getFieldByName: function(fieldName) {
-      if( !this.inputsNames.hasOwnProperty(fieldName) ) return null;
+      if( !this.inputsNames.hasOwnProperty(fieldName) ) {
+         return null;
+      }
       return this.inputsNames[fieldName];
    }
 
