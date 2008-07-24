@@ -139,7 +139,7 @@ lang.extend(inputEx.Form, inputEx.Group,
          {
             display: 'none', 
             width: Dom.getStyle(this.divEl,"width"),
-            height: Dom.getStyle(this.divEl,"height"),
+            height: Dom.getStyle(this.divEl,"height")
          }, 
          "<div/><center><br /><img src='../images/spinner.gif'/><br /><span>Envoi en cours...</span></center>");
       this.divEl.appendChild(this.formMask);
