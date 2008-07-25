@@ -222,6 +222,10 @@ lang.extend(inputEx.ColorField, inputEx.Field,
 	   	
 	   // Fire updated
 	   this.fireUpdatedEvt();
+	},
+	
+	getValue: function() {
+	   return this.el.value;
 	}
 	  
 }); 
