@@ -43,7 +43,7 @@ inputEx.Field = function(options) {
 	this.initEvents();
 	
 	// set the default styling
-	this.setClassFromState();
+	//this.setClassFromState();
 	
 	// append it immediatly to the parent DOM element
 	if(this.options.parentEl) {

@@ -29,7 +29,7 @@ lang.extend(inputEx.Form, inputEx.Group,
    setOptions: function() {
       inputEx.Form.superclass.setOptions.call(this);
    
-      this.buttons = this.options.buttons;
+      this.buttons = [];
    
       if(this.options.ajax) {
          this.options.ajax.method = this.options.ajax.method || 'POST';
@@ -68,10 +68,11 @@ lang.extend(inputEx.Form, inputEx.Group,
    renderButtons: function() {
 		
 	   var button, buttonEl;
-	   for(var i = 0 ; i < this.buttons.length ; i++ ) {
-	      button = this.buttons[i];
+	   for(var i = 0 ; i < this.options.buttons.length ; i++ ) {
+	      button = this.options.buttons[i];
 	      buttonEl = inputEx.cn('input', {type: button.type, value: button.value});
 	      if( button.onClick ) { buttonEl.onclick = button.onClick; }
+	      this.buttons.push(buttonEl);
 	      this.form.appendChild(buttonEl);
 	   }	
    },
