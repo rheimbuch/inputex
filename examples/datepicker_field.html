@@ -34,6 +34,27 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
+			new YAHOO.inputEx.DatePickerField({parentEl: 'container1', value: new Date()});
+		</textarea>
+		</form>
+	</div>
+
+</div>
+
+
+<!-- Example 2 -->
+<div class='exampleDiv'>
+
+	<p class="title">Change DatePickerField date format</p>
+	
+	<p>Use the following code to select another date format</p>
+
+	<div class='demoContainer' id='container2'></div>
+
+	<div class='codeContainer'>
+		<form>
+		<textarea name="code" class="JScript">
+			new YAHOO.inputEx.DatePickerField({parentEl: 'container2', value: new Date(), dateFormat: 'd/m/Y'});
 		</textarea>
 		</form>
 	</div>
@@ -64,6 +85,9 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 
 	// Example 1
 	new YAHOO.inputEx.DatePickerField({parentEl: 'container1', value: new Date()});
+	
+	// Example 2
+	new YAHOO.inputEx.DatePickerField({parentEl: 'container2', value: new Date(), dateFormat: 'd/m/Y'});
 	
 });
 
