@@ -18,6 +18,9 @@
  */
 inputEx.AutoComplete = function(options) {
    inputEx.AutoComplete.superclass.constructor.call(this, options);
+   
+   // Event fired when the user validated an item
+   this.validateItemEvt = new YAHOO.util.CustomEvent('validateItem', this);
 };
 
 lang.extend(inputEx.AutoComplete, inputEx.StringField, 
@@ -141,6 +144,9 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
    
        this.setValue( this.options.displayAutocompleted.call(this, this.listValues[pos]) );
        this.hideList();
+       
+       // Fire the validateItem event
+       this.validateItemEvt.fire(this.listValues[pos]);
     },
 
    /**
