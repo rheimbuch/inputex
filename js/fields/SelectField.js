@@ -67,8 +67,22 @@ YAHOO.lang.extend(inputEx.SelectField, inputEx.Field,
     */
    getValue: function() {
       return this.options.selectValues[this.el.selectedIndex];
-   }
+   },
+   
+   /**
+    * Disable the field
+    */
+   disable: function() {
+      this.el.disabled = true;
+   },
 
+   /**
+    * Enable the field
+    */
+   enable: function() {
+      this.el.disabled = false;
+   }
+   
 });
 
 /**

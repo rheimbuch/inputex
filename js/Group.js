@@ -33,6 +33,8 @@ lang.extend(inputEx.Group, inputEx.Field,
    
       this.options.collapsible = lang.isUndefined(this.options.collapsible) ? false : this.options.collapsible;
       
+      this.options.disabled = lang.isUndefined(this.options.disabled) ? false : this.options.disabled;
+      
       // Array containing the list of the field instances
       this.inputs = [];
 
@@ -49,6 +51,10 @@ lang.extend(inputEx.Group, inputEx.Field,
 	   this.divEl = inputEx.cn('div', {className: 'inputEx-Group'});
   	   
   	   this.renderFields(this.divEl);  	  
+  	   
+  	   if(this.options.disabled) {
+  	      this.disable();
+  	   }
    },
    
    /**

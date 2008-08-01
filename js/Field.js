@@ -110,7 +110,7 @@ inputEx.Field.prototype = {
          // Uses setTimeout to escape the stack (that originiated in an event)
          var that = this;
          setTimeout(function() {
-      	   that.updatedEvt.fire(that.getValue());
+      	   that.updatedEvt.fire(that.getValue(), that);
          },50);
       }
 	},
