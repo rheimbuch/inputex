@@ -156,7 +156,7 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	   // Instanciate the new subField
 	   var opts = lang.merge({}, this.options.elementType);
 	   if(!opts.inputParams) opts.inputParams = {};
-	   if(value) opts.inputParams.value = value;
+	   if(!YAHOO.lang.isUndefined(value)) opts.inputParams.value = value;
 	   
 	   var el = inputEx.buildField(opts);
 	   
