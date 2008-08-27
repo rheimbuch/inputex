@@ -201,9 +201,10 @@
 		<textarea name="code" class="JScript" cols="60" rows="1">
 			var el = YAHOO.util.Dom.get('container9');
 			var field = new YAHOO.inputEx.StringField({parentEl: el });
-			var logDiv = inputEx.cn('div', null, null, "Log :<br />");
+			var logDiv = YAHOO.inputEx.cn('div', null, null, "Log :<br />");
 			el.appendChild(logDiv);
-			field.updatedEvt.subscribe(function() {
+			field.updatedEvt.subscribe(function(e,params) {
+				var val = params[0];
 				logDiv.innerHTML += "Updated at "+(new Date())+" with value: "+val+"<br />";
 			});
 		</textarea>
@@ -267,7 +268,8 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	var field = new YAHOO.inputEx.StringField({parentEl: el });
 	var logDiv = YAHOO.inputEx.cn('div', null, null, "Log :<br />");
 	el.appendChild(logDiv);
-	field.updatedEvt.subscribe(function(e,val) {
+	field.updatedEvt.subscribe(function(e,params) {
+		var val = params[0];
 		logDiv.innerHTML += "Updated at "+(new Date())+" with value: "+val+"<br />";
 	});
 	

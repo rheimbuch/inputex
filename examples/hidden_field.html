@@ -36,8 +36,8 @@
 			var exampleDiv = YAHOO.util.Dom.get('container1');
 			var group = new YAHOO.inputEx.Group({
 				 	fields: [ 
-						{label: '', type: 'hidden', inputParams: {name: 'id', value: 12 } }, 
-						{label: 'Firstname', inputParams: {name: 'firstname', required: true, value:'Jacques' } } 
+						{type: 'hidden', inputParams: {name: 'id', value: 12 } }, 
+						{inputParams: {label: 'Firstname', name: 'firstname', required: true, value:'Jacques' } } 
 					], 
 					parentEl: exampleDiv
 			});
@@ -74,8 +74,8 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	var exampleDiv = YAHOO.util.Dom.get('container1');
 	var group = new YAHOO.inputEx.Group({
 		 	fields: [ 
-				{label: '', type: 'hidden', inputParams: {name: 'id', value: 12 } }, 
-				{label: 'Firstname', inputParams: {name: 'firstname', required: true, value:'Jacques' } } 
+				{ type: 'hidden', inputParams: {name: 'id', value: 12 } }, 
+				{ inputParams: {label: 'Firstname', name: 'firstname', required: true, value:'Jacques' } } 
 			], 
 			parentEl: exampleDiv
 	});

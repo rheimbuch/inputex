@@ -46,7 +46,7 @@ lang.extend(inputEx.StringField, inputEx.Field,
       this.el = inputEx.cn('input', attributes);
 	
       // Append it to the main element
-      this.divEl.appendChild(this.el);
+      this.fieldContainer.appendChild(this.el);
    },
 	
    /**

@@ -23,7 +23,7 @@ YAHOO.lang.extend(inputEx.HiddenField, inputEx.Field,
     */
    render: function() {
       this.type = inputEx.HiddenField;
-	   this.divEl = inputEx.cn('div');
+	   this.divEl = inputEx.cn('div', null, {display: 'none'});
    },
 
    /**

@@ -76,6 +76,26 @@
 
 </div>
 
+
+<!-- Example 3 -->
+<div class='exampleDiv'>
+
+	<p class="title">Change Textarea size</p>
+	
+	<p>Set the size using "rows" and "cols" attributes.</p>
+
+	<div class='demoContainer' id='container3'></div>
+
+	<div class='codeContainer'>
+		<form>
+		<textarea name="code" class="JScript">
+			new YAHOO.inputEx.Textarea({parentEl: 'container3', value: 'Set the size...\nusing "rows" and "cols" attributes !\n', rows: 8, cols: 40});
+		</textarea>
+		</form>
+	</div>
+
+</div>
+
 <!-- YUI Library -->
 <script type="text/javascript" src="../lib/yui/yahoo/yahoo-min.js"></script> 
 <script type="text/javascript" src="../lib/yui/dom/dom-min.js"></script> 
@@ -120,6 +140,9 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	YAHOO.util.Event.addListener(button2, "click" ,function() { 
 		alert(textField.getValue());
 	});
+	
+	// Example 3
+	new YAHOO.inputEx.Textarea({parentEl: 'container3', value: 'Set the size...\nusing "rows" and "cols" attributes !\n', rows: 8, cols: 40});
 	
 	
 });

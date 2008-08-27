@@ -36,7 +36,7 @@ YAHOO.lang.extend(inputEx.SelectField, inputEx.Field,
          this.optionEls[i] = inputEx.cn('option', {value: this.options.selectValues[i]}, null, (this.options.selectOptions) ? this.options.selectOptions[i] : this.options.selectValues[i]);
          this.el.appendChild(this.optionEls[i]);
       }
-      this.divEl.appendChild(this.el);
+      this.fieldContainer.appendChild(this.el);
    },  
    
    /**

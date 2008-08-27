@@ -89,10 +89,11 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 
 	// Example 2
 	var field = new YAHOO.inputEx.PairField({
+		label: 'Your favorite color',
 		parentEl: 'container2',
 		tooltipIcon: true,
-		leftFieldOptions: {type: 'string', inputParams: {name: 'key'} },
-    rightFieldOptions: { type: 'text', inputParams: {name: 'function'} }
+		leftFieldOptions: {type: 'string', inputParams: { description: 'Favorite color', value: 'blue'} },
+    rightFieldOptions: { type: 'text', inputParams: { description: 'Why is it your favorite color ?', value: 'looks like the sky' } }
 	});
 	var button = YAHOO.inputEx.cn('button', null, null, "getValue");
 	YAHOO.util.Event.addListener(button, 'click', function() {

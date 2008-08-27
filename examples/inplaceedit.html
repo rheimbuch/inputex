@@ -61,19 +61,19 @@
 					type:'group', 
 					inputParams: {
 						fields: [
-							{label: 'Firstname', inputParams: {name: 'firstname' } }, 
-							{label: 'Lastname', inputParams: {name: 'lastname' } }, 
-							{label: 'Photo', type:'url', inputParams: {name:'picUrl'} }
+							{ inputParams: {label: 'Firstname',name: 'firstname' } }, 
+							{ inputParams: {label: 'Lastname', name: 'lastname' } }, 
+							{ type:'url', inputParams: {label: 'Photo', name:'picUrl', favicon: false} }
 						]
 					} 
 				},
 				visu: {visuType: 'func', func: function(val) {
-					if( YAHOO.lang.isUndefined(val) ) return inputEx.messages.emptyInPlaceEdit;
+					if( YAHOO.lang.isUndefined(val) ) return YAHOO.inputEx.messages.emptyInPlaceEdit;
 					return '<img src="'+val.picUrl+'" style="width: 128px; height: 128px;"><br /><b>'+val.firstname+' '+val.lastname+'</b>';
 				}},
 				value: {
 						firstname: 'Lena',
-						lastname: '???',
+						lastname: 'Idontknow',
 						picUrl: 'http://www.limsi.fr/Individu/vezien/lena.jpg'
 				}
 			});
@@ -123,9 +123,9 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 			type:'group', 
 			inputParams: {
 				fields: [
-					{label: 'Firstname', inputParams: {name: 'firstname' } }, 
-					{label: 'Lastname', inputParams: {name: 'lastname' } }, 
-					{label: 'Photo', type:'url', inputParams: {name:'picUrl'} }
+					{ inputParams: {label: 'Firstname',name: 'firstname' } }, 
+					{ inputParams: {label: 'Lastname', name: 'lastname' } }, 
+					{ type:'url', inputParams: {label: 'Photo', name:'picUrl', favicon: false} }
 				]
 			} 
 		},
@@ -135,7 +135,7 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 		}},
 		value: {
 				firstname: 'Lena',
-				lastname: '???',
+				lastname: 'Idontknow',
 				picUrl: 'http://www.limsi.fr/Individu/vezien/lena.jpg'
 		}
 	});

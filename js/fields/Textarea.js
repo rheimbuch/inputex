@@ -45,7 +45,7 @@ YAHOO.lang.extend(inputEx.Textarea, inputEx.Field,
          cols: this.options.cols
       }, null, this.options.value);
       
-      this.divEl.appendChild(this.el);
+      this.fieldContainer.appendChild(this.el);
    },
 
    /**

@@ -51,11 +51,11 @@ lang.extend( inputEx.PairField, inputEx.Field,
 	   Dom.setStyle(this.elLeft.getEl(), "float", "left");
 	
 	   // Append it to the main element
-	   this.divEl.appendChild(this.elLeft.getEl());
+	   this.fieldContainer.appendChild(this.elLeft.getEl());
 	   var span = inputEx.cn('span', null, null, " : ");
 	   Dom.setStyle(span, "float", "left");
-	   this.divEl.appendChild(span);
-	   this.divEl.appendChild(this.elRight.getEl());
+	   this.fieldContainer.appendChild(span);
+	   this.fieldContainer.appendChild(this.elRight.getEl());
 	   	
 	   Dom.setStyle(this.elRight.getEl(), "float", "left");
 	      

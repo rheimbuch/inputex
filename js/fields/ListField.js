@@ -46,14 +46,14 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	      
 	   // Add element button
 	   this.addButton = inputEx.cn('img', {src: inputEx.spacerUrl, className: 'inputEx-ListField-addButton'});
-	   this.divEl.appendChild(this.addButton);
+	   this.fieldContainer.appendChild(this.addButton);
 	      
 	   // List label
-	   this.divEl.appendChild( inputEx.cn('span', null, {marginLeft: "4px"}, this.options.listLabel) );
+	   this.fieldContainer.appendChild( inputEx.cn('span', null, {marginLeft: "4px"}, this.options.listLabel) );
 	      
 	   // Div element to contain the children
 	   this.childContainer = inputEx.cn('div', {className: 'inputEx-ListField-childContainer'});
-	   this.divEl.appendChild(this.childContainer);
+	   this.fieldContainer.appendChild(this.childContainer);
 	},
 	   
 	/**

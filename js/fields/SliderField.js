@@ -39,7 +39,6 @@ YAHOO.lang.extend(inputEx.SliderField, inputEx.Field,
       
       if(this.options.displayValue) {
          this.valueDisplay = inputEx.cn('div', null, {display:'inline'}, String(this.options.minValue) );
-         //YAHOO.util.Dom.setStyle(this.valueDisplay,'float', 'left');
          this.divEl.appendChild(this.valueDisplay);
       }
       
@@ -56,8 +55,6 @@ YAHOO.lang.extend(inputEx.SliderField, inputEx.Field,
       this.sliderbg.appendChild(this.sliderthumb);
       this.divEl.appendChild(this.sliderbg);
             
-            
-            console.log("instanciating getHorizSlider");
             
       this.slider = YAHOO.widget.Slider.getHorizSlider(this.sliderbg, this.sliderthumb, this.options.minValue, this.options.maxValue);       
       

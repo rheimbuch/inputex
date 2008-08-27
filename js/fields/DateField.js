@@ -28,7 +28,7 @@ lang.extend(inputEx.DateField, inputEx.StringField,
 	 * Adds the 'inputEx-DateField' default className
 	 */
    setOptions: function() {
-	   this.options.className = this.options.className || 'inputEx-DateField';
+	   this.options.className = this.options.className || 'inputEx-Field inputEx-DateField';
    	inputEx.DateField.superclass.setOptions.call(this);
    },
 	   

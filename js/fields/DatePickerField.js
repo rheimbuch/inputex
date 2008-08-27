@@ -21,7 +21,7 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
     * Set the default date picker CSS classes
     */
    setOptions: function() {
-	   this.options.className = this.options.className || 'inputEx-DateField inputEx-DatePickerField';
+	   this.options.className = this.options.className || 'inputEx-Field inputEx-DateField inputEx-DatePickerField';
    	inputEx.DatePickerField.superclass.setOptions.call(this);
    },
    
@@ -42,11 +42,10 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
       this.el = inputEx.cn('input', attributes);
 	
       // Append it to the main element
-      this.divEl.appendChild(this.el);
+      this.fieldContainer.appendChild(this.el);
       
-      
-      this.minicalContainer = inputEx.cn('div');
-      this.divEl.appendChild(this.minicalContainer);
+      this.minicalContainer = inputEx.cn('div', {className: 'inputEx-DatePickerField-minical'});
+      this.fieldContainer.appendChild(this.minicalContainer);
    },
    
    /**
@@ -83,7 +82,9 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
     */
    initEvents : function() {
       inputEx.DatePickerField.superclass.initEvents.call(this);
-      Event.addListener(this.el,'click',this.onClickField,this,true);
+      //Event.addListener(this.el,'click',this.onClickField,this,true);
+      Event.addListener(this.fieldContainer,'click',this.onClickField,this,true);
+      
    },
    
    /**

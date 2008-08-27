@@ -46,11 +46,15 @@ lang.extend(inputEx.UrlField, inputEx.StringField,
    render: function() {
       inputEx.UrlField.superclass.render.call(this);
       this.el.size = 27;
+      
+      if(!this.options.favicon) {
+         YAHOO.util.Dom.addClass(this.el, 'nofavicon');
+      }
 
       // Create the favicon image tag
       if(this.options.favicon) {
-         this.favicon = inputEx.cn('img');
-         this.divEl.insertBefore(this.favicon,this.el);
+         this.favicon = inputEx.cn('img', {src: inputEx.spacerUrl});
+         this.fieldContainer.insertBefore(this.favicon,this.el);
       }
    },
    

@@ -37,11 +37,11 @@
 		<textarea name="code" class="JScript">
 			new YAHOO.inputEx.Form( { 
 				fields: [ 
-					{label: 'Title', type: 'select', optional: true, inputParams: {name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
-					{label: 'Firstname', inputParams: {name: 'firstname', required: true, value:'Jacques' } }, 
-					{label: 'Lastname', inputParams: {name: 'lastname', value:'Dupont' } }, 
-					{label: 'Email', type:'email', optional: true, inputParams: {name: 'email'}}, 
-					{label: 'Website', type:'url', optional: true, inputParams: {name:'website'}} 
+					{type: 'select', optional: true, inputParams: {label: 'Title', name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
+					{inputParams: {label: 'Firstname', name: 'firstname', required: true, value:'Jacques' } }, 
+					{inputParams: {label: 'Lastname', name: 'lastname', value:'Dupont' } }, 
+					{type:'email', optional: true, inputParams: {label: 'Email', name: 'email'}}, 
+					{type:'url', optional: true, inputParams: {label: 'Website',name:'website'}} 
 				], 
 				buttons: [{type: 'submit', value: 'Change'}], 	
 				parentEl: 'container1' 
@@ -67,9 +67,9 @@
 		<textarea name="code" class="JScript">
 			new YAHOO.inputEx.Form( { 
 				fields: [ 
-					{label: 'Title', type: 'select', inputParams: {name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
-					{label: 'Firstname', inputParams: {name: 'firstname', required: true, value:'Jacques' } }, 
-					{label: 'Lastname', inputParams: {name: 'lastname', value:'Dupont' } }
+					{ type: 'select', inputParams: {label: 'Title', name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
+					{ inputParams: {label: 'Firstname', name: 'firstname', required: true, value:'Jacques' } }, 
+					{ inputParams: {label: 'Lastname', name: 'lastname', value:'Dupont' } }
 				], 
 				buttons: [{type: 'submit', value: 'Change'}], 	
 				parentEl: 'container2',
@@ -123,11 +123,11 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	// Example 1
 	new YAHOO.inputEx.Form( { 
 		fields: [ 
-			{label: 'Title', type: 'select', optional: true, inputParams: {name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
-			{label: 'Firstname', inputParams: {name: 'firstname', required: true, value:'Jacques' } }, 
-			{label: 'Lastname', inputParams: {name: 'lastname', value:'Dupont' } }, 
-			{label: 'Email', type:'email', optional: true, inputParams: {name: 'email'}}, 
-			{label: 'Website', type:'url', optional: true, inputParams: {name:'website'}} 
+			{type: 'select', optional: true, inputParams: {label: 'Title', name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
+			{inputParams: {label: 'Firstname', name: 'firstname', required: true, value:'Jacques' } }, 
+			{inputParams: {label: 'Lastname', name: 'lastname', value:'Dupont' } }, 
+			{type:'email', optional: true, inputParams: {label: 'Email', name: 'email'}}, 
+			{type:'url', optional: true, inputParams: {label: 'Website',name:'website'}} 
 		], 
 		buttons: [{type: 'submit', value: 'Change'}], 	
 		parentEl: 'container1' 
@@ -136,9 +136,9 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	// Example 2
 	new YAHOO.inputEx.Form( { 
 		fields: [ 
-			{label: 'Title', type: 'select', inputParams: {name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
-			{label: 'Firstname', inputParams: {name: 'firstname', required: true, value:'Jacques' } }, 
-			{label: 'Lastname', inputParams: {name: 'lastname', value:'Dupont' } }
+			{ type: 'select', inputParams: {label: 'Title', name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
+			{ inputParams: {label: 'Firstname', name: 'firstname', required: true, value:'Jacques' } }, 
+			{ inputParams: {label: 'Lastname', name: 'lastname', value:'Dupont' } }
 		], 
 		buttons: [{type: 'submit', value: 'Change'}], 	
 		parentEl: 'container2',

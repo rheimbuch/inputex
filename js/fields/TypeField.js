@@ -78,13 +78,13 @@ YAHOO.lang.extend(inputEx.TypeField, inputEx.Field,
       this.inplaceEditLabel = new inputEx.InPlaceEdit({name: "label",editorField:{type: 'string'}});
       var inplaceEditEl = this.inplaceEditLabel.getEl();
       Dom.setStyle(inplaceEditEl, 'float', 'left');
-      this.divEl.appendChild(inplaceEditEl);
+      this.fieldContainer.appendChild(inplaceEditEl);
       
       // DIV element to wrap the Field "default value"
       this.fieldWrapper = inputEx.cn('div', null, null, '');
       Dom.setStyle(this.fieldWrapper, 'float', 'left');
       Dom.setStyle(this.fieldWrapper, 'margin-left', '4px');
-      this.divEl.appendChild( this.fieldWrapper );
+      this.fieldContainer.appendChild( this.fieldWrapper );
       
       // The properties panel is hidden first
       this.renderPropertiesPanel();

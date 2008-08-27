@@ -213,6 +213,7 @@
 <script src="../js/fields/EmailField.js"  type='text/javascript'></script>
 <script src="../js/fields/UrlField.js"  type='text/javascript'></script>
 <script src="../js/fields/ListField.js"  type='text/javascript'></script>
+<script src="../js/fields/CheckBox.js"  type='text/javascript'></script>
 
 <script>
 
@@ -222,13 +223,14 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 
 	// Example 1
 	var contactFormFields = [ 
-			{label: 'Title', type: 'select', inputParams: {name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
-			{label: 'Firstname', inputParams: {name: 'firstname', required: true, value:'Jacques' } }, 
-			{label: 'Lastname', inputParams: {name: 'lastname', value:'Dupont' } }, 
-			{label: 'Email', type:'email', inputParams: {name: 'email'}}, 
-			{label: 'Website', type:'url', inputParams: {name:'website'}} 
+			{type: 'select', inputParams: {label: 'Title', name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
+			{inputParams: {label: 'Firstname', name: 'firstname', required: true, value:'Jacques' } }, 
+			{inputParams: {label: 'Lastname', name: 'lastname', value:'Dupont' } }, 
+			{type:'email', inputParams: {label: 'Email', name: 'email'}}, 
+			{type:'boolean', inputParams: {label: 'Happy to be there ?', name: 'email'}}, 
+			{type:'url', inputParams: {label: 'Website', name:'website'}} 
 	];
-	new YAHOO.inputEx.Group({parentEl: 'container1', fields: contactFormFields/*, legend: 'User Informations'*/});
+	new YAHOO.inputEx.Group({parentEl: 'container1', fields: contactFormFields, legend: 'Tell us about yourself...'});
 	
 	
 	// Example 2
@@ -264,10 +266,10 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 			collapsible: true,
 			legend: 'Phone number',
 			fields: [
-				{label: 'Home', inputParams: {name: 'home' } },
-				{label: 'Business', inputParams: {name: 'business' } },
-				{label: 'Mobile', inputParams: {name: 'mobile' } },
-				{label: 'Fax', inputParams: {name: 'fax' } }
+				{ inputParams: {label: 'Home', name: 'home' } },
+				{ inputParams: {label: 'Business', name: 'business' } },
+				{ inputParams: {label: 'Mobile',name: 'mobile' } },
+				{ inputParams: {label: 'Fax', name: 'fax' } }
 			]
 		}
 	})
@@ -281,11 +283,12 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	
 	// Example 6
 	var descriptedFields = [ 
-			{label: 'Title', type: 'select', description: 'Select your gender', inputParams: {name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
-			{label: 'Firstname', description: 'Your firstname', inputParams: {name: 'firstname', required: true, value:'Jacques' } }, 
-			{label: 'Lastname', description: 'Your lastname', inputParams: {name: 'lastname', value:'Dupont' } }, 
-			{label: 'Email', type:'email', description: 'Your email. We wont send you any commercial information.', inputParams: {name: 'email'}}, 
-			{label: 'Website', type:'url', description: 'Your blog url', inputParams: {name:'website'}} 
+			{type: 'select', inputParams: {label: 'Title', name: 'title', description: 'Select your gender',  selectValues: ['Mr','Mrs','Mme'] } },
+			{ inputParams: {label: 'Firstname', description: 'Your firstname', name: 'firstname', required: true, value:'Jacques' } }, 
+			{ inputParams: {label: 'Lastname', description: 'Your lastname', name: 'lastname', value:'Dupont' } }, 
+			{ type:'email', inputParams: {description: 'Your email. We wont send you any commercial information', label: 'Email', name: 'email'}}, 
+			{type:'boolean', inputParams: {description: 'Check this box if you are happy to be there', label: 'Happy to be there ?', name: 'email'}}, 
+			{ type:'url', inputParams: {description: 'Your blog url', label: 'Website', name:'website'}} 
 	];
 	new YAHOO.inputEx.Group({parentEl: 'container6', fields: descriptedFields, legend: 'User Informations'});
 	

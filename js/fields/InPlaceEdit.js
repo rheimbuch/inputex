@@ -25,11 +25,18 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
    /**
     * Override render to create 2 divs: the visualization one, and the edit in place form
     */
-   render: function() {
+   /*render: function() {
       
 	   // Create a DIV element to wrap the editing el and the image
 	   this.divEl = inputEx.cn('div', {className: this.options.className});
    	
+      this.renderVisuDiv();
+	   
+	   this.renderEditor();
+   },*/
+   
+   renderComponent: function() {
+      
       this.renderVisuDiv();
 	   
 	   this.renderEditor();
@@ -48,11 +55,11 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
       this.editorContainer.appendChild( this.editorField.getEl() );
       Dom.setStyle(this.editorField.getEl(), 'float', 'left');
       
-      this.okButton = inputEx.cn('input', {type: 'button', value: 'Ok'});
+      this.okButton = inputEx.cn('input', {type: 'button', value: 'Ok', className: 'inputEx-InPlaceEdit-OkButton'});
       Dom.setStyle(this.okButton, 'float', 'left');
       this.editorContainer.appendChild(this.okButton);
       
-      this.cancelLink = inputEx.cn('a', null, null, "cancel");
+      this.cancelLink = inputEx.cn('a', {className: 'inputEx-InPlaceEdit-CancelLink'}, null, "cancel");
       this.cancelLink.href = ""; // IE required (here, not in the cn fct)
       Dom.setStyle(this.cancelLink, 'float', 'left');
       this.editorContainer.appendChild(this.cancelLink);
@@ -60,7 +67,9 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
       // Line breaker
       this.editorContainer.appendChild( inputEx.cn('div',null, {clear: 'both'}) );
       
-      this.divEl.appendChild(this.editorContainer);
+      //this.divEl.appendChild(this.editorContainer);
+      this.fieldContainer.appendChild(this.editorContainer);
+      
    },
    
    /**
@@ -92,7 +101,7 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
     * Create the div that will contain the visualization of the value
     */
    renderVisuDiv: function() {
-      this.formattedContainer = inputEx.cn('div', {className: 'inputEx-InPlaceEdit-formattedContainer'});
+      this.formattedContainer = inputEx.cn('div', {className: 'inputEx-InPlaceEdit-visu'});
       
       if( lang.isFunction(this.options.formatDom) ) {
          this.formattedContainer.appendChild( this.options.formatDom(this.options.value) );
@@ -104,7 +113,9 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
          this.formattedContainer.innerHTML = lang.isUndefined(this.options.value) ? inputEx.messages.emptyInPlaceEdit: this.options.value;
       }
       
-      this.divEl.appendChild(this.formattedContainer);
+      //this.divEl.appendChild(this.formattedContainer);
+      this.fieldContainer.appendChild(this.formattedContainer);
+      
    },
 
    /**

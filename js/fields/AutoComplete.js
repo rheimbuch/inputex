@@ -53,7 +53,7 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
    
       // Render the list :
       this.listEl = inputEx.cn('div', {className: 'inputEx-AutoComplete-List'}, {display: 'none'});
-      this.divEl.appendChild(this.listEl);
+      this.fieldContainer.appendChild(this.listEl);
    },
 
    /**

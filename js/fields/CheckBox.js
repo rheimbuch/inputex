@@ -25,6 +25,9 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 	 * Adds the CheckBox specific options
 	 */
 	setOptions: function() {
+	   
+      this.options.className = this.options.className || 'inputEx-Field inputEx-CheckBox';
+	   
 	   inputEx.CheckBox.superclass.setOptions.call(this);
 	   
 	   this.sentValues = this.options.sentValues || [true, false];
@@ -41,14 +44,14 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 	        type: 'checkbox', 
 	        checked:(this.options.checked === false) ? false : true 
 	   });
-	   this.divEl.appendChild(this.el);
+	   this.fieldContainer.appendChild(this.el);
 	
-	   this.label = inputEx.cn('label', {className: 'inputExForm-checkbox-rightLabel'}, null, this.options.label || '');
-	   this.divEl.appendChild(this.label);
+	   this.rightLabelEl = inputEx.cn('div', {className: 'inputEx-CheckBox-rightLabel'}, null, this.options.rightLabel || '');
+	   this.fieldContainer.appendChild(this.rightLabelEl);
 	
 	   // Keep state of checkbox in a hidden field (format : this.checkedValue or this.uncheckedValue)
 	   this.hiddenEl = inputEx.cn('input', {type: 'hidden', name: this.options.name || '', value: this.el.checked ? this.checkedValue : this.uncheckedValue});
-	   this.divEl.appendChild(this.hiddenEl);
+	   this.fieldContainer.appendChild(this.hiddenEl);
 	},
 	   
 	/**

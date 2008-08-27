@@ -11,7 +11,6 @@
  *   <li>displayTitle: boolean to display a prompt message</li>
  *   <li>auto: default color grid to be used</li>
  *   <li>colors: list of colors to choose from</li>
- *   <li>ratio: (default is [16,9])</li>
  * </ul>
  */
 inputEx.ColorField = function(options) {
@@ -22,6 +21,15 @@ lang.extend(inputEx.ColorField, inputEx.Field,
  * @scope inputEx.ColorField.prototype   
  */
 {
+   
+	/**
+	 * Adds the 'inputEx-ColorField' default className
+	 */
+   setOptions: function() {
+	   this.options.className = this.options.className || 'inputEx-Field inputEx-ColorField';
+   	inputEx.ColorField.superclass.setOptions.call(this);
+   },
+   
 	/**
 	 * Render the color button and the colorpicker popup
 	 */
@@ -34,14 +42,14 @@ lang.extend(inputEx.ColorField, inputEx.Field,
 	      value: this.options.value || '#DD7870' });
 	   	   
 	   // Create a colored area
-	   this.colorEl = inputEx.cn('div', {className: 'inputEx-ColorField'}, {backgroundColor: this.el.value});
+	   this.colorEl = inputEx.cn('div', {className: 'inputEx-ColorField-button'}, {backgroundColor: this.el.value});
 	
 	   // Render the popup
 	   this.renderPopUp();
 	
 	   // Elements are bound to divEl
-	   this.divEl.appendChild(this.el);
-	   this.divEl.appendChild(this.colorEl);
+	   this.fieldContainer.appendChild(this.el);
+	   this.fieldContainer.appendChild(this.colorEl);
 	},
 	   
 	/**
@@ -91,22 +99,11 @@ lang.extend(inputEx.ColorField, inputEx.Field,
 		this.colors = this.options.colors || this.setDefaultColors(defaultGrid);
 		this.length = this.colors.length;
 	
-		// set PopUp size ratio (default 16/9 ratio)
-		this.ratio = this.options.ratio || [16,9];
-	
-		// set color grid dimensions
-		this.squaresPerLine = Math.ceil(Math.sqrt(this.length*this.ratio[0]/this.ratio[1]));
-		this.squaresPerColumn = Math.ceil(this.length/this.squaresPerLine);
-		this.squaresOnLastLine = this.squaresPerLine - (this.squaresPerLine*this.squaresPerColumn-this.length);
-	
-		// set popup width
-		var width = 30*this.squaresPerLine+10;
-	
 		// keep the visible state of the popup
 		this.visible = false;
 	
 		// create the popup
-		this.colorPopUp = inputEx.cn('div', {className: 'inputEx-ColorField-popup'}, {width: width+'px', display: 'none'});
+		this.colorPopUp = inputEx.cn('div', {className: 'inputEx-ColorField-popup'}, { display: 'none'});
 	
 		// create the title
 		if (this.displayTitle) {
@@ -114,11 +111,9 @@ lang.extend(inputEx.ColorField, inputEx.Field,
 	      this.colorPopUp.appendChild( div );
 	   }
 	
-	   var body = inputEx.cn('div');
-	   body.appendChild( this.renderColorGrid() );
-	   this.colorPopUp.appendChild(body);
+	   this.colorPopUp.appendChild( this.renderColorGrid() );
 	
-	   this.divEl.appendChild(this.colorPopUp);
+	   this.fieldContainer.appendChild(this.colorPopUp);
 	},
 	   
 	/**
@@ -143,35 +138,13 @@ lang.extend(inputEx.ColorField, inputEx.Field,
 	 * This creates a color grid
 	 */
 	renderColorGrid: function() {
-		var table = inputEx.cn('table');
-		var tbody = inputEx.cn('tbody');
-		for(var i = 0; i<this.squaresPerColumn; i++) {
-			var line = inputEx.cn('tr');
-			for(var j = 0; j<this.squaresPerLine; j++) {
-	
-	   		// spacer cells
-	   		line.appendChild( inputEx.cn('td', null, {backgroundColor: '#fff', lineHeight: '10px', cursor: 'default'}, "&nbsp;") );
-	
-	   		// fill remaining space with empty and inactive squares
-	   		var square = inputEx.cn('td', null, {backgroundColor: '#fff', lineHeight: '10px', cursor: 'default'}, '&nbsp;&nbsp;&nbsp;');
-	
-	   	    if (i===(this.squaresPerColumn-1) && j>=this.squaresOnLastLine ) {
-	   	       inputEx.sn(square, null, {backgroundColor: '#fff', cursor: 'default'});
-	   		 } 
-	   		 else {
-	   		   // create active squares
-	   	      inputEx.sn(square, null, {backgroundColor: '#'+this.colors[i*this.squaresPerLine+j], cursor: 'pointer'});
-	   			Event.addListener(square, "mousedown", this.onColorClick, this, true );
-	   		 }   
-	          line.appendChild(square);
-	   	}
-	   	tbody.appendChild(line);
-	
-	   	// spacer line
-	   	tbody.appendChild( inputEx.cn('tr', null, {height: '8px'}) );
-	   }
-	   table.appendChild(tbody);
-	   return table;
+	   var grid = inputEx.cn('div');
+	   for(var i = 0 ; i < this.length ; i++) {
+	      var square = inputEx.cn('div', {className: 'inputEx-ColorField-square'},{backgroundColor: '#'+this.colors[i] });
+	   	Event.addListener(square, "mousedown", this.onColorClick, this, true );
+	   	grid.appendChild(square);
+      }
+	   return grid;
 	},
 	   
 	/**

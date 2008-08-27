@@ -64,8 +64,7 @@ lang.extend(inputEx.Group, inputEx.Field,
    renderFields: function(parentEl) {
       
       this.fieldset = inputEx.cn('fieldset');
-      this.legend = inputEx.cn('legend');
-      this.listEl = inputEx.cn('ol');
+      this.legend = inputEx.cn('legend', {className: 'inputEx-Group-legend'});
    
       // Option Collapsible
       if(this.options.collapsible) {
@@ -74,44 +73,21 @@ lang.extend(inputEx.Group, inputEx.Field,
          inputEx.sn(this.fieldset,{className:'inputEx-Expanded'});
       }
    
-      // Doesn't work in IE ?
-      /*if(this.options.legend !== '') {
+      if(!YAHOO.lang.isUndefined(this.options.legend) && this.options.legend !== '') {
          this.legend.innerHTML += (" "+this.options.legend);
-      }*/
+      }
    
-      this.fieldset.appendChild(this.legend);
-      this.fieldset.appendChild(this.listEl);
+      if( this.options.collapsible || (!YAHOO.lang.isUndefined(this.options.legend) && this.options.legend !== '') ) {
+         this.fieldset.appendChild(this.legend);
+      }
   	   
       // Iterate this.createInput on input fields
       for (var i = 0 ; i < this.inputConfigs.length ; i++) {
          var input = this.inputConfigs[i];
-
-         var groupItem = inputEx.cn('li', {className: 'inputEx-Group-GroupItem'});
-         
-         // Hide the row if type == "hidden"
-         if(input.type == 'hidden') {
-            Dom.setStyle(groupItem, 'display', 'none');
-         }
-         
-         // Label element
-         groupItem.appendChild( inputEx.cn('div', {className: 'inputEx-Group-label'}, null, input.label || "") );
         
-         // Render the field (and adds it into this.inputs)
+         // Render the field
          var field = this.renderField(input);
-    	   
-         // Field element
-         var groupItemField = inputEx.cn('div', {className: 'inputEx-Group-field'});
-         groupItemField.appendChild(field.getEl() );
-         groupItem.appendChild(groupItemField);
-         
-         // Description
-         if(input.description) {
-            groupItem.appendChild(inputEx.cn('em', {className: 'inputEx-description'}, null, input.description));
-         }
-         
-         //this.fieldset.appendChild( inputEx.cn('div',null, {clear: 'both'}," ") );
-         //this.fieldset.appendChild(groupItem);
-         this.listEl.appendChild(groupItem);
+         this.fieldset.appendChild(field.getEl() );
   	   }
   	
   	   // Append the fieldset

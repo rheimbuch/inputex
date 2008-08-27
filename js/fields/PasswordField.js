@@ -47,6 +47,8 @@ YAHOO.lang.extend(inputEx.PasswordField, inputEx.StringField,
 		
 		// capsLockWarning
 		this.options.capsLockWarning = YAHOO.lang.isUndefined(this.options.capsLockWarning) ? false : this.options.capsLockWarning;
+		
+      this.options.className = "inputEx-Field inputEx-PasswordField";
 	},
 	
 	/**
@@ -66,9 +68,15 @@ YAHOO.lang.extend(inputEx.PasswordField, inputEx.StringField,
 		this.el = inputEx.cn('input', attributes);
 		
 		// Append it to the main element
-		this.divEl.appendChild(this.el);
+		this.fieldContainer.appendChild(this.el);
 		
-		// Password strength indicator
+		// Caps lock warning
+		if(this.options.capsLockWarning) {
+		   this.capsLockWarning = inputEx.cn('div',{className: 'capsLockWarning'},{display: 'none'},inputEx.messages.capslockWarning);
+		   this.fieldContainer.appendChild(this.capsLockWarning);
+	   }
+	   
+	   // Password strength indicator
 		if(this.options.strengthIndicator) {
 		   this.strengthEl = inputEx.cn('div', {className: 'inputEx-Password-StrengthIndicator'}, null, "Password Strength");
 		   this.strengthBlocks = [];
@@ -76,14 +84,8 @@ YAHOO.lang.extend(inputEx.PasswordField, inputEx.StringField,
 		      this.strengthBlocks[i] = inputEx.cn('div', {className: 'inputEx-Password-StrengthIndicatorBlock'});
 		      this.strengthEl.appendChild( this.strengthBlocks[i] );
 		   }
-		   this.divEl.appendChild(this.strengthEl);
+		   this.fieldContainer.appendChild(this.strengthEl);
 		}
-		
-		// Caps lock warning
-		if(this.options.capsLockWarning) {
-		   this.capsLockWarning = inputEx.cn('span',null,{display: 'none'},inputEx.messages.capslockWarning);
-		   this.divEl.appendChild(this.capsLockWarning);
-	   }
 	},
 	   
 	/**

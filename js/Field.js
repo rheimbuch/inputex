@@ -78,6 +78,7 @@ inputEx.Field.prototype = {
 	   // The following options are used later:
 	   // + this.options.name
 	   // + this.options.value
+	   // + this.options.id
 	},
 
    /**
@@ -86,18 +87,42 @@ inputEx.Field.prototype = {
 	render: function() {
 	
 	   // Create a DIV element to wrap the editing el and the image
-	   this.divEl = inputEx.cn('div', {className: this.options.className});
+	   this.divEl = inputEx.cn('div', {className: 'inputEx-fieldWrapper'});
+	   if(this.options.id) {
+	      this.divEl.id = this.options.id;
+	   }
+	   
+	   // Label element
+	   if(this.options.label && this.options.label != "") {
+	      this.labelDiv = inputEx.cn('div', {className: 'inputEx-label'});
+	      this.labelEl = inputEx.cn('label');
+	      //this.labelEl.appendChild( inputEx.cn('span', null, null, "*") );
+	      this.labelEl.appendChild( document.createTextNode(this.options.label) );
+	      this.labelDiv.appendChild(this.labelEl);
+	      this.divEl.appendChild(this.labelDiv);
+      }
+      
+      this.fieldContainer = inputEx.cn('div', {className: this.options.className});
 	
       // Render the component directly
       this.renderComponent();
-	
-	   // Create a div next to the field with an icon and a tooltip
+      
+      // Description
+      if(this.options.description && this.options.description != "") {
+         this.fieldContainer.appendChild(inputEx.cn('div', {className: 'inputEx-description'}, null, this.options.description));
+      }
+      
+   	this.divEl.appendChild(this.fieldContainer);
+      
+	   // Create an icon and a tooltip
 	   if( this.options.tooltipIcon ) {
-		   this.tooltipIcon = inputEx.cn('img', {src: inputEx.spacerUrl, className: 'inputEx-Field-stateIcon'});
+	      this.tooltipIcon = inputEx.cn('img', {src: inputEx.spacerUrl, className: 'inputEx-statusIcon'});
 		   if(!inputEx.tooltipCount) { inputEx.tooltipCount = 0; }
    	   this.tooltip = new YAHOO.widget.Tooltip('inputEx-tooltip-'+(inputEx.tooltipCount++), { context: this.tooltipIcon, text:"" }); 
-		   this.divEl.appendChild(this.tooltipIcon);
+   	   this.divEl.appendChild(this.tooltipIcon);
 	   }
+	   
+	   this.divEl.appendChild( inputEx.cn('div',null, {clear: 'both'}," ") );
 	
 	},
 	
@@ -185,16 +210,7 @@ inputEx.Field.prototype = {
     */ 
 	setToolTipMessage: function() { 
 	   if(this.tooltip) {
-	      var content = "";
-		   if( this.previousState == 'required') {
-			   content = '<div class="inputEx-tooltip-required"></div> <span>'+this.options.messages.required+'</span>';
-		   }
-		   else if( this.previousState == 'invalid') {
-			   content = '<div class="inputEx-tooltip-exclamation"></div> <span>'+this.options.messages.invalid+'</span>';
-		   }
-   	   else {
-   		   content = '<div class="inputEx-tooltip-validated"></div> <span>'+this.options.messages.valid+'</span>';
-   	   }
+   	   var content = '<div class="inputEx-tooltip inputEx-tooltip-'+this.previousState+'"></div> <span>'+this.options.messages[this.previousState]+'</span>';
    	   this.tooltip.setBody(content);
 	   }
 	},
@@ -234,6 +250,9 @@ inputEx.Field.prototype = {
     */
 	onBlur: function(e) {
 	   Dom.removeClass(this.getEl(), 'inputEx-focused');
+	   
+	   // Call setClassFromState on Blur
+	   this.setClassFromState();
 	},
 
    /**

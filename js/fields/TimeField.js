@@ -34,7 +34,7 @@ YAHOO.lang.extend(inputEx.TimeField, inputEx.Field,
       this.hoursField = new inputEx.SelectField({name: 'hours', selectOptions: h, selectValues: h});
       var el = this.hoursField.getEl();
       YAHOO.util.Dom.setStyle(el,'float', 'left');
-      this.divEl.appendChild(el);
+      this.fieldContainer.appendChild(el);
       
       
       var m = [];
@@ -44,8 +44,8 @@ YAHOO.lang.extend(inputEx.TimeField, inputEx.Field,
       YAHOO.util.Dom.setStyle(el,'float', 'left');
       var span = inputEx.cn('span', null, null, ":");
       YAHOO.util.Dom.setStyle(span,'float', 'left');
-      this.divEl.appendChild(span);
-      this.divEl.appendChild(el);
+      this.fieldContainer.appendChild(span);
+      this.fieldContainer.appendChild(el);
       
       
       var secs = [];
@@ -55,8 +55,8 @@ YAHOO.lang.extend(inputEx.TimeField, inputEx.Field,
       YAHOO.util.Dom.setStyle(el,'float', 'left');
       var span = inputEx.cn('span', null, null, ":");
       YAHOO.util.Dom.setStyle(span,'float', 'left');
-      this.divEl.appendChild(span);
-      this.divEl.appendChild(el);
+      this.fieldContainer.appendChild(span);
+      this.fieldContainer.appendChild(el);
    },
    
    /**

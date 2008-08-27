@@ -35,7 +35,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			new inputEx.ColorField({parentEl: 'container1'});
+			new YAHOO.inputEx.ColorField({parentEl: 'container1', description: 'Choose a color'});
 		</textarea>
 		</form>
 	</div>
@@ -114,7 +114,7 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
-	new YAHOO.inputEx.ColorField({parentEl: 'container1'});
+	new YAHOO.inputEx.ColorField({parentEl: 'container1', label: 'Choose a color', description: 'Click to view the available colors'});
 	
 	
 	// Example 2
@@ -122,8 +122,8 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	var field = new YAHOO.inputEx.ColorField({parentEl: el });
 	var logDiv = YAHOO.inputEx.cn('div', null, null, "Log :<br />");
 	el.appendChild(logDiv);
-	field.updatedEvt.subscribe(function(e,val) {
-		console.log(e,val);
+	field.updatedEvt.subscribe(function(e,params) {
+		var val = params[0];
 		logDiv.innerHTML += "Updated at "+(new Date())+" with value: "+val+"<br />";
 	});
 	

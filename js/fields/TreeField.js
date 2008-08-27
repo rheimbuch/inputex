@@ -58,7 +58,7 @@ YAHOO.lang.extend(inputEx.TreeField, inputEx.ListField,
 	   // Add element button
 	   this.addButton = inputEx.cn('img', {src: inputEx.spacerUrl, className: 'inputEx-ListField-addButton'});
 	   Dom.setStyle(this.addButton, 'float', 'left');
-	   this.divEl.appendChild(this.addButton);      
+	   this.fieldContainer.appendChild(this.addButton);      
 	      
 	   // Instanciate the new subField
 	   this.subField = inputEx.buildField(this.options.elementType);
@@ -66,15 +66,15 @@ YAHOO.lang.extend(inputEx.TreeField, inputEx.ListField,
 	   var subFieldEl = this.subField.getEl();
 	   Dom.setStyle(subFieldEl, 'margin-left', '4px');
 	   Dom.setStyle(subFieldEl, 'float', 'left');
-	   this.divEl.appendChild( subFieldEl );
+	   this.fieldContainer.appendChild( subFieldEl );
 	      
 	   // Line breaker
-	   this.divEl.appendChild( inputEx.cn('div', null, {clear: "both"}, this.options.listLabel) );
+	   this.fieldContainer.appendChild( inputEx.cn('div', null, {clear: "both"}, this.options.listLabel) );
 	      
 	      
 	   // Div element to contain the children
 	   this.childContainer = inputEx.cn('div', {className: 'inputEx-ListField-childContainer'});
-	   this.divEl.appendChild(this.childContainer);      
+	   this.fieldContainer.appendChild(this.childContainer);      
 	},
 	
 	/**

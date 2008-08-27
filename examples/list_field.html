@@ -188,8 +188,9 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	var field3 = new YAHOO.inputEx.ListField({parentEl: el3, value: ["one", "two", "three", "four"], sortable: true });
 	var logDiv = YAHOO.inputEx.cn('div', null, null, "Log :<br />");
 	el3.appendChild(logDiv);
-	field3.updatedEvt.subscribe(function() {
-		logDiv.innerHTML += "Updated at "+(new Date())+"<br />";
+	field3.updatedEvt.subscribe(function(e,params) {
+		var value = params[0];
+		logDiv.innerHTML += "Updated at "+(new Date())+" with value "+YAHOO.lang.JSON.stringify(value)+"<br />";
 	});
 	
 	
