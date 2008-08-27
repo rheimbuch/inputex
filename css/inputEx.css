@@ -433,3 +433,22 @@ div.inputEx-SliderField div.inputEx-SliderField-thumb {
    width: 17px;
    height: 21px;
 }
+
+
+/**
+ * Password Field
+ */
+div.inputEx-Password-StrengthIndicator {
+    float: left;
+    color: #505050;
+    font-size: 70%;
+}
+
+div.inputEx-Password-StrengthIndicator div.inputEx-Password-StrengthIndicatorBlock {
+   background-color: white;
+   width: 1.4em;
+   height: 7px;
+   border: 1px solid #aaaaaa;
+   float: left;
+   margin-left: 2px;
+}

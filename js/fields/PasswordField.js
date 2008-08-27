@@ -1,6 +1,6 @@
 (function() {
 	
-   var inputEx = YAHOO.inputEx;
+   var inputEx = YAHOO.inputEx,Event=YAHOO.util.Event;
 	
 /**
  * @class Create a password field. Options:
@@ -21,6 +21,14 @@ YAHOO.lang.extend(inputEx.PasswordField, inputEx.StringField,
  * @scope inputEx.PasswordField.prototype   
  */  
 {
+   
+   /**
+    * Add the keypress listener for caps lock detection
+    */
+   initEvents: function() {	
+      inputEx.PasswordField.superclass.initEvents.call(this);
+	   Event.addListener(this.el, "keypress", this.onKeyPress, this, true);
+   },
 	
 	/**
 	 * Add the password regexp, and the minLength (+set messges)
@@ -33,6 +41,12 @@ YAHOO.lang.extend(inputEx.PasswordField, inputEx.StringField,
 	   //   minLength || 5 not possible because 0 falsy value...
 	   this.options.minLength = (this.options.minLength == undefined) ? 5 : this.options.minLength;
 		this.options.messages.invalid = inputEx.messages.invalidPassword[0]+this.options.minLength+inputEx.messages.invalidPassword[1];
+		
+		// display a strength indicator
+		this.options.strengthIndicator = YAHOO.lang.isUndefined(this.options.strengthIndicator) ? false : this.options.strengthIndicator;
+		
+		// capsLockWarning
+		this.options.capsLockWarning = YAHOO.lang.isUndefined(this.options.capsLockWarning) ? false : this.options.capsLockWarning;
 	},
 	
 	/**
@@ -50,9 +64,26 @@ YAHOO.lang.extend(inputEx.PasswordField, inputEx.StringField,
 	
 	   // Create the node
 		this.el = inputEx.cn('input', attributes);
-	
+		
 		// Append it to the main element
 		this.divEl.appendChild(this.el);
+		
+		// Password strength indicator
+		if(this.options.strengthIndicator) {
+		   this.strengthEl = inputEx.cn('div', {className: 'inputEx-Password-StrengthIndicator'}, null, "Password Strength");
+		   this.strengthBlocks = [];
+		   for(var i = 0 ; i < 4 ; i++) {
+		      this.strengthBlocks[i] = inputEx.cn('div', {className: 'inputEx-Password-StrengthIndicatorBlock'});
+		      this.strengthEl.appendChild( this.strengthBlocks[i] );
+		   }
+		   this.divEl.appendChild(this.strengthEl);
+		}
+		
+		// Caps lock warning
+		if(this.options.capsLockWarning) {
+		   this.capsLockWarning = inputEx.cn('span',null,{display: 'none'},inputEx.messages.capslockWarning);
+		   this.divEl.appendChild(this.capsLockWarning);
+	   }
 	},
 	   
 	/**
@@ -88,13 +119,117 @@ YAHOO.lang.extend(inputEx.PasswordField, inputEx.StringField,
 	   if(this.options.confirmationPasswordField) {
 	      this.options.confirmationPasswordField.setClassFromState();
 	   }
-	}
+	},
+	
+	/**
+	 * onKeyPress callback to display the capsLockWarning
+	 */
+	onKeyPress: function(e) {
+	   
+	   if(this.options.capsLockWarning) {
+         var ev = e ? e : window.event;
+         if (!ev) {
+            return;
+         }
+         var targ = ev.target ? ev.target : ev.srcElement;
+      
+         // get key pressed
+         var which = -1;
+         if (ev.which) {
+            which = ev.which;
+         } else if (ev.keyCode) {
+            which = ev.keyCode;
+         }
+         // get shift status
+         var shift_status = false;
+         if (ev.shiftKey) {
+            shift_status = ev.shiftKey;
+         } else if (ev.modifiers) {
+            shift_status = !!(ev.modifiers & 4);
+         }
+         var displayWarning = ((which >= 65 && which <=  90) && !shift_status) ||
+                              ((which >= 97 && which <= 122) && shift_status);
+         this.setCapsLockWarning(displayWarning);
+      }
+       
+       // Update 
+       if(this.options.strengthIndicator) {
+          YAHOO.lang.later( 100, this, "updateStrengthIndicator");
+       }
+     },
+     
+     /**
+      * Show or hide the caps lock warning given the status
+      */
+     setCapsLockWarning: function(status) {
+        this.capsLockWarning.style.display = status ? '' : 'none';
+     },
+     
+     /**
+      * Update the strength indicator (called by onKeyPress)
+      */
+     updateStrengthIndicator: function() {
+  	     var strength = inputEx.PasswordField.getPasswordStrength(this.getValue());
+        for(var i = 0 ; i < 4 ; i++) {
+           var on = (strength >= i*25) && (strength>0);
+           YAHOO.util.Dom.setStyle(this.strengthBlocks[i],"background-color", on ? "#4AE817" : "#FFFFFF");
+		  }
+     }
+   
 	
 });
+
+/**
+ * Return an integer within [0,100] that quantify the password strength
+ * Function taken from Mozilla Code: (changed a little bit the values)
+ * http://lxr.mozilla.org/seamonkey/source/security/manager/pki/resources/content/password.js
+ */
+inputEx.PasswordField.getPasswordStrength = function(pw) {
+    // Here is how we weigh the quality of the password
+    // number of characters
+    // numbers
+    // non-alpha-numeric chars
+    // upper and lower case characters
+
+    //length of the password
+    var pwlength=(pw.length);
+    //if (pwlength>5)
+    //     pwlength=5;
+    if (pwlength>7)
+         pwlength=7;
+
+    //use of numbers in the password
+    var numnumeric = pw.replace (/[0-9]/g, "");
+    var numeric=(pw.length - numnumeric.length);
+    if (numeric>3)
+        numeric=3;
+
+    //use of symbols in the password
+    var symbols = pw.replace (/\W/g, "");
+    var numsymbols=(pw.length - symbols.length);
+    if (numsymbols>3)
+        numsymbols=3;
+
+    //use of uppercase in the password
+    var numupper = pw.replace (/[A-Z]/g, "");
+    var upper=(pw.length - numupper.length);
+    if (upper>3)
+        upper=3;
+
+    //var pwstrength=((pwlength*10)-20) + (numeric*10) + (numsymbols*15) + (upper*10);
+    var pwstrength=((pwlength*10)-20) + (numeric*10) + (numsymbols*20) + (upper*10);
+
+    // make sure we're give a value between 0 and 100
+    if ( pwstrength < 0 ) { pwstrength = 0; }
+    if ( pwstrength > 100 ) { pwstrength = 100;}
+    return pwstrength;
+};
+
 	
 // Specific message for the password field
 inputEx.messages.invalidPassword = ["The password schould contain at least "," numbers or caracters"];
 inputEx.messages.invalidPasswordConfirmation = "Passwords are different !";
+inputEx.messages.capslockWarning = "Warning: CapsLock is on";
 	
 /**
  * Register this class as "password" type
