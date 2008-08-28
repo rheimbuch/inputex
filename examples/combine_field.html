@@ -34,6 +34,16 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
+			new YAHOO.inputEx.CombineField({
+				parentEl: 'container1', 
+				label: 'Your name',
+				description: 'Please enter your name',
+				fields: [
+					{ inputParams: {name: 'firstname', typeInvite: 'firstname'} },
+					{ inputParams: {name: 'lastname', typeInvite: 'lastname'} }
+				],
+				separators: [false,"&nbsp;&nbsp;&nbsp;",false]
+			});
 		</textarea>
 		</form>
 	</div>
@@ -53,6 +63,14 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
+			new YAHOO.inputEx.CombineField({
+				parentEl: 'container2', 
+				fields: [
+					{type: 'date', inputParams: {name: 'date', typeInvite: 'mm/dd/YYYY'} },
+					{type: 'time', inputParams: {name: 'time'} }
+				],
+				separators: [false," : ",false]
+			});
 		</textarea>
 		</form>
 	</div>
@@ -89,8 +107,8 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 		label: 'Your name',
 		description: 'Please enter your name',
 		fields: [
-			{ inputParams: {name: 'lastname', value: 'lastname'} },
-			{ inputParams: {name: 'firstname', value: 'firstname'} }
+			{ inputParams: {name: 'firstname', typeInvite: 'firstname'} },
+			{ inputParams: {name: 'lastname', typeInvite: 'lastname'} }
 		],
 		separators: [false,"&nbsp;&nbsp;&nbsp;",false]
 	});
@@ -100,7 +118,7 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	new YAHOO.inputEx.CombineField({
 		parentEl: 'container2', 
 		fields: [
-			{type: 'date', inputParams: {name: 'date'} },
+			{type: 'date', inputParams: {name: 'date', typeInvite: 'mm/dd/YYYY'} },
 			{type: 'time', inputParams: {name: 'time'} }
 		],
 		separators: [false," : ",false]

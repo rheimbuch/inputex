@@ -106,7 +106,44 @@ lang.extend(inputEx.StringField, inputEx.Field,
       if(!!this.el && lang.isFunction(this.el.focus) ) {
          this.el.focus();
       }
-   }
+   },
+   
+   /**
+    * Return (stateEmpty|stateRequired) if the value equals the typeInvite attribute
+    */
+   getState: function() { 
+      var val = this.getValue();
+	   // if the field is empty :
+	   if( val === '' || (this.options.typeInvite && val == this.options.typeInvite) ) {
+	      return this.options.required ? inputEx.stateRequired : inputEx.stateEmpty;
+	   }
+	   return this.validate() ? inputEx.stateValid : inputEx.stateInvalid;
+	},
+   
+   /**
+    * Display the type invite after setting the class
+    */
+   setClassFromState: function() {
+	   inputEx.StringField.superclass.setClassFromState.call(this);
+	   if(this.options.typeInvite) {
+	      if(this.previousState == inputEx.stateEmpty) {
+	         this.el.value = this.options.typeInvite;
+	      }
+      }
+	},
+	
+	/**
+	 * Clear the typeInvite when the field gains focus
+	 */
+	onFocus: function(e) {
+	   inputEx.StringField.superclass.onFocus.call(this,e);
+	   if(this.options.typeInvite) {
+	      if(this.previousState==inputEx.stateEmpty) {
+	         this.el.value = "";
+         }
+      }
+	}
+   
 
 });
 

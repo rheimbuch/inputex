@@ -43,7 +43,7 @@ inputEx.Field = function(options) {
 	this.initEvents();
 	
 	// set the default styling
-	//this.setClassFromState();
+	this.setClassFromState();
 	
 	// append it immediatly to the parent DOM element
 	if(this.options.parentEl) {
@@ -241,7 +241,9 @@ inputEx.Field.prototype = {
     * @param {Event} e The original 'focus' event
     */
 	onFocus: function(e) {
-	   Dom.addClass(this.getEl(), 'inputEx-focused');
+	   var el = this.getEl();
+	   Dom.removeClass(el, 'inputEx-empty');
+	   Dom.addClass(el, 'inputEx-focused');
 	},
 
    /**

@@ -14,6 +14,10 @@ version 0.2.0b:
 
 not released yet
 
+	- typeInvitation for StringField and subclasses
+	- MultiSelectField
+	- DDList widget: sortable list widget
+	- Made TimeField, DateTimeField, PairField inherit from CombineField
 	- CombineField: replace PairField, but for N fields
 	- Markup and CSS refactoring: the "description" and "label" attributes are now in the field JSON
 	- PasswordField: Strength indicator

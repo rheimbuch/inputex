@@ -63,6 +63,26 @@
 </div>
 
 
+
+<!-- Example 3 -->
+<div class='exampleDiv'>
+
+	<p class="title">Type invitation</p>
+	
+	<p>You can use all the parameters from StringField, including "typeInvite":</p>
+
+	<div class='demoContainer' id='container3'></div>
+
+	<div class='codeContainer'>
+		<form>
+		<textarea name="code" class="JScript">
+			new YAHOO.inputEx.UrlField({parentEl: 'container3', tooltipIcon: true, favicon: false, typeInvite: 'webservice url'});
+		</textarea>
+		</form>
+	</div>
+
+</div>
+
 <!-- YUI Library -->
 <script type="text/javascript" src="../lib/yui/yahoo/yahoo-min.js"></script> 
 <script type="text/javascript" src="../lib/yui/dom/dom-min.js"></script> 
@@ -88,6 +108,9 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	// Example 2
 	new YAHOO.inputEx.UrlField({parentEl: 'container2', tooltipIcon: true, favicon: false, value: 'http://www.neyric.com'});
 	
+	
+	// Example 3
+	new YAHOO.inputEx.UrlField({parentEl: 'container3', tooltipIcon: true, favicon: false, typeInvite: 'webservice url'});
 });
 
 </script>

@@ -76,6 +76,15 @@ div.inputEx-invalid, div.inputEx-required {
 }
 
 
+div.inputEx-empty div.inputEx-Field input {
+   color: #aaa;
+}
+
+inputEx-focused div.inputEx-Field input {
+   color: black;
+}
+
+
 /**
  * Tooltips
  */

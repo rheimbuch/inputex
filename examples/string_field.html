@@ -126,16 +126,16 @@
 <!-- Example 6 -->
 <div class='exampleDiv'>
 
-	<p class="title">Numbers only</p>
+	<p class="title">Regular Expression 1</p>
 	
-	<p>If the 'numbersOnly' property is set, the field will only accept numbers !</p>
+	<p>Here is an example on how to check the value with a regular expression. (It is better to use the IntegerField, but this is a simple example.)</p>
 
 	<div class='demoContainer' id='container6'></div>
 
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript" cols="60" rows="1">
-			new YAHOO.inputEx.StringField({label: 'Enter your age', numbersOnly: true, parentEl: 'container6'});
+			new YAHOO.inputEx.StringField({label: 'Enter your age', regexp: /^[0-9]*$/, parentEl: 'container6'});
 		</textarea>
 		</form>
 	</div>
@@ -147,7 +147,7 @@
 <!-- Example 7 -->
 <div class='exampleDiv'>
 
-	<p class="title">Regular Expression</p>
+	<p class="title">Regular Expression 2</p>
 	
 	<p>The basic Field class can use regular expressions to validate the field content. Here is an example with this wonderful email regular expression (note that there is an Email Field class).</p>
 
@@ -213,6 +213,29 @@
 
 </div>
 
+
+
+
+<!-- Example 10 -->
+<div class='exampleDiv'>
+
+	<p class="title">Type invitation</p>
+	
+	<p>Display a text when the field is empty.</p>
+
+	<div class='demoContainer' id='container10'></div>
+
+	<div class='codeContainer'>
+		<form>
+		<textarea name="code" class="JScript" cols="60" rows="1">
+			new YAHOO.inputEx.StringField({parentEl: 'container10', typeInvite: 'lastname', description: 'Enter your lastname'});
+		</textarea>
+		</form>
+	</div>
+
+</div>
+
+
 <!-- YUI Library -->
 <script type="text/javascript" src="../lib/yui/yahoo/yahoo-min.js"></script> 
 <script type="text/javascript" src="../lib/yui/dom/dom-min.js"></script> 
@@ -254,7 +277,7 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	new YAHOO.inputEx.StringField({required: true, tooltipIcon: true, parentEl: 'container5'});
 	
 	// Example 6
-	new YAHOO.inputEx.StringField({label: 'Enter your age', numbersOnly: true, parentEl: 'container6'});
+	new YAHOO.inputEx.StringField({label: 'Enter your age', regexp: /^[0-9]*$/, parentEl: 'container6'});
 	
 	// Example 7
 	new YAHOO.inputEx.StringField({tooltipIcon: true,regexp: YAHOO.inputEx.regexps.email, value: 'wrong@email', parentEl: 'container7'});
@@ -272,6 +295,10 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 		var val = params[0];
 		logDiv.innerHTML += "Updated at "+(new Date())+" with value: "+val+"<br />";
 	});
+		
+	// Example 10
+	new YAHOO.inputEx.StringField({parentEl: 'container10', typeInvite: 'lastname', description: 'Enter your lastname'});
+
 	
 });
 
