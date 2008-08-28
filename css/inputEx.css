@@ -517,3 +517,31 @@ div.inputEx-CombineField-separator {
    float: left;
    margin-top:2px;
 }
+
+/**
+ * DDList
+ */
+.inputEx-DDList-item {
+   padding: 5px;
+   background-color: #DDDDDD;
+   cursor: move;
+   border: 1px solid #BBBBBB;
+   width: 300px;
+   position: relative;
+}
+
+.inputEx-DDList-item span.inputEx-DDList-label {
+}
+
+.inputEx-DDList-item a {
+   color:#D05D00;
+   padding: 3px 5px;
+   position:absolute;
+   right:0;
+   top:0;
+   cursor: pointer;
+}
+
+.inputEx-DDList-item a:hover {
+   text-decoration: underline;
+}

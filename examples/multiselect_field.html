@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html>
  <head>
-  <title>inputEx - SelectField Usage</title>
+  <title>inputEx - MultiSelectField Usage</title>
 
 <!-- YUI CSS -->
 <link rel="stylesheet" type="text/css" href="../lib/yui/reset/reset-min.css">
@@ -20,50 +20,21 @@
 
  <body>
 
-<p class='demoTitle'>inputEx - SelectField Usage</p>
+<p class='demoTitle'>inputEx - MultiSelectField Usage</p>
 
 
 <!-- Example 1 -->
 <div class='exampleDiv'>
 
-	<p class="title">Basic SelectField creation</p>
+	<p class="title">Basic MultiSelectField creation</p>
 	
-	<p>Use the following code to create a basic inputEx SelectField.</p>
+	<p>Use the following code to create a basic inputEx MultiSelectField.</p>
 
 	<div class='demoContainer' id='container1'></div>
 
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			new inputEx.SelectField({name: 'country', selectValues: ['United States of America','France'], parentEl: 'container1'});
-		</textarea>
-		</form>
-	</div>
-
-</div>
-
-
-
-<!-- Example 2 -->
-<div class='exampleDiv'>
-
-	<p class="title">Updated event</p>
-	
-	<p>How to listen to the updated event :</p>
-
-	<div class='demoContainer' id='container2'></div>
-
-	<div class='codeContainer'>
-		<form>
-		<textarea name="code" class="JScript">
-			var el = YAHOO.util.Dom.get('container2');
-			var field = new YAHOO.inputEx.SelectField({name: 'country', selectValues: ['United States of America','France'], parentEl: el});
-			var logDiv = YAHOO.inputEx.cn('div', null, null, "Log :<br />");
-			el.appendChild(logDiv);
-			field.updatedEvt.subscribe(function(e,params) {
-				var value = params[0];
-				logDiv.innerHTML += "Updated at "+(new Date())+" with value "+value+"<br />";
-			});
 		</textarea>
 		</form>
 	</div>
@@ -75,12 +46,15 @@
 <script type="text/javascript" src="../lib/yui/yahoo/yahoo-min.js"></script> 
 <script type="text/javascript" src="../lib/yui/dom/dom-min.js"></script> 
 <script type="text/javascript" src="../lib/yui/event/event-min.js"></script>
+<script type="text/javascript" src="../lib/yui/dragdrop/dragdrop-min.js"></script>
 
 <!-- InputEx -->
 <script src="../js/inputex.js"  type='text/javascript'></script>
 <script src="../js/Field.js"  type='text/javascript'></script>
 <script src="../js/fields/StringField.js"  type='text/javascript'></script>
 <script src="../js/fields/SelectField.js"  type='text/javascript'></script>
+<script src="../js/widgets/ddlist.js"  type='text/javascript'></script>
+<script src="../js/fields/MultiSelectField.js"  type='text/javascript'></script>
 
 <script>
 
@@ -89,20 +63,7 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
-	new YAHOO.inputEx.SelectField({name: 'country', selectValues: ['United States of America','France'], parentEl: 'container1'});
-	
-	
-	// Example 2
-	var el = YAHOO.util.Dom.get('container2');
-	var field = new YAHOO.inputEx.SelectField({name: 'country', selectValues: ['United States of America','France'], parentEl: el});
-	var logDiv = YAHOO.inputEx.cn('div', null, null, "Log :<br />");
-	el.appendChild(logDiv);
-	field.updatedEvt.subscribe(function(e,params) {
-		var value = params[0];
-		logDiv.innerHTML += "Updated at "+(new Date())+" with value "+value+"<br />";
-	});
-	
-	
+	new YAHOO.inputEx.MultiSelectField({label: 'Your countries', name: 'country', selectValues: ['United States of America','France'], parentEl: 'container1', description: 'This field rulezzzz'});
 	
 });
 
