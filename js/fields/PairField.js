@@ -1,6 +1,6 @@
 (function() {
 	
-   var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Dom = YAHOO.util.Dom;
+   var inputEx = YAHOO.inputEx;
 	
 /**
  * @class A meta field to put 2 fields on the same line
@@ -18,7 +18,7 @@ inputEx.PairField = function(options) {
    inputEx.PairField.superclass.constructor.call(this, options);
 };
 	
-lang.extend( inputEx.PairField, inputEx.CombineField);
+YAHOO.lang.extend( inputEx.PairField, inputEx.CombineField);
 	
 /**
  * Register this class as "pair" type

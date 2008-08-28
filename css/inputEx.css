@@ -71,7 +71,8 @@ div.inputEx-invalid div.inputEx-label label, div.inputEx-required div.inputEx-la
 }
 
 div.inputEx-invalid, div.inputEx-required {
-   background: transparent url(../images/error_arrow_bg.gif) no-repeat scroll -1em 0;
+   /*background: transparent url(../images/error_arrow_bg.gif) no-repeat scroll -1em 0;*/
+   /*border: 1px dashed red;*/
 }
 
 
@@ -506,11 +507,10 @@ div.inputEx-CheckBox-rightLabel {
    margin: 2px 0 0 2px;
 }
  
- /**
-  * CombineField
-  */
+/**
+ * CombineField
+ */
 div.inputEx-CombineField {
-   width: 100%;/*600px;*/
 }
 
 div.inputEx-CombineField-separator {

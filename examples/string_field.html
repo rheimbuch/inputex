@@ -135,7 +135,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript" cols="60" rows="1">
-			new YAHOO.inputEx.StringField({numbersOnly: true, parentEl: 'container6'});
+			new YAHOO.inputEx.StringField({label: 'Enter your age', numbersOnly: true, parentEl: 'container6'});
 		</textarea>
 		</form>
 	</div>
@@ -254,7 +254,7 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	new YAHOO.inputEx.StringField({required: true, tooltipIcon: true, parentEl: 'container5'});
 	
 	// Example 6
-	new YAHOO.inputEx.StringField({numbersOnly: true, parentEl: 'container6'});
+	new YAHOO.inputEx.StringField({label: 'Enter your age', numbersOnly: true, parentEl: 'container6'});
 	
 	// Example 7
 	new YAHOO.inputEx.StringField({tooltipIcon: true,regexp: YAHOO.inputEx.regexps.email, value: 'wrong@email', parentEl: 'container7'});

@@ -10,7 +10,7 @@
  */
 inputEx.DateTimeField = function(options) {
    options.fields = [
-      {type: 'date', inputParams: {}},
+      {type: 'datepicker', inputParams: {}},
       {type: 'time', inputParams: {}}
    ];
    options.separators = options.separators || [false, "&nbsp;&nbsp;", false];

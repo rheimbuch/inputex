@@ -21,19 +21,15 @@ lang.extend(inputEx.RTEField, inputEx.Field,
  */  
 {   
 	/**
-	 * Render the field usingthe YUI Editor widget
-	 */
-	render: function() {
-	      
-	   // Create a DIV element to wrap the editing el and the image
-	   this.divEl = inputEx.cn('div', {className: this.options.className});
-	      
+	 * Render the field using the YUI Editor widget
+	 */	
+	renderComponent: function() {
 	   if(!inputEx.RTEfieldsNumber) { inputEx.RTEfieldsNumber = 0; }
 	   var id = "inputEx-RTEField-"+inputEx.RTEfieldsNumber;
 	      
 	   this.el = inputEx.cn('textarea', {id: id});
 	   inputEx.RTEfieldsNumber += 1;
-	   this.divEl.appendChild(this.el);
+	   this.fieldContainer.appendChild(this.el);
 	
 	   //If not set, set it to empty
 	   if (!this.options.opts) {
