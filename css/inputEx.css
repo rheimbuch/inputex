@@ -8,11 +8,14 @@ div.inputEx-fieldWrapper {
 }
 
 div.inputEx-label {
-   width: 130px;/*25%;*/
    float: left;
    color: #505050;
    text-align: right;
    padding: 0.2em 0.5em 0 0;
+}
+
+div.inputEx-Group div.inputEx-label {
+   width: 130px;
 }
 
 div.inputEx-Field {
@@ -503,3 +506,14 @@ div.inputEx-CheckBox-rightLabel {
    margin: 2px 0 0 2px;
 }
  
+ /**
+  * CombineField
+  */
+div.inputEx-CombineField {
+   width: 100%;/*600px;*/
+}
+
+div.inputEx-CombineField-separator {
+   float: left;
+   margin-top:2px;
+}

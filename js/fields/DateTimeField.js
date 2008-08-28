@@ -9,48 +9,26 @@
  * @param {Object} options No added options
  */
 inputEx.DateTimeField = function(options) {
+   options.fields = [
+      {type: 'date', inputParams: {}},
+      {type: 'time', inputParams: {}}
+   ];
+   options.separators = options.separators || [false, "&nbsp;&nbsp;", false];
    inputEx.DateTimeField.superclass.constructor.call(this,options);
 };
-YAHOO.lang.extend(inputEx.DateTimeField, inputEx.Field, 
+YAHOO.lang.extend(inputEx.DateTimeField, inputEx.CombineField, 
 /**
  * @scope inputEx.DateTimeField.prototype   
  */
-{
-
-   /**
-    * Insert a 'breaker' (div with 'clear: both' css attribute)
-    */
-   render: function() {
-      inputEx.DateTimeField.superclass.render.call(this);
-      this.divEl.appendChild(inputEx.cn('div', null, {clear: 'both'}, ''));
-   },
-
-   /**
-    * Render a DateField and a TimeField
-    */
-   renderComponent: function() {
-      
-      this.dateField = new inputEx.DateField({name: 'date'});
-      var el = this.dateField.getEl();
-      YAHOO.util.Dom.setStyle(el,'float', 'left');
-      YAHOO.util.Dom.setStyle(el,'margin-right', '10px');
-      this.divEl.appendChild(el);
-      
-      this.timeField = new inputEx.TimeField({name: 'time'});
-      var el = this.timeField.getEl();
-      YAHOO.util.Dom.setStyle(el,'float', 'left');
-      this.divEl.appendChild(el);
-
-   },
-   
+{   
    /**
     * Concat the values to return a date
     * @return {Date} The javascript Date object
     */
    getValue: function() {
-      var d = this.dateField.getValue();
+      var d = this.inputs[0].getValue();
       if( d == '' ) return null;
-      var a = this.timeField.getValue().split(':');
+      var a = this.inputs[1].getValue().split(':');
       
       d.setHours(a[0]);
       d.setMinutes(a[1]);
@@ -64,8 +42,8 @@ YAHOO.lang.extend(inputEx.DateTimeField, inputEx.Field,
     * @param {Date} val Date to set
     */
    setValue: function(val) {
-      this.dateField.setValue(val);
-      this.timeField.setValue( ([val.getHours(), val.getMinutes(), val.getSeconds()]).join(':') );
+      this.inputs[0].setValue(val);
+      this.inputs[1].setValue( ([val.getHours(), val.getMinutes(), val.getSeconds()]).join(':') );
    }
 
 });

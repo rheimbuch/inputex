@@ -73,8 +73,9 @@ lang.extend(inputEx.Group, inputEx.Field,
          inputEx.sn(this.fieldset,{className:'inputEx-Expanded'});
       }
    
-      if(!YAHOO.lang.isUndefined(this.options.legend) && this.options.legend !== '') {
-         this.legend.innerHTML += (" "+this.options.legend);
+      if(!YAHOO.lang.isUndefined(this.options.legend) && this.options.legend !== ''){
+         //this.legend.innerHTML += (" "+this.options.legend);
+         this.legend.appendChild( document.createTextNode(" "+this.options.legend) );
       }
    
       if( this.options.collapsible || (!YAHOO.lang.isUndefined(this.options.legend) && this.options.legend !== '') ) {

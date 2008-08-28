@@ -14,6 +14,9 @@ version 0.2.0b:
 
 not released yet
 
+	- Markup and CSS refactoring: the "description" and "label" attributes are now in the field JSON
+	- PasswordField: Strength indicator
+	- PasswordField: CapsLock validation
 	- Form mask
    - small visualization/templating engine (Visus.js)
 	- Added a SliderField (type: slider)

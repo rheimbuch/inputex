@@ -68,7 +68,8 @@ YAHOO.lang.extend(inputEx.SliderField, inputEx.Field,
       
       // Update the displayed value
       if(this.options.displayValue) {
-         this.updatedEvt.subscribe( function(e,val) {
+         this.updatedEvt.subscribe( function(e,params) {
+            var val = params[0];
             this.valueDisplay.innerHTML = val;
          }, this, true);
       }
