@@ -39,8 +39,17 @@ YAHOO.lang.extend(inputEx.MultiSelectField, inputEx.SelectField,
    },
    
    onAddNewItem: function() {
-      // TODO: mark option disabled
-      this.ddlist.addItem(this.options.selectValues[this.el.selectedIndex]);
+      if(this.el.selectedIndex != 0) {
+         
+         // Add the value to the ddlist
+         this.ddlist.addItem(this.options.selectValues[this.el.selectedIndex]);
+         
+         // mark option disabled
+         this.el.childNodes[this.el.selectedIndex].disabled = "disabled";
+      
+         // Return to the first Element
+         this.el.selectedIndex = 0;
+      }
    },
    
    /**

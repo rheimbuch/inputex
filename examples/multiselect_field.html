@@ -28,19 +28,19 @@
 
 	<p class="title">Basic MultiSelectField creation</p>
 	
-	<p>Use the following code to create a basic inputEx MultiSelectField.</p>
+	<p>Use the following code to create a basic inputEx MultiSelectField. The first value of "selectValues" is used as the invite text to select an option.</p>
 
 	<div class='demoContainer' id='container1'></div>
 
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
+			new YAHOO.inputEx.MultiSelectField({label: 'Javascript libraries you use', name: 'country', selectValues: ['Choose a library', 'YUI','Dojo','Prototype','Scriptaculous', 'mootools'], parentEl: 'container1', description: 'Select and order your favorite libraries'});
 		</textarea>
 		</form>
 	</div>
 
 </div>
-
 
 <!-- YUI Library -->
 <script type="text/javascript" src="../lib/yui/yahoo/yahoo-min.js"></script> 
@@ -63,7 +63,7 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
-	new YAHOO.inputEx.MultiSelectField({label: 'Javascript libraries you use', name: 'country', selectValues: ['YUI','Dojo','Prototype','Scriptaculous', 'mootools'], parentEl: 'container1', description: 'This field rulezzzz'});
+	new YAHOO.inputEx.MultiSelectField({label: 'Javascript libraries you use', name: 'country', selectValues: ['Choose a library', 'YUI','Dojo','Prototype','Scriptaculous', 'mootools'], parentEl: 'container1', description: 'Select and order your favorite libraries'});
 	
 });
 

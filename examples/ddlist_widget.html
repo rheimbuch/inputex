@@ -25,7 +25,7 @@
 <!-- Example 1 -->
 <div class='exampleDiv'>
 
-	<p class="title">Basic Calendar Widget  creation</p>
+	<p class="title">Basic DDList Widget creation</p>
 	
 	<p>Use the following code to create a basic inputEx DDList Widget.</p>
 
@@ -40,6 +40,40 @@
 	</div>
 
 </div>
+
+
+<!-- Example 2 -->
+<div class='exampleDiv'>
+
+	<p class="title">Numbered list</p>
+	
+	<p>Display the item # by changing CSS style only :</p>
+
+	<style>
+	#numberedList li {
+		list-style-type:decimal;
+		margin-left:20px;
+	}
+	</style>
+	<div class='demoContainer' id='container2'> </div>
+
+	<div class='codeContainer'>
+		<form>
+		<textarea name="code" class="JScript">
+			new YAHOO.inputEx.widget.DDList({id:'numberedList', parentEl: 'container2', value: ['I was in first position !', 'I\'m second.', 'Third element']});
+			
+			/* Style */
+			#numberedList li {
+				list-style-type:decimal;
+				margin-left:20px;
+			}
+			
+		</textarea>
+		</form>
+	</div>
+
+</div>
+
 
 
 <!-- YUI Library -->
@@ -62,6 +96,10 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 
 	// Example 1
 	new YAHOO.inputEx.widget.DDList({parentEl: 'container1', value: ['I was in first position !', 'I\'m second.', 'Third element']});
+	
+	// Example 2
+	new YAHOO.inputEx.widget.DDList({id:'numberedList', parentEl: 'container2', value: ['I was in first position !', 'I\'m second.', 'Third element']});
+
 	
 });
 
