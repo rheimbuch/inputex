@@ -144,7 +144,7 @@ YAHOO.inputEx.widget.DDList.prototype = {
    getValue: function() {
       var value = [];
       for(var i = 0 ; i < this.ul.childNodes.length ; i++) {
-         value.push(this.ul.childNodes[i].childeNodes[0].innerHTML);
+         value.push(this.ul.childNodes[i].childNodes[0].innerHTML);
       }
       return value;
    },

@@ -262,6 +262,7 @@ div.inputEx-AutoComplete div.inputEx-AutoComplete-List {
    position: absolute;
    background-color: #FFFFFF;
    cursor: pointer;
+   z-index: 4;
 }
 
 div.inputEx-AutoComplete div.inputEx-AutoComplete-List div.inputEx-AutoComplete-Item {
@@ -506,4 +507,20 @@ div.inputEx-CombineField-separator {
 
 .inputEx-DDList-item a:hover {
    text-decoration: underline;
+}
+
+
+/**
+ * inputEx-ColorPicker
+ */
+div.inputEx-ColorPicker {
+   
+}
+
+div.inputEx-ColorPicker div.yui-overlay div.bd {
+   background:white url(../images/icon_panel.png) no-repeat scroll 5px 5px;
+   border:1px solid #AAAAAA;
+   height:151px;
+   padding:10px;
+   width:194px;
 }

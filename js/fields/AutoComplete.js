@@ -118,7 +118,7 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
        */
    
        // trim whitespaces (remove spaces at beginning and end of string)
-       var value = this.getValue().replace(/^\s+/g, '').replace(/\s+$/g, ''); 
+       var value = this.el.value.replace(/^\s+/g, '').replace(/\s+$/g, ''); 
 
        if(value.length >= this.options.queryMinLength ) {
           this.resetTimer();
@@ -142,7 +142,7 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
        }
        if(pos == -1) { return; }
    
-       this.setValue( this.options.displayAutocompleted.call(this, this.listValues[pos]) );
+       this.el.value = this.options.displayAutocompleted.call(this, this.listValues[pos]);
        this.hideList();
        
        // Fire the validateItem event
@@ -217,7 +217,8 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
     * Send the request when the timer ends.
     */
    timerEnd: function() {
-      var value = this.getValue().replace(/^\s+/g, '').replace(/\s+$/g, ''); 
+      //var value = this.getValue().replace(/^\s+/g, '').replace(/\s+$/g, ''); 
+      var value = this.el.value.replace(/^\s+/g, '').replace(/\s+$/g, ''); 
       this.queryList(value);
    },
 
