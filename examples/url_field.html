@@ -35,7 +35,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			new YAHOO.inputEx.UrlField({parentEl: 'container1', tooltipIcon: true, value: 'http://www.neyric.com'});
+			new YAHOO.inputEx.UrlField({parentEl: 'container1', showMsg: true, value: 'http://www.neyric.com'});
 		</textarea>
 		</form>
 	</div>
@@ -55,7 +55,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			new YAHOO.inputEx.UrlField({parentEl: 'container2', tooltipIcon: true, favicon: false, value: 'http://www.neyric.com'});
+			new YAHOO.inputEx.UrlField({parentEl: 'container2', showMsg: true, favicon: false, value: 'http://www.neyric.com'});
 		</textarea>
 		</form>
 	</div>
@@ -76,7 +76,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			new YAHOO.inputEx.UrlField({parentEl: 'container3', tooltipIcon: true, favicon: false, typeInvite: 'webservice url'});
+			new YAHOO.inputEx.UrlField({parentEl: 'container3', showMsg: true, favicon: false, typeInvite: 'webservice url'});
 		</textarea>
 		</form>
 	</div>
@@ -102,15 +102,15 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
-	new YAHOO.inputEx.UrlField({parentEl: 'container1', tooltipIcon: true, value: 'http://www.neyric.com'});
+	new YAHOO.inputEx.UrlField({parentEl: 'container1', showMsg: true, value: 'http://www.neyric.com'});
 	
 	
 	// Example 2
-	new YAHOO.inputEx.UrlField({parentEl: 'container2', tooltipIcon: true, favicon: false, value: 'http://www.neyric.com'});
+	new YAHOO.inputEx.UrlField({parentEl: 'container2', showMsg: true, favicon: false, value: 'http://www.neyric.com'});
 	
 	
 	// Example 3
-	new YAHOO.inputEx.UrlField({parentEl: 'container3', tooltipIcon: true, favicon: false, typeInvite: 'webservice url'});
+	new YAHOO.inputEx.UrlField({parentEl: 'container3', showMsg: true, favicon: false, typeInvite: 'webservice url'});
 });
 
 </script>

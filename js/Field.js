@@ -8,7 +8,6 @@
  * <ul>
  *	  <li>name: the name of the field</li>
  *	  <li>required: boolean, the field cannot be null if true</li>
- *	  <li>tooltipIcon: show an icon next to the field and display an error in a tooltip (default false)</li>
  *   <li>className: CSS class name for the div wrapper (default 'inputEx-Field')</li>
  *   <li>value: initial value</li>
  *   <li>parentEl: HTMLElement or String id, append the field to this DOM element</li>
@@ -73,7 +72,7 @@ inputEx.Field.prototype = {
 	   // Other options
 	   this.options.className = this.options.className || 'inputEx-Field';
 	   this.options.required = this.options.required ? true : false;
-	   this.options.tooltipIcon = this.options.tooltipIcon ? true : false;
+	   this.options.showMsg = lang.isUndefined(this.options.showMsg) ? false : this.options.showMsg;
 	
 	   // The following options are used later:
 	   // + this.options.name
@@ -96,7 +95,6 @@ inputEx.Field.prototype = {
 	   if(this.options.label && this.options.label != "") {
 	      this.labelDiv = inputEx.cn('div', {className: 'inputEx-label'});
 	      this.labelEl = inputEx.cn('label');
-	      //this.labelEl.appendChild( inputEx.cn('span', null, null, "*") );
 	      this.labelEl.appendChild( document.createTextNode(this.options.label) );
 	      this.labelDiv.appendChild(this.labelEl);
 	      this.divEl.appendChild(this.labelDiv);
@@ -114,14 +112,7 @@ inputEx.Field.prototype = {
       
    	this.divEl.appendChild(this.fieldContainer);
       
-	   // Create an icon and a tooltip
-	   if( this.options.tooltipIcon ) {
-	      this.tooltipIcon = inputEx.cn('img', {src: inputEx.spacerUrl, className: 'inputEx-statusIcon'});
-		   if(!inputEx.tooltipCount) { inputEx.tooltipCount = 0; }
-   	   this.tooltip = new YAHOO.widget.Tooltip('inputEx-tooltip-'+(inputEx.tooltipCount++), { context: this.tooltipIcon, text:"" }); 
-   	   this.divEl.appendChild(this.tooltipIcon);
-	   }
-	   
+	   // Insert a float breaker
 	   this.divEl.appendChild( inputEx.cn('div',null, {clear: 'both'}," ") );
 	
 	},
@@ -144,6 +135,7 @@ inputEx.Field.prototype = {
     * Render the interface component into this.divEl
     */
 	renderComponent: function() {
+ 	   // override me
 	},
 
    /**
@@ -158,6 +150,7 @@ inputEx.Field.prototype = {
     * Initialize events of the Input
     */
 	initEvents: function() {
+ 	   // override me
 	},
 
    /**
@@ -184,10 +177,14 @@ inputEx.Field.prototype = {
 	   if( this.previousState ) {
 		   Dom.removeClass(this.getEl(), 'inputEx-'+this.previousState );
 	   }
-	   this.previousState = this.getState();
-	   Dom.addClass(this.getEl(), 'inputEx-'+this.previousState );
+	   var state = this.getState();
+	   Dom.addClass(this.getEl(), 'inputEx-'+state );
 	
-	   this.setToolTipMessage();
+	   if(this.options.showMsg) {
+	      this.displayMessage( this.getStateString(state) );
+      }
+	   
+	   this.previousState = state;
 	},
 
    /**
@@ -201,20 +198,9 @@ inputEx.Field.prototype = {
          return this.options.messages.invalid;
       }
       else {
-         return this.options.messages.valid;
+         return '';//this.options.messages.valid;
       }
 	},
-
-   /**   
-    * Set the tooltip message
-    */ 
-	setToolTipMessage: function() { 
-	   if(this.tooltip) {
-   	   var content = '<div class="inputEx-tooltip inputEx-tooltip-'+this.previousState+'"></div> <span>'+this.options.messages[this.previousState]+'</span>';
-   	   this.tooltip.setBody(content);
-	   }
-	},
-
 
    /**
     * Returns the current state (given its value)
@@ -303,6 +289,18 @@ inputEx.Field.prototype = {
       
       // recursively purge element
       util.Event.purgeElement(el, true);
+   },
+   
+   /**
+    * Display a message 
+    */
+   displayMessage: function(msg) {
+      if(!this.fieldContainer) { return; }
+      if(!this.msgEl) {
+         this.msgEl = inputEx.cn('div', {className: 'inputEx-message'});
+         this.divEl.insertBefore(this.msgEl, this.fieldContainer.nextSibling);
+      }
+      this.msgEl.innerHTML = msg;
    }
 
 };

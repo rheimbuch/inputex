@@ -39,6 +39,7 @@ YAHOO.lang.extend(inputEx.MultiSelectField, inputEx.SelectField,
    },
    
    onAddNewItem: function() {
+      // TODO: mark option disabled
       this.ddlist.addItem(this.options.selectValues[this.el.selectedIndex]);
    },
    
@@ -47,14 +48,7 @@ YAHOO.lang.extend(inputEx.MultiSelectField, inputEx.SelectField,
     * @param {String} value The value to set
     */
    setValue: function(value) {
-      /*var index = 0;
-      var option;
-      for(var i = 0 ; i < this.options.selectValues.length ; i++) {
-         if(value === this.options.selectValues[i]) {
-            option = this.el.childNodes[i];
-		      option.selected = "selected";
-         }
-      }*/
+      // TODO: mark the option disabled
       this.ddlist.setValue(value);
    },
    
@@ -63,8 +57,7 @@ YAHOO.lang.extend(inputEx.MultiSelectField, inputEx.SelectField,
     * @return {Any} the selected value from the selectValues array
     */
    getValue: function() {
-      return this.ddlist.setValue(value);
-      //return this.options.selectValues[this.el.selectedIndex];
+      return this.ddlist.getValue();
    },
    
    /**

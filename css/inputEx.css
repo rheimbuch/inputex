@@ -30,34 +30,15 @@ div.inputEx-description {
    margin-top: 2px;
 }
 
-/**
- * Status Icon
- */
-img.inputEx-statusIcon {
-   width: 16px;
-	height: 16px;
-	background: transparent url('') no-repeat scroll 0px 0px;
-	visibility: hidden;
-	cursor: default;
-	margin:2px 0pt 0px 4px;
+div.inputEx-message {
+   float: left;
+   margin: 4px;
+   font-size: 85%;
 }
 
-/**
- * Status
- */
-div.inputEx-valid img.inputEx-statusIcon {
-	background-image: url('../images/tick.gif');
-	visibility: visible;
-}
-
-div.inputEx-invalid img.inputEx-statusIcon {
-	background-image: url('../images/exclamation.gif');
-	visibility: visible;
-}
-
-div.inputEx-required img.inputEx-statusIcon {
-   background-image: url('../images/cancel.gif');
-	visibility: visible;
+div.inputEx-invalid div.inputEx-message, div.inputEx-required div.inputEx-message {
+   color:#C00E0C;
+   font-weight:bold;
 }
 
 div.inputEx-invalid div.inputEx-label, div.inputEx-required div.inputEx-label {
@@ -83,35 +64,6 @@ div.inputEx-empty div.inputEx-Field input {
 inputEx-focused div.inputEx-Field input {
    color: black;
 }
-
-
-/**
- * Tooltips
- */
-div.inputEx-tooltip-invalid {
-	background-image: url('../images/exclamation.gif');
-	width: 16px;
-	height: 16px;
-	margin-right: 4px;
-	float: left;
-}
-
-div.inputEx-tooltip-required {
-	background-image: url('../images/cancel.gif');
-	width: 16px;
-	height: 16px;
-	margin-right: 4px;
-	float: left;
-}
-
-div.inputEx-tooltip-valid {
-	background-image: url('../images/tick.gif');
-	width: 16px;
-	height: 16px;
-	margin-right: 4px;
-	float: left;
-}
-
 
 /**
  * inputEx.Group
@@ -485,6 +437,7 @@ div.inputEx-PasswordField div.capsLockWarning {
    float: left;
    margin:3px 4px;
    color: #505050;
+   font-size: 85%;
 }
  
 div.inputEx-Password-StrengthIndicator {

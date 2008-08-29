@@ -95,7 +95,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript" cols="60" rows="1">
-			new YAHOO.inputEx.StringField({value: 'test', tooltipIcon: true, parentEl: 'container4'});
+			new YAHOO.inputEx.StringField({value: 'test', showMsg: true, parentEl: 'container4'});
 		</textarea>
 		</form>
 	</div>
@@ -115,7 +115,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript" cols="60" rows="1">
-			new YAHOO.inputEx.StringField({required: true, tooltipIcon: true, parentEl: 'container5'});
+			new YAHOO.inputEx.StringField({required: true, showMsg: true, parentEl: 'container5'});
 		</textarea>
 		</form>
 	</div>
@@ -156,7 +156,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript" cols="60" rows="1">
-			new YAHOO.inputEx.StringField({tooltipIcon: true,regexp: inputEx.regexps.email, value: 'wrong@email', parentEl: 'container7'});
+			new YAHOO.inputEx.StringField({showMsg: true,regexp: inputEx.regexps.email, value: 'wrong@email', parentEl: 'container7'});
 		</textarea>
 		</form>
 	</div>
@@ -271,16 +271,16 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	new YAHOO.inputEx.StringField({size: 40, value: 'size is set to 40 (default is 20)', parentEl: 'container3'});
 
 	// Example 4
-	new YAHOO.inputEx.StringField({value: 'test', tooltipIcon: true, parentEl: 'container4'});
+	new YAHOO.inputEx.StringField({value: 'test', showMsg: true, parentEl: 'container4'});
 	
 	// Example 5
-	new YAHOO.inputEx.StringField({required: true, tooltipIcon: true, parentEl: 'container5'});
+	new YAHOO.inputEx.StringField({required: true, showMsg: true, parentEl: 'container5'});
 	
 	// Example 6
 	new YAHOO.inputEx.StringField({label: 'Enter your age', regexp: /^[0-9]*$/, parentEl: 'container6'});
 	
 	// Example 7
-	new YAHOO.inputEx.StringField({tooltipIcon: true,regexp: YAHOO.inputEx.regexps.email, value: 'wrong@email', parentEl: 'container7'});
+	new YAHOO.inputEx.StringField({showMsg: true,regexp: YAHOO.inputEx.regexps.email, value: 'wrong@email', parentEl: 'container7'});
 	
 	// Example 8
 	var field = new YAHOO.inputEx.StringField({value: 'This field is disabled', parentEl: 'container8'});

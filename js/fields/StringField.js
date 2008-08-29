@@ -62,8 +62,8 @@ lang.extend(inputEx.StringField, inputEx.Field,
     * Return the string value
     * @param {String} The string value
     */
-   getValue: function() { 
-	   return this.el.value;
+   getValue: function() {
+	   return (this.options.typeInvite && this.el.value == this.options.typeInvite) ? '' : this.el.value;
    },
 	
    /**

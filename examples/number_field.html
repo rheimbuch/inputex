@@ -34,7 +34,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			new inputEx.NumberField({parentEl: 'container1', tooltipIcon: true});
+			new inputEx.NumberField({parentEl: 'container1', showMsg: true});
 		</textarea>
 		</form>
 	</div>
@@ -63,7 +63,7 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
-	field = new YAHOO.inputEx.NumberField({parentEl: 'container1', tooltipIcon: true});
+	field = new YAHOO.inputEx.NumberField({parentEl: 'container1', showMsg: true});
 	var button = YAHOO.inputEx.cn('button', null, null, 'getValue');
 	YAHOO.util.Event.addListener(button, "click",function() {
 		alert(field.getValue());

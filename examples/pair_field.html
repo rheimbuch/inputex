@@ -36,7 +36,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			new inputEx.PairField({parentEl: 'container1', tooltipIcon: true});
+			new inputEx.PairField({parentEl: 'container1', showMsg: true});
 		</textarea>
 		</form>
 	</div>
@@ -88,13 +88,13 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 
 
 	// Example 1
-	new YAHOO.inputEx.PairField({parentEl: 'container1', tooltipIcon: true});
+	new YAHOO.inputEx.PairField({parentEl: 'container1', showMsg: true});
 
 	// Example 2
 	var field = new YAHOO.inputEx.PairField({
 		label: 'Your favorite color',
 		parentEl: 'container2',
-		tooltipIcon: true,
+		showMsg: true,
 		leftFieldOptions: {type: 'string', inputParams: { description: 'Favorite color', value: 'blue'} },
     rightFieldOptions: { type: 'text', inputParams: { description: 'Why is it your favorite color ?', value: 'looks like the sky' } }
 	});
