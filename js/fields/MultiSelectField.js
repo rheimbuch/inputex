@@ -36,8 +36,21 @@ YAHOO.lang.extend(inputEx.MultiSelectField, inputEx.SelectField,
     */
    initEvents: function() {
       YAHOO.util.Event.addListener(this.el,"change", this.onAddNewItem, this, true);
+      this.ddlist.itemRemovedEvt.subscribe(this.onItemRemoved, this, true);
    },
    
+   /**
+    * Re-enable the option element when an item is removed by the user
+    */
+   onItemRemoved: function(e,params) {
+      var itemValue = params[0];
+      var index = inputEx.indexOf(itemValue, this.options.selectValues);
+      this.el.childNodes[index].disabled = false;
+   },
+   
+   /**
+    * Add an item to the list when the select changed
+    */
    onAddNewItem: function() {
       if(this.el.selectedIndex != 0) {
          
@@ -45,7 +58,7 @@ YAHOO.lang.extend(inputEx.MultiSelectField, inputEx.SelectField,
          this.ddlist.addItem(this.options.selectValues[this.el.selectedIndex]);
          
          // mark option disabled
-         this.el.childNodes[this.el.selectedIndex].disabled = "disabled";
+         this.el.childNodes[this.el.selectedIndex].disabled = true;
       
          // Return to the first Element
          this.el.selectedIndex = 0;
@@ -53,12 +66,22 @@ YAHOO.lang.extend(inputEx.MultiSelectField, inputEx.SelectField,
    },
    
    /**
-    * Set the value
+    * Set the value of the list
     * @param {String} value The value to set
     */
    setValue: function(value) {
-      // TODO: mark the option disabled
+      
       this.ddlist.setValue(value);
+      
+      // Re-enable all options
+      for(var i = 0 ; i < this.el.childNodes.length ; i++) {
+         this.el.childNodes[i].disabled = false;
+      }
+      // disable selected options
+      for(i = 0 ; i < value.length ; i++) {
+         var index = inputEx.indexOf(value[i], this.options.selectValues);
+         this.el.childNodes[index].disabled = true;
+      }
    },
    
    /**
@@ -67,20 +90,6 @@ YAHOO.lang.extend(inputEx.MultiSelectField, inputEx.SelectField,
     */
    getValue: function() {
       return this.ddlist.getValue();
-   },
-   
-   /**
-    * Disable the field
-    */
-   disable: function() {
-      this.el.disabled = true;
-   },
-
-   /**
-    * Enable the field
-    */
-   enable: function() {
-      this.el.disabled = false;
    }
    
 });

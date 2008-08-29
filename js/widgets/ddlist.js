@@ -122,6 +122,14 @@ inputEx.widget.DDList = function(options) {
       this.setValue(options.value);
    }
    
+   /**
+	 * @event
+	 * @param {Any} itemValue value of the removed item
+	 * @desc YAHOO custom event fired when an item is removed
+	 */
+	this.itemRemovedEvt = new YAHOO.util.CustomEvent('itemRemoved', this);
+   
+   
    // append it immediatly to the parent DOM element
 	if(options.parentEl) {
 	   if( YAHOO.lang.isString(options.parentEl) ) {
@@ -143,14 +151,20 @@ inputEx.widget.DDList.prototype = {
       Event.addListener(removeLink, 'click', function(e) {
          var a = Event.getTarget(e);
          var li = a.parentNode;
-         this.ul.removeChild(li);
+         this.removeItem( inputEx.indexOf(li,this.ul.childNodes) );
       }, this, true);
       new inputEx.widget.DDListItem(li);
       this.ul.appendChild(li);
    },
    
    removeItem: function(i) {
+      
+      var itemValue = this.ul.childNodes[i].childNodes[0].innerHTML;
+      
       this.ul.removeChild(this.ul.childNodes[i]);
+      
+      // Fire the itemRemoved Event
+      this.itemRemovedEvt.fire(itemValue);
    },
    
    getValue: function() {

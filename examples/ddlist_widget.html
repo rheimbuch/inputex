@@ -76,6 +76,30 @@
 
 
 
+
+<!-- Example 3 -->
+<div class='exampleDiv'>
+
+	<p class="title">itemRemoved Event</p>
+	
+	<p>Use the following code to listen for the itemRemoved Event:</p>
+
+	<div class='demoContainer' id='container3'> </div>
+
+	<div class='codeContainer'>
+		<form>
+		<textarea name="code" class="JScript">
+			var list = new YAHOO.inputEx.widget.DDList({parentEl: 'container3', value: ['I was in first position !', 'I\'m second.', 'Third element']});
+			list.itemRemovedEvt.subscribe(function() {
+					alert("removed !");
+			});
+		</textarea>
+		</form>
+	</div>
+
+</div>
+
+
 <!-- YUI Library -->
 <script type="text/javascript" src="../lib/yui/yahoo/yahoo-min.js"></script> 
 <script type="text/javascript" src="../lib/yui/dom/dom-min.js"></script> 
@@ -100,6 +124,11 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	// Example 2
 	new YAHOO.inputEx.widget.DDList({id:'numberedList', parentEl: 'container2', value: ['I was in first position !', 'I\'m second.', 'Third element']});
 
+	// Example 3
+	var list = new YAHOO.inputEx.widget.DDList({parentEl: 'container3', value: ['I was in first position !', 'I\'m second.', 'Third element']});
+	list.itemRemovedEvt.subscribe(function() {
+			alert("removed !");
+	});
 	
 });
 
