@@ -361,9 +361,9 @@ if(inputEx.NumberField) {
 }
  
 inputEx.StringField.groupOptions = [
+   { inputParams: { label: 'Type invite', name: 'typeInvite'}},
    { type: 'integer', inputParams: { label: 'Size', name: 'size', value: 20}},
-   { type: 'integer', inputParams: { label: 'Min. length', name: 'minLength'}},
-   { type: 'integer', inputParams: { label: 'Max. length', name: 'maxLength'}}
+   { type: 'integer', inputParams: { label: 'Min. length', name: 'minLength'}}
 ];
 
 inputEx.TypeField.groupOptions = [

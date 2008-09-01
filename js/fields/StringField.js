@@ -12,6 +12,7 @@
  *   <li>size: size attribute of the input</li>
  *   <li>maxLength: maximum size of the string field (no message display, uses the maxlength html attribute)</li>
  *   <li>minLength: minimum size of the string field (will display an error message if shorter)</li>
+ *   <li>typeInvite: string displayed when the field is empty</li>
  * </ul>
  */
 inputEx.StringField = function(options) {
