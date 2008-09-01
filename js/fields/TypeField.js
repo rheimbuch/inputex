@@ -53,17 +53,15 @@ YAHOO.lang.extend(inputEx.TypeField, inputEx.Field,
       
       var V = this.typePropertiesGroup.getValue();
       
-      var obj = { 
-         type: V.type,
-         label: this.inplaceEditLabel.getValue()
-      };
+      var obj = { type: V.type };
       
       // InputParams
       var inputParams = this.group.getValue();
       obj.inputParams = inputParams;
       obj.inputParams.name = V.name;
+      obj.inputParams.label = this.inplaceEditLabel.getValue();
       if(V.required) { obj.inputParams.required = true; }
-      obj.inputParams.tooltipIcon = V.tooltipIcon;
+      //obj.inputParams.tooltipIcon = V.tooltipIcon;
       if(this.fieldValue) { obj.inputParams.value = this.fieldValue.getValue(); }
       
       return obj;
@@ -111,11 +109,11 @@ YAHOO.lang.extend(inputEx.TypeField, inputEx.Field,
 
          // Type Properties:
          this.typePropertiesGroup = new inputEx.Group({fields: [
-            {label: "Type", type: "select", inputParams: {name: "type", selectOptions: selectOptions, selectValues: selectOptions} },
+            {type: "select", inputParams: {label: "Type", name: "type", selectOptions: selectOptions, selectValues: selectOptions} },
             //{label: "Optional?", type: "boolean", inputParams: {name: "optional", value: false} },
-            {label: "Name", type: "string", inputParams:{name: "name"} },
-            {label: "Required?", type: "boolean", inputParams: {name: "required", value: false} },
-            {label: "Display icon", type: "boolean", inputParams: {name: "tooltipIcon", value: false} }
+            { type: "string", inputParams:{label: "Name", name: "name"} },
+            { type: "boolean", inputParams: {label: "Required?",name: "required", value: false} },
+            { type: "boolean", inputParams: {label: "Display icon",name: "tooltipIcon", value: false} }
          ]});
          var groupEl = this.typePropertiesGroup.getEl();
          this.propertyPanel.appendChild( groupEl );
@@ -131,7 +129,7 @@ YAHOO.lang.extend(inputEx.TypeField, inputEx.Field,
          // Button to switch the panel
          this.button = inputEx.cn('div', {className: "inputEx-TypeField-EditButton"}, {position: "relative"});
          this.button.appendChild(this.propertyPanel);
-         this.divEl.appendChild(this.button);
+         this.fieldContainer.appendChild(this.button);
          
          // This is a line breaker :
          this.divEl.appendChild( inputEx.cn('div', null, {clear: 'both'}) );
@@ -263,7 +261,7 @@ inputEx.registerType("type", inputEx.TypeField);
  */
 
 if(inputEx.CheckBox) {
-   inputEx.CheckBox.groupOptions = [ {label: 'Label', type: 'string', inputParams: {name: 'label'} } ];
+   inputEx.CheckBox.groupOptions = [ {type: 'string', inputParams: {label: 'Label', name: 'label'} } ];
 }
 
 if(inputEx.ColorField) {
@@ -272,14 +270,20 @@ if(inputEx.ColorField) {
 
 if(inputEx.DateField) {
    inputEx.DateField.groupOptions = [
-      {label: 'Date format', type: 'select', inputParams: {name: 'dateFormat', selectOptions: ["m/d/Y", "d/m/Y"], selectValues: ["m/d/Y", "d/m/Y"] } }
+      {type: 'select', inputParams: {label: 'Date format', name: 'dateFormat', selectOptions: ["m/d/Y", "d/m/Y"], selectValues: ["m/d/Y", "d/m/Y"] } }
+   ];
+}
+
+if(inputEx.CombineField) {
+   inputEx.CombineField.groupOptions = [
+      { type: 'list', inputParams: {name: 'fields', label: 'Elements', required: true, elementType: {type: 'type'} } }
    ];
 }
 
 if(inputEx.PairField) {
    inputEx.PairField.groupOptions = [
-      {label: 'Left field', type: 'type', inputParams: {name: 'leftFieldOptions', required: true} },
-      {label: 'Right field', type: 'type', inputParams: {name: 'rightFieldOptions', required: true} }
+      { type: 'type', inputParams: {label: 'Left field', name: 'leftFieldOptions', required: true} },
+      { type: 'type', inputParams: {label: 'Right field', name: 'rightFieldOptions', required: true} }
    ];
 }
 
@@ -301,7 +305,7 @@ if(inputEx.RTEField) {
 
 if(inputEx.UrlField) {
    inputEx.UrlField.groupOptions = [
-      { label: 'Display favicon', type: 'boolean', inputParams: {name:'favicon', value: true}}
+      {  type: 'boolean', inputParams: {label: 'Display favicon', name:'favicon', value: true}}
    ];
 }
 
@@ -319,22 +323,22 @@ if(inputEx.SelectField) {
 
 if(inputEx.SliderField) {
    inputEx.SliderField.groupOptions = [
-      { label: 'Min. value',  type: 'integer', inputParams: {name: 'minValue', value: 0} },
-      { label: 'Max. value', type: 'integer', inputParams: {name: 'maxValue', value: 100} }
+      { type: 'integer', inputParams: {label: 'Min. value',  name: 'minValue', value: 0} },
+      { type: 'integer', inputParams: {label: 'Max. value', name: 'maxValue', value: 100} }
    ];
 }
 
 if(inputEx.ListField) {
    inputEx.ListField.groupOptions = [
-      { label: 'of type', type: 'type', inputParams: {required: true, name: 'elementType'} },
-      { label: 'List label', type: 'string', inputParams: {name: 'listLabel'}}
+      { type: 'type', inputParams: {label: 'of type', required: true, name: 'elementType'} },
+      { type: 'string', inputParams: {label: 'List label', name: 'listLabel'}}
    ];
 }
  
 
 if(inputEx.IntegerField) {
    inputEx.IntegerField.groupOptions = [
-      { label: 'Radix', type: 'integer', inputParams: {name: 'radix'}}
+      { type: 'integer', inputParams: {label: 'Radix', name: 'radix'}}
    ];
 }
 
@@ -345,45 +349,45 @@ if(inputEx.NumberField) {
 inputEx.StringField.groupOptions = [];
 
 inputEx.TypeField.groupOptions = [
-   //{ label: 'default value field', type: 'boolean', inputParams: {name:'createValueField', value: false}}
+   //{ type: 'boolean', inputParams: {label: 'default value field', name:'createValueField', value: false}}
 ];
 
 
 if(inputEx.Group) {
    inputEx.Group.groupOptions = [
-      {label: '', type: 'list', inputParams:{ listLabel: 'Fields', name: 'fields', elementType: {type: 'type' } } },
-      { label: 'Collapsible', type: 'boolean', inputParams: {name:'collapsible', value: false}},
-      { label: 'Legend', inputParams: {name:'legend'}}
+      { type: 'list', inputParams:{ label: 'Fields', name: 'fields', elementType: {type: 'type' } } },
+      { type: 'boolean', inputParams: {label: 'Collapsible', name:'collapsible', value: false}},
+      { inputParams: { label: 'Legend', name:'legend'}}
    ];
 }
 
 
 if(inputEx.Form) {
    inputEx.Form.groupOptions = [
-      {label: '', type: 'list', inputParams:{ listLabel: 'Fields', name: 'fields', elementType: {type: 'type' } } },
-      {label: '', type: 'list', inputParams:{ 
+      {type: 'list', inputParams:{ label: 'Fields', name: 'fields', elementType: {type: 'type' } } },
+      {type: 'list', inputParams:{ 
          listLabel: 'Buttons', 
          name: 'buttons', 
             elementType: {
                type: 'group', 
                inputParams: { 
                   fields: [
-                     {label: 'Label', inputParams: {name: 'value'}},
-                     {label: 'Type', type: 'select', inputParams: {name: 'type', selectValues:["button", "submit"]} }
+                     { inputParams: {label: 'Label', name: 'value'}},
+                     { type: 'select', inputParams: {label: 'Type', name: 'type', selectValues:["button", "submit"]} }
                   ] 
                } 
             } 
          } 
       }   ,
-         { label: 'Collapsible', type: 'boolean', inputParams: {name:'collapsible', value: false}},
-         { label: 'Legend', inputParams: {name:'legend'}}
+         { type: 'boolean', inputParams: { label: 'Collapsible', name:'collapsible', value: false}},
+         { inputParams: {label: 'Legend', name:'legend'}}
    ];
 }
 
 
 if(inputEx.InPlaceEdit) {
    inputEx.InPlaceEdit.groupOptions = [
-      {label: 'Editor', type:'type', inputParams: {name: 'editorField'} }
+      { type:'type', inputParams: {label: 'Editor', name: 'editorField'} }
    ];
 }
 

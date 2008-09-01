@@ -35,6 +35,10 @@ lang.extend( inputEx.CombineField, inputEx.Field,
 	   
 	   this.appendSeparator(0);
 	   
+	   if(!this.options.fields) {
+	      return;
+	   }
+	   
 	   for(var i = 0 ; i < this.options.fields.length ; i++) {
 	      
 	      var field = this.renderField(this.options.fields[i]);
