@@ -153,7 +153,10 @@ lang.extend(inputEx.ColorField, inputEx.Field,
 	 */
 	onColorClick: function(e) {
 	      
-		var square = Event.getTarget(e);//e.target;
+		var square = Event.getTarget(e);
+		
+		// Stop the event to prevent a selection
+		Event.stopEvent(e);
 	   	
 		var couleur = Dom.getStyle(square,'background-color'); 
 		Dom.setStyle(this.colorEl,'background-color',couleur);

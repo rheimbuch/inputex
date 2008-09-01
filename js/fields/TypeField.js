@@ -349,7 +349,11 @@ if(inputEx.NumberField) {
    inputEx.NumberField.groupOptions = [];
 }
  
-inputEx.StringField.groupOptions = [];
+inputEx.StringField.groupOptions = [
+   { type: 'integer', inputParams: { label: 'Size', name: 'size', value: 20}},
+   { type: 'integer', inputParams: { label: 'Min. length', name: 'minLength'}},
+   { type: 'integer', inputParams: { label: 'Max. length', name: 'maxLength'}}
+];
 
 inputEx.TypeField.groupOptions = [
    //{ type: 'boolean', inputParams: {label: 'default value field', name:'createValueField', value: false}}
