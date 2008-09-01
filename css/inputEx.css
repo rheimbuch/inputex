@@ -56,6 +56,21 @@ div.inputEx-invalid, div.inputEx-required {
    /*border: 1px dashed red;*/
 }
 
+div.inputEx-valid div.inputEx-message {
+   color:#505050;
+   font-weight: normal;
+}
+
+div.inputEx-valid div.inputEx-label {
+   color:#505050;
+   font-weight:normal;
+}
+
+div.inputEx-valid div.inputEx-label label {
+   background: none;
+   padding-left: inherit;
+}
+
 
 div.inputEx-empty div.inputEx-Field input {
    color: #aaa;

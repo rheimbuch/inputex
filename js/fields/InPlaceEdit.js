@@ -231,9 +231,11 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
 	   this.value = value;
    
       if(lang.isUndefined(value) || value == "") {
-         this.value = "(Edit me)";
+         inputEx.renderVisu(this.options.visu, inputEx.messages.emptyInPlaceEdit, this.formattedContainer);
       }
-      inputEx.renderVisu(this.options.visu, this.value, this.formattedContainer);
+      else {
+         inputEx.renderVisu(this.options.visu, this.value, this.formattedContainer);
+      }
    }
 
 });

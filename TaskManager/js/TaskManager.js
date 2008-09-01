@@ -39,10 +39,10 @@ var TaskManager = {
     */
    buildForm: function() {
       this.oTaskDetailsForm = new YAHOO.inputEx.Group({parentEl: 'taskInformation', fields: [ 
-            {label: 'Description', type: 'string', inputParams: {name: 'description'} },
-      		{label: 'Due date', type: 'date', inputParams: {name: 'duedate' } },
-            {label: 'Tags', type: 'string', inputParams: {name: 'tags' } },
-      		{label: 'Comments', type:'text', inputParams: {name:'comments'}}
+            {inputParams: {label: 'Description', name: 'description'} },
+      		{type: 'date', inputParams: {label: 'Due date', name: 'duedate' } },
+            {inputParams: {label: 'Tags', name: 'tags' } },
+      		{type:'text', inputParams: {label: 'Comments', name:'comments'}}
       ] });
    },
    

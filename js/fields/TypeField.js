@@ -355,15 +355,17 @@ inputEx.TypeField.groupOptions = [
 
 if(inputEx.Group) {
    inputEx.Group.groupOptions = [
-      { type: 'list', inputParams:{ label: 'Fields', name: 'fields', elementType: {type: 'type' } } },
+      { inputParams: { label: 'Legend', name:'legend'}},
       { type: 'boolean', inputParams: {label: 'Collapsible', name:'collapsible', value: false}},
-      { inputParams: { label: 'Legend', name:'legend'}}
+      { type: 'list', inputParams:{ label: 'Fields', name: 'fields', elementType: {type: 'type' } } }
    ];
 }
 
 
 if(inputEx.Form) {
    inputEx.Form.groupOptions = [
+      { inputParams: {label: 'Legend', name:'legend'}},
+      { type: 'boolean', inputParams: { label: 'Collapsible', name:'collapsible', value: false}},
       {type: 'list', inputParams:{ label: 'Fields', name: 'fields', elementType: {type: 'type' } } },
       {type: 'list', inputParams:{ 
          listLabel: 'Buttons', 
@@ -378,9 +380,7 @@ if(inputEx.Form) {
                } 
             } 
          } 
-      }   ,
-         { type: 'boolean', inputParams: { label: 'Collapsible', name:'collapsible', value: false}},
-         { inputParams: {label: 'Legend', name:'legend'}}
+      }
    ];
 }
 
