@@ -47,6 +47,27 @@
 </div>
 
 
+
+<!-- Example 2 -->
+<div class='exampleDiv'>
+
+	<p class="title">Date format</p>
+	
+	<p>Change the date format</p>
+
+	<div class='demoContainer' id='container2'></div>
+
+	<div class='codeContainer'>
+		<form>
+		<textarea name="code" class="JScript">
+			new YAHOO.inputEx.DateTimeField({parentEl: 'container2', value: new Date(), dateFormat: 'd/m/Y'});
+		</textarea>
+		</form>
+	</div>
+
+</div>
+
+
 <!-- YUI Library -->
 <script type="text/javascript" src="../lib/yui/yahoo/yahoo-min.js"></script> 
 <script type="text/javascript" src="../lib/yui/dom/dom-min.js"></script> 
@@ -79,6 +100,11 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 		alert(field.getValue());
 	});
 	YAHOO.util.Dom.get('container1').appendChild(button);
+	
+	
+	// Example 2
+	new YAHOO.inputEx.DateTimeField({parentEl: 'container2', value: new Date(), dateFormat: 'd/m/Y'});
+	
 });
 
 </script>

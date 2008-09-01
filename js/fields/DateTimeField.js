@@ -6,13 +6,19 @@
  * @class A field limited to number inputs (floating)
  * @extends inputEx.Field
  * @constructor
- * @param {Object} options No added options
+ * @param {Object} options Added options
+ * <ul>
+ *    <li>dateFormat: same as DateField</li>
+ * </ul>
  */
 inputEx.DateTimeField = function(options) {
    options.fields = [
       {type: 'datepicker', inputParams: {}},
       {type: 'time', inputParams: {}}
    ];
+   if(options.dateFormat) {
+      options.fields[0].inputParams.dateFormat = options.dateFormat;
+   }
    options.separators = options.separators || [false, "&nbsp;&nbsp;", false];
    inputEx.DateTimeField.superclass.constructor.call(this,options);
 };

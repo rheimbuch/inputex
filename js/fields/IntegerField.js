@@ -6,7 +6,10 @@
  * @class A field limited to number inputs
  * @extends inputEx.StringField
  * @constructor
- * @param {Object} options inputEx.StringField options object
+ * @param {Object} options Added options:
+ * <ul>
+ *	  <li>radix: The radix to be used (default 10)</li>
+ * </ul>
  */
 inputEx.IntegerField = function(options) {
    inputEx.IntegerField.superclass.constructor.call(this,options);
@@ -16,6 +19,15 @@ YAHOO.lang.extend(inputEx.IntegerField, inputEx.StringField,
  * @scope inputEx.IntegerField.prototype   
  */
 {
+   
+   /**
+    * Add the radix option
+    */
+   setOptions: function() {
+      inputEx.IntegerField.superclass.setOptions.call(this);
+      
+      this.options.radix = this.options.radix || 10;
+   },
 
    initEvents: function() {	
       inputEx.IntegerField.superclass.initEvents.call(this);
@@ -32,8 +44,13 @@ YAHOO.lang.extend(inputEx.IntegerField, inputEx.StringField,
     * @param {Event} e The original input event
     */
    onInput: function(e) {
-	   this.setValue( this.getValue() );
-      this.setClassFromState();
+      try {
+	      this.setValue( this.getValue() );
+         this.setClassFromState();
+      }
+      catch(ex) {
+         console.log(ex);
+      }
    },
    
    /**
@@ -41,15 +58,15 @@ YAHOO.lang.extend(inputEx.IntegerField, inputEx.StringField,
     * @param {int} value The value to set
     */
    setValue: function(value) {
-      
+      console.log("setValue", value);
       if( isNaN(value) ) {
          this.el.value = "";
       }
       else if( lang.isNumber(value) ) {
-         this.el.value = Math.floor(value);
+         this.el.value = Math.floor(value).toString(this.options.radix);
       }
       else if(lang.isString(value) ) {
-        this.el.value = value.replace(/[^0-9]/g,'');
+        this.el.value = value/*.replace(/[^0-9]/g,'')*/.toString(this.options.radix);
       }
       
    },
@@ -59,7 +76,7 @@ YAHOO.lang.extend(inputEx.IntegerField, inputEx.StringField,
     * @return {int} The integer value
     */
    getValue: function() {
-      return parseInt(this.el.value, 10);
+      return parseInt(this.el.value, this.options.radix);
    }
 
 });

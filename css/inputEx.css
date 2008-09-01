@@ -316,6 +316,7 @@ div.inputEx-Calendar div.inputEx-Calendar-outer-container {
     padding-bottom:1px;
     padding-left:2px;
     background-image:url('../images/gray_shadow.png');
+    z-index: 4;
 }
 
 div.inputEx-Calendar div.inputEx-Calendar-inner-container {
