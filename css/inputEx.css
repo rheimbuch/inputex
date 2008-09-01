@@ -530,3 +530,16 @@ div.inputEx-ColorPicker div.yui-overlay div.bd {
    padding:10px;
    width:194px;
 }
+
+/**
+ * Radio Field
+ */
+label.inputEx-RadioField-rightLabel {
+   margin: 3px;
+}
+
+div.inputEx-RadioField-choice {
+   float: left;
+   margin-left: 10px;
+}
+

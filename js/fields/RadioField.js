@@ -1,22 +1,23 @@
 (function() {	
 	var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Event = YAHOO.util.Event, Dom = YAHOO.util.Dom;
+	
 /**
  * @class Create a radio button. Here are the added options :
  * <ul>
- *    <li>checked: boolean, initial state</li>
- *    <li>sentValues: couple of values that schould be returned by the getValue. (default: [true, false])</li>
+ *    <li>choices: list of choices (array of string)</li>
+ *    <li>allowAny: add an option with a string field</li>
  * </ul>
  * @extends inputEx.Field
  * @constructor
  * @param {Object} options inputEx.Field options object
  */
-inputEx.Radio = function(options) {
-	inputEx.Radio.superclass.constructor.call(this,options);
+inputEx.RadioField = function(options) {
+	inputEx.RadioField.superclass.constructor.call(this,options);
 };
 	
-lang.extend(inputEx.Radio, inputEx.Field, 
+lang.extend(inputEx.RadioField, inputEx.Field, 
 /**
- * @scope inputEx.Radio.prototype   
+ * @scope inputEx.RadioField.prototype   
  */
 {
 	   
@@ -25,13 +26,11 @@ lang.extend(inputEx.Radio, inputEx.Field,
 	 */
 	setOptions: function() {
 	   
-	   this.options.className = this.options.className || 'inputEx-Field inputEx-Radio';
+	   this.options.className = this.options.className || 'inputEx-Field inputEx-RadioField';
 	   
-	   inputEx.Radio.superclass.setOptions.call(this);
+	   inputEx.RadioField.superclass.setOptions.call(this);
 	   
-	   this.sentValues = this.options.sentValues || [true, false];
-	   this.checkedValue = this.sentValues[0];
-	   this.uncheckedValue = this.sentValues[1];
+	   this.options.allowAny = lang.isUndefined(this.options.allowAny) ? false : this.options.allowAny;
 	},
 	   
 	/**
@@ -39,25 +38,49 @@ lang.extend(inputEx.Radio, inputEx.Field,
 	 */
 	renderComponent: function() {
 	
-	   this.el = inputEx.cn('input', {
-	        type: 'radio', 
-	        checked:(this.options.checked === false) ? false : true 
-	   });
-	   this.fieldContainer.appendChild(this.el);
+	   this.optionEls = [];
 	
-	   this.label = inputEx.cn('label', {className: 'inputEx-radio-rightLabel'}, null, this.options.label || '');
-	   this.fieldContainer.appendChild(this.label);
+	   for(var i = 0 ; i < this.options.choices.length ; i++) {
 	
-	   // Keep state of radio in a hidden field (format : this.checkedValue or this.uncheckedValue)
-	   this.hiddenEl = inputEx.cn('input', {type: 'hidden', name: this.options.name || '', value: this.el.checked ? this.checkedValue : this.uncheckedValue});
-	   this.fieldContainer.appendChild(this.hiddenEl);
+	      var div = inputEx.cn('div', {className: 'inputEx-RadioField-choice'});
+	
+	      var radio = inputEx.cn('input', { type: 'radio', name: this.options.name, value: this.options.choices[i] });
+	      div.appendChild(radio);
+	      
+         this.label = inputEx.cn('label', {className: 'inputEx-RadioField-rightLabel'}, null, this.options.choices[i]);
+      	div.appendChild(this.label);
+      	
+      	this.fieldContainer.appendChild( div );
+      	
+      	this.optionEls.push(radio);
+     }
+     
+     // Build a "any" radio combined with a StringField
+     if(this.options.allowAny) {
+        this.radioAny = inputEx.cn('input', { type: 'radio', name: this.options.name });
+	     this.fieldContainer.appendChild(this.radioAny);
+	      
+        this.anyField = new inputEx.StringField({});
+        Dom.setStyle(this.radioAny, "float","left");
+        Dom.setStyle(this.anyField.divEl, "float","left");
+        this.anyField.disable();
+     	  this.fieldContainer.appendChild(this.anyField.getEl());
+     	  
+     	  this.optionEls.push(this.radioAny);
+     }
+     
 	},
 	   
 	/**
-	 * Clear the previous events and listen for the "change" event
+	 * Listen for change events on all radios
 	 */
 	initEvents: function() {
-	   Event.addListener(this.el, "change", this.onChange, this, true);	
+	   Event.addListener(this.optionEls, "change", this.onChange, this, true);
+	   if(this.anyField)	{
+	      this.anyField.updatedEvt.subscribe(function(e) {
+	         inputEx.RadioField.superclass.onChange.call(this,e);
+	      }, this, true);
+	   }
 	},
 	   
 	/**
@@ -65,42 +88,51 @@ lang.extend(inputEx.Radio, inputEx.Field,
 	 * @param {Event} e The original 'change' event
 	 */
 	onChange: function(e) {
-	   this.hiddenEl.value = this.el.checked ? this.checkedValue : this.uncheckedValue;
-	   
-	   inputEx.Radio.superclass.onChange.call(this,e);
+	   // Enable/disable the "any" field
+      if(this.radioAny) {
+         if(this.radioAny == Event.getTarget(e) ) {
+            this.anyField.enable();
+            lang.later( 50 , this.anyField , "focus");
+         }
+         else {
+            this.anyField.disable();
+         }
+      } 
+	   inputEx.RadioField.superclass.onChange.call(this,e);
 	},
 	
 	/**
 	 * Get the state value
-	 * @return {Any} one of [checkedValue,uncheckedValue]
+	 * @return {Any} 
 	 */
 	getValue: function() {
-	      return this.el.checked ? this.checkedValue : this.uncheckedValue;
+	   for(var i = 0 ; i < this.optionEls.length ; i++) {
+	      if(this.optionEls[i].checked) {
+	         if(this.radioAny && this.radioAny == this.optionEls[i]) {
+	            var val = this.anyField.getValue();
+	            return (val == '') ? null : val;
+	         }
+	         return this.options.choices[i];
+	      }
+	   }
+	   return null;
 	},
 	
 	/**
 	 * Set the value of the checkedbox
-	 * @param {Any} value The value schould be one of [checkedValue,uncheckedValue]
+	 * @param {Any} value The value schould be one of this.options.choices
 	 */
 	setValue: function(value) {
-	   if (value===this.checkedValue) {
-			this.hiddenEl.value = value;
-			this.el.checked = true;
-		}
-	   else if (value===this.uncheckedValue) {
-			this.hiddenEl.value = value;
-			this.el.checked = false;
-		}
-		else {
-		   throw new Error("inputEx.Radio.setValue: "+value+" schould be in ["+this.checkedValue+","+this.uncheckedValue+"]");
-		}
+	   for(var i = 0 ; i < this.optionEls.length ; i++) {
+	      this.optionEls[i].checked = (value == this.options.choices[i]);
+	   }
 	}
 	
 });   
 	
 /**
- * Register this class as "boolean" type
+ * Register this class as "radio" type
  */
-inputEx.registerType("radio", inputEx.Radio);
+inputEx.registerType("radio", inputEx.RadioField);
 	
 })();
