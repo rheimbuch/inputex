@@ -302,6 +302,14 @@ if(inputEx.PasswordField) {
    ]; 
 }
 
+
+if(inputEx.RadioField) {
+   inputEx.RadioField.groupOptions = [
+      {type: 'list', inputParams: {label: 'Options', name: 'choices', elementType: {type: 'string'} } },
+      {type: 'boolean', inputParams: {label: 'Allow custom value', name: 'allowAny'} }
+   ];
+}
+
 if(inputEx.RTEField) {
    inputEx.RTEField.groupOptions = [];
 }

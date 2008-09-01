@@ -48,6 +48,7 @@ YAHOO.lang.extend(inputEx.DateTimeField, inputEx.CombineField,
     * @param {Date} val Date to set
     */
    setValue: function(val) {
+      if(!YAHOO.lang.isObject(val)) {return;}
       this.inputs[0].setValue(val);
       this.inputs[1].setValue( ([val.getHours(), val.getMinutes(), val.getSeconds()]).join(':') );
    }
