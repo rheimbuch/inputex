@@ -98,10 +98,10 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 
 	// Example 1
 	var contactFormFields = [ 
-			{label: 'Title', type: 'select', inputParams: {name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
-			{label: 'Firstname', inputParams: {name: 'firstname', required: true, value:'Jacques' } }, 
-			{label: 'Lastname', inputParams: {name: 'lastname', value:'Dupont' } }, 
-			{label: 'Email', type:'email', inputParams: {name: 'email'}}
+			{ type: 'select', inputParams: {label: 'Title',name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
+			{ inputParams: {label: 'Firstname',name: 'firstname', required: true, value:'Jacques' } }, 
+			{ inputParams: {label: 'Lastname',name: 'lastname', value:'Dupont' } }, 
+			{ type:'email', inputParams: {label: 'Email',name: 'email'}}
 	];
 	
 	
@@ -147,7 +147,7 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	   inputParams: {
 	       name: 'group1',
 	       fields: contactFormFields,
-	disabled: true
+				 disabled: true
 	   }
 	};
 
@@ -157,7 +157,7 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	   inputParams: {
 			   name: 'group2',
 	       fields: [
-					 {type: 'url', label: "Website", inputParams: { name: 'myUrl' } }
+					 {type: 'url', inputParams: {label: "Website",  name: 'myUrl' } }
 				 ]
 	   }
 	};
@@ -178,14 +178,13 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	
 	
 	
-	new inputEx.Group({ 
+	var example2 = new inputEx.Group({ 
 	   parentEl: 'container2',
 
 	   fields: [
 	       {
 						type: 'select', 
-						label: 'Country', 
-						inputParams:{ selectValues: ["France", "USA"]},
+						inputParams:{ label: 'Select your country', selectValues: ["France", "USA"]},
 						interactions: [
 							{
 								valueTrigger: "France",
@@ -215,10 +214,12 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 							}
 						]
 				 },
-			   {type: 'select', inputParams: {name: 'franceCitiesSelect', selectValues: ["Paris", "Lyon", "Marseille"]} },
-			   {type: 'select', inputParams: {name: 'USACitiesSelect', selectValues: ["NewYork", "Chicago", "LA","San Francisco"]} }
+			   {type: 'select', inputParams: {label: 'Select your city', name: 'franceCitiesSelect', selectValues: ["Paris", "Lyon", "Marseille"]} },
+			   {type: 'select', inputParams: {label: 'Select your city', name: 'USACitiesSelect', selectValues: ["NewYork", "Chicago", "LA","San Francisco"]} }
 	   ]
-	})
+	});
+	
+	example2.inputs[2].hide();
 	
 	
 });

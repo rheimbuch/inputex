@@ -45,9 +45,9 @@ YAHOO.inputEx.Group.prototype.runInteractions = function(actions) {
 };
 
 YAHOO.inputEx.Field.prototype.hide= function() {
-   this.el.style.display = 'none';
+   this.divEl.style.display = 'none';
 };
 
 YAHOO.inputEx.Field.prototype.show= function() {
-   this.el.style.display = '';
+   this.divEl.style.display = '';
 };
