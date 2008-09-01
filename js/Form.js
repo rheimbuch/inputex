@@ -66,6 +66,8 @@ lang.extend(inputEx.Form, inputEx.Group,
     * Render the buttons 
     */
    renderButtons: function() {
+      
+      var buttonDiv = inputEx.cn('div', {className: 'inputEx-Form-buttonBar'});
 		
 	   var button, buttonEl;
 	   for(var i = 0 ; i < this.options.buttons.length ; i++ ) {
@@ -73,8 +75,10 @@ lang.extend(inputEx.Form, inputEx.Group,
 	      buttonEl = inputEx.cn('input', {type: button.type, value: button.value});
 	      if( button.onClick ) { buttonEl.onclick = button.onClick; }
 	      this.buttons.push(buttonEl);
-	      this.form.appendChild(buttonEl);
+	      buttonDiv.appendChild(buttonEl);
 	   }	
+	   
+	   this.form.appendChild(buttonDiv);
    },
    
    
