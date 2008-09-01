@@ -44,14 +44,7 @@ YAHOO.util.Event.addListener(window, 'load', function() {
    			"inputParams" : {
    				"name" : "name",
    				"required" : true,
-   				"tooltipIcon" : false,
    				"value" : "",
-   				"messages" : {
-   					"required" : "This field is required",
-   					"invalid" : "This field is invalid",
-   					"valid" : "This field is valid"
-   				},
-   				"className" : "inputEx-Field",
    				"size" : 20
    			}
    		},
@@ -61,14 +54,7 @@ YAHOO.util.Event.addListener(window, 'load', function() {
    			"inputParams" : {
    				"name" : "firstname",
    				"required" : true,
-   				"tooltipIcon" : false,
    				"value" : "",
-   				"messages" : {
-   					"required" : "This field is required",
-   					"invalid" : "This field is invalid",
-   					"valid" : "This field is valid"
-   				},
-   				"className" : "inputEx-Field",
    				"size" : 20
    			}
    		},
@@ -77,14 +63,7 @@ YAHOO.util.Event.addListener(window, 'load', function() {
    			"label" : "Email",
    			"inputParams" : {
    				"name" : "",
-   				"tooltipIcon" : true,
    				"value" : "",
-   				"messages" : {
-   					"required" : "This field is required",
-   					"invalid" : "Invalid email, ex: sample@test.com",
-   					"valid" : "This field is valid"
-   				},
-   				"className" : "inputEx-Field",
    				"required" : false,
    				"size" : 20
    			}
@@ -96,22 +75,14 @@ YAHOO.util.Event.addListener(window, 'load', function() {
    				"elementType" : {
    					"type" : "color",
    					"inputParams" : {
-   						"name" : "",
-   						"tooltipIcon" : false
+   						"name" : ""
    					}
    				},
    				"listLabel" : "",
    				"name" : "",
-   				"tooltipIcon" : false,
    				"value" : [
 
    				],
-   				"messages" : {
-   					"required" : "This field is required",
-   					"invalid" : "This field is invalid",
-   					"valid" : "This field is valid"
-   				},
-   				"className" : "inputEx-Field inputEx-ListField",
    				"required" : false,
    				"sortable" : false
    			}

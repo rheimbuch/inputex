@@ -58,7 +58,6 @@ YAHOO.lang.extend(inputEx.IntegerField, inputEx.StringField,
     * @param {int} value The value to set
     */
    setValue: function(value) {
-      console.log("setValue", value);
       if( isNaN(value) ) {
          this.el.value = "";
       }
