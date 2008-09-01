@@ -10,6 +10,8 @@
  * <ul>
  *	  <li>regexp: regular expression used to validate (otherwise it always validate)</li>
  *   <li>size: size attribute of the input</li>
+ *   <li>maxLength: maximum size of the string field (no message display, uses the maxlength html attribute)</li>
+ *   <li>minLength: minimum size of the string field (will display an error message if shorter)</li>
  * </ul>
  */
 inputEx.StringField = function(options) {
@@ -41,6 +43,8 @@ lang.extend(inputEx.StringField, inputEx.Field,
       attributes.type = 'text';
       attributes.size = this.options.size;
       if(this.options.name) attributes.name = this.options.name;
+      
+      if(this.options.maxLength) attributes.maxLength = this.options.maxLength;
    
       // Create the node
       this.el = inputEx.cn('input', attributes);
@@ -78,9 +82,13 @@ lang.extend(inputEx.StringField, inputEx.Field,
     * Uses the optional regexp to validate the field value
     */
    validate: function() { 
+      var val = this.getValue();
       // if we are using a regular expression
       if( this.options.regexp ) {
-	      return this.getValue().match(this.options.regexp);
+	      return val.match(this.options.regexp);
+      }
+      if( this.options.minLength ) {
+	      return val.length >= this.options.minLength;
       }
       return true;
    },
@@ -113,11 +121,25 @@ lang.extend(inputEx.StringField, inputEx.Field,
     */
    getState: function() { 
       var val = this.getValue();
+      // If the field has a minLength:
+      if(this.options.minLength && val.length < this.options.minLength) {
+         return inputEx.stateInvalid;
+      }
 	   // if the field is empty :
 	   if( val === '' || (this.options.typeInvite && val == this.options.typeInvite) ) {
 	      return this.options.required ? inputEx.stateRequired : inputEx.stateEmpty;
 	   }
 	   return this.validate() ? inputEx.stateValid : inputEx.stateInvalid;
+	},
+	
+	/**
+    * Add the minLength string message handling
+    */
+	getStateString: function(state) {
+	   if(state == inputEx.stateInvalid && this.options.minLength && this.el.value.length < this.options.minLength) {  
+	      return inputEx.messages.stringTooShort[0]+this.options.minLength+inputEx.messages.stringTooShort[1];
+      }
+	   return inputEx.StringField.superclass.getStateString.call(this, state);
 	},
    
    /**
@@ -146,6 +168,9 @@ lang.extend(inputEx.StringField, inputEx.Field,
    
 
 });
+
+
+inputEx.messages.stringTooShort = ["This field should contain at least "," numbers or caracters"];
 
 /**
  * Register this class as "string" type

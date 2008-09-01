@@ -191,10 +191,10 @@ inputEx.Field.prototype = {
     * Get the string for the given state
     */
 	getStateString: function(state) {
-      if(state == 'required') {
+      if(state == inputEx.stateRequired) {
          return this.options.messages.required;
       }
-      else if(state == 'invalid') {
+      else if(state == inputEx.stateInvalid) {
          return this.options.messages.invalid;
       }
       else {

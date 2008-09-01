@@ -3,14 +3,14 @@
    var inputEx = YAHOO.inputEx,Event=YAHOO.util.Event;
 	
 /**
- * @class Create a password field. Options:
- * -minLength
+ * @class Create a password field.
  * @extends inputEx.StringField
  * @constructor
  * @param {Object} options inputEx.Field options object
  * <ul>
- *   <li>minLength: the minimum size for the password</li>
  *   <li>confirmPasswordField: the PasswordField instance to compare to when using 2 password fields for password creation (please use the setConfirmationField method)</li>
+ *   <li>strengthIndicator: display a widget to indicate password strength (default false)</li>
+ *   <li>capsLockWarning: display a warning if CapsLock is on (default false)</li>
  * </ul>
  */
 inputEx.PasswordField = function(options) {
@@ -31,24 +31,23 @@ YAHOO.lang.extend(inputEx.PasswordField, inputEx.StringField,
    },
 	
 	/**
-	 * Add the password regexp, and the minLength (+set messges)
+	 * Add the password regexp, strengthIndicator, capsLockWarning
 	 */
 	setOptions: function() {
 	   
+      this.options.className = this.options.className || "inputEx-Field inputEx-PasswordField";
+      
 	   inputEx.PasswordField.superclass.setOptions.call(this);
 	   
+	   // Add the password regexp
 	   this.options.regexp = inputEx.regexps.password;
-	   //   minLength || 5 not possible because 0 falsy value...
-	   this.options.minLength = (this.options.minLength == undefined) ? 5 : this.options.minLength;
-		this.options.messages.invalid = inputEx.messages.invalidPassword[0]+this.options.minLength+inputEx.messages.invalidPassword[1];
-		
+	  
 		// display a strength indicator
 		this.options.strengthIndicator = YAHOO.lang.isUndefined(this.options.strengthIndicator) ? false : this.options.strengthIndicator;
 		
 		// capsLockWarning
 		this.options.capsLockWarning = YAHOO.lang.isUndefined(this.options.capsLockWarning) ? false : this.options.capsLockWarning;
 		
-      this.options.className = "inputEx-Field inputEx-PasswordField";
 	},
 	
 	/**
@@ -103,13 +102,21 @@ YAHOO.lang.extend(inputEx.PasswordField, inputEx.StringField,
 	 */
 	validate: function() {
 	   if(this.options.confirmPasswordField) {
-	      return (this.options.confirmPasswordField.getValue() == this.getValue());
+	      if(this.options.confirmPasswordField.getValue() == this.getValue() ) {
+	         return false;
+	      }
 	   }
-	   else {
-	      var superValid = inputEx.PasswordField.superclass.validate.call(this);
-	      var lengthValid = this.getValue().length >= this.options.minLength;
-	      return superValid && lengthValid;
-	   }
+	   return inputEx.PasswordField.superclass.validate.call(this);
+	},
+	
+	/**
+	 * Change the state string
+	 */
+	getStateString: function(state) {
+	   if(state == inputEx.stateInvalid && this.options.minLength && this.el.value.length < this.options.minLength) {  
+	      return inputEx.messages.invalidPassword[0]+this.options.minLength+inputEx.messages.invalidPassword[1];
+      }
+	   return inputEx.StringField.superclass.getStateString.call(this, state);
 	},
 	
 	/**

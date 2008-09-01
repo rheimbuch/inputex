@@ -86,16 +86,16 @@
 <!-- Example 4 -->
 <div class='exampleDiv'>
 
-	<p class="title">Tooltip icons</p>
+	<p class="title">Maximum and minimum length</p>
 	
-	<p>InputEx can add a icon next to each field that will represent the state of the field. A tooltip is added on</p>
+	<p>You can add a maximum/minimum length on string fields :</p>
 
 	<div class='demoContainer' id='container4'></div>
 
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript" cols="60" rows="1">
-			new YAHOO.inputEx.StringField({value: 'test', showMsg: true, parentEl: 'container4'});
+			new YAHOO.inputEx.StringField({value: '0123456789', showMsg: true, minLength: 3, maxLength: 10, parentEl: 'container4'});
 		</textarea>
 		</form>
 	</div>
@@ -271,7 +271,7 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	new YAHOO.inputEx.StringField({size: 40, value: 'size is set to 40 (default is 20)', parentEl: 'container3'});
 
 	// Example 4
-	new YAHOO.inputEx.StringField({value: 'test', showMsg: true, parentEl: 'container4'});
+	new YAHOO.inputEx.StringField({value: '0123456789', showMsg: true, minLength: 3, maxLength: 10, parentEl: 'container4'});
 	
 	// Example 5
 	new YAHOO.inputEx.StringField({required: true, showMsg: true, parentEl: 'container5'});
