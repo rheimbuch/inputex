@@ -10,7 +10,7 @@
   {
      label: 'Enter your Birthdate',
      type: 'date',
-     inputParams: {name: 'birthdate',required: true, tooltipIcon: false, ...typeGroupOptionValues.. }
+     inputParams: {name: 'birthdate',required: true, showMsg: true, ...typeGroupOptionValues.. }
   }
  * @extends inputEx.Field
  * @constructor
@@ -39,7 +39,7 @@ YAHOO.lang.extend(inputEx.TypeField, inputEx.Field,
         type: value.type,
         name: value.inputParams.name,
         required: value.inputParams.required,
-        tooltipIcon: value.inputParams.tooltipIcon
+        showMsg: value.inputParams.showMsg
       });
       this.rebuildGroupOptions();
       this.group.setValue(value.inputParams);
@@ -61,7 +61,7 @@ YAHOO.lang.extend(inputEx.TypeField, inputEx.Field,
       obj.inputParams.name = V.name;
       obj.inputParams.label = this.inplaceEditLabel.getValue();
       if(V.required) { obj.inputParams.required = true; }
-      //obj.inputParams.tooltipIcon = V.tooltipIcon;
+      obj.inputParams.showMsg = V.showMsg;
       if(this.fieldValue) { obj.inputParams.value = this.fieldValue.getValue(); }
       
       return obj;
@@ -113,7 +113,7 @@ YAHOO.lang.extend(inputEx.TypeField, inputEx.Field,
             //{label: "Optional?", type: "boolean", inputParams: {name: "optional", value: false} },
             { type: "string", inputParams:{label: "Name", name: "name"} },
             { type: "boolean", inputParams: {label: "Required?",name: "required", value: false} },
-            { type: "boolean", inputParams: {label: "Display icon",name: "tooltipIcon", value: false} }
+            { type: "boolean", inputParams: {label: "Display messages",name: "showMsg", value: false} }
          ]});
          var groupEl = this.typePropertiesGroup.getEl();
          this.propertyPanel.appendChild( groupEl );
@@ -296,7 +296,10 @@ if(inputEx.IPv4Field) {
 }
 
 if(inputEx.PasswordField) {
-   inputEx.PasswordField.groupOptions = []; 
+   inputEx.PasswordField.groupOptions = [
+      {type: 'boolean', inputParams: {label: 'Strength indicator', name: 'strengthIndicator', value: false} },
+      {type: 'boolean', inputParams: {label: 'CapsLock warning', name: 'capsLockWarning', value: false} }
+   ]; 
 }
 
 if(inputEx.RTEField) {

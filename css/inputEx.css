@@ -467,6 +467,7 @@ div.inputEx-Password-StrengthIndicator {
     color: #505050;
     font-size: 70%;
     margin-left:10px;
+    width:83px;
 }
 
 div.inputEx-Password-StrengthIndicator div.inputEx-Password-StrengthIndicatorBlock {
