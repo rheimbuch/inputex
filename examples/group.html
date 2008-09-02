@@ -181,6 +181,15 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
+			var descriptedFields = [ 
+					{type: 'select', inputParams: {label: 'Title', name: 'title', description: 'Select your gender',  selectValues: ['Mr','Mrs','Mme'] } },
+					{ inputParams: {label: 'Firstname', description: 'Your firstname', name: 'firstname', required: true, value:'Jacques' } }, 
+					{ inputParams: {label: 'Lastname', description: 'Your lastname', name: 'lastname', value:'Dupont' } }, 
+					{ type:'email', inputParams: {description: 'Your email. We wont send you any commercial information', label: 'Email', name: 'email'}}, 
+					{type:'boolean', inputParams: {description: 'Check this box if you are happy to be there', label: 'Happy to be there ?', name: 'email'}}, 
+					{ type:'url', inputParams: {description: 'Your blog url', label: 'Website', name:'website'}} 
+			];
+			new YAHOO.inputEx.Group({parentEl: 'container6', fields: descriptedFields, legend: 'User Informations'});
 		</textarea>
 		</form>
 	</div>

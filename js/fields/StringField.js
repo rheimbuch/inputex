@@ -13,6 +13,7 @@
  *   <li>maxLength: maximum size of the string field (no message display, uses the maxlength html attribute)</li>
  *   <li>minLength: minimum size of the string field (will display an error message if shorter)</li>
  *   <li>typeInvite: string displayed when the field is empty</li>
+ *   <li>readonly: set the field as readonly</li>
  * </ul>
  */
 inputEx.StringField = function(options) {
@@ -30,9 +31,6 @@ lang.extend(inputEx.StringField, inputEx.Field,
     */
    setOptions: function() {
       inputEx.StringField.superclass.setOptions.call(this);
-      
-      // Field Size
-      this.options.size = this.options.size || 20;
    },
    
    /**
@@ -42,8 +40,9 @@ lang.extend(inputEx.StringField, inputEx.Field,
       // Attributes of the input field
       var attributes = {};
       attributes.type = 'text';
-      attributes.size = this.options.size;
+      if(this.options.size) attributes.size = this.options.size;
       if(this.options.name) attributes.name = this.options.name;
+      if(this.options.readonly) attributes.readonly = 'readonly';
       
       if(this.options.maxLength) attributes.maxLength = this.options.maxLength;
    

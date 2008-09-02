@@ -1,6 +1,6 @@
 (function() {
 
-   var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Event = YAHOO.util.Event;
+   var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Event = YAHOO.util.Event, Dom = YAHOO.util.Dom;
 
 /**
  * @class A DatePicker Field.
@@ -23,83 +23,81 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
    setOptions: function() {
 	   this.options.className = this.options.className || 'inputEx-Field inputEx-DateField inputEx-DatePickerField';
    	inputEx.DatePickerField.superclass.setOptions.call(this);
+   	
+   	this.options.calendar = this.options.calendar || { navigator: true };
+   	this.options.readonly = true;
    },
    
    /**
     * Render the input field and the minical container
     */
    renderComponent: function() {
-      // Attributes of the input field
-      var attributes = {};
-      attributes.type = 'text';
-      attributes.size = this.options.size;
-      if(this.options.name) attributes.name = this.options.name;
-   
-      // Adds a readonly attribute
-      attributes.readonly = 'readonly';
-   
-      // Create the node
-      this.el = inputEx.cn('input', attributes);
-	
-      // Append it to the main element
-      this.fieldContainer.appendChild(this.el);
       
-      this.minicalContainer = inputEx.cn('div', {className: 'inputEx-DatePickerField-minical'});
-      this.fieldContainer.appendChild(this.minicalContainer);
-   },
-   
-   /**
-    * Render the minical using the inputEx calendar widget
-    */
-   initMinical : function() {
-       var date = (this.value instanceof Date) ? this.value : new Date();
-   	// Create a minical
-   	
-   	// Set the id of the dom element with a hack
-   	if( !inputEx.DatePickerField.instanceNbr ) {
-         inputEx.DatePickerField.instanceNbr = 0;
-      }
-      var id = 'minical-DatePickerField-'+inputEx.DatePickerField.instanceNbr;
-      inputEx.DatePickerField.instanceNbr += 1;
+      inputEx.DatePickerField.superclass.renderComponent.call(this);
       
-   	this.minicalEl = new inputEx.widget.calendar(id,this.minicalContainer,{
-   																calNumber:1,
-   																calNbrLines:6,
-   																autoCloseDelay:1000,
-   																hideOnSelect:true,
-   																selectedDate:date,
-   																pageDate:date
-   															});
       
-      // Fire the event when a new date is clicked on the minical
-      this.minicalEl.changeSelectedDatesEvent.subscribe(function(e,args) {
-         this.setValue(args[0][0]);
-      }, this, true);
+      // Creation de l'overlay
+      this.oOverlay = new YAHOO.widget.Overlay(Dom.generateId(), { visible: false });
+      this.oOverlay.setBody(" ");
+      this.oOverlay.body.id = Dom.generateId();
+      
+      this.button = new YAHOO.widget.Button({ type: "menu", menu: this.oOverlay, label: "&nbsp;&nbsp;&nbsp;&nbsp;" });
+      this.button._hideMenu = function () {
+            if (this._menu) {
+               if (this.preventHide) {
+                 this._showMenu();
+                 return;
+               }
+               this._menu.hide();
+            }
+       };
+      this.button.appendTo(this.fieldContainer);
    },
 
    /**
-    * Listen for the click event on the field
+    * Listen for the click event on the field and for button click
     */
    initEvents : function() {
       inputEx.DatePickerField.superclass.initEvents.call(this);
-      //Event.addListener(this.el,'click',this.onClickField,this,true);
-      Event.addListener(this.fieldContainer,'click',this.onClickField,this,true);
+
+      Event.addListener(this.fieldContainer,'click',this.oOverlay.show,this.oOverlay,true);
       
+      this.button.on('click', this.onButtonClick, this, true);
    },
    
    /**
-    * Handle the click event
-    * @param {Event} e The original click event
+    * Called ONCE to render the calendar lazily
     */
-   onClickField: function(e) {
-      // Lazy initializing of minical
-      if (!this.minicalEl) {
-         this.initMinical();
-      }
+   onButtonClick: function() {
       
-      if (this.value instanceof Date) {this.minicalEl.gotoDate(this.value);}
-
-      this.minicalEl.toggle();
+      // Render the overlay
+      this.oOverlay.render(this.fieldContainer);
+      
+      // Render the calendar
+      Event.onAvailable(this.oOverlay.body.id, function() {
+         this.calendar = new YAHOO.widget.Calendar(Dom.generateId(),this.oOverlay.body.id, this.options.calendar );
+         this.calendar.render();
+         
+         // Set the field value when a date is selected
+         this.calendar.selectEvent.subscribe(function (type,args,obj) {
+         	var date = args[0][0];
+         	var year = date[0], month = date[1], day = date[2];
+         	this.setValue(new Date(year,month-1, day) );
+         	this.button.preventHide = false;
+         	this.oOverlay.hide();
+         }, this, true);
+         
+         // HACK for not closing the calendar when changing page
+      	this.calendar.changePageEvent.subscribe(function () {
+      		this.button.preventHide = true;
+            var that = this;
+            window.setTimeout(function() {that.button.preventHide = false;},0);
+      	}, this, true);
+         
+      }, this, true);
+      
+      // Unsubscribe the event so this function is called only once
+      this.button.unsubscribe("click", this.onButtonClick); 
    }
    
 });
