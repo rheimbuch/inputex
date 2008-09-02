@@ -6,10 +6,12 @@
  */
 YAHOO.inputEx.ObjectField = function(options) {
 	options.elementType = {
-		type: 'pair', 
+		type: 'combine', 
 		inputParams: {
-			leftFieldOptions: {type: 'string', inputParams: {size: 10} }, 
-			rightFieldOptions: {type:'string', inputParams: {size: 10} } 
+			fields: [
+			   {type: 'string', inputParams: {size: 10} }, 
+			   {type:'string', inputParams: {size: 10} } 
+			]
 		} 
 	};
 	YAHOO.inputEx.ObjectField.superclass.constructor.call(this, options);

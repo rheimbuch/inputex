@@ -56,7 +56,8 @@
 	<div id='container'>
 		<p class="title">inputExChart</p>
 		<p class="description">
-			Enter the desired configuration
+			Enter the desired configuration and click the 'Update' button.<br />
+			This application is an example for the <a href="http://javascript.neyric.com/inputex">inputEx Library</a>.<br />
 		</p>
 		
 		<table id='mainTable'>
@@ -71,7 +72,7 @@
 		
 					<p class="subtitle" style="margin-top: 20px;">Preview :</p>
 					<p class="description" id='preview'>
-						Hit the preview button
+						<button id='updateButton'>Update</button>
 					</p>
 		
 					<img src='../images/space.gif' id='chart'/>
@@ -129,15 +130,18 @@ YAHOO.util.Event.addListener(window, "load", function() {
 		
 	};
 	
+	YAHOO.util.Event.addListener('updateButton', 'click', updateChart);
+	
 	form = new YAHOO.inputEx.Form({
 		parentEl: 'htmlFormContainer',
 		fields: [
-	      {label: 'Title', inputParams: {name: 'title', value: 'My Graph'} },
-				{label: 'Width', type: 'integer', inputParams: {name: 'width', value: 320} },
-				{label: 'Height', type: 'integer', inputParams: {name: 'height', value: 240} },
-				{label: 'Labels', type: 'list', inputParams: {name: 'labels', value:['Q1','Q2','Q3','Q4']}},
-				{label: 'Colors', type: 'list', inputParams: {name: 'colors', elementType: {type: 'color', inputParams:{} }, value: ['#ff0000','#00ff00','#0000ff','#ffff00'] }},
-				{label: 'Series', type: 'list', inputParams: {
+	      { inputParams: {label: 'Title', name: 'title', value: 'My Graph'} },
+				{ type: 'integer', inputParams: {label: 'Width', name: 'width', value: 320} },
+				{ type: 'integer', inputParams: {label: 'Height', name: 'height', value: 240} },
+				{ type: 'list', inputParams: {label: 'Labels', name: 'labels', value:['Q1','Q2','Q3','Q4']}},
+				{ type: 'list', inputParams: {label: 'Colors',name: 'colors', elementType: {type: 'color', inputParams:{} }, value: ['#ff0000','#00ff00','#0000ff','#ffff00'] }},
+				{ type: 'list', inputParams: {
+					label: 'Series',
 					name: 'series', 
 					elementType: {
 						type: 'list', 
@@ -145,10 +149,7 @@ YAHOO.util.Event.addListener(window, "load", function() {
 					},
 					value: [[10,20,30,40],[40,30,20,10],[15,15,15,15],[0,10,25,50]]
 				}}
-		],
-	  buttons: [
-	      {type: 'button', value: 'Preview !', onClick: updateChart }
-	   ]
+		]
 	});
 
 	updateChart();

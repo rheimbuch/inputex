@@ -30,6 +30,8 @@ lang.extend(inputEx.Form, inputEx.Group,
       inputEx.Form.superclass.setOptions.call(this);
    
       this.buttons = [];
+      
+      this.options.buttons = this.options.buttons || [];
    
       if(this.options.ajax) {
          this.options.ajax.method = this.options.ajax.method || 'POST';

@@ -24,6 +24,9 @@
 	font-weight: 16pt;
 	margin-bottom: 10px;
 }
+div.inputEx-Group div.inputEx-label {
+	width:63px;
+}
 </style>
 
 </head>
@@ -72,15 +75,14 @@ YAHOO.util.Event.addListener(window, "load", function() {
 	form = new YAHOO.inputEx.Form({
 		parentEl: 'htmlFormContainer',
 		fields: [
-	      {label: 'Tag', type: 'select', inputParams: {name: 'tagName', 
+	      { type: 'select', inputParams: {label: 'Tag', name: 'tagName', 
 											 selectValues: ["div", "script", "img", "a", "input", "p", "br", "span", "b", "iframe"]} },
-				{label: '', type: 'object', inputParams: {listLabel: 'attributes', name: 'attributes'} },
-				{label: '', type: 'object', inputParams: {listLabel: 'css attributes', name: 'cssStyles'} },
-	      {label: 'innerHTML', type: 'text', inputParams: {name: 'innerHTML'}}
+				{ type: 'object', inputParams: {label: ' ', listLabel: 'attributes', name: 'attributes'} },
+				{ type: 'object', inputParams: {label: ' ', listLabel: 'css attributes', name: 'cssStyles'} },
+	      { type: 'text', inputParams: {label: 'innerHTML', name: 'innerHTML'}}
 		],
 	  buttons: [
 	      {type: 'button', value: 'Create !', onClick: createHTMLElement },
-		
 			  {type: 'button', value: 'Clear', onClick: function() {
 	         form.setValue({tagName: 'div', cssStyles:{}, attributes:{}, innerHTML: "" });
 	      } }
