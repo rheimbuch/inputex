@@ -14,6 +14,7 @@ version 0.2.0b:
 
 not released yet
 
+	- flatten option on type JSON
 	- Added RadioField
 	- StringField: added maxLength, minLength attributes
 	- Added MultiAutoComplete

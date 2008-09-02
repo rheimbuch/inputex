@@ -188,6 +188,49 @@
 </div>
 
 
+<!-- Example 7 -->
+<div class='exampleDiv'>
+
+	<p class="title">Flatten output value for a sub-group</p>
+	
+	<p>The parent group will then flatten the sub-group value within its value.</p>
+	
+	<p>In this example, we return <i>{firstname: ..., lastname: ..., title:... }</i> instead of <i>{ MySubForm: {firstname: ..., lastname: ...}, title:... }</i>.</p>
+
+	<div class='demoContainer' id='container7'></div>
+
+	<div class='codeContainer'>
+		<form>
+		<textarea name="code" class="JScript">
+			var flattenGroup = new YAHOO.inputEx.Group({
+				parentEl: 'container7', 
+				legend: 'Flatten demo', 
+				inputParams: {name: "MyForm"},
+				fields: [
+			      { 
+			          type: 'group',
+			          flatten: true, 
+			          inputParams: {
+									name: "MySubForm",
+									fields: [
+				             {inputParams: {label: 'Firstname', name: 'firstname' }},
+				             {inputParams: {label: 'Lastname', name: 'lastname',description: "Firstname and Lastname are within the same sub-group" }}
+				          ]
+								},
+			      },
+			      { inputParams: {label: 'Title', name: 'title' } }
+			   ]
+			});
+			flattenGroup.updatedEvt.subscribe(function(e,params) {
+				var value = params[0];
+				YAHOO.util.Dom.get('container7').appendChild( inputEx.cn('div',null,null, YAHOO.lang.JSON.stringify(value)) );
+			});
+		</textarea>
+		</form>
+	</div>
+
+</div>
+
 
 
 <!-- YUI Library -->
@@ -291,6 +334,33 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 			{ type:'url', inputParams: {description: 'Your blog url', label: 'Website', name:'website'}} 
 	];
 	new YAHOO.inputEx.Group({parentEl: 'container6', fields: descriptedFields, legend: 'User Informations'});
+	
+	
+	
+	// Example 7
+	var flattenGroup = new YAHOO.inputEx.Group({
+		parentEl: 'container7', 
+		legend: 'Flatten demo', 
+		inputParams: {name: "MyForm"},
+		fields: [
+	      { 
+	          type: 'group',
+	          flatten: true, 
+	          inputParams: {
+							name: "MySubForm",
+							fields: [
+		             {inputParams: {label: 'Firstname', name: 'firstname' }},
+		             {inputParams: {label: 'Lastname', name: 'lastname',description: "Firstname and Lastname are within the same sub-group" }}
+		          ]
+						},
+	      },
+	      { inputParams: {label: 'Title', name: 'title' } }
+	   ]
+	});
+	flattenGroup.updatedEvt.subscribe(function(e,params) {
+		var value = params[0];
+		YAHOO.util.Dom.get('container7').appendChild( inputEx.cn('div',null,null, YAHOO.lang.JSON.stringify(value)) );
+	});
 	
 });
 

@@ -147,6 +147,11 @@ lang.augmentObject(inputEx,
 
       // Instanciate the field
       var inputInstance = new fieldClass(fieldOptions.inputParams);
+      
+      // Add the flatten attribute if present in the params
+      if(fieldOptions.flatten) {
+         inputInstance._flatten = true;
+      }
    	  
       return inputInstance;
    },
