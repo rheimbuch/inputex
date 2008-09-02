@@ -16,7 +16,7 @@ not released yet
 
 	- flatten option on type JSON
 	- Added RadioField
-	- StringField: added maxLength, minLength attributes
+	- StringField: added maxLength, minLength, readonly attributes
 	- Added MultiAutoComplete
 	- typeInvitation for StringField and subclasses
 	- MultiSelectField
@@ -32,7 +32,6 @@ not released yet
 	- Added an inputEx.importJsonSchema (experimental) method to create a form from a JSON Schema
 	- Documentation now uses JsDocToolkit 2 and http://code.google.com/p/neyricjslibs-template/
 	- Added a DatePickerField (type: datepicker)
-	- Added a Calendar Widget (for the date picker, much lighter than YUI calendar)
 	- Added DateTimeField (type: datetime)
 	- Added IntegerField (type: integer) and removed the "numbersOnly" option from StringField
 	- Added NumberField (type: number)

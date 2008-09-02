@@ -310,7 +310,6 @@ div.inputEx-DateField input {
  * DatePicker
  */
 div.inputEx-DatePickerField, div.inputEx-DatePickerField input {
-   cursor: pointer;
    vertical-align: top;
 }
 
@@ -320,6 +319,7 @@ div.inputEx-DatePickerField div.yui-overlay {
 
 div.inputEx-DatePickerField {
    background: none;
+   padding-left: inherit;
 }
 
 div.inputEx-DatePickerField .yui-menu-button button {

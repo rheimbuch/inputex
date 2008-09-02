@@ -37,7 +37,7 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
       
       
       // Creation de l'overlay
-      this.oOverlay = new YAHOO.widget.Overlay(Dom.generateId(), { visible: false });
+      this.oOverlay = new YAHOO.widget.Overlay(Dom.generateId()/*, { visible: false }*/);
       this.oOverlay.setBody(" ");
       this.oOverlay.body.id = Dom.generateId();
       
@@ -52,18 +52,11 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
             }
        };
       this.button.appendTo(this.fieldContainer);
-   },
-
-   /**
-    * Listen for the click event on the field and for button click
-    */
-   initEvents : function() {
-      inputEx.DatePickerField.superclass.initEvents.call(this);
-
-      Event.addListener(this.fieldContainer,'click',this.oOverlay.show,this.oOverlay,true);
       
+      // Subscribe to the first click
       this.button.on('click', this.onButtonClick, this, true);
    },
+
    
    /**
     * Called ONCE to render the calendar lazily
@@ -74,27 +67,23 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
       this.oOverlay.render(this.fieldContainer);
       
       // Render the calendar
-      Event.onAvailable(this.oOverlay.body.id, function() {
-         this.calendar = new YAHOO.widget.Calendar(Dom.generateId(),this.oOverlay.body.id, this.options.calendar );
-         this.calendar.render();
+      this.calendar = new YAHOO.widget.Calendar(Dom.generateId(),this.oOverlay.body.id, this.options.calendar );
+      this.calendar.render();
          
-         // Set the field value when a date is selected
-         this.calendar.selectEvent.subscribe(function (type,args,obj) {
-         	var date = args[0][0];
-         	var year = date[0], month = date[1], day = date[2];
-         	this.setValue(new Date(year,month-1, day) );
-         	this.button.preventHide = false;
-         	this.oOverlay.hide();
-         }, this, true);
-         
-         // HACK for not closing the calendar when changing page
-      	this.calendar.changePageEvent.subscribe(function () {
-      		this.button.preventHide = true;
-            var that = this;
-            window.setTimeout(function() {that.button.preventHide = false;},0);
-      	}, this, true);
-         
+      // Set the field value when a date is selected
+      this.calendar.selectEvent.subscribe(function (type,args,obj) {
+   	   this.oOverlay.hide();
+      	var date = args[0][0];
+      	var year = date[0], month = date[1], day = date[2];
+      	this.setValue(new Date(year,month-1, day) );
       }, this, true);
+      
+      // HACK for not closing the calendar when changing page
+   	this.calendar.changePageEvent.subscribe(function () {
+   		this.button.preventHide = true;
+         var that = this;
+         window.setTimeout(function() {that.button.preventHide = false;},0);
+   	}, this, true);
       
       // Unsubscribe the event so this function is called only once
       this.button.unsubscribe("click", this.onButtonClick); 
