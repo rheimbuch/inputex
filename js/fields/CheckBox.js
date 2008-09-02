@@ -64,6 +64,9 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 	   if( YAHOO.env.ua.ie && parseInt(YAHOO.env.ua.ie,10) < 7 ) {
 	      Event.addListener(this.el, "click", function() { this.fireUpdatedEvt(); }, this, true);	
 	   }
+	   
+	   Event.addListener(this.el, "focus", this.onFocus, this, true);
+	   Event.addListener(this.el, "blur", this.onBlur, this, true);
 	},
 	   
 	/**

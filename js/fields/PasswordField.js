@@ -102,7 +102,7 @@ YAHOO.lang.extend(inputEx.PasswordField, inputEx.StringField,
 	 */
 	validate: function() {
 	   if(this.options.confirmPasswordField) {
-	      if(this.options.confirmPasswordField.getValue() == this.getValue() ) {
+	      if(this.options.confirmPasswordField.getValue() != this.getValue() ) {
 	         return false;
 	      }
 	   }

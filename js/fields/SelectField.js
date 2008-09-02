@@ -1,6 +1,6 @@
 (function() {
 
-   var inputEx = YAHOO.inputEx;
+   var inputEx = YAHOO.inputEx, Event = YAHOO.util.Event;
 
 /**
  * @class Create a select field
@@ -43,7 +43,9 @@ YAHOO.lang.extend(inputEx.SelectField, inputEx.Field,
     * Register the "change" event
     */
    initEvents: function() {
-      YAHOO.util.Event.addListener(this.el,"change", this.onChange, this, true);
+      Event.addListener(this.el,"change", this.onChange, this, true);
+	   Event.addListener(this.el, "focus", this.onFocus, this, true);
+	   Event.addListener(this.el, "blur", this.onBlur, this, true);
    },
    
    /**

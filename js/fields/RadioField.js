@@ -76,6 +76,10 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	 */
 	initEvents: function() {
 	   Event.addListener(this.optionEls, "change", this.onChange, this, true);
+	   
+	   Event.addListener(this.optionEls, "focus", this.onFocus, this, true);
+	   Event.addListener(this.optionEls, "blur", this.onBlur, this, true);
+	   
 	   if(this.anyField)	{
 	      this.anyField.updatedEvt.subscribe(function(e) {
 	         inputEx.RadioField.superclass.onChange.call(this,e);

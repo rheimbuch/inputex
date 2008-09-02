@@ -49,6 +49,9 @@ lang.extend(inputEx.Group, inputEx.Field,
    
       // Create the div wrapper for this group
 	   this.divEl = inputEx.cn('div', {className: 'inputEx-Group'});
+	   if(this.options.id) {
+   	   this.divEl.id = this.options.id;
+   	}
   	   
   	   this.renderFields(this.divEl);  	  
   	   

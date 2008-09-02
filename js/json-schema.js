@@ -29,7 +29,7 @@ YAHOO.inputEx.JsonSchema = {
     */
    schemaToInputEx: function(p, propertyName) {
       
-      var fieldDef = { label: propertyName, inputParams: { name: propertyName} };
+      var fieldDef = {inputParams: { label: propertyName, name: propertyName} };
       if(p.type) {
          
          var type = p.type;
