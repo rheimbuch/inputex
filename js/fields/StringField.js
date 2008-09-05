@@ -165,6 +165,10 @@ lang.extend(inputEx.StringField, inputEx.Field,
 	   if(this.options.typeInvite) {
 	      if(this.previousState==inputEx.stateEmpty) {
 	         this.el.value = "";
+	         
+	         // Remove the "empty" state and class
+	         this.previousState = null;
+	         YAHOO.util.Dom.removeClass(this.divEl,"inputEx-empty");
          }
       }
 	},
@@ -175,7 +179,7 @@ lang.extend(inputEx.StringField, inputEx.Field,
    
    onKeyUp: function(e) {
       // Call setClassFromState escaping the stack (after the event has been fully treated, because the value has to be updated)
-	   lang.later(0, this, this.setClassFromState);
+	   //lang.later(0, this, this.setClassFromState);
    }
 
 });
