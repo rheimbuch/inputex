@@ -76,6 +76,7 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
       	var date = args[0][0];
       	var year = date[0], month = date[1], day = date[2];
       	this.setValue(new Date(year,month-1, day) );
+      	this.fireUpdatedEvt();
       }, this, true);
       
       // HACK for not closing the calendar when changing page

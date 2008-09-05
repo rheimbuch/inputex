@@ -62,6 +62,26 @@
 </div>
 
 
+<!-- Example 3 -->
+<div class='exampleDiv'>
+
+	<p class="title">DatePickerField Updated event</p>
+	
+	<p>Listening for the updatedEvt</p>
+
+	<div class='demoContainer' id='container3'></div>
+
+	<div class='codeContainer'>
+		<form>
+		<textarea name="code" class="JScript">
+			new YAHOO.inputEx.DatePickerField({parentEl: 'container2', value: new Date(), dateFormat: 'd/m/Y'});
+		</textarea>
+		</form>
+	</div>
+
+</div>
+
+
 <!-- YUI Library -->
 <script type="text/javascript" src="../lib/yui/yahoo/yahoo-min.js"></script> 
 <script type="text/javascript" src="../lib/yui/dom/dom-min.js"></script> 
@@ -89,6 +109,13 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	
 	// Example 2
 	new YAHOO.inputEx.DatePickerField({parentEl: 'container2', value: new Date(), dateFormat: 'd/m/Y'});
+	
+	// Example 3
+	var dp = new YAHOO.inputEx.DatePickerField({parentEl: 'container3', value: new Date(), dateFormat: 'd/m/Y'});
+	dp.updatedEvt.subscribe( function(e,params) {
+		var value = params[0];
+		YAHOO.util.Dom.get('container3').appendChild( YAHOO.inputEx.cn('div',null,null, value) );
+	});
 	
 });
 
