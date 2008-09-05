@@ -29,6 +29,9 @@ YAHOO.lang.extend(inputEx.MultiAutoComplete, inputEx.AutoComplete,
       inputEx.MultiAutoComplete.superclass.renderComponent.call(this);
       
       this.ddlist = new inputEx.widget.DDList({parentEl: this.fieldContainer});
+      this.ddlist.itemRemovedEvt.subscribe(function() {
+         this.fireUpdatedEvt();
+      }, this, true);
    },  
    
    validateItem: function() {
@@ -55,7 +58,6 @@ YAHOO.lang.extend(inputEx.MultiAutoComplete, inputEx.AutoComplete,
     * @param {String} value The value to set
     */
    setValue: function(value) {
-      // TODO: mark the option disabled
       this.ddlist.setValue(value);
    },
    

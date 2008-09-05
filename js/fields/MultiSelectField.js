@@ -46,6 +46,7 @@ YAHOO.lang.extend(inputEx.MultiSelectField, inputEx.SelectField,
       var itemValue = params[0];
       var index = inputEx.indexOf(itemValue, this.options.selectValues);
       this.el.childNodes[index].disabled = false;
+      this.fireUpdatedEvt();
    },
    
    /**
@@ -62,6 +63,8 @@ YAHOO.lang.extend(inputEx.MultiSelectField, inputEx.SelectField,
       
          // Return to the first Element
          this.el.selectedIndex = 0;
+         
+         this.fireUpdatedEvt();
       }
    },
    
