@@ -30,30 +30,12 @@
 	<p>Use the following code to create a basic inputEx IntegerField.</p>
 
 	<div class='demoContainer' id='container1'></div>
+	<div id='valueContainer1'></div>
 
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
 			new YAHOO.inputEx.IntegerField({parentEl: 'container1', showMsg: true});
-		</textarea>
-		</form>
-	</div>
-
-</div>
-
-
-<!-- Example 2 -->
-<div class='exampleDiv'>
-
-	<p class="title">Changing radix</p>
-	
-	<p>Let's speak in hexadecimal</p>
-
-	<div class='demoContainer' id='container2'></div>
-
-	<div class='codeContainer'>
-		<form>
-		<textarea name="code" class="JScript">
 		</textarea>
 		</form>
 	</div>
@@ -81,13 +63,9 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
-	new YAHOO.inputEx.IntegerField({parentEl: 'container1', showMsg: true});
-	
-	// Example 2
-	var hexaField = new YAHOO.inputEx.IntegerField({parentEl: 'container2', showMsg: true, radix: 16});
-	hexaField.updatedEvt.subscribe(function(e, params) {
-		var val = params[0];
-		YAHOO.util.Dom.get('container2').innerHTML += "Updated with value "+val+" (in decimal)";
+	var field = new YAHOO.inputEx.IntegerField({parentEl: 'container1', showMsg: true});
+	field.updatedEvt.subscribe(function(e, params) {
+		YAHOO.util.Dom.get('valueContainer1').innerHTML = "value: "+params[0]+", type: "+typeof(params[0]);
 	});
 	
 });

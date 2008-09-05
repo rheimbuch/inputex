@@ -34,7 +34,7 @@ YAHOO.lang.extend(inputEx.UpperCaseField, inputEx.StringField,
     * @param {Event} e The original 'input' event
     */
    onKeyPress: function(e) { 
-   	inputEx.UpperCaseField.superclass.onKeyPress.call(this);
+   	inputEx.UpperCaseField.superclass.onKeyPress.call(this,e);
    	
    	// Re-Apply a toUpperCase method
    	YAHOO.lang.later(0,this,function() {this.setValue( (this.getValue()) );})

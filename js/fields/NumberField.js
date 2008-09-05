@@ -1,14 +1,10 @@
-/**
- * options: maxDigits, comma-separated,
- *
- */
 (function() {
 
    var inputEx = YAHOO.inputEx, Event = YAHOO.util.Event, lang = YAHOO.lang;
 
 /**
  * @class A field limited to number inputs (floating)
- * @extends inputEx.IntegerField
+ * @extends inputEx.StringField
  * @constructor
  * @param {Object} options inputEx.Field options object
  */
@@ -34,13 +30,10 @@ YAHOO.lang.extend(inputEx.NumberField, inputEx.StringField,
    validate: function() { 
       var v = this.getValue();
       if(isNaN(v)) return false;
-      var s = String(v);
-	   return s.match(/^(\+?((([0-9]+(\.)?)|([0-9]*\.[0-9]+))([eE][+-]?[0-9]+)?))$/);
+	   return this.el.value.match(/^(\+?((([0-9]+(\.)?)|([0-9]*\.[0-9]+))([eE][+-]?[0-9]+)?))$/);
    }
 
 });
-
-
 
 /**
  * Register this class as "number" type

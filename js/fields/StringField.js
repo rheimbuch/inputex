@@ -123,7 +123,7 @@ lang.extend(inputEx.StringField, inputEx.Field,
     * Return (stateEmpty|stateRequired) if the value equals the typeInvite attribute
     */
    getState: function() { 
-      var val = this.getValue();
+      var val = this.el.value;//this.getValue();
       // If the field has a minLength:
       if(this.options.minLength && val.length < this.options.minLength) {
          return inputEx.stateInvalid;
