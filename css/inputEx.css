@@ -340,7 +340,8 @@ div.inputEx-SliderField div.inputEx-SliderField-bg {
    position: relative;
    background:url('../images/slider-bg-h.gif') 5px 0 no-repeat;
    height:28px;
-   /*width:228px;*/
+   width:112px;
+   float: left;
 }
 
 div.inputEx-SliderField div.inputEx-SliderField-thumb {
@@ -350,6 +351,12 @@ div.inputEx-SliderField div.inputEx-SliderField-thumb {
    top: 4px;
    width: 17px;
    height: 21px;
+}
+
+div.inputEx-SliderField div.inputEx-SliderField-value {
+   float: left;
+   margin-top:6px;
+   margin-left: 5px;
 }
 
 

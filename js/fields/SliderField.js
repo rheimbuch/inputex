@@ -8,7 +8,6 @@
  * @param {Object} options inputEx.Field options object
  */
 inputEx.SliderField = function(options) {
-   console.log("instanciating slider");
    inputEx.SliderField.superclass.constructor.call(this,options);
 };
 
@@ -33,31 +32,21 @@ YAHOO.lang.extend(inputEx.SliderField, inputEx.Field,
    /**
     * render a slider widget
     */
-   render: function() {
-      this.divEl = inputEx.cn('div', {className: this.options.className});
-      
+   renderComponent: function() {
+            
+      this.sliderbg = inputEx.cn('div', {id: YAHOO.util.Dom.generateId(), className: 'inputEx-SliderField-bg'});
+      this.sliderthumb = inputEx.cn('div', {className: 'inputEx-SliderField-thumb'} );      
+      this.sliderbg.appendChild(this.sliderthumb);
+      this.fieldContainer.appendChild(this.sliderbg);
       
       if(this.options.displayValue) {
-         this.valueDisplay = inputEx.cn('div', null, {display:'inline'}, String(this.options.minValue) );
-         this.divEl.appendChild(this.valueDisplay);
+         this.valueDisplay = inputEx.cn('div', {className: 'inputEx-SliderField-value'}, null, String(this.options.minValue) );
+         this.fieldContainer.appendChild(this.valueDisplay);
       }
       
-      if(!inputEx.SliderField.instanceNbr) { inputEx.SliderField.instanceNbr = 0;}
-      this.id = "inputEx-Slider-"+inputEx.SliderField.instanceNbr;
-      inputEx.SliderField.instanceNbr+=1;
+      this.fieldContainer.appendChild( inputEx.cn('div',null,{clear: 'both'}) );
             
-      this.sliderbg = inputEx.cn('div', {id: this.id, className: 'inputEx-SliderField-bg'});
-      this.sliderthumb = inputEx.cn('div', {className: 'inputEx-SliderField-thumb'} );
-      
-      // Set the size dynamically
-      YAHOO.util.Dom.setStyle(this.sliderbg,'width', (this.options.maxValue+12)+'px');
-            
-      this.sliderbg.appendChild(this.sliderthumb);
-      this.divEl.appendChild(this.sliderbg);
-            
-            
-      this.slider = YAHOO.widget.Slider.getHorizSlider(this.sliderbg, this.sliderthumb, this.options.minValue, this.options.maxValue);       
-      
+      this.slider = YAHOO.widget.Slider.getHorizSlider(this.sliderbg, this.sliderthumb, 0,100);
    },
    
    initEvents: function() {
@@ -77,6 +66,17 @@ YAHOO.lang.extend(inputEx.SliderField, inputEx.Field,
         
    setValue: function(val) {
       
+      var v = val;
+      if(v < this.options.minValue) {
+         v = this.options.minValue;
+      }
+      if(v > this.options.maxValue) {
+         v = this.options.maxValue;
+      }
+      
+      var percent = Math.floor(v-this.options.minValue)*100/this.options.maxValue;
+      
+      this.slider.setValue(percent);
    },
 
    /**
@@ -84,7 +84,8 @@ YAHOO.lang.extend(inputEx.SliderField, inputEx.Field,
     * @return {int} The integer value
     */
    getValue: function() {
-      return this.slider.getValue();
+      var val = Math.floor(this.options.minValue+(this.options.maxValue-this.options.minValue)*this.slider.getValue()/100);
+      return val;
    }
     
 });
