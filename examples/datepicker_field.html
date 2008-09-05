@@ -74,7 +74,11 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			new YAHOO.inputEx.DatePickerField({parentEl: 'container2', value: new Date(), dateFormat: 'd/m/Y'});
+			var dp = new YAHOO.inputEx.DatePickerField({parentEl: 'container3', value: new Date(), dateFormat: 'd/m/Y'});
+			dp.updatedEvt.subscribe( function(e,params) {
+				var value = params[0];
+				YAHOO.util.Dom.get('container3').appendChild( YAHOO.inputEx.cn('div',null,null, value) );
+			});
 		</textarea>
 		</form>
 	</div>
