@@ -109,7 +109,18 @@ lang.extend( inputEx.CombineField, inputEx.Field,
 	      values.push(this.inputs[i].getValue());
 	   }
 	   return values;
-	}
+	},
+	
+	/**
+	 * Call setClassFromState on all children
+	 */
+	setClassFromState: function() {
+	   inputEx.CombineField.superclass.setClassFromState.call(this);
+	   
+	   for(var i = 0 ; i < this.inputs.length ; i++) {
+	      this.inputs[i].setClassFromState();
+	   }
+	},
 	
 });
 	
