@@ -301,6 +301,20 @@ inputEx.Field.prototype = {
          this.divEl.insertBefore(this.msgEl, this.fieldContainer.nextSibling);
       }
       this.msgEl.innerHTML = msg;
+   },
+
+   /**
+    * Show the field
+    */
+   show: function() {
+      this.divEl.style.display = '';
+   },
+   
+   /**
+    * Hide the field
+    */
+   hide: function() {
+      this.divEl.style.display = 'none';
    }
 
 };

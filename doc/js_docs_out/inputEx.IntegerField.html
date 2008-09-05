@@ -35,15 +35,6 @@
 
 <!-- Known subsclasses-->
 
-	<dl class="subclasses">
-		<dt>Known Subclasses:</dt>
-		<dd>
-			
-				<a href="inputEx.NumberField.html">inputEx.NumberField</a>
-			
-		</dd>
-	</dl>
-
 
 <!--
 
@@ -83,7 +74,6 @@
 									<code>options<i>&nbsp;&lt;Object&gt;&nbsp;</i></code>
 									 - Added options:
 <ul>
-	  <li>radix: The radix to be used (default 10)</li>
 </ul> 
 								</dd>
 							
@@ -204,16 +194,44 @@
 					
 					
 		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
 			<div>
-				<h4><a name="method_initEvents">initEvents</a></h4>
+				<h4><a name="method_validate">validate</a></h4>
 			
 				<div class="detail">
-					<code><b>initEvents</b>()</code> 
+					<code><b>validate</b>()</code> 
 				</div>
 				
 				<div class="description">
 					
-					
+					Validate  if is a number
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -232,134 +250,6 @@
 						<hr>
 						</div>
 					
-					
-		
-					
-		
-					
-		
-					
-		
-			<div>
-				<h4><a name="method_onInput">onInput</a></h4>
-			
-				<div class="detail">
-					<code><b>onInput</b>(e)</code> 
-				</div>
-				
-				<div class="description">
-					
-					onInput is called 50ms after a "keypress" event
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<div class="description">
-				<b>Parameters:</b>
-					<ul>
-						<code>e&nbsp;<i>&lt;Event&gt;</i>&nbsp;</code>
-						 - The original input event 
-					</ul>
-					
-				</div>
-				
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-					
-		
-					
-		
-					
-		
-					
-		
-					
-		
-			<div>
-				<h4><a name="method_setOptions">setOptions</a></h4>
-			
-				<div class="detail">
-					<code><b>setOptions</b>()</code> 
-				</div>
-				
-				<div class="description">
-					
-					Add the radix option
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-			<div>
-				<h4><a name="method_setValue">setValue</a></h4>
-			
-				<div class="detail">
-					<code><b>setValue</b>(value)</code> 
-				</div>
-				
-				<div class="description">
-					
-					Set the integer value
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<div class="description">
-				<b>Parameters:</b>
-					<ul>
-						<code>value&nbsp;<i>&lt;int&gt;</i>&nbsp;</code>
-						 - The value to set 
-					</ul>
-					
-				</div>
-				
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-					
-		
 					
 
 				</div>
@@ -385,6 +275,8 @@
 					
 						<a href="inputEx.Field.html#fireUpdatedEvt">fireUpdatedEvt</a>,
 					
+						<a href="inputEx.Field.html#show">show</a>,
+					
 						<a href="inputEx.Field.html#close">close</a>,
 					
 						<a href="inputEx.Field.html#onBlur">onBlur</a>,
@@ -394,6 +286,8 @@
 						<a href="inputEx.Field.html#render">render</a>,
 					
 						<a href="inputEx.Field.html#updatedEvt">updatedEvt</a>,
+					
+						<a href="inputEx.Field.html#hide">hide</a>,
 					
 						<a href="inputEx.Field.html#displayMessage">displayMessage</a>,
 					
@@ -408,13 +302,17 @@
 			<div class="content">
 				<code>
 					
+						<a href="inputEx.StringField.html#initEvents">initEvents</a>,
+					
 						<a href="inputEx.StringField.html#getState">getState</a>,
 					
 						<a href="inputEx.StringField.html#disable">disable</a>,
 					
+						<a href="inputEx.StringField.html#setOptions">setOptions</a>,
+					
 						<a href="inputEx.StringField.html#enable">enable</a>,
 					
-						<a href="inputEx.StringField.html#validate">validate</a>,
+						<a href="inputEx.StringField.html#setValue">setValue</a>,
 					
 						<a href="inputEx.StringField.html#onFocus">onFocus</a>,
 					
@@ -672,10 +570,6 @@
 							
 								
 								<li>
-								<a href="accordion.js.html">accordion.js</a></li>
-							
-								
-								<li>
 								<a href="AutoComplete.js.html">AutoComplete.js</a></li>
 							
 								
@@ -724,7 +618,7 @@
 							
 								
 								<li>
-								<a href="fr_messages.js.html">fr_messages.js</a></li>
+								<a href="fr.js.html">fr.js</a></li>
 							
 								
 								<li>
@@ -861,7 +755,7 @@
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 14:27:41 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 16:05:41 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

@@ -1,11 +1,12 @@
+(function() {
+   var inputEx = YAHOO.inputEx;
 
-
-YAHOO.inputEx.Group.prototype.onChange = function(eventName, args) {
+inputEx.Group.prototype.onChange = function(eventName, args) {
    
    // Check if interactions are defined
    var fieldValue = args[0];
    var fieldInstance = args[1];
-   var index = YAHOO.inputEx.indexOf(fieldInstance, this.inputs);
+   var index = inputEx.indexOf(fieldInstance, this.inputs);
    var fieldConfig = this.inputConfigs[index];
    if( !YAHOO.lang.isUndefined(fieldConfig.interactions) ) {
       // Let's run the interactions !
@@ -23,7 +24,7 @@ YAHOO.inputEx.Group.prototype.onChange = function(eventName, args) {
 };
 
 
-YAHOO.inputEx.Group.prototype.runAction = function(action) {
+inputEx.Group.prototype.runAction = function(action) {
    
    try {
       
@@ -38,16 +39,10 @@ YAHOO.inputEx.Group.prototype.runAction = function(action) {
    } catch(ex) {console.log(ex, action);}
 };
 
-YAHOO.inputEx.Group.prototype.runInteractions = function(actions) {
+inputEx.Group.prototype.runInteractions = function(actions) {
    for(var i = 0 ; i < actions.length ; i++) {
       this.runAction(actions[i]);
    }
 };
 
-YAHOO.inputEx.Field.prototype.hide= function() {
-   this.divEl.style.display = 'none';
-};
-
-YAHOO.inputEx.Field.prototype.show= function() {
-   this.divEl.style.display = '';
-};
+})();

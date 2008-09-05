@@ -1,3 +1,5 @@
+(function() {
+   var inputEx = YAHOO.inputEx;
 /**
  * WARNING: the json-schema methods are EXPERIMENTAL.
  *
@@ -18,8 +20,7 @@
  *    - no "Union type definition"
  *
  */
- 
-YAHOO.inputEx.JsonSchema = {
+inputEx.JsonSchema = {
    
    /**
     * Convert a json schema to a inputEx group object config
@@ -127,3 +128,6 @@ YAHOO.inputEx.JsonSchema = {
    }
 
 };
+
+
+})();
