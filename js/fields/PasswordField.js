@@ -1,6 +1,6 @@
 (function() {
 	
-   var inputEx = YAHOO.inputEx,Event=YAHOO.util.Event;
+   var inputEx = YAHOO.inputEx,Event=YAHOO.util.Event,lang=YAHOO.lang;
 	
 /**
  * @class Create a password field.
@@ -16,20 +16,12 @@
 inputEx.PasswordField = function(options) {
 	inputEx.PasswordField.superclass.constructor.call(this,options);
 };
-YAHOO.lang.extend(inputEx.PasswordField, inputEx.StringField, 
+lang.extend(inputEx.PasswordField, inputEx.StringField, 
 /**
  * @scope inputEx.PasswordField.prototype   
  */  
 {
    
-   /**
-    * Add the keypress listener for caps lock detection
-    */
-   initEvents: function() {	
-      inputEx.PasswordField.superclass.initEvents.call(this);
-	   Event.addListener(this.el, "keypress", this.onKeyPress, this, true);
-   },
-	
 	/**
 	 * Add the password regexp, strengthIndicator, capsLockWarning
 	 */
@@ -131,9 +123,10 @@ YAHOO.lang.extend(inputEx.PasswordField, inputEx.StringField,
 	},
 	
 	/**
-	 * onKeyPress callback to display the capsLockWarning
+	 * callback to display the capsLockWarning
 	 */
 	onKeyPress: function(e) {
+	   inputEx.PasswordField.superclass.onKeyPress.call(this,e);
 	   
 	   if(this.options.capsLockWarning) {
          var ev = e ? e : window.event;
@@ -160,10 +153,16 @@ YAHOO.lang.extend(inputEx.PasswordField, inputEx.StringField,
                               ((which >= 97 && which <= 122) && shift_status);
          this.setCapsLockWarning(displayWarning);
       }
-       
-       // Update 
+      
+	},
+	
+	/**
+	 * onkeyup callback to update the strength indicator
+	 */
+	onKeyUp: function(e) {
+ 	   inputEx.PasswordField.superclass.onKeyUp.call(this,e);
        if(this.options.strengthIndicator) {
-          YAHOO.lang.later( 100, this, "updateStrengthIndicator");
+          lang.later( 0, this, this.updateStrengthIndicator);
        }
      },
      

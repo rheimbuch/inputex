@@ -46,16 +46,16 @@
 <!-- Example 2 -->
 <div class='exampleDiv'>
 
-	<p class="title">Date validation</p>
+	<p class="title">Change date format</p>
 	
-	<p>The DateField will only accept valid dates</p>
+	<p>Set the formatDate to your localized date format ! Here is the french format :</p>
 
 	<div class='demoContainer' id='container2'></div>
 
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-   	new YAHOO.inputEx.DateField({value: '02/30/2008', parentEl: 'container2', showMsg: true});
+			new YAHOO.inputEx.DateField({dateFormat: 'd/m/Y', value: '03/27/2008', parentEl: 'container2', showMsg: true});
 		</textarea>
 		</form>
 	</div>
@@ -66,20 +66,20 @@
 <!-- Example 3 -->
 <div class='exampleDiv'>
 
-	<p class="title">Return value</p>
+	<p class="title">Updated event and return value</p>
 	
-	<p>The DateField returns a javascript date instance :</p>
+	<p>The DateField returns a javascript Date object instance :</p>
 
 	<div class='demoContainer' id='container3'></div>
 
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-   	var exampleDiv = YAHOO.util.Dom.get('container3');
-   	var dateField = new YAHOO.inputEx.DateField({value: new Date(), dateFormat: 'd/m/Y', parentEl: exampleDiv, showMsg: true}); 
-   	var button = YAHOO.inputEx.cn('button', null, null, 'getValue()'); 
-   	exampleDiv.appendChild(button); 
-   	YAHOO.util.Event.addListener(button, 'click', function() { alert(dateField.getValue()); });
+   		var exampleDiv = YAHOO.util.Dom.get('container3');
+			var dateField = new YAHOO.inputEx.DateField({value: new Date(),  parentEl: exampleDiv, showMsg: true}); 
+			dateField.updatedEvt.subscribe(function() {
+				exampleDiv.appendChild( inputEx.cn('div', null, null, dateField.getValue()) ); 
+			});
 		</textarea>
 		</form>
 	</div>
@@ -109,21 +109,19 @@
 <script>
 
 YAHOO.util.Event.addListener(window, 'load', function() {
-	// Required for the tooltips
-	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
 	new YAHOO.inputEx.DateField({parentEl: 'container1', value: new Date(), showMsg: true});
 	
 	// Example 2
-	new YAHOO.inputEx.DateField({value: '02/30/2008', parentEl: 'container2', showMsg: true});
+	new YAHOO.inputEx.DateField({dateFormat: 'd/m/Y', value: '27/03/2008', parentEl: 'container2', showMsg: true});
 	
 	// Example 3
 	var exampleDiv = YAHOO.util.Dom.get('container3');
-	var dateField = new YAHOO.inputEx.DateField({value: new Date(), dateFormat: 'd/m/Y', parentEl: exampleDiv, showMsg: true}); 
-	var button = YAHOO.inputEx.cn('button', null, null, 'getValue()'); 
-	exampleDiv.appendChild(button); 
-	YAHOO.util.Event.addListener(button, 'click', function() { alert(dateField.getValue()); });
+	var dateField = new YAHOO.inputEx.DateField({value: new Date(),  parentEl: exampleDiv, showMsg: true}); 
+	dateField.updatedEvt.subscribe(function() {
+		exampleDiv.appendChild( inputEx.cn('div', null, null, dateField.getValue()) ); 
+	});
 	
 });
 

@@ -61,7 +61,8 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 	   Event.addListener(this.el, "change", this.onChange, this, true);	
 	   
 	   // Awful Hack to work in IE6 and below (the checkbox doesn't fire the change event)
-	   if( YAHOO.env.ua.ie && parseInt(YAHOO.env.ua.ie,10) < 7 ) {
+	   // It seems IE 8 removed this behavior from IE7 so it only works with IE 7 ??
+	   if( YAHOO.env.ua.ie && parseInt(YAHOO.env.ua.ie,10) != 7 ) {
 	      Event.addListener(this.el, "click", function() { this.fireUpdatedEvt(); }, this, true);	
 	   }
 	   

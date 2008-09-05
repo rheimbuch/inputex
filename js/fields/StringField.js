@@ -60,6 +60,9 @@ lang.extend(inputEx.StringField, inputEx.Field,
 	   Event.addListener(this.el, "change", this.onChange, this, true);
 	   Event.addListener(this.el, "focus", this.onFocus, this, true);
 	   Event.addListener(this.el, "blur", this.onBlur, this, true);	  
+	   
+	   Event.addListener(this.el, "keypress", this.onKeyPress, this, true);
+	   Event.addListener(this.el, "keyup", this.onKeyUp, this, true);
    },
 
    /**
@@ -164,8 +167,16 @@ lang.extend(inputEx.StringField, inputEx.Field,
 	         this.el.value = "";
          }
       }
-	}
+	},
+	
+	onKeyPress: function(e) {
+	   // override me
+	},
    
+   onKeyUp: function(e) {
+      // Call setClassFromState escaping the stack (after the event has been fully treated, because the value has to be updated)
+	   lang.later(0, this, this.setClassFromState);
+   }
 
 });
 
