@@ -33,7 +33,7 @@
 <form>
 	<textarea name="code" class="JScript">(function() {
 	
-   var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Dom = YAHOO.util.Dom;
+   var inputEx = YAHOO.inputEx;
 	
 /**
  * @class A meta field to put 2 fields on the same line
@@ -46,79 +46,12 @@
  * </ul>
  */
 inputEx.PairField = function(options) {
-   options.leftFieldOptions = options.leftFieldOptions || {};
-   options.rightFieldOptions = options.rightFieldOptions || {};
+   options.fields = [options.leftFieldOptions || {}, options.rightFieldOptions || {}];
+   options.separators = [false, " : ", false];
    inputEx.PairField.superclass.constructor.call(this, options);
 };
 	
-lang.extend( inputEx.PairField, inputEx.Field, 
-/**
- * @scope inputEx.PairField.prototype   
- */   
-{
-	
-	/**
-	 * Insert a breaker (div with clear:both css attribute)
-	 */
-	render: function() {
-	   inputEx.PairField.superclass.render.call(this);
-	   this.divEl.appendChild( inputEx.cn('div', null, {clear: "both"}) );
-	},
-	   
-	/**
-	 * Render the two subfields
-	 */
-	renderComponent: function() {
-	      
-	   var leftType = 'string';
-	   if(this.options.leftFieldOptions.type) { leftType = this.options.leftFieldOptions.type; }
-	   var leftFieldClass = inputEx.getFieldClass(leftType);
-	      
-	   var rightType = 'string';
-	   if(this.options.rightFieldOptions.type) { rightType = this.options.rightFieldOptions.type; }
-	   var rightFieldClass = inputEx.getFieldClass(rightType);
-	   
-	   this.elLeft = new leftFieldClass(this.options.leftFieldOptions.inputParams || {});
-	   this.elRight = new rightFieldClass(this.options.rightFieldOptions.inputParams || {});
-	
-	   Dom.setStyle(this.elLeft.getEl(), "float", "left");
-	
-	   // Append it to the main element
-	   this.divEl.appendChild(this.elLeft.getEl());
-	   var span = inputEx.cn('span', null, null, " : ");
-	   Dom.setStyle(span, "float", "left");
-	   this.divEl.appendChild(span);
-	   this.divEl.appendChild(this.elRight.getEl());
-	   	
-	   Dom.setStyle(this.elRight.getEl(), "float", "left");
-	      
-	},
-	
-	/**
-	 * Apply a AND operator on both field validations
-	 */
-	validate: function() {
-	   return (this.elLeft.validate() && this.elRight.validate());
-	},
-	   
-	/**
-	 * Set the value
-	 * @param {Array} val [leftValue, rightValue]
-	 */
-	setValue: function(val) {
-	   this.elLeft.setValue(val[0]);
-	   this.elRight.setValue(val[1]);
-	},
-	
-	/**
-	 * Specific getValue 
-	 * @return {Array} A 2-element array [leftValue, rightValue]
-	 */   
-	getValue: function() {
-	   return [this.elLeft.getValue(),this.elRight.getValue()];
-	}
-	
-});
+YAHOO.lang.extend( inputEx.PairField, inputEx.CombineField);
 	
 /**
  * Register this class as "pair" type
@@ -193,6 +126,14 @@ inputEx.registerType("pair", inputEx.PairField);
 							
 								
 								<li>
+									<a href="inputEx.ColorField2.html">inputEx.ColorField2</a></li>
+							
+								
+								<li>
+									<a href="inputEx.CombineField.html">inputEx.CombineField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.DateField.html">inputEx.DateField</a></li>
 							
 								
@@ -233,6 +174,14 @@ inputEx.registerType("pair", inputEx.PairField);
 							
 								
 								<li>
+									<a href="inputEx.IconPickerField.html">inputEx.IconPickerField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.ImagemapField.html">inputEx.ImagemapField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.InPlaceEdit.html">inputEx.InPlaceEdit</a></li>
 							
 								
@@ -249,6 +198,14 @@ inputEx.registerType("pair", inputEx.PairField);
 							
 								
 								<li>
+									<a href="inputEx.MultiAutoComplete.html">inputEx.MultiAutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.MultiSelectField.html">inputEx.MultiSelectField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.NumberField.html">inputEx.NumberField</a></li>
 							
 								
@@ -258,6 +215,10 @@ inputEx.registerType("pair", inputEx.PairField);
 								
 								<li>
 									<a href="inputEx.PasswordField.html">inputEx.PasswordField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.RadioField.html">inputEx.RadioField</a></li>
 							
 								
 								<li>
@@ -309,11 +270,11 @@ inputEx.registerType("pair", inputEx.PairField);
 							
 								
 								<li>
-									<a href="inputEx.widget.calendar.html">inputEx.widget.calendar</a></li>
+									<a href="inputEx.widget.DDList.html">inputEx.widget.DDList</a></li>
 							
 								
 								<li>
-									<a href="inputEx.widget.DateEx.html">inputEx.widget.DateEx</a></li>
+									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
 							
 								
 						</ul>
@@ -333,15 +294,19 @@ inputEx.registerType("pair", inputEx.PairField);
 							
 								
 								<li>
-								<a href="calendar.js.html">calendar.js</a></li>
-							
-								
-								<li>
 								<a href="CheckBox.js.html">CheckBox.js</a></li>
 							
 								
 								<li>
 								<a href="ColorField.js.html">ColorField.js</a></li>
+							
+								
+								<li>
+								<a href="ColorField2.js.html">ColorField2.js</a></li>
+							
+								
+								<li>
+								<a href="CombineField.js.html">CombineField.js</a></li>
 							
 								
 								<li>
@@ -354,6 +319,10 @@ inputEx.registerType("pair", inputEx.PairField);
 								
 								<li>
 								<a href="DateTimeField.js.html">DateTimeField.js</a></li>
+							
+								
+								<li>
+								<a href="ddlist.js.html">ddlist.js</a></li>
 							
 								
 								<li>
@@ -385,7 +354,19 @@ inputEx.registerType("pair", inputEx.PairField);
 							
 								
 								<li>
+								<a href="GroupInteractions-beta.js.html">GroupInteractions-beta.js</a></li>
+							
+								
+								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
+							
+								
+								<li>
+								<a href="IconPickerField.js.html">IconPickerField.js</a></li>
+							
+								
+								<li>
+								<a href="ImagemapField.js.html">ImagemapField.js</a></li>
 							
 								
 								<li>
@@ -413,6 +394,14 @@ inputEx.registerType("pair", inputEx.PairField);
 							
 								
 								<li>
+								<a href="MultiAutoComplete.js.html">MultiAutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="MultiSelectField.js.html">MultiSelectField.js</a></li>
+							
+								
+								<li>
 								<a href="NumberField.js.html">NumberField.js</a></li>
 							
 								<li class="selected">
@@ -422,6 +411,10 @@ inputEx.registerType("pair", inputEx.PairField);
 								
 								<li>
 								<a href="PasswordField.js.html">PasswordField.js</a></li>
+							
+								
+								<li>
+								<a href="RadioField.js.html">RadioField.js</a></li>
 							
 								
 								<li>
@@ -482,7 +475,7 @@ inputEx.registerType("pair", inputEx.PairField);
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Thu, 17 Jul 2008 08:48:51 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 14:27:40 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

@@ -33,7 +33,7 @@
 <form>
 	<textarea name="code" class="JScript">(function() {
 
-   var inputEx = YAHOO.inputEx;
+   var inputEx = YAHOO.inputEx, Event = YAHOO.util.Event;
 
 /**
  * @class Create a textarea input
@@ -57,7 +57,9 @@ YAHOO.lang.extend(inputEx.Textarea, inputEx.Field,
     * Register the change event
     */
    initEvents: function() {
-      YAHOO.util.Event.addListener(this.el, "change", this.onChange, this, true);
+      Event.addListener(this.el, "change", this.onChange, this, true);
+	   Event.addListener(this.el, "focus", this.onFocus, this, true);
+	   Event.addListener(this.el, "blur", this.onBlur, this, true);
    },
    
    /**
@@ -78,7 +80,7 @@ YAHOO.lang.extend(inputEx.Textarea, inputEx.Field,
          cols: this.options.cols
       }, null, this.options.value);
       
-      this.divEl.appendChild(this.el);
+      this.fieldContainer.appendChild(this.el);
    },
 
    /**
@@ -172,6 +174,14 @@ inputEx.registerType("text", inputEx.Textarea);
 							
 								
 								<li>
+									<a href="inputEx.ColorField2.html">inputEx.ColorField2</a></li>
+							
+								
+								<li>
+									<a href="inputEx.CombineField.html">inputEx.CombineField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.DateField.html">inputEx.DateField</a></li>
 							
 								
@@ -212,6 +222,14 @@ inputEx.registerType("text", inputEx.Textarea);
 							
 								
 								<li>
+									<a href="inputEx.IconPickerField.html">inputEx.IconPickerField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.ImagemapField.html">inputEx.ImagemapField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.InPlaceEdit.html">inputEx.InPlaceEdit</a></li>
 							
 								
@@ -228,6 +246,14 @@ inputEx.registerType("text", inputEx.Textarea);
 							
 								
 								<li>
+									<a href="inputEx.MultiAutoComplete.html">inputEx.MultiAutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.MultiSelectField.html">inputEx.MultiSelectField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.NumberField.html">inputEx.NumberField</a></li>
 							
 								
@@ -237,6 +263,10 @@ inputEx.registerType("text", inputEx.Textarea);
 								
 								<li>
 									<a href="inputEx.PasswordField.html">inputEx.PasswordField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.RadioField.html">inputEx.RadioField</a></li>
 							
 								
 								<li>
@@ -288,11 +318,11 @@ inputEx.registerType("text", inputEx.Textarea);
 							
 								
 								<li>
-									<a href="inputEx.widget.calendar.html">inputEx.widget.calendar</a></li>
+									<a href="inputEx.widget.DDList.html">inputEx.widget.DDList</a></li>
 							
 								
 								<li>
-									<a href="inputEx.widget.DateEx.html">inputEx.widget.DateEx</a></li>
+									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
 							
 								
 						</ul>
@@ -312,15 +342,19 @@ inputEx.registerType("text", inputEx.Textarea);
 							
 								
 								<li>
-								<a href="calendar.js.html">calendar.js</a></li>
-							
-								
-								<li>
 								<a href="CheckBox.js.html">CheckBox.js</a></li>
 							
 								
 								<li>
 								<a href="ColorField.js.html">ColorField.js</a></li>
+							
+								
+								<li>
+								<a href="ColorField2.js.html">ColorField2.js</a></li>
+							
+								
+								<li>
+								<a href="CombineField.js.html">CombineField.js</a></li>
 							
 								
 								<li>
@@ -333,6 +367,10 @@ inputEx.registerType("text", inputEx.Textarea);
 								
 								<li>
 								<a href="DateTimeField.js.html">DateTimeField.js</a></li>
+							
+								
+								<li>
+								<a href="ddlist.js.html">ddlist.js</a></li>
 							
 								
 								<li>
@@ -364,7 +402,19 @@ inputEx.registerType("text", inputEx.Textarea);
 							
 								
 								<li>
+								<a href="GroupInteractions-beta.js.html">GroupInteractions-beta.js</a></li>
+							
+								
+								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
+							
+								
+								<li>
+								<a href="IconPickerField.js.html">IconPickerField.js</a></li>
+							
+								
+								<li>
+								<a href="ImagemapField.js.html">ImagemapField.js</a></li>
 							
 								
 								<li>
@@ -392,6 +442,14 @@ inputEx.registerType("text", inputEx.Textarea);
 							
 								
 								<li>
+								<a href="MultiAutoComplete.js.html">MultiAutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="MultiSelectField.js.html">MultiSelectField.js</a></li>
+							
+								
+								<li>
 								<a href="NumberField.js.html">NumberField.js</a></li>
 							
 								
@@ -401,6 +459,10 @@ inputEx.registerType("text", inputEx.Textarea);
 								
 								<li>
 								<a href="PasswordField.js.html">PasswordField.js</a></li>
+							
+								
+								<li>
+								<a href="RadioField.js.html">RadioField.js</a></li>
 							
 								
 								<li>
@@ -461,7 +523,7 @@ inputEx.registerType("text", inputEx.Textarea);
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Thu, 17 Jul 2008 08:48:51 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 14:27:40 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

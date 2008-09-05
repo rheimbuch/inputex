@@ -31,73 +31,135 @@
 </div>
 										
 <form>
-	<textarea name="code" class="JScript">(function() {
-/**
- * WARNING: the json-schema methods are experimental.
+	<textarea name="code" class="JScript">/**
+ * WARNING: the json-schema methods are EXPERIMENTAL.
  *
  * Conversion between inputEx json format and JSON Schema
- * based on "Json Schema Proposal Second Draft" at
+ * based on "Json Schema Proposal Second Draft":
  * http://groups.google.com/group/json-schema/web/json-schema-proposal---second-draft
  *
  * The proposal is still under discussion and the implementation is very minimalist.
  *
+ *
+ * TODO:
+ *    - we should provide a lot of json schema examples and instances that should/should not validate
+ *    - use the $ref (async calls => provide callbacks to methods)
+ *
+ * Limitations:
+ *    - ??? Please do not trust inputEx: the getValue may return a value which do NOT validate the schema (provide an example ?)
+ *    - no tuple typing for arrays
+ *    - no "Union type definition"
+ *
  */
-   var inputEx = YAHOO.inputEx;
+ 
+YAHOO.inputEx.JsonSchema = {
    
    /**
     * Convert a json schema to a inputEx group object config
+    *
     * @param {Object} jsonSchema The evaled JSON schema
     * @param {String} groupName optional, used for the "object" json schema type
     */
-   inputEx.importJsonSchema = function(jsonSchema, groupName) {
-      var ret = { fields: [] };
+   schemaToInputEx: function(p, propertyName) {
       
-      if(groupName) ret.name = groupName;
+      var fieldDef = {inputParams: { label: propertyName, name: propertyName} };
+      if(p.type) {
+         
+         var type = p.type;
+         
+         // If type is a "Union type definition", we'll use the first type for the field
+         // "array" <=>  [] <=> ["any"]
+         if(YAHOO.lang.isArray(type)) {
+            if(type.length == 0 || (type.length == 1 && type[0] == "any") ) {
+               type = "array";
+            }
+            else {
+               type = type[0];
+            }
+         }
+         else if(YAHOO.lang.isObject(type) ) {
+            // What do we do ??
+            console.log("type is an object !!");
+         }
+         
+         fieldDef.type = type;
       
-      for(var key in jsonSchema.properties) {
-         if(jsonSchema.properties.hasOwnProperty(key)) {
-            var p = jsonSchema.properties[key];
-            var field = { label: key, inputParams: { name: key} };
-            if(p.type) {
-               field.type = p.type;
-               
-               if(p.type == "object") {
-                  field.type = "group";
-                  field.inputParams = inputEx.importJsonSchema(p, key);
-               }
-               else if(p.type == "string" && (!!p.options) ) {
-                  field.type = "select";
-                  field.inputParams.selectOptions = [];
-                  field.inputParams.selectValues = [];
-                  for(var i = 0 ; i < p.options.length ; i++) {
-                     var o = p.options[i];
-                     field.inputParams.selectOptions.push(o.label);
-                     field.inputParams.selectValues.push(o.value);
-                  }
-               }
-               else if(p.type == "string") {
-                  if( p.format ) {
-                     if(p.format == "html") {
-                        field.type = "html";
-                     }
-                     else if(p.format == "date") {
-                        field.type = "date";
-                        field.inputParams.tooltipIcon = true;
-                     }
-                  }
+         if(type == "array" ) {
+            fieldDef.type = "list";
+         }
+         else if(type == "object" ) {
+            fieldDef.type = "group";
+            //fieldDef.inputParams = this.schemaToInputEx(p, propertyName);
+            //fieldDef.inputParams = this._parseSchemaProperty(p, propertyName);
+            var groupDef = { fields: [] };
+
+            if(propertyName) groupDef.name = propertyName;
+
+            for(var key in p.properties) {
+               if(p.properties.hasOwnProperty(key)) {
+                  groupDef.fields.push( this.schemaToInputEx(p.properties[key], key) );
                }
             }
-            else if(p["$ref"]) {
-               
+
+            fieldDef.inputParams = groupDef;
+            
+         }
+         else if(type == "string" && (!!p.options) ) {
+            fieldDef.type = "select";
+            fieldDef.inputParams.selectOptions = [];
+            fieldDef.inputParams.selectValues = [];
+            for(var i = 0 ; i < p.options.length ; i++) {
+               var o = p.options[i];
+               fieldDef.inputParams.selectOptions.push(o.label);
+               fieldDef.inputParams.selectValues.push(o.value);
             }
-            ret.fields.push(field);
+         }
+         else if(type == "string") {
+            if( p.format ) {
+               if(p.format == "html") {
+                  fieldDef.type = "html";
+               }
+               else if(p.format == "date") {
+                  fieldDef.type = "date";
+                  fieldDef.inputParams.tooltipIcon = true;
+               }
+            }
          }
       }
+      else if(p["$ref"]){
+         throw new Error("$ref not implemented yet...");
+      }
       
-      return ret;
-   };
+      return fieldDef;
+   },
    
-})();</textarea>
+   
+   /**
+    * Create an inputEx Json form definition from a json schema instance object
+    * Respect the "Self-Defined Schema Convention"
+    */
+   formFromInstance: function(instanceObject) {
+      
+      if(!instanceObject || !instanceObject["$schema"]) {
+         throw new Error("Invalid json schema instance object. Object must have a '$schema' property.");
+      }
+      
+      var formDef = YAHOO.inputEx.JsonSchema.schemaToInputEx(instanceObject["$schema"]);
+      
+      // Set the default value of each property to the instance value
+      for(var i = 0 ; i < formDef.fields.length ; i++) {
+         var fieldName = formDef.fields[i].inputParams.name;
+         formDef.fields[i].inputParams.value = instanceObject[fieldName];
+      }
+      
+      return formDef;
+   },
+   
+   inputExToSchema: function(inputExJson) {
+      
+   }
+
+};</textarea>
 </form>
 					
 					
@@ -165,6 +227,14 @@
 							
 								
 								<li>
+									<a href="inputEx.ColorField2.html">inputEx.ColorField2</a></li>
+							
+								
+								<li>
+									<a href="inputEx.CombineField.html">inputEx.CombineField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.DateField.html">inputEx.DateField</a></li>
 							
 								
@@ -205,6 +275,14 @@
 							
 								
 								<li>
+									<a href="inputEx.IconPickerField.html">inputEx.IconPickerField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.ImagemapField.html">inputEx.ImagemapField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.InPlaceEdit.html">inputEx.InPlaceEdit</a></li>
 							
 								
@@ -221,6 +299,14 @@
 							
 								
 								<li>
+									<a href="inputEx.MultiAutoComplete.html">inputEx.MultiAutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.MultiSelectField.html">inputEx.MultiSelectField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.NumberField.html">inputEx.NumberField</a></li>
 							
 								
@@ -230,6 +316,10 @@
 								
 								<li>
 									<a href="inputEx.PasswordField.html">inputEx.PasswordField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.RadioField.html">inputEx.RadioField</a></li>
 							
 								
 								<li>
@@ -281,11 +371,11 @@
 							
 								
 								<li>
-									<a href="inputEx.widget.calendar.html">inputEx.widget.calendar</a></li>
+									<a href="inputEx.widget.DDList.html">inputEx.widget.DDList</a></li>
 							
 								
 								<li>
-									<a href="inputEx.widget.DateEx.html">inputEx.widget.DateEx</a></li>
+									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
 							
 								
 						</ul>
@@ -305,15 +395,19 @@
 							
 								
 								<li>
-								<a href="calendar.js.html">calendar.js</a></li>
-							
-								
-								<li>
 								<a href="CheckBox.js.html">CheckBox.js</a></li>
 							
 								
 								<li>
 								<a href="ColorField.js.html">ColorField.js</a></li>
+							
+								
+								<li>
+								<a href="ColorField2.js.html">ColorField2.js</a></li>
+							
+								
+								<li>
+								<a href="CombineField.js.html">CombineField.js</a></li>
 							
 								
 								<li>
@@ -326,6 +420,10 @@
 								
 								<li>
 								<a href="DateTimeField.js.html">DateTimeField.js</a></li>
+							
+								
+								<li>
+								<a href="ddlist.js.html">ddlist.js</a></li>
 							
 								
 								<li>
@@ -357,7 +455,19 @@
 							
 								
 								<li>
+								<a href="GroupInteractions-beta.js.html">GroupInteractions-beta.js</a></li>
+							
+								
+								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
+							
+								
+								<li>
+								<a href="IconPickerField.js.html">IconPickerField.js</a></li>
+							
+								
+								<li>
+								<a href="ImagemapField.js.html">ImagemapField.js</a></li>
 							
 								
 								<li>
@@ -385,6 +495,14 @@
 							
 								
 								<li>
+								<a href="MultiAutoComplete.js.html">MultiAutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="MultiSelectField.js.html">MultiSelectField.js</a></li>
+							
+								
+								<li>
 								<a href="NumberField.js.html">NumberField.js</a></li>
 							
 								
@@ -394,6 +512,10 @@
 								
 								<li>
 								<a href="PasswordField.js.html">PasswordField.js</a></li>
+							
+								
+								<li>
+								<a href="RadioField.js.html">RadioField.js</a></li>
 							
 								
 								<li>
@@ -454,7 +576,7 @@
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Thu, 17 Jul 2008 08:48:51 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 14:27:40 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

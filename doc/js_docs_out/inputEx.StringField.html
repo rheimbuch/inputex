@@ -99,6 +99,10 @@
 <ul>
 	  <li>regexp: regular expression used to validate (otherwise it always validate)</li>
   <li>size: size attribute of the input</li>
+  <li>maxLength: maximum size of the string field (no message display, uses the maxlength html attribute)</li>
+  <li>minLength: minimum size of the string field (will display an error message if shorter)</li>
+  <li>typeInvite: string displayed when the field is empty</li>
+  <li>readonly: set the field as readonly</li>
 </ul> 
 								</dd>
 							
@@ -195,6 +199,8 @@
 					
 					
 		
+					
+		
 			<div>
 				<h4><a name="method_enable">enable</a></h4>
 			
@@ -259,8 +265,73 @@
 		
 					
 		
+			<div>
+				<h4><a name="method_getState">getState</a></h4>
+			
+				<div class="detail">
+					<code><b>getState</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Return (stateEmpty|stateRequired) if the value equals the typeInvite attribute
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
 					
 		
+			<div>
+				<h4><a name="method_getStateString">getStateString</a></h4>
+			
+				<div class="detail">
+					<code><b>getStateString</b>(state)</code> 
+				</div>
+				
+				<div class="description">
+					
+					Add the minLength string message handling
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>state</code>
+						 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
 					
 		
 			<div>
@@ -336,6 +407,121 @@
 		
 					
 		
+			<div>
+				<h4><a name="method_onFocus">onFocus</a></h4>
+			
+				<div class="detail">
+					<code><b>onFocus</b>(e)</code> 
+				</div>
+				
+				<div class="description">
+					
+					Clear the typeInvite when the field gains focus
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>e</code>
+						 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_onKeyPress">onKeyPress</a></h4>
+			
+				<div class="detail">
+					<code><b>onKeyPress</b>(e)</code> 
+				</div>
+				
+				<div class="description">
+					
+					
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>e</code>
+						 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_onKeyUp">onKeyUp</a></h4>
+			
+				<div class="detail">
+					<code><b>onKeyUp</b>(e)</code> 
+				</div>
+				
+				<div class="description">
+					
+					
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>e</code>
+						 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
 					
 		
 					
@@ -370,6 +556,34 @@
 					
 					
 		
+			<div>
+				<h4><a name="method_setClassFromState">setClassFromState</a></h4>
+			
+				<div class="detail">
+					<code><b>setClassFromState</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Display the type invite after setting the class
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
 					
 		
 			<div>
@@ -400,8 +614,6 @@
 						<hr>
 						</div>
 					
-					
-		
 					
 		
 			<div>
@@ -502,23 +714,15 @@
 					
 						<a href="inputEx.Field.html#onBlur">onBlur</a>,
 					
-						<a href="inputEx.Field.html#onFocus">onFocus</a>,
-					
-						<a href="inputEx.Field.html#getStateString">getStateString</a>,
-					
-						<a href="inputEx.Field.html#setClassFromState">setClassFromState</a>,
-					
 						<a href="inputEx.Field.html#onChange">onChange</a>,
 					
 						<a href="inputEx.Field.html#render">render</a>,
 					
 						<a href="inputEx.Field.html#updatedEvt">updatedEvt</a>,
 					
-						<a href="inputEx.Field.html#getState">getState</a>,
+						<a href="inputEx.Field.html#displayMessage">displayMessage</a>,
 					
 						<a href="inputEx.Field.html#destroy">destroy</a>,
-					
-						<a href="inputEx.Field.html#setToolTipMessage">setToolTipMessage</a>,
 							
 				</code>
 			</div>
@@ -602,6 +806,14 @@
 							
 								
 								<li>
+									<a href="inputEx.ColorField2.html">inputEx.ColorField2</a></li>
+							
+								
+								<li>
+									<a href="inputEx.CombineField.html">inputEx.CombineField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.DateField.html">inputEx.DateField</a></li>
 							
 								
@@ -642,6 +854,14 @@
 							
 								
 								<li>
+									<a href="inputEx.IconPickerField.html">inputEx.IconPickerField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.ImagemapField.html">inputEx.ImagemapField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.InPlaceEdit.html">inputEx.InPlaceEdit</a></li>
 							
 								
@@ -658,6 +878,14 @@
 							
 								
 								<li>
+									<a href="inputEx.MultiAutoComplete.html">inputEx.MultiAutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.MultiSelectField.html">inputEx.MultiSelectField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.NumberField.html">inputEx.NumberField</a></li>
 							
 								
@@ -667,6 +895,10 @@
 								
 								<li>
 									<a href="inputEx.PasswordField.html">inputEx.PasswordField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.RadioField.html">inputEx.RadioField</a></li>
 							
 								
 								<li>
@@ -718,11 +950,11 @@
 							
 								
 								<li>
-									<a href="inputEx.widget.calendar.html">inputEx.widget.calendar</a></li>
+									<a href="inputEx.widget.DDList.html">inputEx.widget.DDList</a></li>
 							
 								
 								<li>
-									<a href="inputEx.widget.DateEx.html">inputEx.widget.DateEx</a></li>
+									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
 							
 								
 						</ul>
@@ -742,15 +974,19 @@
 							
 								
 								<li>
-								<a href="calendar.js.html">calendar.js</a></li>
-							
-								
-								<li>
 								<a href="CheckBox.js.html">CheckBox.js</a></li>
 							
 								
 								<li>
 								<a href="ColorField.js.html">ColorField.js</a></li>
+							
+								
+								<li>
+								<a href="ColorField2.js.html">ColorField2.js</a></li>
+							
+								
+								<li>
+								<a href="CombineField.js.html">CombineField.js</a></li>
 							
 								
 								<li>
@@ -763,6 +999,10 @@
 								
 								<li>
 								<a href="DateTimeField.js.html">DateTimeField.js</a></li>
+							
+								
+								<li>
+								<a href="ddlist.js.html">ddlist.js</a></li>
 							
 								
 								<li>
@@ -794,7 +1034,19 @@
 							
 								
 								<li>
+								<a href="GroupInteractions-beta.js.html">GroupInteractions-beta.js</a></li>
+							
+								
+								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
+							
+								
+								<li>
+								<a href="IconPickerField.js.html">IconPickerField.js</a></li>
+							
+								
+								<li>
+								<a href="ImagemapField.js.html">ImagemapField.js</a></li>
 							
 								
 								<li>
@@ -822,6 +1074,14 @@
 							
 								
 								<li>
+								<a href="MultiAutoComplete.js.html">MultiAutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="MultiSelectField.js.html">MultiSelectField.js</a></li>
+							
+								
+								<li>
 								<a href="NumberField.js.html">NumberField.js</a></li>
 							
 								
@@ -831,6 +1091,10 @@
 								
 								<li>
 								<a href="PasswordField.js.html">PasswordField.js</a></li>
+							
+								
+								<li>
+								<a href="RadioField.js.html">RadioField.js</a></li>
 							
 								
 								<li>
@@ -891,7 +1155,7 @@
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Thu, 17 Jul 2008 08:48:52 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 14:27:41 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

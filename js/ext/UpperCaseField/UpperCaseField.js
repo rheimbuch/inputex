@@ -22,16 +22,22 @@ YAHOO.lang.extend(inputEx.UpperCaseField, inputEx.StringField,
     * @param {String} val The string
     */
    setValue: function(val) {
-      this.el.value = val.toUpperCase();
+      // don't always rewrite the value to able selections with Ctrl+A
+      var uppered = val.toUpperCase();
+      if(uppered != this.el.value) {
+         this.el.value = uppered;
+      }
    },
 
    /**
     * Call setvalue on input to update the field with upper case value
     * @param {Event} e The original 'input' event
     */
-   onInput: function(e) { 
-   	this.setValue( (this.getValue()) );
-   	this.setClassFromState();
+   onKeyPress: function(e) { 
+   	inputEx.UpperCaseField.superclass.onKeyPress.call(this);
+   	
+   	// Re-Apply a toUpperCase method
+   	YAHOO.lang.later(0,this,function() {this.setValue( (this.getValue()) );})
    }
 
 });

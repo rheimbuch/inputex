@@ -66,6 +66,8 @@ lang.extend(inputEx.Group, inputEx.Field,
    
       this.options.collapsible = lang.isUndefined(this.options.collapsible) ? false : this.options.collapsible;
       
+      this.options.disabled = lang.isUndefined(this.options.disabled) ? false : this.options.disabled;
+      
       // Array containing the list of the field instances
       this.inputs = [];
 
@@ -80,8 +82,15 @@ lang.extend(inputEx.Group, inputEx.Field,
    
       // Create the div wrapper for this group
 	   this.divEl = inputEx.cn('div', {className: 'inputEx-Group'});
+	   if(this.options.id) {
+   	   this.divEl.id = this.options.id;
+   	}
   	   
   	   this.renderFields(this.divEl);  	  
+  	   
+  	   if(this.options.disabled) {
+  	      this.disable();
+  	   }
    },
    
    /**
@@ -91,7 +100,7 @@ lang.extend(inputEx.Group, inputEx.Field,
    renderFields: function(parentEl) {
       
       this.fieldset = inputEx.cn('fieldset');
-      this.legend = inputEx.cn('legend');
+      this.legend = inputEx.cn('legend', {className: 'inputEx-Group-legend'});
    
       // Option Collapsible
       if(this.options.collapsible) {
@@ -100,41 +109,22 @@ lang.extend(inputEx.Group, inputEx.Field,
          inputEx.sn(this.fieldset,{className:'inputEx-Expanded'});
       }
    
-      if(this.options.legend != '') {
-         this.legend.innerHTML += (" "+this.options.legend);
+      if(!YAHOO.lang.isUndefined(this.options.legend) && this.options.legend !== ''){
+         //this.legend.innerHTML += (" "+this.options.legend);
+         this.legend.appendChild( document.createTextNode(" "+this.options.legend) );
       }
    
-      this.fieldset.appendChild(this.legend);
+      if( this.options.collapsible || (!YAHOO.lang.isUndefined(this.options.legend) && this.options.legend !== '') ) {
+         this.fieldset.appendChild(this.legend);
+      }
   	   
       // Iterate this.createInput on input fields
       for (var i = 0 ; i < this.inputConfigs.length ; i++) {
          var input = this.inputConfigs[i];
-
-         var groupItem = inputEx.cn('div', {className: 'inputEx-Group-GroupItem'});
-         
-         // Hide the row if type == "hidden"
-         if(input.type == 'hidden') {
-            Dom.setStyle(groupItem, 'display', 'none');
-         }
-         
-         // Label element
-         groupItem.appendChild( inputEx.cn('div', {className: 'inputEx-Group-label'}, null, input.label || "") );
         
-         // Render the field (and adds it into this.inputs)
+         // Render the field
          var field = this.renderField(input);
-    	   
-         // Field element
-         var groupItemField = inputEx.cn('div', {className: 'inputEx-Group-field'});
-         groupItemField.appendChild(field.getEl() );
-         groupItem.appendChild(groupItemField);
-         
-         // Description
-         if(input.description) {
-            groupItem.appendChild(inputEx.cn('div', {className: 'inputEx-Group-description'}, null, input.description));
-         }
-         
-         this.fieldset.appendChild( inputEx.cn('div',null, {clear: 'both'}," ") );
-         this.fieldset.appendChild(groupItem);
+         this.fieldset.appendChild(field.getEl() );
   	   }
   	
   	   // Append the fieldset
@@ -222,7 +212,9 @@ lang.extend(inputEx.Group, inputEx.Field,
     * Set the values of each field from a key/value hash object
     */
    setValue: function(oValues) {
-      if(!oValues) return;
+      if(!oValues) {
+         return;
+      }
 	   for (var i = 0 ; i < this.inputs.length ; i++) {
 	      if(this.inputs[i].options.name && !lang.isUndefined(oValues[this.inputs[i].options.name]) ) {
 	         this.inputs[i].setValue(oValues[this.inputs[i].options.name]);
@@ -237,8 +229,14 @@ lang.extend(inputEx.Group, inputEx.Field,
    getValue: function() {
 	   var o = {};
 	   for (var i = 0 ; i < this.inputs.length ; i++) {
+	      var v = this.inputs[i].getValue();
 	      if(this.inputs[i].options.name) {
-		      o[this.inputs[i].options.name] = this.inputs[i].getValue();
+	         if(this.inputs[i]._flatten && lang.isObject(v) ) {
+	            lang.augmentObject( o, v);
+	         }
+	         else {
+		         o[this.inputs[i].options.name] = v;
+	         }
 	      }
       }
 	   return o;
@@ -268,7 +266,9 @@ lang.extend(inputEx.Group, inputEx.Field,
     * @param {String} fieldName The name property
     */
    getFieldByName: function(fieldName) {
-      if( !this.inputsNames.hasOwnProperty(fieldName) ) return null;
+      if( !this.inputsNames.hasOwnProperty(fieldName) ) {
+         return null;
+      }
       return this.inputsNames[fieldName];
    }
 
@@ -349,6 +349,14 @@ inputEx.registerType("group", inputEx.Group);
 							
 								
 								<li>
+									<a href="inputEx.ColorField2.html">inputEx.ColorField2</a></li>
+							
+								
+								<li>
+									<a href="inputEx.CombineField.html">inputEx.CombineField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.DateField.html">inputEx.DateField</a></li>
 							
 								
@@ -389,6 +397,14 @@ inputEx.registerType("group", inputEx.Group);
 							
 								
 								<li>
+									<a href="inputEx.IconPickerField.html">inputEx.IconPickerField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.ImagemapField.html">inputEx.ImagemapField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.InPlaceEdit.html">inputEx.InPlaceEdit</a></li>
 							
 								
@@ -405,6 +421,14 @@ inputEx.registerType("group", inputEx.Group);
 							
 								
 								<li>
+									<a href="inputEx.MultiAutoComplete.html">inputEx.MultiAutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.MultiSelectField.html">inputEx.MultiSelectField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.NumberField.html">inputEx.NumberField</a></li>
 							
 								
@@ -414,6 +438,10 @@ inputEx.registerType("group", inputEx.Group);
 								
 								<li>
 									<a href="inputEx.PasswordField.html">inputEx.PasswordField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.RadioField.html">inputEx.RadioField</a></li>
 							
 								
 								<li>
@@ -465,11 +493,11 @@ inputEx.registerType("group", inputEx.Group);
 							
 								
 								<li>
-									<a href="inputEx.widget.calendar.html">inputEx.widget.calendar</a></li>
+									<a href="inputEx.widget.DDList.html">inputEx.widget.DDList</a></li>
 							
 								
 								<li>
-									<a href="inputEx.widget.DateEx.html">inputEx.widget.DateEx</a></li>
+									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
 							
 								
 						</ul>
@@ -489,15 +517,19 @@ inputEx.registerType("group", inputEx.Group);
 							
 								
 								<li>
-								<a href="calendar.js.html">calendar.js</a></li>
-							
-								
-								<li>
 								<a href="CheckBox.js.html">CheckBox.js</a></li>
 							
 								
 								<li>
 								<a href="ColorField.js.html">ColorField.js</a></li>
+							
+								
+								<li>
+								<a href="ColorField2.js.html">ColorField2.js</a></li>
+							
+								
+								<li>
+								<a href="CombineField.js.html">CombineField.js</a></li>
 							
 								
 								<li>
@@ -510,6 +542,10 @@ inputEx.registerType("group", inputEx.Group);
 								
 								<li>
 								<a href="DateTimeField.js.html">DateTimeField.js</a></li>
+							
+								
+								<li>
+								<a href="ddlist.js.html">ddlist.js</a></li>
 							
 								
 								<li>
@@ -541,7 +577,19 @@ inputEx.registerType("group", inputEx.Group);
 							
 								
 								<li>
+								<a href="GroupInteractions-beta.js.html">GroupInteractions-beta.js</a></li>
+							
+								
+								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
+							
+								
+								<li>
+								<a href="IconPickerField.js.html">IconPickerField.js</a></li>
+							
+								
+								<li>
+								<a href="ImagemapField.js.html">ImagemapField.js</a></li>
 							
 								
 								<li>
@@ -569,6 +617,14 @@ inputEx.registerType("group", inputEx.Group);
 							
 								
 								<li>
+								<a href="MultiAutoComplete.js.html">MultiAutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="MultiSelectField.js.html">MultiSelectField.js</a></li>
+							
+								
+								<li>
 								<a href="NumberField.js.html">NumberField.js</a></li>
 							
 								
@@ -578,6 +634,10 @@ inputEx.registerType("group", inputEx.Group);
 								
 								<li>
 								<a href="PasswordField.js.html">PasswordField.js</a></li>
+							
+								
+								<li>
+								<a href="RadioField.js.html">RadioField.js</a></li>
 							
 								
 								<li>
@@ -638,7 +698,7 @@ inputEx.registerType("group", inputEx.Group);
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Thu, 17 Jul 2008 08:48:51 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 14:27:40 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

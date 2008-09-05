@@ -58,6 +58,9 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 	 * Adds the CheckBox specific options
 	 */
 	setOptions: function() {
+	   
+      this.options.className = this.options.className || 'inputEx-Field inputEx-CheckBox';
+	   
 	   inputEx.CheckBox.superclass.setOptions.call(this);
 	   
 	   this.sentValues = this.options.sentValues || [true, false];
@@ -74,14 +77,14 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 	        type: 'checkbox', 
 	        checked:(this.options.checked === false) ? false : true 
 	   });
-	   this.divEl.appendChild(this.el);
+	   this.fieldContainer.appendChild(this.el);
 	
-	   this.label = inputEx.cn('label', {className: 'inputExForm-checkbox-rightLabel'}, null, this.options.label || '');
-	   this.divEl.appendChild(this.label);
+	   this.rightLabelEl = inputEx.cn('div', {className: 'inputEx-CheckBox-rightLabel'}, null, this.options.rightLabel || '');
+	   this.fieldContainer.appendChild(this.rightLabelEl);
 	
 	   // Keep state of checkbox in a hidden field (format : this.checkedValue or this.uncheckedValue)
 	   this.hiddenEl = inputEx.cn('input', {type: 'hidden', name: this.options.name || '', value: this.el.checked ? this.checkedValue : this.uncheckedValue});
-	   this.divEl.appendChild(this.hiddenEl);
+	   this.fieldContainer.appendChild(this.hiddenEl);
 	},
 	   
 	/**
@@ -89,6 +92,15 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 	 */
 	initEvents: function() {
 	   Event.addListener(this.el, "change", this.onChange, this, true);	
+	   
+	   // Awful Hack to work in IE6 and below (the checkbox doesn't fire the change event)
+	   // It seems IE 8 removed this behavior from IE7 so it only works with IE 7 ??
+	   if( YAHOO.env.ua.ie && parseInt(YAHOO.env.ua.ie,10) != 7 ) {
+	      Event.addListener(this.el, "click", function() { this.fireUpdatedEvt(); }, this, true);	
+	   }
+	   
+	   Event.addListener(this.el, "focus", this.onFocus, this, true);
+	   Event.addListener(this.el, "blur", this.onBlur, this, true);
 	},
 	   
 	/**
@@ -202,6 +214,14 @@ inputEx.registerType("boolean", inputEx.CheckBox);
 							
 								
 								<li>
+									<a href="inputEx.ColorField2.html">inputEx.ColorField2</a></li>
+							
+								
+								<li>
+									<a href="inputEx.CombineField.html">inputEx.CombineField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.DateField.html">inputEx.DateField</a></li>
 							
 								
@@ -242,6 +262,14 @@ inputEx.registerType("boolean", inputEx.CheckBox);
 							
 								
 								<li>
+									<a href="inputEx.IconPickerField.html">inputEx.IconPickerField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.ImagemapField.html">inputEx.ImagemapField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.InPlaceEdit.html">inputEx.InPlaceEdit</a></li>
 							
 								
@@ -258,6 +286,14 @@ inputEx.registerType("boolean", inputEx.CheckBox);
 							
 								
 								<li>
+									<a href="inputEx.MultiAutoComplete.html">inputEx.MultiAutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.MultiSelectField.html">inputEx.MultiSelectField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.NumberField.html">inputEx.NumberField</a></li>
 							
 								
@@ -267,6 +303,10 @@ inputEx.registerType("boolean", inputEx.CheckBox);
 								
 								<li>
 									<a href="inputEx.PasswordField.html">inputEx.PasswordField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.RadioField.html">inputEx.RadioField</a></li>
 							
 								
 								<li>
@@ -318,11 +358,11 @@ inputEx.registerType("boolean", inputEx.CheckBox);
 							
 								
 								<li>
-									<a href="inputEx.widget.calendar.html">inputEx.widget.calendar</a></li>
+									<a href="inputEx.widget.DDList.html">inputEx.widget.DDList</a></li>
 							
 								
 								<li>
-									<a href="inputEx.widget.DateEx.html">inputEx.widget.DateEx</a></li>
+									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
 							
 								
 						</ul>
@@ -340,10 +380,6 @@ inputEx.registerType("boolean", inputEx.CheckBox);
 								<li>
 								<a href="AutoComplete.js.html">AutoComplete.js</a></li>
 							
-								
-								<li>
-								<a href="calendar.js.html">calendar.js</a></li>
-							
 								<li class="selected">
 								
 								<a href="CheckBox.js.html">CheckBox.js</a></li>
@@ -351,6 +387,14 @@ inputEx.registerType("boolean", inputEx.CheckBox);
 								
 								<li>
 								<a href="ColorField.js.html">ColorField.js</a></li>
+							
+								
+								<li>
+								<a href="ColorField2.js.html">ColorField2.js</a></li>
+							
+								
+								<li>
+								<a href="CombineField.js.html">CombineField.js</a></li>
 							
 								
 								<li>
@@ -363,6 +407,10 @@ inputEx.registerType("boolean", inputEx.CheckBox);
 								
 								<li>
 								<a href="DateTimeField.js.html">DateTimeField.js</a></li>
+							
+								
+								<li>
+								<a href="ddlist.js.html">ddlist.js</a></li>
 							
 								
 								<li>
@@ -394,7 +442,19 @@ inputEx.registerType("boolean", inputEx.CheckBox);
 							
 								
 								<li>
+								<a href="GroupInteractions-beta.js.html">GroupInteractions-beta.js</a></li>
+							
+								
+								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
+							
+								
+								<li>
+								<a href="IconPickerField.js.html">IconPickerField.js</a></li>
+							
+								
+								<li>
+								<a href="ImagemapField.js.html">ImagemapField.js</a></li>
 							
 								
 								<li>
@@ -422,6 +482,14 @@ inputEx.registerType("boolean", inputEx.CheckBox);
 							
 								
 								<li>
+								<a href="MultiAutoComplete.js.html">MultiAutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="MultiSelectField.js.html">MultiSelectField.js</a></li>
+							
+								
+								<li>
 								<a href="NumberField.js.html">NumberField.js</a></li>
 							
 								
@@ -431,6 +499,10 @@ inputEx.registerType("boolean", inputEx.CheckBox);
 								
 								<li>
 								<a href="PasswordField.js.html">PasswordField.js</a></li>
+							
+								
+								<li>
+								<a href="RadioField.js.html">RadioField.js</a></li>
 							
 								
 								<li>
@@ -491,7 +563,7 @@ inputEx.registerType("boolean", inputEx.CheckBox);
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Thu, 17 Jul 2008 08:48:51 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 14:27:39 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

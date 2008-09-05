@@ -39,51 +39,35 @@
  * @class A field limited to number inputs (floating)
  * @extends inputEx.Field
  * @constructor
- * @param {Object} options No added options
+ * @param {Object} options Added options
+ * <ul>
+ *    <li>dateFormat: same as DateField</li>
+ * </ul>
  */
 inputEx.DateTimeField = function(options) {
+   options.fields = [
+      {type: 'datepicker', inputParams: {}},
+      {type: 'time', inputParams: {}}
+   ];
+   if(options.dateFormat) {
+      options.fields[0].inputParams.dateFormat = options.dateFormat;
+   }
+   options.separators = options.separators || [false, "&nbsp;&nbsp;", false];
    inputEx.DateTimeField.superclass.constructor.call(this,options);
 };
-YAHOO.lang.extend(inputEx.DateTimeField, inputEx.Field, 
+YAHOO.lang.extend(inputEx.DateTimeField, inputEx.CombineField, 
 /**
  * @scope inputEx.DateTimeField.prototype   
  */
-{
-
-   /**
-    * Insert a 'breaker' (div with 'clear: both' css attribute)
-    */
-   render: function() {
-      inputEx.DateTimeField.superclass.render.call(this);
-      this.divEl.appendChild(inputEx.cn('div', null, {clear: 'both'}, ''));
-   },
-
-   /**
-    * Render a DateField and a TimeField
-    */
-   renderComponent: function() {
-      
-      this.dateField = new inputEx.DateField({name: 'date'});
-      var el = this.dateField.getEl();
-      YAHOO.util.Dom.setStyle(el,'float', 'left');
-      YAHOO.util.Dom.setStyle(el,'margin-right', '10px');
-      this.divEl.appendChild(el);
-      
-      this.timeField = new inputEx.TimeField({name: 'time'});
-      var el = this.timeField.getEl();
-      YAHOO.util.Dom.setStyle(el,'float', 'left');
-      this.divEl.appendChild(el);
-
-   },
-   
+{   
    /**
     * Concat the values to return a date
     * @return {Date} The javascript Date object
     */
    getValue: function() {
-      var d = this.dateField.getValue();
+      var d = this.inputs[0].getValue();
       if( d == '' ) return null;
-      var a = this.timeField.getValue().split(':');
+      var a = this.inputs[1].getValue().split(':');
       
       d.setHours(a[0]);
       d.setMinutes(a[1]);
@@ -97,8 +81,9 @@ YAHOO.lang.extend(inputEx.DateTimeField, inputEx.Field,
     * @param {Date} val Date to set
     */
    setValue: function(val) {
-      this.dateField.setValue(val);
-      this.timeField.setValue( ([val.getHours(), val.getMinutes(), val.getSeconds()]).join(':') );
+      if(!YAHOO.lang.isObject(val)) {return;}
+      this.inputs[0].setValue(val);
+      this.inputs[1].setValue( ([val.getHours(), val.getMinutes(), val.getSeconds()]).join(':') );
    }
 
 });
@@ -178,6 +163,14 @@ inputEx.registerType("datetime", inputEx.DateTimeField);
 							
 								
 								<li>
+									<a href="inputEx.ColorField2.html">inputEx.ColorField2</a></li>
+							
+								
+								<li>
+									<a href="inputEx.CombineField.html">inputEx.CombineField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.DateField.html">inputEx.DateField</a></li>
 							
 								
@@ -218,6 +211,14 @@ inputEx.registerType("datetime", inputEx.DateTimeField);
 							
 								
 								<li>
+									<a href="inputEx.IconPickerField.html">inputEx.IconPickerField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.ImagemapField.html">inputEx.ImagemapField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.InPlaceEdit.html">inputEx.InPlaceEdit</a></li>
 							
 								
@@ -234,6 +235,14 @@ inputEx.registerType("datetime", inputEx.DateTimeField);
 							
 								
 								<li>
+									<a href="inputEx.MultiAutoComplete.html">inputEx.MultiAutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.MultiSelectField.html">inputEx.MultiSelectField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.NumberField.html">inputEx.NumberField</a></li>
 							
 								
@@ -243,6 +252,10 @@ inputEx.registerType("datetime", inputEx.DateTimeField);
 								
 								<li>
 									<a href="inputEx.PasswordField.html">inputEx.PasswordField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.RadioField.html">inputEx.RadioField</a></li>
 							
 								
 								<li>
@@ -294,11 +307,11 @@ inputEx.registerType("datetime", inputEx.DateTimeField);
 							
 								
 								<li>
-									<a href="inputEx.widget.calendar.html">inputEx.widget.calendar</a></li>
+									<a href="inputEx.widget.DDList.html">inputEx.widget.DDList</a></li>
 							
 								
 								<li>
-									<a href="inputEx.widget.DateEx.html">inputEx.widget.DateEx</a></li>
+									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
 							
 								
 						</ul>
@@ -318,15 +331,19 @@ inputEx.registerType("datetime", inputEx.DateTimeField);
 							
 								
 								<li>
-								<a href="calendar.js.html">calendar.js</a></li>
-							
-								
-								<li>
 								<a href="CheckBox.js.html">CheckBox.js</a></li>
 							
 								
 								<li>
 								<a href="ColorField.js.html">ColorField.js</a></li>
+							
+								
+								<li>
+								<a href="ColorField2.js.html">ColorField2.js</a></li>
+							
+								
+								<li>
+								<a href="CombineField.js.html">CombineField.js</a></li>
 							
 								
 								<li>
@@ -339,6 +356,10 @@ inputEx.registerType("datetime", inputEx.DateTimeField);
 								<li class="selected">
 								
 								<a href="DateTimeField.js.html">DateTimeField.js</a></li>
+							
+								
+								<li>
+								<a href="ddlist.js.html">ddlist.js</a></li>
 							
 								
 								<li>
@@ -370,7 +391,19 @@ inputEx.registerType("datetime", inputEx.DateTimeField);
 							
 								
 								<li>
+								<a href="GroupInteractions-beta.js.html">GroupInteractions-beta.js</a></li>
+							
+								
+								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
+							
+								
+								<li>
+								<a href="IconPickerField.js.html">IconPickerField.js</a></li>
+							
+								
+								<li>
+								<a href="ImagemapField.js.html">ImagemapField.js</a></li>
 							
 								
 								<li>
@@ -398,6 +431,14 @@ inputEx.registerType("datetime", inputEx.DateTimeField);
 							
 								
 								<li>
+								<a href="MultiAutoComplete.js.html">MultiAutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="MultiSelectField.js.html">MultiSelectField.js</a></li>
+							
+								
+								<li>
 								<a href="NumberField.js.html">NumberField.js</a></li>
 							
 								
@@ -407,6 +448,10 @@ inputEx.registerType("datetime", inputEx.DateTimeField);
 								
 								<li>
 								<a href="PasswordField.js.html">PasswordField.js</a></li>
+							
+								
+								<li>
+								<a href="RadioField.js.html">RadioField.js</a></li>
 							
 								
 								<li>
@@ -467,7 +512,7 @@ inputEx.registerType("datetime", inputEx.DateTimeField);
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Thu, 17 Jul 2008 08:48:51 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 14:27:40 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>
