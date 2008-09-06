@@ -15,6 +15,12 @@
  */
 inputEx.Group = function(options) {
    inputEx.Group.superclass.constructor.call(this,options);
+   
+   if(this.hasInteractions) {
+      for(var i = 0 ; i < this.inputs.length ; i++) {
+         this.runInteractions(this.inputs[i],this.inputs[i].getValue());
+      }
+   }
 };
 lang.extend(inputEx.Group, inputEx.Field, 
 /**
@@ -29,6 +35,7 @@ lang.extend(inputEx.Group, inputEx.Field,
    
       this.options.legend = this.options.legend || '';
    
+      // leave this for compatibility reasons
       this.inputConfigs = this.options.fields;
    
       this.options.collapsible = lang.isUndefined(this.options.collapsible) ? false : this.options.collapsible;
@@ -86,8 +93,8 @@ lang.extend(inputEx.Group, inputEx.Field,
       }
   	   
       // Iterate this.createInput on input fields
-      for (var i = 0 ; i < this.inputConfigs.length ; i++) {
-         var input = this.inputConfigs[i];
+      for (var i = 0 ; i < this.options.fields.length ; i++) {
+         var input = this.options.fields[i];
         
          // Render the field
          var field = this.renderField(input);
@@ -112,6 +119,11 @@ lang.extend(inputEx.Group, inputEx.Field,
       // Create an index to access fields by their name
       if(fieldInstance.options.name) {
          this.inputsNames[fieldInstance.options.name] = fieldInstance;
+      }
+      
+      // Create the this.hasInteractions to run interactions at startup
+      if(!this.hasInteractions && fieldOptions.interactions) {
+         this.hasInteractions = true;
       }
       
 	   // Subscribe to the field "updated" event to send the group "updated" event
@@ -237,8 +249,59 @@ lang.extend(inputEx.Group, inputEx.Field,
          return null;
       }
       return this.inputsNames[fieldName];
-   }
+   },
+   
+   
+   
+   
+   
+   /**
+    * EXPERIMENTAL
+    * Methods for interactions
+    */
+   onChange: function(eventName, args) {
 
+      // Check if interactions are defined for this field
+      var fieldValue = args[0];
+      var fieldInstance = args[1];
+      
+      this.runInteractions(fieldInstance,fieldValue);
+
+      //this.setClassFromState();
+      this.fireUpdatedEvt();
+   },
+
+   runAction: function(action) {
+      var field = this.getFieldByName(action.name);
+      if( YAHOO.lang.isFunction(field[action.action]) ) {
+         field[action.action].call(field);
+      }
+      else {
+         throw new Error("action "+action.action+" is not a valid action for field "+action.name);
+      }
+   },
+   
+   
+   runInteractions: function(fieldInstance,fieldValue) {
+      
+      var index = inputEx.indexOf(fieldInstance, this.inputs);
+      var fieldConfig = this.options.fields[index];
+      if( YAHOO.lang.isUndefined(fieldConfig.interactions) ) return;
+      
+      // Let's run the interactions !
+      var interactions = fieldConfig.interactions;
+      for(var i = 0 ; i < interactions.length ; i++) {
+         var interaction = interactions[i];
+         if(interaction.valueTrigger === fieldValue) {
+            for(var i = 0 ; i < interaction.actions.length ; i++) {
+               this.runAction(interaction.actions[i]);
+            }
+         }
+      }
+      
+   }
+   
+   
 });
 
    

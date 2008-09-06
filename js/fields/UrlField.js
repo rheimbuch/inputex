@@ -8,7 +8,7 @@
  * @constructor
  * @param {Object} options inputEx.Field options object
  * <ul>
- *   <li>favicon: boolean whether the domain favicon.ico should be displayed or not (default is true, set to false for https)</li>
+ *   <li>favicon: boolean whether the domain favicon.ico should be displayed or not (default is true, except for https)</li>
  * </ul>
  */
 inputEx.UrlField = function(options) {
@@ -28,7 +28,7 @@ lang.extend(inputEx.UrlField, inputEx.StringField,
       inputEx.UrlField.superclass.setOptions.call(this);
       this.options.className = "inputEx-Field inputEx-UrlField";
       this.options.messages.invalid = inputEx.messages.invalidUrl;
-      this.options.favicon = lang.isUndefined(this.options.favicon) ? true : this.options.favicon;
+      this.options.favicon = lang.isUndefined(this.options.favicon) ? (("https:" == document.location.protocol) ? false : true) : this.options.favicon;
    },
    
    /**
