@@ -14,6 +14,7 @@ inputEx.widget.DDListItem = function(id) {
 
     inputEx.widget.DDListItem.superclass.constructor.call(this, id);
 
+    // Prevent lateral draggability
     this.setXConstraint(0,0);
 
     this.goingUp = false;
@@ -27,12 +28,20 @@ YAHOO.extend(inputEx.widget.DDListItem, YAHOO.util.DDProxy, {
         var dragEl = this.getDragEl();
         var clickEl = this.getEl();
         Dom.setStyle(clickEl, "visibility", "hidden");
+        this._originalIndex = inputEx.indexOf(clickEl ,clickEl.parentNode.childNodes);
         dragEl.className = clickEl.className;
         dragEl.innerHTML = clickEl.innerHTML;
     },
 
     endDrag: function(e) {
         Dom.setStyle(this.id, "visibility", "");
+        
+        // Fire the reordered event if position in list has changed
+        var clickEl = this.getEl();
+        var newIndex = inputEx.indexOf(clickEl ,clickEl.parentNode.childNodes);
+        if(this._originalIndex != newIndex) {
+           this._list.listReorderedEvt.fire();
+        }
     },
 
     onDragDrop: function(e, id) {
@@ -128,7 +137,12 @@ inputEx.widget.DDList = function(options) {
 	 * @desc YAHOO custom event fired when an item is removed
 	 */
 	this.itemRemovedEvt = new YAHOO.util.CustomEvent('itemRemoved', this);
-   
+	
+	/**
+	 * @event
+	 * @desc YAHOO custom event fired when the list is reordered
+	 */
+   this.listReorderedEvt = new YAHOO.util.CustomEvent('listReordered', this);
    
    // append it immediatly to the parent DOM element
 	if(options.parentEl) {
@@ -153,7 +167,8 @@ inputEx.widget.DDList.prototype = {
          var li = a.parentNode;
          this.removeItem( inputEx.indexOf(li,this.ul.childNodes) );
       }, this, true);
-      new inputEx.widget.DDListItem(li);
+      var item = new inputEx.widget.DDListItem(li);
+      item._list = this;
       this.ul.appendChild(li);
    },
    

@@ -57,7 +57,7 @@ YAHOO.lang.extend(inputEx.TypeField, inputEx.Field,
       
       // InputParams
       var inputParams = this.group.getValue();
-      console.log(inputParams);
+      //console.log(inputParams);
       obj.inputParams = inputParams;
       obj.inputParams.name = V.name;
       obj.inputParams.label = this.inplaceEditLabel.getValue();

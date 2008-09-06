@@ -100,6 +100,25 @@
 </div>
 
 
+
+<!-- Example 4 -->
+<div class='exampleDiv'>
+
+	<p class="title">listReordered Event</p>
+	
+	<p>Use the following code to listen for the listReordered Event:</p>
+
+	<div class='demoContainer' id='container4'> </div>
+
+	<div class='codeContainer'>
+		<form>
+		<textarea name="code" class="JScript">
+		</textarea>
+		</form>
+	</div>
+
+</div>
+
 <!-- YUI Library -->
 <script type="text/javascript" src="../lib/yui/yahoo/yahoo-min.js"></script> 
 <script type="text/javascript" src="../lib/yui/dom/dom-min.js"></script> 
@@ -128,6 +147,12 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	var list = new YAHOO.inputEx.widget.DDList({parentEl: 'container3', value: ['I was in first position !', 'I\'m second.', 'Third element']});
 	list.itemRemovedEvt.subscribe(function() {
 			alert("removed !");
+	});
+	
+	// Example 4
+	var list = new YAHOO.inputEx.widget.DDList({parentEl: 'container4', value: ['I was in first position !', 'I\'m second.', 'Third element']});
+	list.listReorderedEvt.subscribe(function() {
+			alert("remordered !");
 	});
 	
 });

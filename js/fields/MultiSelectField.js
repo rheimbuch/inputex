@@ -37,6 +37,7 @@ YAHOO.lang.extend(inputEx.MultiSelectField, inputEx.SelectField,
    initEvents: function() {
       YAHOO.util.Event.addListener(this.el,"change", this.onAddNewItem, this, true);
       this.ddlist.itemRemovedEvt.subscribe(this.onItemRemoved, this, true);
+      this.ddlist.listReorderedEvt.subscribe(this.fireUpdatedEvt, this, true);
    },
    
    /**

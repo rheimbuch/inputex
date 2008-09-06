@@ -32,6 +32,7 @@ YAHOO.lang.extend(inputEx.MultiAutoComplete, inputEx.AutoComplete,
       this.ddlist.itemRemovedEvt.subscribe(function() {
          this.fireUpdatedEvt();
       }, this, true);
+      this.ddlist.listReorderedEvt.subscribe(this.fireUpdatedEvt, this, true);
    },  
    
    validateItem: function() {
