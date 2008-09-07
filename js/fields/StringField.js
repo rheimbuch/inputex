@@ -37,6 +37,10 @@ lang.extend(inputEx.StringField, inputEx.Field,
     * Render an 'INPUT' DOM node
     */
    renderComponent: function() {
+      
+      // This element wraps the input node in a float: none div
+      this.wrapEl = inputEx.cn('div', {className: 'inputEx-StringField-wrapper'});
+      
       // Attributes of the input field
       var attributes = {};
       attributes.type = 'text';
@@ -50,7 +54,8 @@ lang.extend(inputEx.StringField, inputEx.Field,
       this.el = inputEx.cn('input', attributes);
 	
       // Append it to the main element
-      this.fieldContainer.appendChild(this.el);
+      this.wrapEl.appendChild(this.el);
+      this.fieldContainer.appendChild(this.wrapEl);
    },
 	
    /**

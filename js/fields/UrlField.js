@@ -54,7 +54,7 @@ lang.extend(inputEx.UrlField, inputEx.StringField,
       // Create the favicon image tag
       if(this.options.favicon) {
          this.favicon = inputEx.cn('img', {src: inputEx.spacerUrl});
-         this.fieldContainer.insertBefore(this.favicon,this.el);
+         this.fieldContainer.insertBefore(this.favicon,this.fieldContainer.childNodes[0]);
       }
    },
    

@@ -23,22 +23,10 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
 {
 
    /**
-    * Override render to create 2 divs: the visualization one, and the edit in place form
+    * Override renderComponent to create 2 divs: the visualization one, and the edit in place form
     */
-   /*render: function() {
-      
-	   // Create a DIV element to wrap the editing el and the image
-	   this.divEl = inputEx.cn('div', {className: this.options.className});
-   	
-      this.renderVisuDiv();
-	   
-	   this.renderEditor();
-   },*/
-   
    renderComponent: function() {
-      
       this.renderVisuDiv();
-	   
 	   this.renderEditor();
    },
    
@@ -113,7 +101,6 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
          this.formattedContainer.innerHTML = lang.isUndefined(this.options.value) ? inputEx.messages.emptyInPlaceEdit: this.options.value;
       }
       
-      //this.divEl.appendChild(this.formattedContainer);
       this.fieldContainer.appendChild(this.formattedContainer);
       
    },
@@ -137,7 +124,7 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
          Event.addListener(this.editorField.el, "keyup", this.onKeyUp, this, true);
          Event.addListener(this.editorField.el, "keydown", this.onKeyDown, this, true);
          // BLur
-         Event.addListener(this.editorField.el, "blur", this.onCancelEditor, this, true);
+        // Event.addListener(this.editorField.el, "blur", this.onCancelEditor, this, true);
       }
    },
    

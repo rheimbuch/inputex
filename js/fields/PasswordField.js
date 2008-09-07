@@ -48,6 +48,10 @@ lang.extend(inputEx.PasswordField, inputEx.StringField,
 	renderComponent: function() {
 	   // IE doesn't want to set the "type" property to 'password' if the node has a parent
 	   // even if the parent is not in the DOM yet !!
+	   
+	   
+      // This element wraps the input node in a float: none div
+      this.wrapEl = inputEx.cn('div', {className: 'inputEx-StringField-wrapper'});
 	      
 		// Attributes of the input field
 	   var attributes = {};
@@ -59,7 +63,8 @@ lang.extend(inputEx.PasswordField, inputEx.StringField,
 		this.el = inputEx.cn('input', attributes);
 		
 		// Append it to the main element
-		this.fieldContainer.appendChild(this.el);
+		this.wrapEl.appendChild(this.el);
+      this.fieldContainer.appendChild(this.wrapEl);
 		
 		// Caps lock warning
 		if(this.options.capsLockWarning) {

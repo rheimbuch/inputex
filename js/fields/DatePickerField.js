@@ -51,7 +51,8 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
                this._menu.hide();
             }
        };
-      this.button.appendTo(this.fieldContainer);
+      //this.button.appendTo(this.fieldContainer);
+      this.button.appendTo(this.wrapEl);
       
       // Subscribe to the first click
       this.button.on('click', this.onButtonClick, this, true);

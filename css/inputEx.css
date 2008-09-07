@@ -80,6 +80,14 @@ inputEx-focused div.inputEx-Field input {
    color: black;
 }
 
+
+/**
+ * inputEx.StringField
+ */
+div.inputEx-StringField-wrapper {
+   float: none;
+}
+
 /**
  * inputEx.Group
  */
@@ -283,6 +291,9 @@ div.inputEx-AutoComplete div.inputEx-AutoComplete-List {
    background-color: #FFFFFF;
    cursor: pointer;
    z-index: 4;
+   border: 1px solid #ccc;
+   top: 21px;
+   left: 0px;
 }
 
 div.inputEx-AutoComplete div.inputEx-AutoComplete-List div.inputEx-AutoComplete-Item {

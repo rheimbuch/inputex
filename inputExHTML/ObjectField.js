@@ -1,10 +1,14 @@
+(function() {
+
+   var inputEx = YAHOO.inputEx;
+
 /**
  * @class list of PairField where where the returned value is converted to an object
  * @extends inputEx.ListField
  * @constructor
  * @param {Object} options inputEx.Field options object
  */
-YAHOO.inputEx.ObjectField = function(options) {
+inputEx.ObjectField = function(options) {
 	options.elementType = {
 		type: 'combine', 
 		inputParams: {
@@ -14,16 +18,16 @@ YAHOO.inputEx.ObjectField = function(options) {
 			]
 		} 
 	};
-	YAHOO.inputEx.ObjectField.superclass.constructor.call(this, options);
+	inputEx.ObjectField.superclass.constructor.call(this, options);
 };
 
-YAHOO.extend(YAHOO.inputEx.ObjectField, YAHOO.inputEx.ListField, {
+YAHOO.extend(inputEx.ObjectField, inputEx.ListField, {
 
    /**
     * Convert the array of 2d elements to an javascript object 
     */
    getValue: function() {
-   	var v = YAHOO.inputEx.ObjectField.superclass.getValue.call(this);
+   	var v = inputEx.ObjectField.superclass.getValue.call(this);
    	var obj = {};
    	for(var i = 0 ; i < v.length ; i++) {
    		obj[ v[i][0] ] = v[i][1];
@@ -41,11 +45,13 @@ YAHOO.extend(YAHOO.inputEx.ObjectField, YAHOO.inputEx.ListField, {
    			val.push([key, v[key]]);
    		}
    	}
-   	YAHOO.inputEx.ObjectField.superclass.setValue.call(this,val);
+   	inputEx.ObjectField.superclass.setValue.call(this,val);
    }
 });
 
 /**
  * Register this class as "object" type
  */
-YAHOO.inputEx.registerType('object', YAHOO.inputEx.ObjectField);
+inputEx.registerType('object', inputEx.ObjectField);
+
+})();

@@ -67,7 +67,8 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
    
       Event.addListener(this.el, "keydown", this.onKeyDown, this, true);
       
-      Event.addListener(this.el, "input", this.onInput, this, true);
+      //Event.addListener(this.el, "input", this.onInput, this, true);
+      //Event.addListener(this.el, "keypress", this.onkeypress, this, true);
    },
 
    /**
@@ -111,7 +112,7 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
     * Start the typing timer on Input
     * @param {Event} e The original input event
     */
-   onInput: function(e) { 
+   onKeyPress: function(e) { 
    
       /**
        * If this is a normal key, make the query
