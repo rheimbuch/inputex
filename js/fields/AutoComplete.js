@@ -113,9 +113,7 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
          this.hideList();
          return;
       }
-      
-      alert(e.keyCode);
-   
+         
       /**
        * If this is a normal key, make the query
        */
