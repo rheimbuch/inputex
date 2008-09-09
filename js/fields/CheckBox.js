@@ -41,11 +41,8 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 	renderComponent: function() {
 	
    	var checkBoxId = Dom.generateId();
-	   this.el = inputEx.cn('input', {
-	        id: checkBoxId,
-	        type: 'checkbox', 
-	        checked:(this.options.checked === false) ? false : true 
-	   });
+   	
+	   this.el = inputEx.cn('input', { id: checkBoxId, type: 'checkbox', checked:(this.options.checked === false) ? false : true });
 	   this.fieldContainer.appendChild(this.el);
 	
 	   this.rightLabelEl = inputEx.cn('label', {"for": checkBoxId, className: 'inputEx-CheckBox-rightLabel'}, null, this.options.rightLabel || '');
@@ -64,8 +61,11 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 	   
 	   // Awful Hack to work in IE6 and below (the checkbox doesn't fire the change event)
 	   // It seems IE 8 removed this behavior from IE7 so it only works with IE 7 ??
-	   if( YAHOO.env.ua.ie && parseInt(YAHOO.env.ua.ie,10) != 7 ) {
+	   /*if( YAHOO.env.ua.ie && parseInt(YAHOO.env.ua.ie,10) != 7 ) {
 	      Event.addListener(this.el, "click", function() { this.fireUpdatedEvt(); }, this, true);	
+	   }*/
+	   if( YAHOO.env.ua.ie ) {
+	      Event.addListener(this.el, "click", function() { YAHOO.lang.later(10,this,this.fireUpdatedEvt); }, this, true);	
 	   }
 	   
 	   Event.addListener(this.el, "focus", this.onFocus, this, true);
@@ -78,8 +78,11 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 	 */
 	onChange: function(e) {
 	   this.hiddenEl.value = this.el.checked ? this.checkedValue : this.uncheckedValue;
-	   
-	   inputEx.CheckBox.superclass.onChange.call(this,e);
+	
+      // In IE the fireUpdatedEvent is sent by the click ! We need to send it only once ! 
+      if( !YAHOO.env.ua.ie ) {
+	      inputEx.CheckBox.superclass.onChange.call(this,e);
+      }
 	},
 	
 	/**

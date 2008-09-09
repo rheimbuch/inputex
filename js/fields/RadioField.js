@@ -45,11 +45,19 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	      var div = inputEx.cn('div', {className: 'inputEx-RadioField-choice'});
 	
 	      var radioId = Dom.generateId();
-	      var radio = inputEx.cn('input', { id: radioId,type: 'radio', name: this.options.name, value: this.options.choices[i] });
-	      div.appendChild(radio);
 	      
-         this.label = inputEx.cn('label', {"for": radioId, className: 'inputEx-RadioField-rightLabel'}, null, this.options.choices[i]);
-      	div.appendChild(this.label);
+	      var radio = null;
+	      // Do you still ask why javascript developpers don't like IE ?
+	      if(YAHOO.env.ua.ie) {
+	         radio = document.createElement("<input id='"+radioId+"' type='radio' name='"+this.options.name+"' value='"+this.options.choices[i]+"'>");
+	      }
+	      else {
+	         radio = inputEx.cn('input', { id: radioId,type: 'radio', name: this.options.name, value: this.options.choices[i] });
+         }
+         div.appendChild(radio);
+         var label = inputEx.cn('label', {"for": radioId, className: 'inputEx-RadioField-rightLabel'}, null, this.options.choices[i]);
+      	div.appendChild(label);
+	      
       	
       	this.fieldContainer.appendChild( div );
       	
@@ -58,7 +66,12 @@ lang.extend(inputEx.RadioField, inputEx.Field,
      
      // Build a "any" radio combined with a StringField
      if(this.options.allowAny) {
-        this.radioAny = inputEx.cn('input', { type: 'radio', name: this.options.name });
+        if(YAHOO.env.ua.ie) {
+           this.radioAny = document.createElement("<input type='radio' name='"+this.options.name+"'>");
+        }
+        else {
+           this.radioAny = inputEx.cn('input', { type: 'radio', name: this.options.name });
+        }
 	     this.fieldContainer.appendChild(this.radioAny);
 	      
         this.anyField = new inputEx.StringField({});
@@ -80,6 +93,11 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	   
 	   Event.addListener(this.optionEls, "focus", this.onFocus, this, true);
 	   Event.addListener(this.optionEls, "blur", this.onBlur, this, true);
+
+
+	   if( YAHOO.env.ua.ie ) {
+	      Event.addListener(this.optionEls, "click", function() { YAHOO.lang.later(10,this,this.fireUpdatedEvt); }, this, true);	
+	   }
 	   
 	   if(this.anyField)	{
 	      this.anyField.updatedEvt.subscribe(function(e) {
@@ -102,8 +120,11 @@ lang.extend(inputEx.RadioField, inputEx.Field,
          else {
             this.anyField.disable();
          }
-      } 
-	   inputEx.RadioField.superclass.onChange.call(this,e);
+      }
+      // In IE the fireUpdatedEvent is sent by the click ! We need to send it only once ! 
+      if( !YAHOO.env.ua.ie ) {
+	      inputEx.RadioField.superclass.onChange.call(this,e);
+      }
 	},
 	
 	/**
@@ -129,7 +150,7 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	 */
 	setValue: function(value) {
 	   for(var i = 0 ; i < this.optionEls.length ; i++) {
-	      //this.optionEls[i].checked = (value == this.options.choices[i]);
+	      this.optionEls[i].checked = (value == this.options.choices[i]);
 	   }
 	}
 	

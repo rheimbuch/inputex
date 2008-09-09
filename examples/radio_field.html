@@ -33,11 +33,9 @@
 	<div class='demoContainer' id='container1'></div>
 
 	<div class='codeContainer'>
-		<form>
 		<textarea name="code" class="JScript">
 			new YAHOO.inputEx.RadioField({label: 'Where did you learn about inputEx ?', name: 'example1', choices: ['Ajaxian','YUI blog','other'], parentEl: 'container1'});
 		</textarea>
-		</form>
 	</div>
 
 </div>
@@ -52,14 +50,12 @@
 	<div class='demoContainer' id='container2'></div>
 
 	<div class='codeContainer'>
-		<form>
 		<textarea name="code" class="JScript">
 			var field2 = new YAHOO.inputEx.RadioField({label: 'Where did you learn about inputEx ?', name: 'example2', choices: ['Ajaxian','YUI blog'], parentEl: 'container2', allowAny: true});
 			field2.updatedEvt.subscribe(function(e, params) {
 					YAHOO.util.Dom.get('container2').appendChild( YAHOO.inputEx.cn('div',null,null, "Updated with value: "+params[0]) );
 			});
 		</textarea>
-		</form>
 	</div>
 
 </div>
@@ -79,7 +75,6 @@
 	<div class='demoContainer' id='container3'></div>
 
 	<div class='codeContainer'>
-		<form>
 		<textarea name="code" class="JScript">
 			new YAHOO.inputEx.RadioField({label: 'Where did you learn about inputEx ?', name: 'example3', choices: ['Ajaxian','YUI blog','other'], parentEl: 'container3', id: 'verticalChoiceField'});
 			
@@ -88,7 +83,6 @@
 				float: none;
 			}
 		</textarea>
-		</form>
 	</div>
 
 </div>
