@@ -61,22 +61,16 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
     */
    initEvents: function() {
       inputEx.AutoComplete.superclass.initEvents.call(this);
-   
       Event.addListener(this.listEl, "click", this.validateItem, this, true);
       Event.addListener(this.listEl, "mouseover", this.onListMouseOver, this, true);
-   
-      Event.addListener(this.el, "keydown", this.onKeyDown, this, true);
-      
-      //Event.addListener(this.el, "input", this.onInput, this, true);
-      //Event.addListener(this.el, "keypress", this.onkeypress, this, true);
    },
 
    /**
-    * Listen for up/down keys
-    * @param {Event} e THe original keydown event
+    * Start the typing timer on Input and Listen for up/down keys
+    * @param {Event} e The original input event
     */
-   onKeyDown: function(e) {
-   
+   onKeyPress: function(e) { 
+      
       // up/down keys
       if( e.keyCode == 40 || e.keyCode == 38) {
    
@@ -96,6 +90,7 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
             this.highlightItem(liItem);
             Event.stopEvent(e);
          }
+         return;
       }   
       
       // Key enter
@@ -105,14 +100,21 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
          Event.stopEvent(e);
 	      return;
       }
-   },
-
-
-   /**
-    * Start the typing timer on Input
-    * @param {Event} e The original input event
-    */
-   onKeyPress: function(e) { 
+      
+      // Escape Key
+      if(e.keyCode == 27) {
+         this.hideList();
+         Event.stopEvent(e);
+   	   return;
+      }
+      
+      // Tabulation
+      if(e.keyCode == 9) {
+         this.hideList();
+         return;
+      }
+      
+      alert(e.keyCode);
    
       /**
        * If this is a normal key, make the query
@@ -148,6 +150,11 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
        
        // Fire the validateItem event
        this.validateItemEvt.fire(this.listValues[pos]);
+    },
+    
+    onBlur: function(e) {
+       inputEx.AutoComplete.superclass.onBlur.call(this,e);
+       this.hideList();
     },
 
    /**
@@ -218,7 +225,6 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
     * Send the request when the timer ends.
     */
    timerEnd: function() {
-      //var value = this.getValue().replace(/^\s+/g, '').replace(/\s+$/g, ''); 
       var value = this.el.value.replace(/^\s+/g, '').replace(/\s+$/g, ''); 
       this.queryList(value);
    },
