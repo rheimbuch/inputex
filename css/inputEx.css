@@ -411,9 +411,9 @@ div.inputEx-CheckBox input {
    margin: 2px 0 4px 0;
 }
  
-div.inputEx-CheckBox-rightLabel {
-   float: left;
-   margin: 2px 0 0 2px;
+label.inputEx-CheckBox-rightLabel {
+   margin: 3px;
+   cursor: pointer;
 }
  
 /**
@@ -476,6 +476,7 @@ div.inputEx-ColorPicker div.yui-overlay div.bd {
  * Radio Field
  */
 label.inputEx-RadioField-rightLabel {
+   cursor: pointer;
    margin: 3px;
 }
 

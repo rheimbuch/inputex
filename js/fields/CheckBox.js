@@ -40,13 +40,15 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 	 */
 	renderComponent: function() {
 	
+   	var checkBoxId = Dom.generateId();
 	   this.el = inputEx.cn('input', {
+	        id: checkBoxId,
 	        type: 'checkbox', 
 	        checked:(this.options.checked === false) ? false : true 
 	   });
 	   this.fieldContainer.appendChild(this.el);
 	
-	   this.rightLabelEl = inputEx.cn('div', {className: 'inputEx-CheckBox-rightLabel'}, null, this.options.rightLabel || '');
+	   this.rightLabelEl = inputEx.cn('label', {"for": checkBoxId, className: 'inputEx-CheckBox-rightLabel'}, null, this.options.rightLabel || '');
 	   this.fieldContainer.appendChild(this.rightLabelEl);
 	
 	   // Keep state of checkbox in a hidden field (format : this.checkedValue or this.uncheckedValue)

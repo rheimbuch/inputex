@@ -44,10 +44,11 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	
 	      var div = inputEx.cn('div', {className: 'inputEx-RadioField-choice'});
 	
-	      var radio = inputEx.cn('input', { type: 'radio', name: this.options.name, value: this.options.choices[i] });
+	      var radioId = Dom.generateId();
+	      var radio = inputEx.cn('input', { id: radioId,type: 'radio', name: this.options.name, value: this.options.choices[i] });
 	      div.appendChild(radio);
 	      
-         this.label = inputEx.cn('label', {className: 'inputEx-RadioField-rightLabel'}, null, this.options.choices[i]);
+         this.label = inputEx.cn('label', {"for": radioId, className: 'inputEx-RadioField-rightLabel'}, null, this.options.choices[i]);
       	div.appendChild(this.label);
       	
       	this.fieldContainer.appendChild( div );
@@ -128,7 +129,7 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	 */
 	setValue: function(value) {
 	   for(var i = 0 ; i < this.optionEls.length ; i++) {
-	      this.optionEls[i].checked = (value == this.options.choices[i]);
+	      //this.optionEls[i].checked = (value == this.options.choices[i]);
 	   }
 	}
 	
