@@ -18,7 +18,7 @@
 
  </head>
 
- <body>
+ <body class="yui-skin-sam">
 
 <p class='demoTitle'>inputEx - MultiAutoComplete Usage</p>
 
@@ -47,8 +47,13 @@
 <script type="text/javascript" src="../lib/yui/dom/dom-min.js"></script> 
 <script type="text/javascript" src="../lib/yui/event/event-min.js"></script>
 <script type="text/javascript" src="../lib/yui/dragdrop/dragdrop-min.js"></script>
+<script type="text/javascript" src="../lib/yui/datasource/datasource-beta-min.js"></script>
+<script type="text/javascript" src="../lib/yui/autocomplete/autocomplete-min.js"></script>
 
-<!-- Just for the example (not needed by MultiAutoComplete)-->
+<!-- For the state autocompleter -->
+<script src="http://developer.yahoo.com/yui/examples/autocomplete/assets/js/states_jsfunction.js" type='text/javascript'></script>
+
+<!-- Just for the example (not required by MultiAutoComplete)-->
 <script type="text/javascript" src="../lib/yui/json/json-min.js"></script>
 
 <!-- InputEx -->
@@ -68,20 +73,24 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 
 	// Example 1	
 	var el = YAHOO.util.Dom.get('container1');
-	var field = new YAHOO.inputEx.MultiAutoComplete({parentEl: el, 
-		visuItem: { visuType: 'func', func: function(val) {
-			 return YAHOO.inputEx.cn('div', null, null, val.firstname+' '+val.lastname);
-		}}, 
-		query: function(val) {
-		   this.updateList([
-					{firstname: 'Alan', lastname: 'Turing', email: 'alan@turing.com'},
-	        {firstname: 'Thomas', lastname: 'Edison', email: 'thomas@edison.com'},
-	        {firstname: 'Leonardo', lastname: 'da Vinci', email: 'leonardo@davinci.com'}
-	     ]);
+	var field = new YAHOO.inputEx.MultiAutoComplete({
+		parentEl: el, 
+		label: 'Search US state',
+		datasource: new YAHOO.widget.DS_JSFunction( getStates), // see http://developer.yahoo.com/yui/examples/autocomplete/assets/js/states_jsfunction.js for getState function
+		
+		// Format the hidden value (value returned by the form)
+		returnValue: function(oResultItem) {
+			return oResultItem[1];
 		},
-		displayAutocompleted: function(val) {
-			return val.email;
-		} 
+		autoComp: {
+			forceSelection: true,
+			minQueryLength: 2,
+			maxResultsDisplayed: 50,
+			formatResult: function(oResultItem, sQuery) {
+       	var sMarkup = oResultItem[0] + " (" + oResultItem[1] + ")";
+       	return sMarkup;
+    	}
+		}
 	});
 	var logDiv = YAHOO.inputEx.cn('div', null, null, "<br />");
 	el.appendChild(logDiv);

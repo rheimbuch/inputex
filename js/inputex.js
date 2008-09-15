@@ -6,9 +6,34 @@
  var lang = YAHOO.lang;
  
 /**
+ * Build a field from an object like: { type: 'color' or fieldClass: inputEx.ColorField, inputParams: {} }<br />
+ * The inputParams property is the object that will be passed as the <code>options</code> parameter to the field class constructor.<br />
+ * If the neither type or fieldClass are found, it uses inputEx.StringField
  * @namespace The inputEx global namespace object.
+ * @static
+ * @param {Object} fieldOptions
+ * @return {inputEx.Field} Created field instance
  */
-YAHOO.namespace("inputEx");
+YAHOO.inputEx = function(fieldOptions) {
+   var fieldClass = null;
+	if(fieldOptions.type) {
+	   fieldClass = YAHOO.inputEx.getFieldClass(fieldOptions.type);
+	   if(fieldClass === null) fieldClass = YAHOO.inputEx.StringField;
+	}
+	else {
+	   fieldClass = fieldOptions.fieldClass ? fieldOptions.fieldClass : inputEx.StringField;
+	}
+
+   // Instanciate the field
+   var inputInstance = new fieldClass(fieldOptions.inputParams);
+
+   // Add the flatten attribute if present in the params
+   if(fieldOptions.flatten) {
+      inputInstance._flatten = true;
+   }
+	  
+   return inputInstance;
+};
 
 /**
  * Test de documentation inputEx
@@ -21,7 +46,7 @@ lang.augmentObject(inputEx,
  */   
 {
    
-   VERSION: "0.2.0b",
+   VERSION: "0.2.0",
    
    /**
     * Url to the spacer image. This url schould be changed according to your project directories
@@ -128,32 +153,13 @@ lang.augmentObject(inputEx,
    },
    
    /**
-    * Build a field from an object like: { type: 'color' or fieldClass: inputEx.ColorField, inputParams: {} }<br />
-    * The inputParams property is the object that will be passed as the <code>options</code> parameter to the field class constructor.<br />
-    * If the neither type or fieldClass are found, it uses inputEx.StringField
-    * @static
+    * Kept for backward compatibility
+    * @alias inputEx
     * @param {Object} fieldOptions
     * @return {inputEx.Field} Created field instance
     */
-   buildField: function(fieldOptions) {
-      var fieldClass = null;
-   	if(fieldOptions.type) {
-   	   fieldClass = this.getFieldClass(fieldOptions.type);
-   	   if(fieldClass === null) fieldClass = inputEx.StringField;
-   	}
-   	else {
-   	   fieldClass = fieldOptions.fieldClass ? fieldOptions.fieldClass : inputEx.StringField;
-   	}
-
-      // Instanciate the field
-      var inputInstance = new fieldClass(fieldOptions.inputParams);
-      
-      // Add the flatten attribute if present in the params
-      if(fieldOptions.flatten) {
-         inputInstance._flatten = true;
-      }
-   	  
-      return inputInstance;
+   buildField: function(fieldOptions) {      
+      return inputEx(fieldOptions);
    },
    
    /**
@@ -172,9 +178,6 @@ lang.augmentObject(inputEx,
             if( lang.isFunction(domAttribute) ){
                continue;
             }
-            /*if(YAHOO.env.ua.ie && i=="type" && (el.tagName=="INPUT"||el.tagName=="SELECT") ){
-               continue;
-            }*/
             if(i=="className"){
                i="class";
                el.className=domAttribute;

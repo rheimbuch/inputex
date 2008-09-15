@@ -281,27 +281,16 @@ a.inputEx-InPlaceEdit-CancelLink {
 /**
  * inputEx.AutoComplete
  */
-div.inputEx-AutoComplete {
-   
+.yui-skin-sam div.inputEx-AutoComplete .yui-ac-input {
+   width: auto;
+   position: relative;
 }
-
-div.inputEx-AutoComplete div.inputEx-AutoComplete-List {
-   width: 300px;
-   position: absolute;
-   background-color: #FFFFFF;
-   cursor: pointer;
-   z-index: 4;
-   border: 1px solid #ccc;
-   top: 21px;
-   left: 0px;
+.yui-skin-sam div.inputEx-AutoComplete .yui-ac-content {
+   width: auto;
 }
-
-div.inputEx-AutoComplete div.inputEx-AutoComplete-List div.inputEx-AutoComplete-Item {
-   padding: 3px;
-}
-
-div.inputEx-AutoComplete div.inputEx-AutoComplete-List div.inputEx-AutoComplete-ItemHovered {
-   background-color: highlight;
+div.inputEx-AutoComplete div.yui-ac-container { 
+   margin-bottom:2em;
+   width:25em;
 }
 
 /**

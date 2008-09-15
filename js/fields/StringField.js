@@ -44,6 +44,7 @@ lang.extend(inputEx.StringField, inputEx.Field,
       // Attributes of the input field
       var attributes = {};
       attributes.type = 'text';
+      attributes.id = YAHOO.util.Dom.generateId();
       if(this.options.size) attributes.size = this.options.size;
       if(this.options.name) attributes.name = this.options.name;
       if(this.options.readonly) attributes.readonly = 'readonly';

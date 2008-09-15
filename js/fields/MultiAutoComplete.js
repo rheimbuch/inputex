@@ -3,14 +3,11 @@
    var inputEx = YAHOO.inputEx;
 
 /**
- * @class Create a select field
- * @extends inputEx.Field
+ * @class Create a multi autocomplete field
+ * @extends inputEx.AutoComplete
  * @constructor
  * @param {Object} options Added options:
  * <ul>
- *	   <li>selectValues: contains the list of options values</li>
- *	   <li>selectOptions: list of option element texts</li>
- *    <li>multiple: boolean to allow multiple selections</li>
  * </ul>
  */
 inputEx.MultiAutoComplete = function(options) {
@@ -35,24 +32,12 @@ YAHOO.lang.extend(inputEx.MultiAutoComplete, inputEx.AutoComplete,
       this.ddlist.listReorderedEvt.subscribe(this.fireUpdatedEvt, this, true);
    },  
    
-   validateItem: function() {
-       var pos = -1;
-       for(var i = 0 ; i < this.listEl.childNodes.length ; i++) {
-          if(this.listEl.childNodes[i]==this.highlightedItem) {
-             pos = i;
-             break;
-          }
-       }
-       if(pos == -1) { return; }
-   
-       this.el.value = "";
-       this.ddlist.addItem( this.options.displayAutocompleted.call(this, this.listValues[pos]) );
-       
-       this.hideList();
-       
-       // Fire the validateItem event
-       this.validateItemEvt.fire(this.listValues[pos]);
-    },
+   itemSelectHandler: function(sType, aArgs) {
+   	var aData = aArgs[2];
+   	this.ddlist.addItem( this.options.returnValue ? this.options.returnValue(aData) : aData[0] );
+   	this.el.value = "";
+   	this.fireUpdatedEvt();
+   },
    
    /**
     * Set the value

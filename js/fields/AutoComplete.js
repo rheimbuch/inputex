@@ -8,19 +8,13 @@
  * @extends inputEx.StringField
  * @param {Object} options Added options for Autocompleter
  * <ul>
- *	  <li>highlightClass: the CSS className added to highlight selected item</li>
- *	  <li>timerDelay: number of milliseconds to wait before sending the request (default is 300)</li>
- *	  <li>query: function called for the querying</li>
- *   <li>visuItem: the visualization object to display each item</li>
- *   <li>displayAutocompleted: method taht should return the string set to the field when an item is selected</li>
- *   <li>queryMinLength: minimum number of letters to type before sending the query (default is 2)</li>
+ *	  <li>datasource: the datasource</li>
+ *	  <li>autoComp: autocompleter options</li>
+ *   <li>returnValue: function to format the returned value (optional)</li>
  * </ul>
  */
 inputEx.AutoComplete = function(options) {
    inputEx.AutoComplete.superclass.constructor.call(this, options);
-   
-   // Event fired when the user validated an item
-   this.validateItemEvt = new YAHOO.util.CustomEvent('validateItem', this);
 };
 
 lang.extend(inputEx.AutoComplete, inputEx.StringField, 
@@ -33,15 +27,8 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
     * Adds autocomplete options
     */
    setOptions: function() {
-   
       this.options.className = this.options.className || 'inputEx-Field inputEx-AutoComplete';
-   
       inputEx.AutoComplete.superclass.setOptions.call(this);
-   
-      this.options.highlightClass = 'inputEx-AutoComplete-ItemHovered';
-      this.options.timerDelay = this.options.timerDelay || 300;
-      this.options.query = this.options.query || null;
-      this.options.queryMinLength = this.options.queryMinLength || 2;
    },
 
    /**
@@ -49,220 +36,92 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
     */
    renderComponent: function() {
    
-      inputEx.AutoComplete.superclass.renderComponent.call(this);
+      // This element wraps the input node in a float: none div
+      this.wrapEl = inputEx.cn('div', {className: 'inputEx-StringField-wrapper'});
+      
+      // Attributes of the input field
+      var attributes = {
+         type: 'text',
+         id: YAHOO.util.Dom.generateId()
+      };
+      if(this.options.size) attributes.size = this.options.size;
+      if(this.options.readonly) attributes.readonly = 'readonly';
+      if(this.options.maxLength) attributes.maxLength = this.options.maxLength;
+   
+      // Create the node
+      this.el = inputEx.cn('input', attributes);
+      
+      // Create the hidden input
+      var hiddenAttrs = {
+         type: 'hidden',
+         value: ''
+      };
+      if(this.options.name) hiddenAttrs.name = this.options.name;
+      this.hiddenEl = inputEx.cn('input', hiddenAttrs);
+      
+      // Append it to the main element
+      this.wrapEl.appendChild(this.el);
+      this.wrapEl.appendChild(this.hiddenEl);
+      this.fieldContainer.appendChild(this.wrapEl);
    
       // Render the list :
-      this.listEl = inputEx.cn('div', {className: 'inputEx-AutoComplete-List'}, {display: 'none'});
+      this.listEl = inputEx.cn('div', {id: Dom.generateId() });
       this.fieldContainer.appendChild(this.listEl);
-   },
-
-   /**
-    * Register some additional events
-    */
-   initEvents: function() {
-      inputEx.AutoComplete.superclass.initEvents.call(this);
-      Event.addListener(this.listEl, "click", this.validateItem, this, true);
-      Event.addListener(this.listEl, "mouseover", this.onListMouseOver, this, true);
-   },
-
-   /**
-    * Start the typing timer on Input and Listen for up/down keys
-    * @param {Event} e The original input event
-    */
-   onKeyPress: function(e) { 
-      
-      // up/down keys
-      if( e.keyCode == 40 || e.keyCode == 38) {
-   
-         var pos = -1;
-         for(var i = 0 ; i < this.listEl.childNodes.length ; i++) {
-            if(this.listEl.childNodes[i]==this.highlightedItem) {
-               pos = i;
-               break;
-            }
-         }
-   
-         var lastPos = this.listEl.childNodes.length-1;
-         var indexItemToHighlight = (e.keyCode == 40) ? (pos < lastPos ? pos+1 : 0) : (pos != 0 ? pos-1 : lastPos);
-         var liItem = this.listEl.childNodes[indexItemToHighlight];
-            
-         if(liItem) {
-            this.highlightItem(liItem);
-            Event.stopEvent(e);
-         }
-         return;
-      }   
-      
-      // Key enter
-      if(e.keyCode == 13) {
-         this.validateItem();
-         this.fireUpdatedEvt();
-         Event.stopEvent(e);
-	      return;
-      }
-      
-      // Escape Key
-      if(e.keyCode == 27) {
-         this.hideList();
-         Event.stopEvent(e);
-   	   return;
-      }
-      
-      // Tabulation
-      if(e.keyCode == 9) {
-         this.hideList();
-         return;
-      }
-         
-      /**
-       * If this is a normal key, make the query
-       */
-   
-       // trim whitespaces (remove spaces at beginning and end of string)
-       var value = this.el.value.replace(/^\s+/g, '').replace(/\s+$/g, ''); 
-
-       if(value.length >= this.options.queryMinLength ) {
-          this.resetTimer();
-       }
-       else {
-          this.stopTimer();
-          this.hideList();
-       }
-    },
-
-    /**
-     * Called when the user clicked on an item or pressed the enter key
-     */
-    validateItem: function() {
-       var pos = -1;
-       for(var i = 0 ; i < this.listEl.childNodes.length ; i++) {
-          if(this.listEl.childNodes[i]==this.highlightedItem) {
-             pos = i;
-             break;
-          }
-       }
-       if(pos == -1) { return; }
-   
-       this.el.value = this.options.displayAutocompleted.call(this, this.listValues[pos]);
-       this.hideList();
        
-       // Fire the validateItem event
-       this.validateItemEvt.fire(this.listValues[pos]);
-    },
-    
-    onBlur: function(e) {
-       inputEx.AutoComplete.superclass.onBlur.call(this,e);
-       this.hideList();
-    },
-
-   /**
-    * Hide the list
-    */
-   hideList: function() {
-      this.listEl.style.display = 'none';
+      Event.onAvailable([this.el, this.listEl], this.buildAutocomplete, this, true);
    },
-
-   /**
-    * Show the list
-    */
-   showList: function() {
-      this.listEl.style.display = '';
-   },
-
-   /**
-    * Run the query function
-    */
-   queryList: function(value) {
-      this.options.query.call(this, value);
-   },
-
-   /**
-    * Function to populate the list
-    */
-   updateList: function(list) {
    
-      this.listValues = list;
-   
-      this.listEl.innerHTML = "";
-   
-      // Call a rendering function:
-      for(var i = 0 ; i < list.length ; i++) {
-         var el = inputEx.cn('div', {className: 'inputEx-AutoComplete-Item'});
+   buildAutocomplete: function() {
+      // Call this function only when this.el AND this.listEl are available
+      if(!this._nElementsReady) { this._nElementsReady = 0; }
+      this._nElementsReady++;
+      if(this._nElementsReady != 2) return;
       
-         //el.appendChild( this.options.displayEl.call(this,list[i]) );
-         inputEx.renderVisu(this.options.visuItem, list[i], el);
+      // Instantiate AutoComplete
+      this.oAutoComp = new YAHOO.widget.AutoComplete(this.el.id, this.listEl.id, this.options.datasource, this.options.autoComp);
+
+      // subscribe to the itemSelect event
+      this.oAutoComp.itemSelectEvent.subscribe(this.itemSelectHandler, this, true);
       
-         this.listEl.appendChild(el);
-      }
+   },
    
-      // Make the list visible
-      this.showList();
+   //define your itemSelect handler function:
+   itemSelectHandler: function(sType, aArgs) {
+   	var aData = aArgs[2];
+   	this.setValue( this.options.returnValue ? this.options.returnValue(aData) : aData[0] );
+   	
+   	this.fireUpdatedEvt();
    },
-
+   
    /**
-    * The timer is used to wait a little before sending the request, so that we don't send too much requests.
+    * onChange event handler
+    * @param {Event} e The original 'change' event
     */
-   resetTimer: function() {
-      if( this.timer ) {
-         clearTimeout(this.timer);
-      }
-      var that = this;
-      this.timer = setTimeout(function() { that.timerEnd(); }, this.options.timerDelay);
+	onChange: function(e) {
+	   this.setClassFromState();
+	   // Clear the field when no value 
+      YAHOO.lang.later(50, this, function() {
+         if(this.el.value == "") {
+            this.setValue("");
+            this.fireUpdatedEvt();
+         }
+      });
+	},
+   
+   setValue: function(value) {
+      this.hiddenEl.value = value;
    },
-
-   /**
-    * Stop the timer
-    */
-   stopTimer: function() {
-      if( this.timer ) {
-         clearTimeout(this.timer);
-      }
-   },
-
-   /**
-    * Send the request when the timer ends.
-    */
-   timerEnd: function() {
-      var value = this.el.value.replace(/^\s+/g, '').replace(/\s+$/g, ''); 
-      this.queryList(value);
-   },
-
-   /**
-    * Set the highlighted item
-    * @param {HTMLElement} liItem The LI node to highlight
-    */
-   highlightItem: function(liItem) {
-      this.toggleHighlightItem(this.highlightedItem, false);
-      this.toggleHighlightItem(liItem, true);
-      this.highlightedItem = liItem;
-   },
-
-
-   /**
-    * Hightlight or unhighlight an item from the list
-    * @param {HTMLElement} liItem The LI node to highlight
-    * @param {Boolean} highlight The highlight state to set
-    */
-   toggleHighlightItem: function(liItem, highlight) {
-      if(highlight) {
-         Dom.addClass(liItem, this.options.highlightClass);
-      }
-      else {
-         Dom.removeClass(liItem, this.options.highlightClass);
-      }
-   },
-
-   /**
-    * Highlight the overed item
-    * @param {Event} e The original mouseover event
-    */ 
-   onListMouseOver: function(e) {
-      var target = Event.getTarget(e);
-      if( Dom.hasClass(target, 'inputEx-AutoComplete-Item') ) {
-         this.highlightItem(target);
-      }
+   
+   getValue: function() {
+      return this.hiddenEl.value;
    }
 
 });
+
+
+/**
+* Register this class as "autocomplete" type
+*/
+inputEx.registerType("autocomplete", inputEx.AutoComplete);
 
 })();
