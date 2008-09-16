@@ -50,7 +50,10 @@ YAHOO.lang.extend(inputEx.DateTimeField, inputEx.CombineField,
    setValue: function(val) {
       if(!YAHOO.lang.isObject(val)) {return;}
       this.inputs[0].setValue(val);
-      this.inputs[1].setValue( ([val.getHours(), val.getMinutes(), val.getSeconds()]).join(':') );
+      var h = val.getHours();
+      var m = val.getMinutes();
+      var s = val.getSeconds();
+      this.inputs[1].setValue( ([(h < 10 ? '0':'')+h, (m < 10 ? '0':'')+m, (s < 10 ? '0':'')+s]).join(':') );
    }
 
 });

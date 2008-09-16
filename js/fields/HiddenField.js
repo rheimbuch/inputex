@@ -24,6 +24,10 @@ YAHOO.lang.extend(inputEx.HiddenField, inputEx.Field,
    render: function() {
       this.type = inputEx.HiddenField;
 	   this.divEl = inputEx.cn('div', null, {display: 'none'});
+	   
+	   this.el = inputEx.cn('input', {type: 'hidden'});
+	   if(this.options.name) this.el.name = this.options.name;
+	   this.divEl.appendChild(this.el);
    },
 
    /**
@@ -31,7 +35,7 @@ YAHOO.lang.extend(inputEx.HiddenField, inputEx.Field,
     * @param {Any} val The value to set
     */
    setValue: function(val) {
-      this.value = val;
+      this.el.value = val;
    },
 
    /**
@@ -39,7 +43,7 @@ YAHOO.lang.extend(inputEx.HiddenField, inputEx.Field,
     * @return {Any} the previously stored value
     */
    getValue: function() {
-      return this.value;
+      return this.el.value;
    }
 
 });
