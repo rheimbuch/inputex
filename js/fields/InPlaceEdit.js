@@ -223,7 +223,15 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
       else {
          inputEx.renderVisu(this.options.visu, this.value, this.formattedContainer);
       }
-   }
+   },
+   
+   /**
+    * Close the editor when calling the close function on this field
+    */
+   close: function() {
+      this.editorContainer.style.display = 'none';
+      this.formattedContainer.style.display = '';
+	}
 
 });
   

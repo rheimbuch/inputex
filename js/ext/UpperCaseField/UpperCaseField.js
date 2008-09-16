@@ -42,5 +42,9 @@ YAHOO.lang.extend(inputEx.UpperCaseField, inputEx.StringField,
 
 });
 
+/**
+* Register this class as "autocomplete" type
+*/
+inputEx.registerType("uppercase", inputEx.UpperCaseField);
 
 })();

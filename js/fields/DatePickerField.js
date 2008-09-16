@@ -24,7 +24,7 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
 	   this.options.className = this.options.className || 'inputEx-Field inputEx-DateField inputEx-DatePickerField';
    	inputEx.DatePickerField.superclass.setOptions.call(this);
    	
-   	this.options.calendar = this.options.calendar || { navigator: true };
+   	this.options.calendar = this.options.calendar || inputEx.messages.defautCalendarOpts;
    	this.options.readonly = true;
    },
    
@@ -69,6 +69,21 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
       
       // Render the calendar
       this.calendar = new YAHOO.widget.Calendar(Dom.generateId(),this.oOverlay.body.id, this.options.calendar );
+      
+      /*
+      this.calendar.cfg.setProperty("DATE_FIELD_DELIMITER", "/");
+      this.calendar.cfg.setProperty("MDY_DAY_POSITION", 1);
+      this.calendar.cfg.setProperty("MDY_MONTH_POSITION", 2);
+      this.calendar.cfg.setProperty("MDY_YEAR_POSITION", 3);
+      this.calendar.cfg.setProperty("MD_DAY_POSITION", 1);
+      this.calendar.cfg.setProperty("MD_MONTH_POSITION", 2);*/
+
+      // localization
+      if(inputEx.messages.shortMonths) this.calendar.cfg.setProperty("MONTHS_SHORT", inputEx.messages.shortMonths);
+      if(inputEx.messages.months) this.calendar.cfg.setProperty("MONTHS_LONG", inputEx.messages.months);
+      if(inputEx.messages.weekdays1char) this.calendar.cfg.setProperty("WEEKDAYS_1CHAR", inputEx.messages.weekdays1char);
+      if(inputEx.messages.shortWeekdays) this.calendar.cfg.setProperty("WEEKDAYS_SHORT", inputEx.messages.shortWeekdays);
+      
       this.calendar.render();
          
       // Set the field value when a date is selected
@@ -93,6 +108,7 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
    
 });
 
+inputEx.messages.defautCalendarOpts = { navigator: true };
 
 /**
  * Register this class as "datepicker" type

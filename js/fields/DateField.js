@@ -14,7 +14,7 @@
 inputEx.DateField = function(options) {
    if(!options) { var options = {}; }
    if(!options.messages) { options.messages = {}; }
-	if(!options.dateFormat) {options.dateFormat = 'm/d/Y'; }
+	if(!options.dateFormat) {options.dateFormat = inputEx.messages.defaultDateFormat; }
 	options.messages.invalid = inputEx.messages.invalidDate;
 	inputEx.DateField.superclass.constructor.call(this,options);
 };
@@ -99,6 +99,7 @@ lang.extend(inputEx.DateField, inputEx.StringField,
 	
 // Specific message for the container
 inputEx.messages.invalidDate = "Invalid date, ex: 03/27/2008";
+inputEx.messages.defaultDateFormat = "m/d/Y";
 	
 /**
  * Register this class as "date" type
