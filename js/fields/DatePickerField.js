@@ -51,7 +51,7 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
                this._menu.hide();
             }
        };
-      this.button.appendTo(this.fieldContainer);
+      //this.button.appendTo(this.fieldContainer);
       this.button.appendTo(this.wrapEl);
       
       // Subscribe to the first click
@@ -65,10 +65,14 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
    onButtonClick: function() {
       
       // Render the overlay
-      this.oOverlay.render(this.fieldContainer);
+      //this.oOverlay.render(this.fieldContainer);
+      this.oOverlay.render(this.wrapEl);
       
       // Render the calendar
       this.calendar = new YAHOO.widget.Calendar(Dom.generateId(),this.oOverlay.body.id, this.options.calendar );
+      
+      // HACK: Set position absolute to the overlay
+      Dom.setStyle(this.oOverlay.body.parentNode, "position", "absolute")
       
       /*
       this.calendar.cfg.setProperty("DATE_FIELD_DELIMITER", "/");

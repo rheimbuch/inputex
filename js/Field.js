@@ -178,7 +178,9 @@ inputEx.Field.prototype = {
 		   Dom.removeClass(this.getEl(), 'inputEx-'+this.previousState );
 	   }
 	   var state = this.getState();
-	   Dom.addClass(this.getEl(), 'inputEx-'+state );
+	   if( !(state == "empty" && Dom.hasClass(this.divEl, 'inputEx-focused') ) ) {
+	      Dom.addClass(this.getEl(), 'inputEx-'+state );
+      }
 	
 	   if(this.options.showMsg) {
 	      this.displayMessage( this.getStateString(state) );
@@ -315,8 +317,15 @@ inputEx.Field.prototype = {
     */
    hide: function() {
       this.divEl.style.display = 'none';
+   },
+   
+   /**
+    * Clear the field by setting the field value to this.options.value
+    */
+   clear: function() {
+      this.setValue(this.options.value || '');
    }
-
+   
 };
 
 })();

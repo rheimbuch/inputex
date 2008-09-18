@@ -195,10 +195,15 @@ lang.extend(inputEx.Group, inputEx.Field,
          return;
       }
 	   for (var i = 0 ; i < this.inputs.length ; i++) {
-	      if(this.inputs[i].options.name && !lang.isUndefined(oValues[this.inputs[i].options.name]) ) {
-	         this.inputs[i].setValue(oValues[this.inputs[i].options.name]);
-		      this.inputs[i].setClassFromState();
+	      var field = this.inputs[i];
+	      var name = field.options.name;
+	      if(name && !lang.isUndefined(oValues[name]) ) {
+	         field.setValue(oValues[name]);
 	      }
+	      else {
+	         field.clear();
+	      }
+		   field.setClassFromState();
       }
    },
    

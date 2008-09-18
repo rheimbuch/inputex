@@ -1,6 +1,6 @@
 (function() {
 
-   var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Event = YAHOO.util.Event;
+   var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Event = YAHOO.util.Event, Dom = YAHOO.util.Dom;
 
 /**
  * @class Basic string field (equivalent to the input type "text")
@@ -129,7 +129,7 @@ lang.extend(inputEx.StringField, inputEx.Field,
     * Return (stateEmpty|stateRequired) if the value equals the typeInvite attribute
     */
    getState: function() { 
-      var val = this.el.value;//this.getValue();
+      var val = this.el.value;
       // If the field has a minLength:
       if(this.options.minLength && val.length < this.options.minLength) {
          return inputEx.stateInvalid;
@@ -157,7 +157,7 @@ lang.extend(inputEx.StringField, inputEx.Field,
    setClassFromState: function() {
 	   inputEx.StringField.superclass.setClassFromState.call(this);
 	   if(this.options.typeInvite) {
-	      if(this.previousState == inputEx.stateEmpty) {
+	      if(this.previousState == inputEx.stateEmpty && !Dom.hasClass(this.divEl, "inputEx-focused")) {
 	         this.el.value = this.options.typeInvite;
 	      }
       }
@@ -174,7 +174,7 @@ lang.extend(inputEx.StringField, inputEx.Field,
 	         
 	         // Remove the "empty" state and class
 	         this.previousState = null;
-	         YAHOO.util.Dom.removeClass(this.divEl,"inputEx-empty");
+	         Dom.removeClass(this.divEl,"inputEx-empty");
          }
       }
 	},

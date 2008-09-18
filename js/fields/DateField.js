@@ -99,7 +99,6 @@ lang.extend(inputEx.DateField, inputEx.StringField,
 	
 // Specific message for the container
 inputEx.messages.invalidDate = "Invalid date, ex: 03/27/2008";
-inputEx.messages.defaultDateFormat = "m/d/Y";
 	
 /**
  * Register this class as "date" type

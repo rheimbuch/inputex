@@ -24,9 +24,9 @@ YAHOO.lang.extend(inputEx.UneditableField, inputEx.Field,
    /**
     * Minimal rendering
     */
-   render: function() {
+   /*render: function() {
       this.divEl = inputEx.cn('div');
-   },
+   },*/
    
    /**
     * Store the value and update the visu
@@ -34,7 +34,8 @@ YAHOO.lang.extend(inputEx.UneditableField, inputEx.Field,
     */
    setValue: function(val) {
       this.value = val;
-      inputEx.renderVisu(this.options.visu, val, this.divEl);
+      //inputEx.renderVisu(this.options.visu, val, this.divEl);
+      inputEx.renderVisu(this.options.visu, val, this.fieldContainer);
    },
    
    /**

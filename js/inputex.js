@@ -84,7 +84,9 @@ lang.augmentObject(inputEx,
    messages: {
    	required: "This field is required",
    	invalid: "This field is invalid",
-   	valid: "This field is valid"
+   	valid: "This field is valid",
+   	defaultDateFormat: "m/d/Y",
+   	months: ["January", "February", "Mars", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
    },
    
    /**

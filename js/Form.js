@@ -69,7 +69,7 @@ lang.extend(inputEx.Form, inputEx.Group,
     */
    renderButtons: function() {
       
-      var buttonDiv = inputEx.cn('div', {className: 'inputEx-Form-buttonBar'});
+      this.buttonDiv = inputEx.cn('div', {className: 'inputEx-Form-buttonBar'});
 		
 	   var button, buttonEl;
 	   for(var i = 0 ; i < this.options.buttons.length ; i++ ) {
@@ -77,10 +77,10 @@ lang.extend(inputEx.Form, inputEx.Group,
 	      buttonEl = inputEx.cn('input', {type: button.type, value: button.value});
 	      if( button.onClick ) { buttonEl.onclick = button.onClick; }
 	      this.buttons.push(buttonEl);
-	      buttonDiv.appendChild(buttonEl);
+	      this.buttonDiv.appendChild(buttonEl);
 	   }	
 	   
-	   this.form.appendChild(buttonDiv);
+	   this.form.appendChild(this.buttonDiv);
    },
    
    

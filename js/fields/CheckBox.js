@@ -102,12 +102,13 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 			this.hiddenEl.value = value;
 			this.el.checked = true;
 		}
-	   else if (value===this.uncheckedValue) {
+	   else {
+	      // DEBUG :
+	      if (value!==this.uncheckedValue && lang.isObject(console) && lang.isFunction(console.log) ) {
+	         console.log("inputEx.CheckBox: value is *"+value+"*, schould be in ["+this.checkedValue+","+this.uncheckedValue+"]");
+         }
 			this.hiddenEl.value = value;
 			this.el.checked = false;
-		}
-		else {
-		   throw new Error("inputEx.CheckBox.setValue: "+value+" schould be in ["+this.checkedValue+","+this.uncheckedValue+"]");
 		}
 	}
 	
