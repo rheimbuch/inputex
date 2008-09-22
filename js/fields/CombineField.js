@@ -120,6 +120,15 @@ lang.extend( inputEx.CombineField, inputEx.Field,
 	   for(var i = 0 ; i < this.inputs.length ; i++) {
 	      this.inputs[i].setClassFromState();
 	   }
+	},
+	
+	/**
+	 * Clear
+	 */
+	clear: function() {
+	   for(var i = 0 ; i < this.inputs.length ; i++) {
+	      this.inputs[i].clear();
+	   }
 	}
 	
 });

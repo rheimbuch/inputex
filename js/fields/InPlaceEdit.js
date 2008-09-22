@@ -43,11 +43,11 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
       this.editorContainer.appendChild( this.editorField.getEl() );
       Dom.setStyle(this.editorField.getEl(), 'float', 'left');
       
-      this.okButton = inputEx.cn('input', {type: 'button', value: 'Ok', className: 'inputEx-InPlaceEdit-OkButton'});
+      this.okButton = inputEx.cn('input', {type: 'button', value: inputEx.messages.okEditor, className: 'inputEx-InPlaceEdit-OkButton'});
       Dom.setStyle(this.okButton, 'float', 'left');
       this.editorContainer.appendChild(this.okButton);
       
-      this.cancelLink = inputEx.cn('a', {className: 'inputEx-InPlaceEdit-CancelLink'}, null, "cancel");
+      this.cancelLink = inputEx.cn('a', {className: 'inputEx-InPlaceEdit-CancelLink'}, null, inputEx.messages.cancelEditor);
       this.cancelLink.href = ""; // IE required (here, not in the cn fct)
       Dom.setStyle(this.cancelLink, 'float', 'left');
       this.editorContainer.appendChild(this.cancelLink);
@@ -223,6 +223,11 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
       else {
          inputEx.renderVisu(this.options.visu, this.value, this.formattedContainer);
       }
+      
+      // If the editor is opened, update it 
+      if(this.editorContainer.style.display == '') {
+         this.editorField.setValue(value);
+      }
    },
    
    /**
@@ -236,6 +241,8 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
 });
   
 inputEx.messages.emptyInPlaceEdit = "(click to edit)";
+inputEx.messages.cancelEditor = "cancel";
+inputEx.messages.okEditor = "Ok";
 
 /**
  * Register this class as "inplaceedit" type

@@ -304,7 +304,16 @@ lang.extend(inputEx.Group, inputEx.Field,
          }
       }
       
-   }
+   },
+   
+	/**
+	 * Clear
+	 */
+	clear: function() {
+	   for(var i = 0 ; i < this.inputs.length ; i++) {
+	      this.inputs[i].clear();
+	   }
+	}
    
    
 });

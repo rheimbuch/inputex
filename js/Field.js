@@ -175,11 +175,11 @@ inputEx.Field.prototype = {
 	setClassFromState: function() {
 	
 	   if( this.previousState ) {
-		   Dom.removeClass(this.getEl(), 'inputEx-'+this.previousState );
+		   Dom.removeClass(this.divEl, 'inputEx-'+this.previousState );
 	   }
 	   var state = this.getState();
 	   if( !(state == "empty" && Dom.hasClass(this.divEl, 'inputEx-focused') ) ) {
-	      Dom.addClass(this.getEl(), 'inputEx-'+state );
+	      Dom.addClass(this.divEl, 'inputEx-'+state );
       }
 	
 	   if(this.options.showMsg) {
