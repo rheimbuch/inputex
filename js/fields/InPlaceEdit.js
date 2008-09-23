@@ -123,8 +123,6 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
          // Register some listeners
          Event.addListener(this.editorField.el, "keyup", this.onKeyUp, this, true);
          Event.addListener(this.editorField.el, "keydown", this.onKeyDown, this, true);
-         // BLur
-        // Event.addListener(this.editorField.el, "blur", this.onCancelEditor, this, true);
       }
    },
    
@@ -206,7 +204,8 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
     * @return {Any} The value of the subfield
     */
    getValue: function() {
-	   return this.value;
+      var editorOpened = (this.editorContainer.style.display == '');
+	   return editorOpened ? this.editorField.getValue() : this.value;
    },
 
    /**

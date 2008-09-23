@@ -33,11 +33,9 @@
 	<div class='demoContainer' id='container1'></div>
 
 	<div class='codeContainer'>
-		<form>
 		<textarea name="code" class="JScript">
 			new YAHOO.inputEx.InPlaceEdit({parentEl: 'container1', editorField:{type:'string', inputParams: {} } });
 		</textarea>
-		</form>
 	</div>
 
 </div>
@@ -53,7 +51,6 @@
 	<div class='demoContainer' id='container2'></div>
 
 	<div class='codeContainer'>
-		<form>
 		<textarea name="code" class="JScript">
 			new YAHOO.inputEx.InPlaceEdit({
 				parentEl: 'container2', 
@@ -78,7 +75,30 @@
 				}
 			});
 		</textarea>
-		</form>
+	</div>
+
+</div>
+
+
+
+<!-- Example 3 -->
+<div class='exampleDiv'>
+
+	<p class="title">Getting the value</p>
+	
+	<p>When the editor is opened, getValue return the editor value.</p>
+
+	<div class='demoContainer' id='container3'></div>
+
+	<div class='codeContainer'>
+		<textarea name="code" class="JScript">
+			var field = new YAHOO.inputEx.InPlaceEdit({parentEl: 'container3', editorField:{type:'string', inputParams: {} } });
+			var button = inputEx.cn('button', null, null, "getValue");
+			YAHOO.util.Event.addListener(button, 'click', function() {
+				alert(field.getValue());
+			});
+			YAHOO.util.Dom.get('container3').appendChild(button);
+		</textarea>
 	</div>
 
 </div>
@@ -139,6 +159,15 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 				picUrl: 'http://www.limsi.fr/Individu/vezien/lena.jpg'
 		}
 	});
+	
+	
+	// Example 3
+	var field = new YAHOO.inputEx.InPlaceEdit({parentEl: 'container3', editorField:{type:'string', inputParams: {} } });
+	var button = inputEx.cn('button', null, null, "getValue");
+	YAHOO.util.Event.addListener(button, 'click', function() {
+		alert(field.getValue());
+	});
+	YAHOO.util.Dom.get('container3').appendChild(button);
 	
 });
 
