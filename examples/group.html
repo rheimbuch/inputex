@@ -276,10 +276,10 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	// Example 1
 	var contactFormFields = [ 
 			{type: 'select', inputParams: {label: 'Title', name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
-			{inputParams: {label: 'Firstname', name: 'firstname', required: true, value:'Jacques' } }, 
+			{inputParams: {label: 'Firstname', name: 'firstname', required: true } }, 
 			{inputParams: {label: 'Lastname', name: 'lastname', value:'Dupont' } }, 
-			{type:'email', inputParams: {label: 'Email', name: 'email'}}, 
-			{type:'boolean', inputParams: {label: 'Happy to be there ?', name: 'email'}}, 
+			{type:'email', inputParams: {label: 'Email', name: 'email', required: true, showMsg: true}}, 
+			{type:'boolean', inputParams: {label: 'Happy to be there ?', name: 'happy'}}, 
 			{type:'url', inputParams: {label: 'Website', name:'website'}} 
 	];
 	new YAHOO.inputEx.Group({parentEl: 'container1', fields: contactFormFields, legend: 'Tell us about yourself...'});
