@@ -210,7 +210,7 @@ inputEx.Field.prototype = {
     */
 	getState: function() { 
 	   // if the field is empty :
-	   if( this.getValue() === '' ) {
+	   if( this.isEmpty() ) {
 	      return this.options.required ? inputEx.stateRequired : inputEx.stateEmpty;
 	   }
 	   return this.validate() ? inputEx.stateValid : inputEx.stateInvalid;
@@ -324,6 +324,13 @@ inputEx.Field.prototype = {
     */
    clear: function() {
       this.setValue(this.options.value || '');
+   },
+   
+   /**
+    * Should return true if empty
+    */
+   isEmpty: function() {
+      return this.getValue() === '';
    }
    
 };

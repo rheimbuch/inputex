@@ -51,9 +51,14 @@ lang.extend(inputEx.BirthdateField, inputEx.CombineField, {
    validate: function() {
       var values = inputEx.BirthdateField.superclass.getValue.call(this);
       var val = this.getValue();
-      var ret = (values[this.monthIndex] != -1 && lang.isFunction(val.getTime) && lang.isNumber(val.getTime()) );
+      var ret = this.isEmpty() || (values[this.monthIndex] != -1 && lang.isFunction(val.getTime) && lang.isNumber(val.getTime()) );
       return ret;
-   }
+   },
+   
+	isEmpty: function() {
+	   var values = inputEx.BirthdateField.superclass.getValue.call(this);
+	   return (values[this.monthIndex] == -1 && values[this.yearIndex] == "" &&  values[this.dayIndex] == "");
+	}
    
 });
 
