@@ -54,7 +54,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			new inputEx.NumberField({parentEl: 'container2', showMsg: true, value: '03e-2'});
+			new inputEx.NumberField({parentEl: 'container2', showMsg: true, value: '03e-2', required:true, typeInvite:"Float numbers accepted"});
 		</textarea>
 		</form>
 	</div>
@@ -90,7 +90,7 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	
 	
 	// Example 2
-	field2 = new YAHOO.inputEx.NumberField({parentEl: 'container2', showMsg: true, value: '03e-2'});
+	field2 = new YAHOO.inputEx.NumberField({parentEl: 'container2', showMsg: true, value: '03e-2', required:true, typeInvite:"Float numbers accepted"});
 	var button = YAHOO.inputEx.cn('button', null, null, 'getValue');
 	YAHOO.util.Event.addListener(button, "click",function() {
 		alert(field2.getValue());

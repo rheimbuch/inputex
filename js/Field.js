@@ -92,7 +92,7 @@ inputEx.Field.prototype = {
 	   }
 	   
 	   // Label element
-	   if(this.options.label && this.options.label != "") {
+	   if(this.options.label) {
 	      this.labelDiv = inputEx.cn('div', {className: 'inputEx-label'});
 	      this.labelEl = inputEx.cn('label');
 	      this.labelEl.appendChild( document.createTextNode(this.options.label) );
@@ -106,7 +106,7 @@ inputEx.Field.prototype = {
       this.renderComponent();
       
       // Description
-      if(this.options.description && this.options.description != "") {
+      if(this.options.description) {
          this.fieldContainer.appendChild(inputEx.cn('div', {className: 'inputEx-description'}, null, this.options.description));
       }
       

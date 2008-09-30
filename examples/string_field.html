@@ -215,7 +215,6 @@
 
 
 
-
 <!-- Example 10 -->
 <div class='exampleDiv'>
 
@@ -229,6 +228,27 @@
 		<form>
 		<textarea name="code" class="JScript" cols="60" rows="1">
 			new YAHOO.inputEx.StringField({parentEl: 'container10', typeInvite: 'lastname', description: 'Enter your lastname'});
+		</textarea>
+		</form>
+	</div>
+
+</div>
+
+
+
+<!-- Example 11 -->
+<div class='exampleDiv'>
+
+	<p class="title">Multiple options</p>
+	
+	<p>Check multiple options config : typeInvite, required, minLength</p>
+
+	<div class='demoContainer' id='container11'></div>
+
+	<div class='codeContainer'>
+		<form>
+		<textarea name="code" class="JScript" cols="60" rows="1">
+			new YAHOO.inputEx.StringField({parentEl: 'container11', typeInvite: 'lastname', description: 'Enter your lastname'});
 		</textarea>
 		</form>
 	</div>
@@ -297,7 +317,10 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	});
 		
 	// Example 10
-	new YAHOO.inputEx.StringField({parentEl: 'container10', typeInvite: 'lastname', description: 'Enter your lastname'});
+   new YAHOO.inputEx.StringField({parentEl: 'container10', typeInvite: 'lastname', description: 'Enter your lastname'});
+
+   // Example 11
+	new YAHOO.inputEx.StringField({parentEl: 'container11', typeInvite: 'lastname', description: 'Enter your lastname', minLength:10, required:true, showMsg:true});
 
 	
 });

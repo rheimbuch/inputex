@@ -25,14 +25,6 @@ lang.extend(inputEx.StringField, inputEx.Field,
  * @scope inputEx.StringField.prototype   
  */   
 {
-   
-   /**
-    * Add the option "size"
-    */
-   setOptions: function() {
-      inputEx.StringField.superclass.setOptions.call(this);
-   },
-   
    /**
     * Render an 'INPUT' DOM node
     */
@@ -92,14 +84,23 @@ lang.extend(inputEx.StringField, inputEx.Field,
     */
    validate: function() { 
       var val = this.getValue();
+      
+      // no validation on non-required empty field
+      if (val == '') {
+         return true;
+      }
+      
+      // Check regex matching and minLength (both used in password field...)
+      var result = true;
+      
       // if we are using a regular expression
       if( this.options.regexp ) {
-	      return val.match(this.options.regexp);
+	      result = result && val.match(this.options.regexp);
       }
       if( this.options.minLength ) {
-	      return val.length >= this.options.minLength;
+	      result = result && val.length >= this.options.minLength;
       }
-      return true;
+      return result;
    },
 	
    /**
@@ -129,15 +130,13 @@ lang.extend(inputEx.StringField, inputEx.Field,
     * Return (stateEmpty|stateRequired) if the value equals the typeInvite attribute
     */
    getState: function() { 
-      var val = this.el.value;
-      // If the field has a minLength:
-      if(this.options.minLength && val.length < this.options.minLength) {
-         return inputEx.stateInvalid;
-      }
+      var val = this.getValue();
+      
 	   // if the field is empty :
-	   if( val === '' || (this.options.typeInvite && val == this.options.typeInvite) ) {
+	   if( val === '') {
 	      return this.options.required ? inputEx.stateRequired : inputEx.stateEmpty;
 	   }
+      
 	   return this.validate() ? inputEx.stateValid : inputEx.stateInvalid;
 	},
 	
@@ -157,8 +156,11 @@ lang.extend(inputEx.StringField, inputEx.Field,
    setClassFromState: function() {
 	   inputEx.StringField.superclass.setClassFromState.call(this);
 	   if(this.options.typeInvite) {
-	      if(this.previousState == inputEx.stateEmpty && !Dom.hasClass(this.divEl, "inputEx-focused")) {
-	         this.el.value = this.options.typeInvite;
+	      if (!Dom.hasClass(this.divEl, "inputEx-focused")) {
+	         if(this.previousState == inputEx.stateEmpty || this.previousState == inputEx.stateRequired) {
+   	         Dom.addClass(this.divEl, "inputEx-typeInvite");
+   	         this.el.value = this.options.typeInvite;
+            }
 	      }
       }
 	},
@@ -169,12 +171,12 @@ lang.extend(inputEx.StringField, inputEx.Field,
 	onFocus: function(e) {
 	   inputEx.StringField.superclass.onFocus.call(this,e);
 	   if(this.options.typeInvite) {
-	      if(this.previousState==inputEx.stateEmpty) {
+	      if(Dom.hasClass(this.divEl,"inputEx-typeInvite")) {
 	         this.el.value = "";
 	         
 	         // Remove the "empty" state and class
 	         this.previousState = null;
-	         Dom.removeClass(this.divEl,"inputEx-empty");
+	         Dom.removeClass(this.divEl,"inputEx-typeInvite");
          }
       }
 	},

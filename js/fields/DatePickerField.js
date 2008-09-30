@@ -36,11 +36,12 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
       inputEx.DatePickerField.superclass.renderComponent.call(this);
       
       
-      // Creation de l'overlay
-      this.oOverlay = new YAHOO.widget.Overlay(Dom.generateId()/*, { visible: false }*/);
+      // Create overlay
+      this.oOverlay = new YAHOO.widget.Overlay(Dom.generateId(), { visible: false });
       this.oOverlay.setBody(" ");
       this.oOverlay.body.id = Dom.generateId();
       
+      // Create button
       this.button = new YAHOO.widget.Button({ type: "menu", menu: this.oOverlay, label: "&nbsp;&nbsp;&nbsp;&nbsp;" });
       this.button._hideMenu = function () {
             if (this._menu) {
@@ -51,22 +52,21 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
                this._menu.hide();
             }
        };
-      //this.button.appendTo(this.fieldContainer);
+       
       this.button.appendTo(this.wrapEl);
+            
+      // Render the overlay
+      this.oOverlay.render(this.wrapEl);
       
       // Subscribe to the first click
-      this.button.on('click', this.onButtonClick, this, true);
+      this.button.on('click', this.renderCalendar, this, true);
    },
 
    
    /**
     * Called ONCE to render the calendar lazily
     */
-   onButtonClick: function() {
-      
-      // Render the overlay
-      //this.oOverlay.render(this.fieldContainer);
-      this.oOverlay.render(this.wrapEl);
+   renderCalendar: function() {
       
       // Render the calendar
       this.calendar = new YAHOO.widget.Calendar(Dom.generateId(),this.oOverlay.body.id, this.options.calendar );
@@ -107,7 +107,7 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
    	}, this, true);
       
       // Unsubscribe the event so this function is called only once
-      this.button.unsubscribe("click", this.onButtonClick); 
+      this.button.unsubscribe("click", this.renderCalendar); 
    }
    
 });

@@ -24,13 +24,23 @@ YAHOO.lang.extend(inputEx.IntegerField, inputEx.StringField,
     * @return {int} The integer value
     */
    getValue: function() {
+      // don't return NaN if empty field
+      if ((this.options.typeInvite && this.el.value == this.options.typeInvite) || this.el.value == '') {
+         return '';
+      }
+      
       return parseInt(this.el.value, 10);
    },
    
    /**
     * Validate  if is a number
     */
-   validate: function() { 
+   validate: function() {
+      // empty field is OK
+      if (this.el.value == '') {
+         return true;
+      }
+      
       var v = this.getValue();
       if(isNaN(v)) return false;
       return this.el.value.match(/^[0-9]*$/);

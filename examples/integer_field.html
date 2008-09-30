@@ -43,6 +43,25 @@
 </div>
 
 
+<!-- Example 2 -->
+<div class='exampleDiv'>
+
+	<p class="title">IntegerField with options</p>
+	
+	<p>Test IntegerField with more options.</p>
+
+	<div class='demoContainer' id='container2'></div>
+	<div id='valueContainer2'></div>
+
+	<div class='codeContainer'>
+		<form>
+		<textarea name="code" class="JScript">
+			new YAHOO.inputEx.IntegerField({parentEl: 'container2', showMsg: true, required:true, typeInvite:"Enter a number"});
+		</textarea>
+		</form>
+	</div>
+
+</div>
 <!-- YUI Library -->
 <script type="text/javascript" src="../lib/yui/yahoo/yahoo-min.js"></script> 
 <script type="text/javascript" src="../lib/yui/dom/dom-min.js"></script> 
@@ -68,6 +87,12 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 		YAHOO.util.Dom.get('valueContainer1').innerHTML = "value: "+params[0]+", type: "+typeof(params[0]);
 	});
 	
+	
+	// Example 2
+	var field = new YAHOO.inputEx.IntegerField({parentEl: 'container2', showMsg: true, required:true, typeInvite:"Enter a number"});
+	field.updatedEvt.subscribe(function(e, params) {
+		YAHOO.util.Dom.get('valueContainer2').innerHTML = "value: "+params[0]+", type: "+typeof(params[0]);
+	});
 });
 
 </script>
