@@ -42,7 +42,7 @@ not released yet
 	
 	- Various:
 		* Markup and CSS refactoring: the "description" and "label" attributes are now in the field JSON, uses "label" and "fieldset" tags
-   	* small visualization/templating engine (Visus.js)
+		* small visualization/templating engine (Visus.js)
 		* Added an inputEx.importJsonSchema (experimental) method to create a form from a JSON Schema
 		* Documentation now uses JsDocToolkit 2 and http://code.google.com/p/neyricjslibs-template/
 		* moved the namespace from inputEx to YAHOO.inputEx (declared using YAHOO.namespace) => breaks namespace
@@ -52,6 +52,7 @@ not released yet
 		* VERSION added in inputEx object
 		* Moved the two functions (Array.prototype compact & indexOf) into the inputEx namespace as static functions
 		* use YAHOO.lang.isMethods instead of typeof
+		* inputExChart example
 	
 
 version 0.1.0

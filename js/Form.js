@@ -166,7 +166,28 @@ lang.extend(inputEx.Form, inputEx.Group,
     */
    hideMask: function() {
       this.formMask.style.display = 'none';
-   }
+   },
+   
+   
+   /**
+    * Enable all fields and buttons in the form
+    */
+   enable: function() {
+      inputEx.Form.superclass.enable.call(this);
+      for (var i = 0 ; i < this.buttons.length ; i++) {
+ 	      this.buttons[i].disabled = false;
+      }
+   },
+   
+   /**
+    * Disable all fields and buttons in the form
+    */
+   disable: function() {
+      inputEx.Form.superclass.disable.call(this);
+      for (var i = 0 ; i < this.buttons.length ; i++) {
+ 	      this.buttons[i].disabled = true;
+      }
+   },
 
 });
 
