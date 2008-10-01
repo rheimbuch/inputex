@@ -14,49 +14,45 @@ version 0.2.0:
 
 not released yet
 
-	- flatten option on type JSON
-	- Added RadioField
-	- StringField: added maxLength, minLength, readonly attributes
-	- Added MultiAutoComplete
-	- typeInvitation for StringField and subclasses
-	- MultiSelectField
-	- DDList widget: sortable list widget
-	- Made TimeField, DateTimeField, PairField inherit from CombineField
-	- CombineField: replace PairField, but for N fields
-	- Markup and CSS refactoring: the "description" and "label" attributes are now in the field JSON
-	- PasswordField: Strength indicator
-	- PasswordField: CapsLock validation
-	- Form mask
-   - small visualization/templating engine (Visus.js)
-	- Added a SliderField (type: slider)
-	- Added an inputEx.importJsonSchema (experimental) method to create a form from a JSON Schema
-	- Documentation now uses JsDocToolkit 2 and http://code.google.com/p/neyricjslibs-template/
-	- Added a DatePickerField (type: datepicker)
-	- Added DateTimeField (type: datetime)
-	- Added IntegerField (type: integer) and removed the "numbersOnly" option from StringField
-	- Added NumberField (type: number)
-	- Added TimeField	(type: time)
-	- TypeField: implemented setValue, the builder can now "load" a group config
-	- Added a "destroy" method on Field
-	- bugfix: URL are case sensitive
-	- moved the namespace from inputEx to YAHOO.inputEx (declared using YAHOO.namespace) => breaks namespace
-	- enclosed components in anonymous functions with shortcuts
-	- use YAHOO.lang.extend(...,...,{ methods: }) to save some bytes => breaks the API doc generation
-	- moved build/inputex-all.js to build/inputex.js for YUI loader
-	- TypeField/FormBuilder update: includes more options for more fields
-	- Group: removed 'optional' option.  You should instead use a sub-group (that can be collapsible as before)
-	- Group: wrapped in a "fieldset" tag, collapsible option (+example), 
-				use 'CSS float left' instead of tables to position elements => breaks old CSS for groups
- 	- UrlField: make favicon optional otherwise it breaks https
- 	- ListField: set the focus to the added element
-	- Added the inputEx.Group.prototype.getFieldByName method
-	- Added a focus method to set the focus on inputs
-	- Moved the two functions (Array.prototype compact & indexOf) into the inputEx namespace as static functions
-	- VERSION added in inputEx object
-	- use YAHOO.lang.isMethods instead of typeof
-	- RTEField: added SimpleEditor support and "opts" option to configure the toolbar (added by Dav Glass)
-		* added a SimpleEditor example on the RTEField page
-
+   - Added fields:
+	 	* RadioField
+		* DatePickerField (type: datepicker)
+		* DateTimeField (type: datetime)
+		* IntegerField (type: integer) and removed the "numbersOnly" option from StringField
+		* NumberField (type: number)
+		* TimeField	(type: time)
+		* DDList widget: sortable list widget
+		* MultiAutoComplete
+		* MultiSelectField
+		* CombineField: replace PairField, but for N fields
+		* SliderField (type: slider)
+		
+	- Field enhancements:
+	   * Field: Added a "destroy" method, focus method to set the focus on inputs
+		* StringField: added typeInvitation, maxLength, minLength, readonly attributes
+		* Group: flatten option on type JSON, getFieldByName method, collapsible option
+	 	* Form mask
+		* PasswordField: Strength indicator, CapsLock indicator
+ 		* PairField inherit from CombineField (deprecated, kept for compatibility)
+		* TypeField: implemented setValue, the builder can now "load" a group config
+		* UrlField: case sensitive URLs, make favicon optional otherwise it breaks https
+	 	* ListField: set the focus to the added element
+		* RTEField: added SimpleEditor support and "opts" option to configure the toolbar (added by Dav Glass)
+		* TypeField/FormBuilder update: includes more options for more fields
+	
+	- Various:
+		* Markup and CSS refactoring: the "description" and "label" attributes are now in the field JSON, uses "label" and "fieldset" tags
+   	* small visualization/templating engine (Visus.js)
+		* Added an inputEx.importJsonSchema (experimental) method to create a form from a JSON Schema
+		* Documentation now uses JsDocToolkit 2 and http://code.google.com/p/neyricjslibs-template/
+		* moved the namespace from inputEx to YAHOO.inputEx (declared using YAHOO.namespace) => breaks namespace
+		* enclosed components in anonymous functions with shortcuts
+		* use YAHOO.lang.extend(...,...,{ methods: }) to save some bytes
+		* moved build/inputex-all.js to build/inputex.js for YUI loader
+		* VERSION added in inputEx object
+		* Moved the two functions (Array.prototype compact & indexOf) into the inputEx namespace as static functions
+		* use YAHOO.lang.isMethods instead of typeof
+	
 
 version 0.1.0
 -------------
