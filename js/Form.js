@@ -61,7 +61,11 @@ lang.extend(inputEx.Form, inputEx.Group,
   	   
   	   this.renderFields(this.form);
 
-      this.renderButtons();	  
+      this.renderButtons();
+      
+      if(this.options.disabled) {
+  	      this.disable();
+  	   }	  
    },
    
    /**
