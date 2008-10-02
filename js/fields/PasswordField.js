@@ -69,7 +69,7 @@ lang.extend(inputEx.PasswordField, inputEx.StringField,
 		// Caps lock warning
 		if(this.options.capsLockWarning) {
 		   this.capsLockWarning = inputEx.cn('div',{className: 'capsLockWarning'},{display: 'none'},inputEx.messages.capslockWarning);
-		   this.fieldContainer.appendChild(this.capsLockWarning);
+		   this.wrapEl.appendChild(this.capsLockWarning);
 	   }
 	   
 	   // Password strength indicator
@@ -80,7 +80,7 @@ lang.extend(inputEx.PasswordField, inputEx.StringField,
 		      this.strengthBlocks[i] = inputEx.cn('div', {className: 'inputEx-Password-StrengthIndicatorBlock'});
 		      this.strengthEl.appendChild( this.strengthBlocks[i] );
 		   }
-		   this.fieldContainer.appendChild(this.strengthEl);
+		   this.wrapEl.appendChild(this.strengthEl);
 		}
 	},
 	   
