@@ -113,6 +113,10 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
+			var list = new YAHOO.inputEx.widget.DDList({parentEl: 'container4', value: ['I was in first position !', 'I\'m second.', 'Third element']});
+			list.listReorderedEvt.subscribe(function() {
+					alert("reordered !");
+			});
 		</textarea>
 		</form>
 	</div>
@@ -152,7 +156,7 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	// Example 4
 	var list = new YAHOO.inputEx.widget.DDList({parentEl: 'container4', value: ['I was in first position !', 'I\'m second.', 'Third element']});
 	list.listReorderedEvt.subscribe(function() {
-			alert("remordered !");
+			alert("reordered !");
 	});
 	
 });

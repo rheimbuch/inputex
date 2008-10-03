@@ -9,7 +9,7 @@
  * @param {Object} options No added option for this field (same as DateField)
  */
 inputEx.DatePickerField = function(options) {
-	inputEx.DatePickerField.superclass.constructor.call(this,options);
+   inputEx.DatePickerField.superclass.constructor.call(this,options);
 };
 
 lang.extend(inputEx.DatePickerField, inputEx.DateField, 
@@ -21,11 +21,11 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
     * Set the default date picker CSS classes
     */
    setOptions: function() {
-	   this.options.className = this.options.className || 'inputEx-Field inputEx-DateField inputEx-DatePickerField';
-   	inputEx.DatePickerField.superclass.setOptions.call(this);
-   	
-   	this.options.calendar = this.options.calendar || inputEx.messages.defautCalendarOpts;
-   	this.options.readonly = true;
+      this.options.className = this.options.className || 'inputEx-Field inputEx-DateField inputEx-DatePickerField';
+      inputEx.DatePickerField.superclass.setOptions.call(this);
+      
+      this.options.calendar = this.options.calendar || inputEx.messages.defautCalendarOpts;
+      this.options.readonly = true;
    },
    
    /**
@@ -42,17 +42,7 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
       this.oOverlay.body.id = Dom.generateId();
       
       // Create button
-      this.button = new YAHOO.widget.Button({ type: "menu", menu: this.oOverlay, label: "&nbsp;&nbsp;&nbsp;&nbsp;" });
-      this.button._hideMenu = function () {
-            if (this._menu) {
-               if (this.preventHide) {
-                 this._showMenu();
-                 return;
-               }
-               this._menu.hide();
-            }
-       };
-       
+      this.button = new YAHOO.widget.Button({ type: "menu", menu: this.oOverlay, label: "&nbsp;&nbsp;&nbsp;&nbsp;" });       
       this.button.appendTo(this.wrapEl);
             
       // Render the overlay
@@ -69,7 +59,8 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
    renderCalendar: function() {
       
       // Render the calendar
-      this.calendar = new YAHOO.widget.Calendar(Dom.generateId(),this.oOverlay.body.id, this.options.calendar );
+      var calendarId = Dom.generateId();
+      this.calendar = new YAHOO.widget.Calendar(calendarId,this.oOverlay.body.id, this.options.calendar );
       
       // HACK: Set position absolute to the overlay
       Dom.setStyle(this.oOverlay.body.parentNode, "position", "absolute")
@@ -88,23 +79,56 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
       if(inputEx.messages.weekdays1char) this.calendar.cfg.setProperty("WEEKDAYS_1CHAR", inputEx.messages.weekdays1char);
       if(inputEx.messages.shortWeekdays) this.calendar.cfg.setProperty("WEEKDAYS_SHORT", inputEx.messages.shortWeekdays);
       
+      // HACK to keep focus on calendar/overlay 
+      // so overlay is not hidden when changing page in calendar
+      // (inspired by YUI examples)
+      var focusDay = function () {
+
+         var oCalendarTBody = Dom.get(calendarId).tBodies[0],
+            aElements = oCalendarTBody.getElementsByTagName("a"),
+            oAnchor;
+
+         if (aElements.length > 0) {
+         
+            Dom.batch(aElements, function (element) {
+               if (Dom.hasClass(element.parentNode, "today")) {
+                  oAnchor = element;
+               }
+            });
+            
+            if (!oAnchor) {
+               oAnchor = aElements[0];
+            }
+
+            // Focus the anchor element using a timer since Calendar will try 
+            // to set focus to its next button by default
+            
+            YAHOO.lang.later(0, oAnchor, function () {
+               try {
+                  oAnchor.focus();
+               }
+               catch(e) {}
+            });
+         
+         }
+         
+      };
+
+      // Set focus to either the current day, or first day of the month in 
+      // the Calendar when the month changes (renderEvent is fired)
+      this.calendar.renderEvent.subscribe(focusDay, this.calendar, true);
+      
+      // Render the calendar
       this.calendar.render();
          
       // Set the field value when a date is selected
       this.calendar.selectEvent.subscribe(function (type,args,obj) {
-   	   this.oOverlay.hide();
-      	var date = args[0][0];
-      	var year = date[0], month = date[1], day = date[2];
-      	this.setValue(new Date(year,month-1, day) );
-      	this.fireUpdatedEvt();
+         this.oOverlay.hide();
+         var date = args[0][0];
+         var year = date[0], month = date[1], day = date[2];
+         this.setValue(new Date(year,month-1, day) );
+         this.fireUpdatedEvt();
       }, this, true);
-      
-      // HACK for not closing the calendar when changing page
-   	this.calendar.changePageEvent.subscribe(function () {
-   		this.button.preventHide = true;
-         var that = this;
-         window.setTimeout(function() {that.button.preventHide = false;},0);
-   	}, this, true);
       
       // Unsubscribe the event so this function is called only once
       this.button.unsubscribe("click", this.renderCalendar); 

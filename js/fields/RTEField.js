@@ -38,7 +38,7 @@ lang.extend(inputEx.RTEField, inputEx.Field,
 	   //This is the default config
 	   var _def = {
 	       height: '300px',
-	       width: '522px',
+	       width: '580px',
 	       dompath: true
 	   };
 	   //The options object

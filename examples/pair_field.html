@@ -57,6 +57,18 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
+			var field = new YAHOO.inputEx.PairField({
+				label: 'Your favorite color',
+				parentEl: 'container2',
+				showMsg: true,
+				leftFieldOptions: {type: 'string', inputParams: { description: 'Favorite color', value: 'blue'} },
+		    rightFieldOptions: { type: 'text', inputParams: { description: 'Why is it your favorite color ?', value: 'looks like the sky' } }
+			});
+			var button = YAHOO.inputEx.cn('button', null, null, "getValue");
+			YAHOO.util.Event.addListener(button, 'click', function() {
+				alert( YAHOO.lang.JSON.stringify(field.getValue()) );
+			});
+			YAHOO.util.Dom.get('container2').appendChild(button);
 		</textarea>
 		</form>
 	</div>
