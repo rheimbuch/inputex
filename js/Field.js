@@ -299,7 +299,8 @@ inputEx.Field.prototype = {
    },
    
    /**
-    * Display a message 
+    * Update the message 
+    * @param {String} msg Message to display
     */
    displayMessage: function(msg) {
       if(!this.fieldContainer) { return; }

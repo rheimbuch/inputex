@@ -257,25 +257,26 @@ lang.extend(inputEx.Group, inputEx.Field,
    },
    
    
-   
-   
-   
    /**
-    * EXPERIMENTAL
-    * Methods for interactions
+    * Called when one of the group subfields is updated.
+    * @param {String} eventName Event name
+    * @param {Array} args Array of [fieldValue, fieldInstance] 
     */
    onChange: function(eventName, args) {
 
-      // Check if interactions are defined for this field
+      // Run interactions
       var fieldValue = args[0];
       var fieldInstance = args[1];
-      
       this.runInteractions(fieldInstance,fieldValue);
-
-      //this.setClassFromState();
+      
+      //this.setClassFromState();      
       this.fireUpdatedEvt();
    },
 
+   /**
+    * Run an action (for interactions)
+    * @param {Object} action inputEx action object
+    */
    runAction: function(action) {
       var field = this.getFieldByName(action.name);
       if( YAHOO.lang.isFunction(field[action.action]) ) {
@@ -286,7 +287,11 @@ lang.extend(inputEx.Group, inputEx.Field,
       }
    },
    
-   
+   /**
+    * Run the interactions for the given field instance
+    * @param {inputEx.Field} fieldInstance Field that just changed
+    * @param {Any} fieldValue Field value
+    */
    runInteractions: function(fieldInstance,fieldValue) {
       
       var index = inputEx.indexOf(fieldInstance, this.inputs);
@@ -298,8 +303,8 @@ lang.extend(inputEx.Group, inputEx.Field,
       for(var i = 0 ; i < interactions.length ; i++) {
          var interaction = interactions[i];
          if(interaction.valueTrigger === fieldValue) {
-            for(var i = 0 ; i < interaction.actions.length ; i++) {
-               this.runAction(interaction.actions[i]);
+            for(var j = 0 ; j < interaction.actions.length ; j++) {
+               this.runAction(interaction.actions[j]);
             }
          }
       }
@@ -307,7 +312,7 @@ lang.extend(inputEx.Group, inputEx.Field,
    },
    
 	/**
-	 * Clear
+	 * Clear all subfields
 	 */
 	clear: function() {
 	   for(var i = 0 ; i < this.inputs.length ; i++) {

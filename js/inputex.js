@@ -129,12 +129,10 @@ lang.augmentObject(inputEx,
     * Returns the class for the given type
     * ex: inputEx.getFieldClass("color") returns inputEx.ColorField
     * @static
+    * @param {String} type String type of the field
     */
    getFieldClass: function(type) {
-      if(lang.isFunction(this.typeClasses[type])) {
-         return this.typeClasses[type];
-      }
-      return null;
+      return lang.isFunction(this.typeClasses[type]) ? this.typeClasses[type] : null;
    },
    
    /**
@@ -269,7 +267,6 @@ lang.augmentObject(inputEx,
 
 
 /**
- * The main inputEx namespace
+ * The main inputEx namespace shortcut
  */
 var inputEx = YAHOO.inputEx;
-// this previous line is just for documentation purposes. It should be removed from the production files

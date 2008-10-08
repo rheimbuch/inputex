@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
    
 var util = YAHOO.util, lang = YAHOO.lang, Event = YAHOO.util.Event, inputEx = YAHOO.inputEx, Dom = util.Dom;
    
@@ -202,5 +202,3 @@ inputEx.registerType("form", inputEx.Form);
 
 
 })();
-
-
