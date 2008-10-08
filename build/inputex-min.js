@@ -1,5 +1,4 @@
-/*
-Distributed under the MIT License :
+/* Distributed under the MIT License :
 Visit http://javascript.neyric.com/inputex for more informations
 
 Copyright (c) 2007-2008, Eric Abouaf <neyric at via.ecp.fr>
