@@ -37,7 +37,7 @@ YAHOO.lang.extend(inputEx.UpperCaseField, inputEx.StringField,
    	inputEx.UpperCaseField.superclass.onKeyPress.call(this,e);
    	
    	// Re-Apply a toUpperCase method
-   	YAHOO.lang.later(0,this,function() {this.setValue( (this.getValue()) );})
+   	YAHOO.lang.later(0,this,function() {this.setValue( (this.getValue()) );});
    }
 
 });

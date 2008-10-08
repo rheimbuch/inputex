@@ -12,7 +12,7 @@
  * </ul>
  */
 inputEx.DateField = function(options) {
-   if(!options) { var options = {}; }
+   if(!options) { options = {}; }
    if(!options.messages) { options.messages = {}; }
 	if(!options.dateFormat) {options.dateFormat = inputEx.messages.defaultDateFormat; }
 	options.messages.invalid = inputEx.messages.invalidDate;
@@ -39,7 +39,7 @@ lang.extend(inputEx.DateField, inputEx.StringField,
 	   var value = this.el.value;
 	   var ladate = value.split("/");
 	   if( ladate.length != 3) { return false; }
-	   if ( isNaN(parseInt(ladate[0])) || isNaN(parseInt(ladate[1])) || isNaN(parseInt(ladate[2]))) { return false; }
+	   if ( isNaN(parseInt(ladate[0],10)) || isNaN(parseInt(ladate[1],10)) || isNaN(parseInt(ladate[2],10))) { return false; }
 	   var formatSplit = this.options.dateFormat.split("/");
 	   var yearIndex = inputEx.indexOf('Y',formatSplit);
 	   if (ladate[yearIndex].length!=4) { return false; } // Avoid 3-digits years...

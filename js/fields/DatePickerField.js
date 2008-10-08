@@ -47,6 +47,8 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
             
       // Render the overlay
       this.oOverlay.render(this.wrapEl);
+      // HACK: Set position absolute to the overlay
+      Dom.setStyle(this.oOverlay.body.parentNode, "position", "absolute");
       
       // Subscribe to the first click
       this.button.on('click', this.renderCalendar, this, true);
@@ -62,8 +64,6 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
       var calendarId = Dom.generateId();
       this.calendar = new YAHOO.widget.Calendar(calendarId,this.oOverlay.body.id, this.options.calendar );
       
-      // HACK: Set position absolute to the overlay
-      Dom.setStyle(this.oOverlay.body.parentNode, "position", "absolute")
       
       /*
       this.calendar.cfg.setProperty("DATE_FIELD_DELIMITER", "/");

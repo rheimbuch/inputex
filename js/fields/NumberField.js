@@ -40,7 +40,7 @@ YAHOO.lang.extend(inputEx.NumberField, inputEx.StringField,
       
       var v = this.getValue();
       if(isNaN(v)) return false;
-	   return this.el.value.match(/^(\+?((([0-9]+(\.)?)|([0-9]*\.[0-9]+))([eE][+-]?[0-9]+)?))$/);
+	   return !!this.el.value.match(/^(\+?((([0-9]+(\.)?)|([0-9]*\.[0-9]+))([eE][+-]?[0-9]+)?))$/);
    }
 
 });

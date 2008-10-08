@@ -45,7 +45,7 @@ lang.extend(inputEx.BirthdateField, inputEx.CombineField, {
    
    getValue: function() {
       var values = inputEx.BirthdateField.superclass.getValue.call(this);
-      return new Date(parseInt(values[this.yearIndex]), values[this.monthIndex], parseInt(values[this.dayIndex]) );
+      return new Date(parseInt(values[this.yearIndex],10), values[this.monthIndex], parseInt(values[this.dayIndex],10) );
    },
    
    validate: function() {
