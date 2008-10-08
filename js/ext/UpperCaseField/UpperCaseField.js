@@ -24,8 +24,8 @@ YAHOO.lang.extend(inputEx.UpperCaseField, inputEx.StringField,
    setValue: function(val) {
       // don't always rewrite the value to able selections with Ctrl+A
       var uppered = val.toUpperCase();
-      if(uppered != this.el.value) {
-         this.el.value = uppered;
+      if(uppered != this.getValue()) {
+         inputEx.UpperCaseField.superclass.setValue.call(this, uppered);
       }
    },
 
