@@ -1,9 +1,8 @@
 (function () {
-   
-var util = YAHOO.util, lang = YAHOO.lang, Event = YAHOO.util.Event, inputEx = YAHOO.inputEx, Dom = util.Dom;
+   var util = YAHOO.util, lang = YAHOO.lang, Event = YAHOO.util.Event, inputEx = YAHOO.inputEx, Dom = util.Dom;
    
 /**
- * @class Create a group of fields within a FORM tag
+ * @class Create a group of fields within a FORM tag and adds buttons
  * @extends inputEx.Group
  * @constructor
  * @param {Object} options The following options are added for Forms:
@@ -191,7 +190,7 @@ lang.extend(inputEx.Form, inputEx.Group,
       for (var i = 0 ; i < this.buttons.length ; i++) {
  	      this.buttons[i].disabled = true;
       }
-   },
+   }
 
 });
 
