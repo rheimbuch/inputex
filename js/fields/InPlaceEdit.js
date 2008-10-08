@@ -26,7 +26,7 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
       inputEx.InPlaceEdit.superclass.setOptions.call(this);
       
       if (!YAHOO.lang.isObject(this.options.animColors)) {
-         this.options.animColors =  {from: '#ffff99' , to: '#eeeeee'};
+         this.options.animColors =  {from: '#ffff99' , to: '#ffffff'};
       }
    },
 
