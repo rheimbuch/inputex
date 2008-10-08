@@ -22,6 +22,14 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
  */   
 {
 
+   setOptions: function() {
+      inputEx.InPlaceEdit.superclass.setOptions.call(this);
+      
+      if (!YAHOO.lang.isObject(this.options.animColors)) {
+         this.options.animColors =  {from: '#ffff99' , to: '#eeeeee'};
+      }
+   },
+
    /**
     * Override renderComponent to create 2 divs: the visualization one, and the edit in place form
     */
@@ -68,7 +76,7 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
       if(this.colorAnim) {
          this.colorAnim.stop(true);
       }
-      inputEx.sn(this.formattedContainer, null, {backgroundColor: '#eeee33' });
+      inputEx.sn(this.formattedContainer, null, {backgroundColor: this.options.animColors.from });
    },
    
    /**
@@ -80,7 +88,7 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
       if(this.colorAnim) {
          this.colorAnim.stop(true);
       }
-      this.colorAnim = new YAHOO.util.ColorAnim(this.formattedContainer, {backgroundColor: { from: '#eeee33' , to: '#eeeeee' }}, 1);
+      this.colorAnim = new YAHOO.util.ColorAnim(this.formattedContainer, {backgroundColor: this.options.animColors}, 1);
       this.colorAnim.onComplete.subscribe(function() { Dom.setStyle(this.formattedContainer, 'background-color', ''); }, this, true);
       this.colorAnim.animate();   
    },

@@ -34,7 +34,7 @@
 
 	<div class='codeContainer'>
 		<textarea name="code" class="JScript">
-			new YAHOO.inputEx.InPlaceEdit({parentEl: 'container1', editorField:{type:'string', inputParams: {} } });
+			new YAHOO.inputEx.InPlaceEdit({parentEl: 'container1', editorField:{type:'string', inputParams: {} },  animColors:{from:"#FFFF99" , to:"#DDDDFF"} });
 		</textarea>
 	</div>
 
@@ -134,7 +134,7 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
-	new YAHOO.inputEx.InPlaceEdit({parentEl: 'container1', editorField:{type:'string', inputParams: {} } });
+	new YAHOO.inputEx.InPlaceEdit({parentEl: 'container1', editorField:{type:'string', inputParams: {} }, animColors:{from:"#FFFF99" , to:"#DDDDFF"} });
 	
 	// Example 2
 	new YAHOO.inputEx.InPlaceEdit({
