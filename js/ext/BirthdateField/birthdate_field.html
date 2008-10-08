@@ -72,6 +72,25 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 		YAHOO.util.Dom.get('container1').appendChild(YAHOO.inputEx.cn('div', null, null, 'Updated with value= '+val));
 	});
 	
+	var div = YAHOO.util.Dom.get('container1');
+	
+	var button1 = YAHOO.inputEx.cn('button', null, null, "SetValue with today date");
+	div.appendChild(button1);
+	YAHOO.util.Event.addListener(button1, "click" ,function() { 
+		f.setValue(new Date()); 
+	});
+	var button2 = YAHOO.inputEx.cn('button', null, null, "SetValue with empty string");
+	div.appendChild(button2);
+	YAHOO.util.Event.addListener(button2, "click" ,function() { 
+		f.setValue(''); 
+	});
+
+	var button3 = YAHOO.inputEx.cn('button', null, null, "GetValue");
+	div.appendChild(button3);
+	YAHOO.util.Event.addListener(button3, "click" ,function() { 
+		alert(f.getValue());
+	});
+	
 });
 
 </script>

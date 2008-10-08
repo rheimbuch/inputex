@@ -35,24 +35,43 @@ inputEx.BirthdateField = function(options) {
 lang.extend(inputEx.BirthdateField, inputEx.CombineField, {
    
    setValue: function(value) {
-      if( !lang.isFunction(value.getTime) || !lang.isNumber(value.getTime()) ) { return; }
+      
       var values = [];
-      for(var i = 0 ; i < 3 ; i++) {
-         values.push( i == this.dayIndex ? value.getDate() : (i==this.yearIndex ? value.getFullYear() : value.getMonth() ) );
+      
+      // !value catches "" (empty field), and invalid dates
+      if(!value || !lang.isFunction(value.getTime) || !lang.isNumber(value.getTime()) ) {
+         values[this.monthIndex] = -1;
+         values[this.yearIndex] = "";
+         values[this.dayIndex] = "";
+      } else {
+         for(var i = 0 ; i < 3 ; i++) {
+            values.push( i == this.dayIndex ? value.getDate() : (i==this.yearIndex ? value.getFullYear() : value.getMonth() ) );
+         }
       }
       inputEx.BirthdateField.superclass.setValue.call(this, values);
    },
    
    getValue: function() {
+      if (this.isEmpty()) return "";
+      
       var values = inputEx.BirthdateField.superclass.getValue.call(this);
+      
+      // if selected month index is -1, new Date(..) would create a valid date with month == December !!!)
+      if (values[this.monthIndex] == -1) {
+         return new Date(NaN,NaN,NaN); // "Invalid Date" 
+      }
+      
       return new Date(parseInt(values[this.yearIndex],10), values[this.monthIndex], parseInt(values[this.dayIndex],10) );
    },
    
    validate: function() {
       var values = inputEx.BirthdateField.superclass.getValue.call(this);
       var val = this.getValue();
-      var ret = this.isEmpty() || (values[this.monthIndex] != -1 && lang.isFunction(val.getTime) && lang.isNumber(val.getTime()) );
-      return ret;
+      
+      // val == "" -> true
+      // val == any date -> true
+      // val == "Invalid Date" -> false
+      return (val != "Invalid Date");
    },
    
 	isEmpty: function() {
