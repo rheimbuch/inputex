@@ -76,18 +76,23 @@ lang.extend( inputEx.CombineField, inputEx.Field,
    	  
       return fieldInstance;
    },
+
 	
 	/**
-	 * Apply a AND operator on all field validations
-	 */
-	validate: function() {
-	   for(var i = 0 ; i < this.inputs.length ; i++) {
-	      if(!this.inputs[i].validate()) {
-	         return false;
-	      }
-	   }
-	   return true;
-	},
+    * Validate each field
+    * @returns {Boolean} true if all fields validate and required fields are not empty
+    */
+   validate: function() {
+      // Validate all the sub fields
+      for (var i = 0 ; i < this.inputs.length ; i++) {
+   	   var input = this.inputs[i];
+   	   var state = input.getState();
+   	   if( state == inputEx.stateRequired || state == inputEx.stateInvalid ) {
+   		   return false;
+   	   }
+      }
+      return true;
+   },
 	   
 	/**
 	 * Set the value

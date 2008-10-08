@@ -87,6 +87,37 @@
 
 </div>
 
+<!-- Example 4 -->
+<div class='exampleDiv'>
+
+	<p class="title">Test more options</p>
+	
+	<p>Values different from choices, required field, etc...</p>
+
+	<div class='demoContainer' id='container4'></div>
+
+	<div class='codeContainer'>
+		<textarea name="code" class="JScript">
+			var field4 = new YAHOO.inputEx.RadioField({label: "What's your favorite programming language ?", name: 'example4', choices: ['Ruby','C#',"PHP"], values: ['ruby','c_sharp','php'],  allowAny: true, parentEl: 'container4', showMsg:true, required:true});
+			field4.updatedEvt.subscribe(function(e, params) {
+					YAHOO.util.Dom.get('container4').appendChild( YAHOO.inputEx.cn('div',null,null, "Updated with value: "+params[0]) );
+			});
+
+			var exampleDiv = YAHOO.util.Dom.get('container4');
+
+			var button1 = inputEx.cn('button', null, null, 'setValue()');
+			exampleDiv.appendChild(button1); 
+			YAHOO.util.Event.addListener(button1, 'click', function() { field4.setValue("Javascript"); });
+
+			var button2 = inputEx.cn('button', null, null, 'getValue()');
+			exampleDiv.appendChild(button2); 
+			YAHOO.util.Event.addListener(button2, 'click', function() { alert(field4.getValue()); });
+		</textarea>
+	</div>
+
+</div>
+
+
 <!-- YUI Library -->
 <script type="text/javascript" src="../lib/yui/yahoo/yahoo-min.js"></script> 
 <script type="text/javascript" src="../lib/yui/dom/dom-min.js"></script> 
@@ -117,6 +148,21 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	// Example 3
 	new YAHOO.inputEx.RadioField({label: 'Where did you learn about inputEx ?', name: 'example3', choices: ['Ajaxian','YUI blog','other'], parentEl: 'container3', id: 'verticalChoiceField'});
 	
+	// Example 4
+	var field4 = new YAHOO.inputEx.RadioField({label: "What's your favorite programming language ?", name: 'example4', choices: ['Ruby','C#',"PHP"], values: ['ruby','c_sharp','php'],  allowAny: true, parentEl: 'container4', showMsg:true, required:true});
+	field4.updatedEvt.subscribe(function(e, params) {
+			YAHOO.util.Dom.get('container4').appendChild( YAHOO.inputEx.cn('div',null,null, "Updated with value: "+params[0]) );
+	});
+	
+	var exampleDiv = YAHOO.util.Dom.get('container4');
+	
+	var button1 = inputEx.cn('button', null, null, 'setValue()');
+	exampleDiv.appendChild(button1); 
+	YAHOO.util.Event.addListener(button1, 'click', function() { field4.setValue("Javascript"); });
+	
+	var button2 = inputEx.cn('button', null, null, 'getValue()');
+	exampleDiv.appendChild(button2); 
+	YAHOO.util.Event.addListener(button2, 'click', function() { alert(field4.getValue()); });
 	
 	
 	

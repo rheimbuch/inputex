@@ -27,6 +27,7 @@ YAHOO.lang.extend(inputEx.MultiAutoComplete, inputEx.AutoComplete,
       
       this.ddlist = new inputEx.widget.DDList({parentEl: this.fieldContainer});
       this.ddlist.itemRemovedEvt.subscribe(function() {
+         this.setClassFromState();
          this.fireUpdatedEvt();
       }, this, true);
       this.ddlist.listReorderedEvt.subscribe(this.fireUpdatedEvt, this, true);
@@ -45,6 +46,10 @@ YAHOO.lang.extend(inputEx.MultiAutoComplete, inputEx.AutoComplete,
     */
    setValue: function(value) {
       this.ddlist.setValue(value);
+      // set corresponding style
+	   this.setClassFromState();
+      // fire update event
+      this.fireUpdatedEvt();
    },
    
    /**
@@ -53,7 +58,37 @@ YAHOO.lang.extend(inputEx.MultiAutoComplete, inputEx.AutoComplete,
     */
    getValue: function() {
       return this.ddlist.getValue();
-   }
+   },
+   
+   /**
+    * Return (stateEmpty|stateRequired) if the value equals the typeInvite attribute
+    */
+   getState: function() { 
+      var val = this.getValue();
+      
+	   // if nothing in the list
+	   if( val.length === 0) {
+	      return this.options.required ? inputEx.stateRequired : inputEx.stateEmpty;
+	   }
+      
+	   return this.validate() ? inputEx.stateValid : inputEx.stateInvalid;
+	},
+	
+	/**
+    * TODO : how to validate ?
+    */
+   validate: function() { 
+      return true;
+   },
+   
+   /**
+    * onChange event handler
+    * @param {Event} e The original 'change' event
+    */
+	onChange: function(e) {
+	   // erase inherited version, so don't trash previous value if input is empty
+	}
+   
    
 });
 

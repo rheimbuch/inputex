@@ -203,7 +203,7 @@ lang.extend(inputEx.Group, inputEx.Field,
 	      else {
 	         field.clear();
 	      }
-		   field.setClassFromState();
+		   //field.setClassFromState();
       }
    },
    

@@ -56,6 +56,9 @@ YAHOO.lang.extend(inputEx.Textarea, inputEx.Field,
     */
    setValue: function(value) {
       this.el.value = value;
+
+      // call parent class method to set style and fire updatedEvt
+      inputEx.StringField.superclass.setValue.call(this, value);
    },
 
    /**

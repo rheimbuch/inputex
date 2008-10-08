@@ -30,6 +30,18 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
       this.options.className = this.options.className || 'inputEx-Field inputEx-AutoComplete';
       inputEx.AutoComplete.superclass.setOptions.call(this);
    },
+   
+   /**
+    * Custom event init
+    *   -> listen to autocompleter textboxBlurEvent instead of this.el "blur" event
+    *   -> listener to autocompleter textboxBlurEvent added in buildAutocomplete method
+    */
+   initEvents: function() {	
+	   inputEx.AutoComplete.superclass.initEvents.call(this);
+	   
+	   // remove standard blur listener
+	   Event.removeListener(this.el, "blur", this.onBlur);
+   },
 
    /**
     * Render the hidden list element
@@ -83,14 +95,17 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
       // subscribe to the itemSelect event
       this.oAutoComp.itemSelectEvent.subscribe(this.itemSelectHandler, this, true);
       
+      // subscribe to the textboxBlur event (instead of "blur" event on this.el)
+      //                                    |-------------- autocompleter ----------|
+      //    -> order : "blur" on this.el -> internal callback -> textboxBlur event -> this.onBlur callback
+      //    -> so fired after autocomp internal "blur" callback (which would erase typeInvite...)
+      this.oAutoComp.textboxBlurEvent.subscribe(this.onBlur, this, true);
    },
    
    //define your itemSelect handler function:
    itemSelectHandler: function(sType, aArgs) {
    	var aData = aArgs[2];
    	this.setValue( this.options.returnValue ? this.options.returnValue(aData) : aData[0] );
-   	
-   	this.fireUpdatedEvt();
    },
    
    /**
@@ -99,17 +114,27 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
     */
 	onChange: function(e) {
 	   this.setClassFromState();
+	   
 	   // Clear the field when no value 
       YAHOO.lang.later(50, this, function() {
          if(this.el.value == "") {
             this.setValue("");
-            this.fireUpdatedEvt();
          }
       });
+      
+      this.fireUpdatedEvt();
 	},
    
    setValue: function(value) {
       this.hiddenEl.value = value;
+      
+      // "inherited" from inputex.Field :
+      //    (can't inherit of inputex.StringField because would set this.el.value...)
+      //
+	      // set corresponding style
+   	   this.setClassFromState();
+	      // fire update event
+         this.fireUpdatedEvt();
    },
    
    getValue: function() {

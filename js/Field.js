@@ -26,11 +26,6 @@ inputEx.Field = function(options) {
 	// Call the render of the dom
 	this.render();
 	
-	// Set the initial value
-	if(!lang.isUndefined(this.options.value)) {
-		this.setValue(this.options.value);
-	}
-	
 	/**
 	 * @event
 	 * @param {Any} value The new value of the field
@@ -41,7 +36,12 @@ inputEx.Field = function(options) {
 	// initialize behaviour events
 	this.initEvents();
 	
-	// set the default styling
+	// Set the initial value
+	if(!lang.isUndefined(this.options.value)) {
+		this.setValue(this.options.value);
+	}
+	
+	// set default styling
 	this.setClassFromState();
 	
 	// append it immediatly to the parent DOM element
@@ -166,7 +166,12 @@ inputEx.Field.prototype = {
     * @param {Any} value The new value
     */
 	setValue: function(value) {
-	   // override me
+	   // to be inherited
+	   
+	   // set corresponding style
+	   this.setClassFromState();
+	   // fire update event
+      this.fireUpdatedEvt();
 	},
 
    /**

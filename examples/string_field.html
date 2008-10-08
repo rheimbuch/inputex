@@ -241,14 +241,24 @@
 
 	<p class="title">Multiple options</p>
 	
-	<p>Check multiple options config : typeInvite, required, minLength</p>
+	<p>Check multiple options config : typeInvite, required, minLength  &nbsp;--&nbsp; Test setValue and getValue methods</p>
 
 	<div class='demoContainer' id='container11'></div>
 
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript" cols="60" rows="1">
-			new YAHOO.inputEx.StringField({parentEl: 'container11', typeInvite: 'lastname', description: 'Enter your lastname', minLength:10, required:true, showMsg:true});
+			var field1 = new YAHOO.inputEx.StringField({parentEl: 'container11', typeInvite: 'lastname', description: 'Enter your lastname', minLength:10, required:true, showMsg:true});
+
+			var exampleDiv = YAHOO.util.Dom.get('container11');
+
+			var button1 = inputEx.cn('button', null, null, 'setValue()');
+			exampleDiv.appendChild(button1); 
+			YAHOO.util.Event.addListener(button1, 'click', function() { field1.setValue("I've been set by setValue"); });
+
+			var button2 = inputEx.cn('button', null, null, 'getValue()');
+			exampleDiv.appendChild(button2); 
+			YAHOO.util.Event.addListener(button2, 'click', function() { alert(field1.getValue()); });
 		</textarea>
 		</form>
 	</div>
@@ -313,7 +323,17 @@ YAHOO.util.Event.addListener(window, 'load', function() {
    new YAHOO.inputEx.StringField({parentEl: 'container10', typeInvite: 'lastname', description: 'Enter your lastname'});
 
    // Example 11
-	new YAHOO.inputEx.StringField({parentEl: 'container11', typeInvite: 'lastname', description: 'Enter your lastname', minLength:10, required:true, showMsg:true});
+	var field1 = new YAHOO.inputEx.StringField({parentEl: 'container11', typeInvite: 'lastname', description: 'Enter your lastname', minLength:10, required:true, showMsg:true});
+
+	var exampleDiv = YAHOO.util.Dom.get('container11');
+	
+	var button1 = inputEx.cn('button', null, null, 'setValue()');
+	exampleDiv.appendChild(button1); 
+	YAHOO.util.Event.addListener(button1, 'click', function() { field1.setValue("I've been set by setValue"); });
+	
+	var button2 = inputEx.cn('button', null, null, 'getValue()');
+	exampleDiv.appendChild(button2); 
+	YAHOO.util.Event.addListener(button2, 'click', function() { alert(field1.getValue()); });
 
 	
 });

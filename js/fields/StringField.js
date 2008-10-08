@@ -77,6 +77,9 @@ lang.extend(inputEx.StringField, inputEx.Field,
     */
    setValue: function(value) {
       this.el.value = value;
+      
+      // call parent class method to set style and fire updatedEvt
+      inputEx.StringField.superclass.setValue.call(this, value);
    },	
 	
    /**
@@ -127,7 +130,7 @@ lang.extend(inputEx.StringField, inputEx.Field,
    },
    
    /**
-    * Return (stateEmpty|stateRequired) if the value equals the typeInvite attribute
+    * Return (stateEmpty|stateRequired) 
     */
    getState: function() { 
       var val = this.getValue();
@@ -155,11 +158,15 @@ lang.extend(inputEx.StringField, inputEx.Field,
     */
    setClassFromState: function() {
 	   inputEx.StringField.superclass.setClassFromState.call(this);
+
+	   // display/mask typeInvite
 	   if(this.options.typeInvite) {
 	      if (!Dom.hasClass(this.divEl, "inputEx-focused")) {
 	         if(this.previousState == inputEx.stateEmpty || this.previousState == inputEx.stateRequired) {
    	         Dom.addClass(this.divEl, "inputEx-typeInvite");
    	         this.el.value = this.options.typeInvite;
+            } else { // important for setValue to work with typeInvite
+               Dom.removeClass(this.divEl, "inputEx-typeInvite");
             }
 	      }
       }

@@ -35,6 +35,46 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
+			YAHOO.util.Event.addListener(window, 'load', function() {
+				// Required for the tooltips
+				YAHOO.inputEx.spacerUrl = "../images/space.gif";
+
+				// Example 1	
+				var el = YAHOO.util.Dom.get('container1');
+
+				var field = new YAHOO.inputEx.MultiAutoComplete({
+					parentEl: el, 
+					label: 'Search US state',
+
+					// see http://developer.yahoo.com/yui/examples/autocomplete/assets/js/states_jsfunction.js for getState function
+					datasource: new YAHOO.widget.DS_JSFunction( getStates),
+
+					// Format the hidden value (value returned by the form)
+					returnValue: function(oResultItem) {
+						return oResultItem[1];
+					},
+
+					// autocompleter options
+					autoComp: {
+						forceSelection: true,
+						minQueryLength: 2,
+						maxResultsDisplayed: 50,
+						formatResult: function(oResultItem, sQuery) {
+			       	   var sMarkup = oResultItem[0] + " (" + oResultItem[1] + ")";
+			       	   return sMarkup;
+			    	   }
+					}
+				});
+
+				var logDiv = YAHOO.inputEx.cn('div', null, null, "<br />");
+				el.appendChild(logDiv);
+
+				field.updatedEvt.subscribe(function(e,params) {
+					var value = YAHOO.lang.JSON.stringify(params[0]);
+					logDiv.appendChild( YAHOO.inputEx.cn('div',null,null,"Updated at "+(new Date())+" "+value+"<br />") );
+				});
+
+			});
 		</textarea>
 		</form>
 	</div>
@@ -73,33 +113,39 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 
 	// Example 1	
 	var el = YAHOO.util.Dom.get('container1');
+	
 	var field = new YAHOO.inputEx.MultiAutoComplete({
 		parentEl: el, 
 		label: 'Search US state',
-		datasource: new YAHOO.widget.DS_JSFunction( getStates), // see http://developer.yahoo.com/yui/examples/autocomplete/assets/js/states_jsfunction.js for getState function
+		
+		// see http://developer.yahoo.com/yui/examples/autocomplete/assets/js/states_jsfunction.js for getState function
+		datasource: new YAHOO.widget.DS_JSFunction( getStates),
 		
 		// Format the hidden value (value returned by the form)
 		returnValue: function(oResultItem) {
 			return oResultItem[1];
 		},
+		
+		// autocompleter options
 		autoComp: {
 			forceSelection: true,
 			minQueryLength: 2,
 			maxResultsDisplayed: 50,
 			formatResult: function(oResultItem, sQuery) {
-       	var sMarkup = oResultItem[0] + " (" + oResultItem[1] + ")";
-       	return sMarkup;
-    	}
+       	   var sMarkup = oResultItem[0] + " (" + oResultItem[1] + ")";
+       	   return sMarkup;
+    	   }
 		}
 	});
+	
 	var logDiv = YAHOO.inputEx.cn('div', null, null, "<br />");
 	el.appendChild(logDiv);
+	
 	field.updatedEvt.subscribe(function(e,params) {
 		var value = YAHOO.lang.JSON.stringify(params[0]);
 		logDiv.appendChild( YAHOO.inputEx.cn('div',null,null,"Updated at "+(new Date())+" "+value+"<br />") );
 	});
-	
-	
+		
 });
 
 </script>

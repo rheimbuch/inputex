@@ -75,11 +75,19 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-   		var exampleDiv = YAHOO.util.Dom.get('container3');
-			var dateField = new YAHOO.inputEx.DateField({value: new Date(),  parentEl: exampleDiv, showMsg: true}); 
+			var exampleDiv = YAHOO.util.Dom.get('container3');
+			var dateField = new YAHOO.inputEx.DateField({value: new Date(),  parentEl: exampleDiv, showMsg: true, required:true, typeInvite:'m/d/Y'}); 
 			dateField.updatedEvt.subscribe(function() {
 				exampleDiv.appendChild( inputEx.cn('div', null, null, dateField.getValue()) ); 
 			});
+
+			var button1 = inputEx.cn('button', null, null, 'setValue()');
+			exampleDiv.appendChild(button1); 
+			YAHOO.util.Event.addListener(button1, 'click', function() { dateField.setValue("06/10/1984"); });
+
+			var button2 = inputEx.cn('button', null, null, 'getValue()');
+			exampleDiv.appendChild(button2); 
+			YAHOO.util.Event.addListener(button2, 'click', function() { alert(dateField.getValue()); });
 		</textarea>
 		</form>
 	</div>
@@ -111,10 +119,18 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	
 	// Example 3
 	var exampleDiv = YAHOO.util.Dom.get('container3');
-	var dateField = new YAHOO.inputEx.DateField({value: new Date(),  parentEl: exampleDiv, showMsg: true}); 
+	var dateField = new YAHOO.inputEx.DateField({value: new Date(),  parentEl: exampleDiv, showMsg: true, required:true, typeInvite:'m/d/Y'}); 
 	dateField.updatedEvt.subscribe(function() {
 		exampleDiv.appendChild( inputEx.cn('div', null, null, dateField.getValue()) ); 
 	});
+	
+	var button1 = inputEx.cn('button', null, null, 'setValue()');
+	exampleDiv.appendChild(button1); 
+	YAHOO.util.Event.addListener(button1, 'click', function() { dateField.setValue("06/10/1984"); });
+	
+	var button2 = inputEx.cn('button', null, null, 'getValue()');
+	exampleDiv.appendChild(button2); 
+	YAHOO.util.Event.addListener(button2, 'click', function() { alert(dateField.getValue()); });
 	
 });
 

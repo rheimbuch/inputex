@@ -60,7 +60,7 @@ lang.extend(inputEx.DateField, inputEx.StringField,
 	
 	   // Don't try to parse a date if there is no date
 	   if( val === '' ) {
-	      this.el.value = '';
+	      inputEx.DateField.superclass.setValue.call(this, '');
 	      return;
 	   }
 	   var str = "";
@@ -77,7 +77,7 @@ lang.extend(inputEx.DateField, inputEx.StringField,
 	     str = val;
 	   }
 	
-	   this.el.value = str;
+	   inputEx.DateField.superclass.setValue.call(this, str);
 	},
 	   
 	/**
@@ -85,16 +85,21 @@ lang.extend(inputEx.DateField, inputEx.StringField,
 	 * @return {Date} The javascript Date object
 	 */
 	getValue: function() {
+	   // let parent class function check if typeInvite, etc...
+	   var value = inputEx.DateField.superclass.getValue.call(this);
+
 	   // Hack to validate if field not required and empty
-	   if (this.el.value === '') { return '';}
-	   var ladate = this.el.value.split("/");
+	   if (value === '') { return '';}
+	   
+	   //var ladate = this.el.value.split("/");
+	   var ladate = value.split("/");
 	   var formatSplit = this.options.dateFormat.split('/');
 	   var d = parseInt(ladate[ inputEx.indexOf('d',formatSplit) ],10);
 	   var Y = parseInt(ladate[ inputEx.indexOf('Y',formatSplit) ],10);
 	   var m = parseInt(ladate[ inputEx.indexOf('m',formatSplit) ],10)-1;
 	   return (new Date(Y,m,d));
 	}
-	   
+
 });
 	
 // Specific message for the container

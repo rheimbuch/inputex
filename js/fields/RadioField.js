@@ -31,6 +31,9 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	   inputEx.RadioField.superclass.setOptions.call(this);
 	   
 	   this.options.allowAny = lang.isUndefined(this.options.allowAny) ? false : this.options.allowAny;
+      
+      // values == choices if not provided
+	   this.options.values = lang.isArray(this.options.values) ? this.options.values : this.options.choices;
 	},
 	   
 	/**
@@ -49,10 +52,10 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	      var radio = null;
 	      // Do you still ask why javascript developpers don't like IE ?
 	      if(YAHOO.env.ua.ie) {
-	         radio = document.createElement("<input id='"+radioId+"' type='radio' name='"+this.options.name+"' value='"+this.options.choices[i]+"'>");
+	         radio = document.createElement("<input id='"+radioId+"' type='radio' name='"+this.options.name+"' value='"+this.options.values[i]+"' />");
 	      }
 	      else {
-	         radio = inputEx.cn('input', { id: radioId,type: 'radio', name: this.options.name, value: this.options.choices[i] });
+	         radio = inputEx.cn('input', { id: radioId,type: 'radio', name: this.options.name, value: this.options.values[i] });
          }
          div.appendChild(radio);
          var label = inputEx.cn('label', {"for": radioId, className: 'inputEx-RadioField-rightLabel'}, null, this.options.choices[i]);
@@ -128,7 +131,7 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	},
 	
 	/**
-	 * Get the state value
+	 * Get the field value
 	 * @return {Any} 
 	 */
 	getValue: function() {
@@ -136,22 +139,42 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	      if(this.optionEls[i].checked) {
 	         if(this.radioAny && this.radioAny == this.optionEls[i]) {
 	            var val = this.anyField.getValue();
-	            return (val == '') ? null : val;
+	            return val;
 	         }
-	         return this.options.choices[i];
+	         return this.options.values[i];
 	      }
 	   }
-	   return null;
+	   return "";
 	},
 	
 	/**
 	 * Set the value of the checkedbox
-	 * @param {Any} value The value schould be one of this.options.choices
+	 * @param {Any} value The value schould be one of this.options.values (which defaults to this.options.choices if missing) if allowAny option not true.
 	 */
 	setValue: function(value) {
+	   var checkAny = true, anyEl;
+	   
 	   for(var i = 0 ; i < this.optionEls.length ; i++) {
-	      this.optionEls[i].checked = (value == this.options.choices[i]);
+	      if (value == this.options.values[i]) {
+	         this.optionEls[i].checked = true;
+	         checkAny = false;
+         } else {
+            this.optionEls[i].checked = false;
+         }
+         
+         if(this.radioAny && this.radioAny == this.optionEls[i]) {
+            anyEl = this.optionEls[i];
+         }
 	   }
+	   
+	   if(this.radioAny && checkAny) {
+         anyEl.checked = true;
+         this.anyField.enable(); // enable anyField
+         this.anyField.setValue(value);
+      }
+	   
+      // call parent class method to set style and fire updatedEvt
+      inputEx.StringField.superclass.setValue.call(this, value);
 	}
 	
 });   

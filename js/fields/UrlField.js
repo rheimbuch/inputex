@@ -29,6 +29,9 @@ lang.extend(inputEx.UrlField, inputEx.StringField,
       this.options.className = "inputEx-Field inputEx-UrlField";
       this.options.messages.invalid = inputEx.messages.invalidUrl;
       this.options.favicon = lang.isUndefined(this.options.favicon) ? (("https:" == document.location.protocol) ? false : true) : this.options.favicon;
+      
+      // validate with url regexp
+      this.options.regexp = inputEx.regexps.url;
    },
    
    /**
@@ -36,7 +39,8 @@ lang.extend(inputEx.UrlField, inputEx.StringField,
     * @param {String} value The url string
     */
    setValue: function(value) {
-	   this.el.value = value;
+	   inputEx.UrlField.superclass.setValue.call(this, value);
+	   
 	   this.validate();
    },
    
@@ -63,7 +67,8 @@ lang.extend(inputEx.UrlField, inputEx.StringField,
     * @return {Boolean} Validation state
     */
    validate: function() {
-      var url = this.getValue().match(inputEx.regexps.url);   
+      // check superclass validation (including regexp for url and emptiness test) 
+      var url = inputEx.UrlField.superclass.validate.call(this); 
       
       if(this.options.favicon) {
          var newSrc = url ? (url[0]+"/favicon.ico") : inputEx.spacerUrl;

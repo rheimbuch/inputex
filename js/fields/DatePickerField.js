@@ -126,8 +126,10 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
          this.oOverlay.hide();
          var date = args[0][0];
          var year = date[0], month = date[1], day = date[2];
+         
+         // set value (updatedEvt fired by setValue)
          this.setValue(new Date(year,month-1, day) );
-         this.fireUpdatedEvt();
+         
       }, this, true);
       
       // Unsubscribe the event so this function is called only once

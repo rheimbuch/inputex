@@ -172,11 +172,24 @@ inputEx.widget.DDList.prototype = {
       this.ul.appendChild(li);
    },
    
-   removeItem: function(i) {
+   /*
+   * private method to remove an item
+   */
+   _removeItem: function(i) {
       
       var itemValue = this.ul.childNodes[i].childNodes[0].innerHTML;
       
       this.ul.removeChild(this.ul.childNodes[i]);
+      
+      return itemValue;
+   },
+   
+   /*
+   *  public metnod to remove an item
+   *    _removeItem function + event firing
+   */
+   removeItem: function(i) {
+      var itemValue = this._removeItem(i);
       
       // Fire the itemRemoved Event
       this.itemRemovedEvt.fire(itemValue);
@@ -191,17 +204,30 @@ inputEx.widget.DDList.prototype = {
    },
    
    updateItem: function(i,value) {
-      this.ul.childNodes[i].childeNodes[0].innerHTML = value;
+      this.ul.childNodes[i].childNodes[0].innerHTML = value;
    },
    
    setValue: function(value) {
-      for(var i = 0 ; i < value.length ; i++) {
-         if(this.ul.childNodes.length > i) {
+      // if trying to set wrong value (or ""), reset
+      if (!YAHOO.lang.isArray(value)) {
+         value = [];
+      }
+      
+      var oldNb = this.ul.childNodes.length;
+      var newNb = value.length;
+      
+      for(var i = 0 ; i < newNb ; i++) {
+         if(i < oldNb) {
             this.updateItem(i, value[i]);
          }
          else {
             this.addItem(value[i]);
          }
+      }
+      
+      // remove extra li items if any
+      for(var j = newNb; j < oldNb; j++) {
+         this._removeItem(newNb); // newNb is always the index of first li to remove (not j !)
       }
    }
    
