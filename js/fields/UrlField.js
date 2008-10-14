@@ -40,8 +40,6 @@ lang.extend(inputEx.UrlField, inputEx.StringField,
     */
    setValue: function(value) {
 	   inputEx.UrlField.superclass.setValue.call(this, value);
-	   
-	   //this.validate();
    },
    
    /**

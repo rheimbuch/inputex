@@ -95,14 +95,22 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	// Example 2
 	var el = YAHOO.util.Dom.get('container2');
 	var field = new YAHOO.inputEx.SelectField({name: 'country', selectValues: ['United States of America','France'], parentEl: el});
+
+	var button1 = YAHOO.inputEx.cn('button', null, null, "SetValue with 'United States of America'");
+	var val = 'United States of America';
+	el.appendChild(button1);
+	YAHOO.util.Event.addListener(button1, "click" ,function() {
+	   field.setValue(val);
+	   val = (val == 'France') ? 'United States of America' : 'France';
+	   button1.innerHTML = "SetValue with '"+val+"'";
+	});
+	
 	var logDiv = YAHOO.inputEx.cn('div', null, null, "Log :<br />");
 	el.appendChild(logDiv);
 	field.updatedEvt.subscribe(function(e,params) {
 		var value = params[0];
 		logDiv.innerHTML += "Updated at "+(new Date())+" with value "+value+"<br />";
 	});
-	
-	
 	
 });
 

@@ -123,7 +123,9 @@ lang.extend(inputEx.ColorField, inputEx.Field,
 	setValue: function(value) {
 	   this.el.value = value;
 	   Dom.setStyle(this.colorEl, 'background-color', this.el.value);
-	   inputEx.ColorField.superclass.setValue(this, value);
+
+		// Call Field.setValue to set class and fire updated event
+		inputEx.ColorField.superclass.setValue.call(this,value);
 	},
 	   
 	/**
@@ -160,14 +162,13 @@ lang.extend(inputEx.ColorField, inputEx.Field,
 		Event.stopEvent(e);
 	   	
 		var couleur = Dom.getStyle(square,'background-color'); 
-		Dom.setStyle(this.colorEl,'background-color',couleur);
 	   	
 		// set hidden field value
 		// Convertit une chaine du style "rgb(255,142,0)" en hexadecimal du style "#FF8E00"
 	  	var hexa = function (rgbcolor) {
-		// Convertit un entier en hexa
-		var DecToHex = function (n){
-	     var tblCode = new Array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E","F");
+		   // Convertit un entier en hexa
+		   var DecToHex = function (n){
+	        var tblCode = new Array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E","F");
 	        var BASE=16;
 	        var Num = parseInt(n, 10);
 	        var i;
@@ -190,15 +191,13 @@ lang.extend(inputEx.ColorField, inputEx.Field,
 	      var rgb = rgbcolor.split(/([(,)])/);
 	      return '#'+DecToHex(rgb[2])+DecToHex(rgb[4])+DecToHex(rgb[6]);
 	   };
-	     
-	   this.el.value = hexa(couleur);
-	
+
 	   // Overlay closure
 	   this.visible = !this.visible;
 	   this.colorPopUp.style.display = 'none';
-	   	
-	   // Fire updated
-	   this.fireUpdatedEvt();
+	   
+	   // SetValue
+	   this.setValue(hexa(couleur));
 	},
 	
 	getValue: function() {

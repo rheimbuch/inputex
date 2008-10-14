@@ -102,7 +102,7 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 
 	
 	// Example 1
-	new YAHOO.inputEx.CombineField({
+	var field = new YAHOO.inputEx.CombineField({
 		parentEl: 'container1', 
 		label: 'Your name',
 		description: 'Please enter your name',
@@ -111,6 +111,24 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 			{ inputParams: {name: 'lastname', typeInvite: 'lastname'} }
 		],
 		separators: [false,"&nbsp;&nbsp;&nbsp;",false]
+	});
+
+   var el = YAHOO.util.Dom.get('container1');
+
+	var button1 = YAHOO.inputEx.cn('button', null, null, "SetValue with ['Jimi','Hendrix']");
+	var val = ['Jimi','Hendrix'];
+	el.appendChild(button1);
+	YAHOO.util.Event.addListener(button1, "click" ,function() {
+	   field.setValue(val);
+	   val = (val[0] == 'Jimi') ? ['',''] : ['Jimi','Hendrix'];
+	   button1.innerHTML = "SetValue with "+((val[0] == 'Jimi') ? "['Jimi','Hendrix']" : "['','']");
+	});
+	
+	var logDiv = YAHOO.inputEx.cn('div', null, null, "Log :<br />");
+	el.appendChild(logDiv);
+	field.updatedEvt.subscribe(function(e,params) {
+		var value = params[0];
+		logDiv.innerHTML += "Updated at "+(new Date())+" with value "+value+"<br />";
 	});
 
 

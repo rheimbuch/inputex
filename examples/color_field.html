@@ -113,6 +113,16 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	// Example 2
 	var el = YAHOO.util.Dom.get('container2');
 	var field = new YAHOO.inputEx.ColorField({parentEl: el });
+	
+	var button1 = YAHOO.inputEx.cn('button', null, null, "SetValue with '#FF99AD'");
+	var val = '#FF99AD';
+	el.appendChild(button1);
+	YAHOO.util.Event.addListener(button1, "click" ,function() {
+	   field.setValue(val);
+	   val = (val == '#FF99AD') ? '#B5EDBC' : '#FF99AD';
+	   button1.innerHTML = "SetValue with '"+val+"'";
+	});
+	
 	var logDiv = YAHOO.inputEx.cn('div', null, null, "Log :<br />");
 	el.appendChild(logDiv);
 	field.updatedEvt.subscribe(function(e,params) {

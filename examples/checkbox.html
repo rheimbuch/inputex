@@ -184,6 +184,16 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	// Example 5
 	var el = YAHOO.util.Dom.get('container5');
 	var field = new YAHOO.inputEx.CheckBox({parentEl: el });
+	
+	var button1 = YAHOO.inputEx.cn('button', null, null, "SetValue with true");
+	var bool = true;
+	el.appendChild(button1);
+	YAHOO.util.Event.addListener(button1, "click" ,function() {
+	   field.setValue(bool);
+	   bool = !bool;
+	   button1.innerHTML = "SetValue with "+bool;
+	});
+	
 	var logDiv = YAHOO.inputEx.cn('div', null, null, "Log :<br />");
 	el.appendChild(logDiv);
 	field.updatedEvt.subscribe(function(e,params) {

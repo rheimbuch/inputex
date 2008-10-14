@@ -62,7 +62,8 @@ YAHOO.lang.extend(inputEx.SelectField, inputEx.Field,
          }
       }
       
-      inputEx.SelectField.superclass.setValue.call(this, value);
+		// Call Field.setValue to set class and fire updated event
+		inputEx.SelectField.superclass.setValue.call(this,value);
    },
    
    /**

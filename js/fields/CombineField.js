@@ -102,7 +102,9 @@ lang.extend( inputEx.CombineField, inputEx.Field,
 	   for(var i = 0 ; i < this.inputs.length ; i++) {
 	      this.inputs[i].setValue(values[i]);
 	   }
-	   inputEx.CombineField.superclass.setValue(this, values);
+	   
+	   // Call Field.setValue to set class and fire updated event
+		inputEx.CombineField.superclass.setValue.call(this,values);
 	},
 	
 	/**
