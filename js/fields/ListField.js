@@ -90,7 +90,9 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	      for(var i = 0 ; i < additionalElements ; i++) { 
 	         this.removeElement(value.length);
 	      }
-	   }
+	   };
+	   
+	   inputEx.ListField.superclass.setValue.call(this, value);
 	},
 	   
 	/**

@@ -123,6 +123,7 @@ lang.extend(inputEx.ColorField, inputEx.Field,
 	setValue: function(value) {
 	   this.el.value = value;
 	   Dom.setStyle(this.colorEl, 'background-color', this.el.value);
+	   inputEx.ColorField.superclass.setValue(this, value);
 	},
 	   
 	/**

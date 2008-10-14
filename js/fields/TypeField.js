@@ -43,6 +43,8 @@ YAHOO.lang.extend(inputEx.TypeField, inputEx.Field,
       });
       this.rebuildGroupOptions();
       this.group.setValue(value.inputParams);
+      
+      inputEx.TypeField.superclass.setValue.call(this, value);
    },
    
    /**

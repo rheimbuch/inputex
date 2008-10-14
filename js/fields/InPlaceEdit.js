@@ -235,6 +235,7 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
       if(this.editorContainer.style.display == '') {
          this.editorField.setValue(value);
       }
+      inputEx.InPlaceEdit.superclass.setValue(this, value);
    },
    
    /**

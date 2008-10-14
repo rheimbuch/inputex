@@ -110,6 +110,7 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 			this.hiddenEl.value = value;
 			this.el.checked = false;
 		}
+		inputEx.CheckBox.superclass.setValue.call(this, value);
 	}
 	
 });   

@@ -61,6 +61,8 @@ YAHOO.lang.extend(inputEx.SelectField, inputEx.Field,
 		      option.selected = "selected";
          }
       }
+      
+      inputEx.SelectField.superclass.setValue.call(this, value);
    },
    
    /**

@@ -27,6 +27,13 @@ YAHOO.lang.extend(inputEx.UpperCaseField, inputEx.StringField,
       if(uppered != this.getValue()) {
          inputEx.UpperCaseField.superclass.setValue.call(this, uppered);
       }
+      // "inherited" from inputex.Field :
+      //    (can't inherit of inputex.StringField because would set this.el.value...)
+      //
+	      // set corresponding style
+   	   this.setClassFromState();
+	      // fire update event
+         this.fireUpdatedEvt();
    },
 
    /**

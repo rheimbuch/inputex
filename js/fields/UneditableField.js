@@ -34,8 +34,10 @@ YAHOO.lang.extend(inputEx.UneditableField, inputEx.Field,
     */
    setValue: function(val) {
       this.value = val;
-      //inputEx.renderVisu(this.options.visu, val, this.divEl);
+      
       inputEx.renderVisu(this.options.visu, val, this.fieldContainer);
+      
+	   inputEx.UneditableField.superclass.setValue.call(this, val);
    },
    
    /**

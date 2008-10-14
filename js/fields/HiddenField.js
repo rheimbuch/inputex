@@ -36,6 +36,7 @@ YAHOO.lang.extend(inputEx.HiddenField, inputEx.Field,
     */
    setValue: function(val) {
       this.el.value = val;
+      inputEx.HiddenField.superclass.setValue.call(this,val);
    },
 
    /**

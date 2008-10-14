@@ -77,6 +77,8 @@ YAHOO.lang.extend(inputEx.SliderField, inputEx.Field,
       var percent = Math.floor(v-this.options.minValue)*100/this.options.maxValue;
       
       this.slider.setValue(percent);
+      
+      inputEx.SliderField.superclass.setValue.call(this, val);
    },
 
    /**
