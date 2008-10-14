@@ -33,12 +33,11 @@ YAHOO.lang.extend(inputEx.NumberField, inputEx.StringField,
     * Check if the entered number is a float
     */
    validate: function() { 
-      // empty field is OK
-      if (this.el.value == '') {
-         return true;
-      }
-      
       var v = this.getValue();
+      
+      // empty field is OK
+      if (v == "") return true;
+      
       if(isNaN(v)) return false;
 	   return !!this.el.value.match(/^(\+?((([0-9]+(\.)?)|([0-9]*\.[0-9]+))([eE][+-]?[0-9]+)?))$/);
    }

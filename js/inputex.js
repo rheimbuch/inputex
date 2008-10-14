@@ -86,7 +86,7 @@ lang.augmentObject(inputEx,
    	invalid: "This field is invalid",
    	valid: "This field is valid",
    	defaultDateFormat: "m/d/Y",
-   	months: ["January", "February", "Mars", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+   	months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
    },
    
    /**

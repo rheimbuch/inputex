@@ -21,6 +21,7 @@
    msgs.shortWeekdays = ["Di","Lu","Ma","Me","Je","Ve","Sa"];
    msgs.selectMonth = "- Choisissez -";
    msgs.dayTypeInvite = "Jour";
+   msgs.monthTypeInvite = "Mois";
    msgs.yearTypeInvite = "Année";
    msgs.cancelEditor = "annuler";
    msgs.okEditor = "Ok";

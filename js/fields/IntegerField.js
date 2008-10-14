@@ -36,12 +36,11 @@ YAHOO.lang.extend(inputEx.IntegerField, inputEx.StringField,
     * Validate  if is a number
     */
    validate: function() {
-      // empty field is OK
-      if (this.el.value == '') {
-         return true;
-      }
-      
       var v = this.getValue();
+      
+      // empty field is OK
+      if (v == "") return true;
+      
       if(isNaN(v)) return false;
       return !!this.el.value.match(/^[0-9]*$/);
    }
