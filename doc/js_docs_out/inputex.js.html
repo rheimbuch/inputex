@@ -39,9 +39,35 @@
  var lang = YAHOO.lang;
  
 /**
+ * Build a field from an object like: { type: 'color' or fieldClass: inputEx.ColorField, inputParams: {} }<br />
+ * The inputParams property is the object that will be passed as the <code>options</code> parameter to the field class constructor.<br />
+ * If the neither type or fieldClass are found, it uses inputEx.StringField
+ * @name inputEx
  * @namespace The inputEx global namespace object.
+ * @static
+ * @param {Object} fieldOptions
+ * @return {inputEx.Field} Created field instance
  */
-YAHOO.namespace("inputEx");
+YAHOO.inputEx = function(fieldOptions) {
+   var fieldClass = null;
+	if(fieldOptions.type) {
+	   fieldClass = YAHOO.inputEx.getFieldClass(fieldOptions.type);
+	   if(fieldClass === null) fieldClass = YAHOO.inputEx.StringField;
+	}
+	else {
+	   fieldClass = fieldOptions.fieldClass ? fieldOptions.fieldClass : inputEx.StringField;
+	}
+
+   // Instanciate the field
+   var inputInstance = new fieldClass(fieldOptions.inputParams);
+
+   // Add the flatten attribute if present in the params
+   if(fieldOptions.flatten) {
+      inputInstance._flatten = true;
+   }
+	  
+   return inputInstance;
+};
 
 /**
  * Test de documentation inputEx
@@ -54,7 +80,7 @@ lang.augmentObject(inputEx,
  */   
 {
    
-   VERSION: "0.2.0b",
+   VERSION: "0.2.0",
    
    /**
     * Url to the spacer image. This url schould be changed according to your project directories
@@ -92,7 +118,9 @@ lang.augmentObject(inputEx,
    messages: {
    	required: "This field is required",
    	invalid: "This field is invalid",
-   	valid: "This field is valid"
+   	valid: "This field is valid",
+   	defaultDateFormat: "m/d/Y",
+   	months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
    },
    
    /**
@@ -135,12 +163,10 @@ lang.augmentObject(inputEx,
     * Returns the class for the given type
     * ex: inputEx.getFieldClass("color") returns inputEx.ColorField
     * @static
+    * @param {String} type String type of the field
     */
    getFieldClass: function(type) {
-      if(lang.isFunction(this.typeClasses[type])) {
-         return this.typeClasses[type];
-      }
-      return null;
+      return lang.isFunction(this.typeClasses[type]) ? this.typeClasses[type] : null;
    },
    
    /**
@@ -161,32 +187,13 @@ lang.augmentObject(inputEx,
    },
    
    /**
-    * Build a field from an object like: { type: 'color' or fieldClass: inputEx.ColorField, inputParams: {} }<br />
-    * The inputParams property is the object that will be passed as the <code>options</code> parameter to the field class constructor.<br />
-    * If the neither type or fieldClass are found, it uses inputEx.StringField
-    * @static
+    * Kept for backward compatibility
+    * @alias inputEx
     * @param {Object} fieldOptions
     * @return {inputEx.Field} Created field instance
     */
-   buildField: function(fieldOptions) {
-      var fieldClass = null;
-   	if(fieldOptions.type) {
-   	   fieldClass = this.getFieldClass(fieldOptions.type);
-   	   if(fieldClass === null) fieldClass = inputEx.StringField;
-   	}
-   	else {
-   	   fieldClass = fieldOptions.fieldClass ? fieldOptions.fieldClass : inputEx.StringField;
-   	}
-
-      // Instanciate the field
-      var inputInstance = new fieldClass(fieldOptions.inputParams);
-      
-      // Add the flatten attribute if present in the params
-      if(fieldOptions.flatten) {
-         inputInstance._flatten = true;
-      }
-   	  
-      return inputInstance;
+   buildField: function(fieldOptions) {      
+      return inputEx(fieldOptions);
    },
    
    /**
@@ -205,9 +212,6 @@ lang.augmentObject(inputEx,
             if( lang.isFunction(domAttribute) ){
                continue;
             }
-            /*if(YAHOO.env.ua.ie && i=="type" && (el.tagName=="INPUT"||el.tagName=="SELECT") ){
-               continue;
-            }*/
             if(i=="className"){
                i="class";
                el.className=domAttribute;
@@ -296,11 +300,8 @@ lang.augmentObject(inputEx,
 })();
 
 
-/**
- * The main inputEx namespace
- */
+// The main inputEx namespace shortcut
 var inputEx = YAHOO.inputEx;
-// this previous line is just for documentation purposes. It should be removed from the production files
 </textarea>
 </form>
 					
@@ -357,7 +358,15 @@ var inputEx = YAHOO.inputEx;
 							
 								
 								<li>
+									<a href="inputEx.html">inputEx</a></li>
+							
+								
+								<li>
 									<a href="inputEx.AutoComplete.html">inputEx.AutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.BirthdateField.html">inputEx.BirthdateField</a></li>
 							
 								
 								<li>
@@ -382,6 +391,10 @@ var inputEx = YAHOO.inputEx;
 								
 								<li>
 									<a href="inputEx.DatePickerField.html">inputEx.DatePickerField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.DateSplitField.html">inputEx.DateSplitField</a></li>
 							
 								
 								<li>
@@ -414,10 +427,6 @@ var inputEx = YAHOO.inputEx;
 								
 								<li>
 									<a href="inputEx.HiddenField.html">inputEx.HiddenField</a></li>
-							
-								
-								<li>
-									<a href="inputEx.IconPickerField.html">inputEx.IconPickerField</a></li>
 							
 								
 								<li>
@@ -513,11 +522,19 @@ var inputEx = YAHOO.inputEx;
 							
 								
 								<li>
+									<a href="inputEx.widget.DataTable.html">inputEx.widget.DataTable</a></li>
+							
+								
+								<li>
 									<a href="inputEx.widget.DDList.html">inputEx.widget.DDList</a></li>
 							
 								
 								<li>
 									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
+							
+								
+								<li>
+									<a href="inputEx.widget.InputExCellEditor.html">inputEx.widget.InputExCellEditor</a></li>
 							
 								
 						</ul>
@@ -530,6 +547,10 @@ var inputEx = YAHOO.inputEx;
 								
 								<li>
 								<a href="AutoComplete.js.html">AutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="BirthdateField.js.html">BirthdateField.js</a></li>
 							
 								
 								<li>
@@ -549,11 +570,19 @@ var inputEx = YAHOO.inputEx;
 							
 								
 								<li>
+								<a href="DataTable-beta.js.html">DataTable-beta.js</a></li>
+							
+								
+								<li>
 								<a href="DateField.js.html">DateField.js</a></li>
 							
 								
 								<li>
 								<a href="DatePickerField.js.html">DatePickerField.js</a></li>
+							
+								
+								<li>
+								<a href="DateSplitField.js.html">DateSplitField.js</a></li>
 							
 								
 								<li>
@@ -593,15 +622,7 @@ var inputEx = YAHOO.inputEx;
 							
 								
 								<li>
-								<a href="GroupInteractions-beta.js.html">GroupInteractions-beta.js</a></li>
-							
-								
-								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
-							
-								
-								<li>
-								<a href="IconPickerField.js.html">IconPickerField.js</a></li>
 							
 								
 								<li>
@@ -714,7 +735,7 @@ var inputEx = YAHOO.inputEx;
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 16:05:40 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 15 Oct 2008 13:04:36 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

@@ -31,12 +31,11 @@
 </div>
 										
 <form>
-	<textarea name="code" class="JScript">﻿(function () {
-   
-var util = YAHOO.util, lang = YAHOO.lang, Event = YAHOO.util.Event, inputEx = YAHOO.inputEx;
+	<textarea name="code" class="JScript">(function () {
+   var util = YAHOO.util, lang = YAHOO.lang, Event = YAHOO.util.Event, inputEx = YAHOO.inputEx, Dom = util.Dom;
    
 /**
- * @class Create a group of fields within a FORM tag
+ * @class Create a group of fields within a FORM tag and adds buttons
  * @extends inputEx.Group
  * @constructor
  * @param {Object} options The following options are added for Forms:
@@ -94,7 +93,11 @@ lang.extend(inputEx.Form, inputEx.Group,
   	   
   	   this.renderFields(this.form);
 
-      this.renderButtons();	  
+      this.renderButtons();
+      
+      if(this.options.disabled) {
+  	      this.disable();
+  	   }	  
    },
    
    /**
@@ -102,7 +105,7 @@ lang.extend(inputEx.Form, inputEx.Group,
     */
    renderButtons: function() {
       
-      var buttonDiv = inputEx.cn('div', {className: 'inputEx-Form-buttonBar'});
+      this.buttonDiv = inputEx.cn('div', {className: 'inputEx-Form-buttonBar'});
 		
 	   var button, buttonEl;
 	   for(var i = 0 ; i < this.options.buttons.length ; i++ ) {
@@ -110,10 +113,10 @@ lang.extend(inputEx.Form, inputEx.Group,
 	      buttonEl = inputEx.cn('input', {type: button.type, value: button.value});
 	      if( button.onClick ) { buttonEl.onclick = button.onClick; }
 	      this.buttons.push(buttonEl);
-	      buttonDiv.appendChild(buttonEl);
+	      this.buttonDiv.appendChild(buttonEl);
 	   }	
 	   
-	   this.form.appendChild(buttonDiv);
+	   this.form.appendChild(this.buttonDiv);
    },
    
    
@@ -199,6 +202,27 @@ lang.extend(inputEx.Form, inputEx.Group,
     */
    hideMask: function() {
       this.formMask.style.display = 'none';
+   },
+   
+   
+   /**
+    * Enable all fields and buttons in the form
+    */
+   enable: function() {
+      inputEx.Form.superclass.enable.call(this);
+      for (var i = 0 ; i < this.buttons.length ; i++) {
+ 	      this.buttons[i].disabled = false;
+      }
+   },
+   
+   /**
+    * Disable all fields and buttons in the form
+    */
+   disable: function() {
+      inputEx.Form.superclass.disable.call(this);
+      for (var i = 0 ; i < this.buttons.length ; i++) {
+ 	      this.buttons[i].disabled = true;
+      }
    }
 
 });
@@ -210,8 +234,6 @@ inputEx.registerType("form", inputEx.Form);
 
 
 })();
-
-
 </textarea>
 </form>
 					
@@ -268,7 +290,15 @@ inputEx.registerType("form", inputEx.Form);
 							
 								
 								<li>
+									<a href="inputEx.html">inputEx</a></li>
+							
+								
+								<li>
 									<a href="inputEx.AutoComplete.html">inputEx.AutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.BirthdateField.html">inputEx.BirthdateField</a></li>
 							
 								
 								<li>
@@ -293,6 +323,10 @@ inputEx.registerType("form", inputEx.Form);
 								
 								<li>
 									<a href="inputEx.DatePickerField.html">inputEx.DatePickerField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.DateSplitField.html">inputEx.DateSplitField</a></li>
 							
 								
 								<li>
@@ -325,10 +359,6 @@ inputEx.registerType("form", inputEx.Form);
 								
 								<li>
 									<a href="inputEx.HiddenField.html">inputEx.HiddenField</a></li>
-							
-								
-								<li>
-									<a href="inputEx.IconPickerField.html">inputEx.IconPickerField</a></li>
 							
 								
 								<li>
@@ -424,11 +454,19 @@ inputEx.registerType("form", inputEx.Form);
 							
 								
 								<li>
+									<a href="inputEx.widget.DataTable.html">inputEx.widget.DataTable</a></li>
+							
+								
+								<li>
 									<a href="inputEx.widget.DDList.html">inputEx.widget.DDList</a></li>
 							
 								
 								<li>
 									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
+							
+								
+								<li>
+									<a href="inputEx.widget.InputExCellEditor.html">inputEx.widget.InputExCellEditor</a></li>
 							
 								
 						</ul>
@@ -441,6 +479,10 @@ inputEx.registerType("form", inputEx.Form);
 								
 								<li>
 								<a href="AutoComplete.js.html">AutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="BirthdateField.js.html">BirthdateField.js</a></li>
 							
 								
 								<li>
@@ -460,11 +502,19 @@ inputEx.registerType("form", inputEx.Form);
 							
 								
 								<li>
+								<a href="DataTable-beta.js.html">DataTable-beta.js</a></li>
+							
+								
+								<li>
 								<a href="DateField.js.html">DateField.js</a></li>
 							
 								
 								<li>
 								<a href="DatePickerField.js.html">DatePickerField.js</a></li>
+							
+								
+								<li>
+								<a href="DateSplitField.js.html">DateSplitField.js</a></li>
 							
 								
 								<li>
@@ -504,15 +554,7 @@ inputEx.registerType("form", inputEx.Form);
 							
 								
 								<li>
-								<a href="GroupInteractions-beta.js.html">GroupInteractions-beta.js</a></li>
-							
-								
-								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
-							
-								
-								<li>
-								<a href="IconPickerField.js.html">IconPickerField.js</a></li>
 							
 								
 								<li>
@@ -625,7 +667,7 @@ inputEx.registerType("form", inputEx.Form);
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 16:05:40 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 15 Oct 2008 13:04:36 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

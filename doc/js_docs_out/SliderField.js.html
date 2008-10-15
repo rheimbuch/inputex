@@ -41,7 +41,6 @@
  * @param {Object} options inputEx.Field options object
  */
 inputEx.SliderField = function(options) {
-   console.log("instanciating slider");
    inputEx.SliderField.superclass.constructor.call(this,options);
 };
 
@@ -66,31 +65,21 @@ YAHOO.lang.extend(inputEx.SliderField, inputEx.Field,
    /**
     * render a slider widget
     */
-   render: function() {
-      this.divEl = inputEx.cn('div', {className: this.options.className});
-      
+   renderComponent: function() {
+            
+      this.sliderbg = inputEx.cn('div', {id: YAHOO.util.Dom.generateId(), className: 'inputEx-SliderField-bg'});
+      this.sliderthumb = inputEx.cn('div', {className: 'inputEx-SliderField-thumb'} );      
+      this.sliderbg.appendChild(this.sliderthumb);
+      this.fieldContainer.appendChild(this.sliderbg);
       
       if(this.options.displayValue) {
-         this.valueDisplay = inputEx.cn('div', null, {display:'inline'}, String(this.options.minValue) );
-         this.divEl.appendChild(this.valueDisplay);
+         this.valueDisplay = inputEx.cn('div', {className: 'inputEx-SliderField-value'}, null, String(this.options.minValue) );
+         this.fieldContainer.appendChild(this.valueDisplay);
       }
       
-      if(!inputEx.SliderField.instanceNbr) { inputEx.SliderField.instanceNbr = 0;}
-      this.id = "inputEx-Slider-"+inputEx.SliderField.instanceNbr;
-      inputEx.SliderField.instanceNbr+=1;
+      this.fieldContainer.appendChild( inputEx.cn('div',null,{clear: 'both'}) );
             
-      this.sliderbg = inputEx.cn('div', {id: this.id, className: 'inputEx-SliderField-bg'});
-      this.sliderthumb = inputEx.cn('div', {className: 'inputEx-SliderField-thumb'} );
-      
-      // Set the size dynamically
-      YAHOO.util.Dom.setStyle(this.sliderbg,'width', (this.options.maxValue+12)+'px');
-            
-      this.sliderbg.appendChild(this.sliderthumb);
-      this.divEl.appendChild(this.sliderbg);
-            
-            
-      this.slider = YAHOO.widget.Slider.getHorizSlider(this.sliderbg, this.sliderthumb, this.options.minValue, this.options.maxValue);       
-      
+      this.slider = YAHOO.widget.Slider.getHorizSlider(this.sliderbg, this.sliderthumb, 0,100);
    },
    
    initEvents: function() {
@@ -110,6 +99,19 @@ YAHOO.lang.extend(inputEx.SliderField, inputEx.Field,
         
    setValue: function(val) {
       
+      var v = val;
+      if(v < this.options.minValue) {
+         v = this.options.minValue;
+      }
+      if(v > this.options.maxValue) {
+         v = this.options.maxValue;
+      }
+      
+      var percent = Math.floor(v-this.options.minValue)*100/this.options.maxValue;
+      
+      this.slider.setValue(percent);
+      
+      inputEx.SliderField.superclass.setValue.call(this, val);
    },
 
    /**
@@ -117,7 +119,8 @@ YAHOO.lang.extend(inputEx.SliderField, inputEx.Field,
     * @return {int} The integer value
     */
    getValue: function() {
-      return this.slider.getValue();
+      var val = Math.floor(this.options.minValue+(this.options.maxValue-this.options.minValue)*this.slider.getValue()/100);
+      return val;
    }
     
 });
@@ -184,7 +187,15 @@ inputEx.registerType("slider", inputEx.SliderField);
 							
 								
 								<li>
+									<a href="inputEx.html">inputEx</a></li>
+							
+								
+								<li>
 									<a href="inputEx.AutoComplete.html">inputEx.AutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.BirthdateField.html">inputEx.BirthdateField</a></li>
 							
 								
 								<li>
@@ -209,6 +220,10 @@ inputEx.registerType("slider", inputEx.SliderField);
 								
 								<li>
 									<a href="inputEx.DatePickerField.html">inputEx.DatePickerField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.DateSplitField.html">inputEx.DateSplitField</a></li>
 							
 								
 								<li>
@@ -241,10 +256,6 @@ inputEx.registerType("slider", inputEx.SliderField);
 								
 								<li>
 									<a href="inputEx.HiddenField.html">inputEx.HiddenField</a></li>
-							
-								
-								<li>
-									<a href="inputEx.IconPickerField.html">inputEx.IconPickerField</a></li>
 							
 								
 								<li>
@@ -340,11 +351,19 @@ inputEx.registerType("slider", inputEx.SliderField);
 							
 								
 								<li>
+									<a href="inputEx.widget.DataTable.html">inputEx.widget.DataTable</a></li>
+							
+								
+								<li>
 									<a href="inputEx.widget.DDList.html">inputEx.widget.DDList</a></li>
 							
 								
 								<li>
 									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
+							
+								
+								<li>
+									<a href="inputEx.widget.InputExCellEditor.html">inputEx.widget.InputExCellEditor</a></li>
 							
 								
 						</ul>
@@ -357,6 +376,10 @@ inputEx.registerType("slider", inputEx.SliderField);
 								
 								<li>
 								<a href="AutoComplete.js.html">AutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="BirthdateField.js.html">BirthdateField.js</a></li>
 							
 								
 								<li>
@@ -376,11 +399,19 @@ inputEx.registerType("slider", inputEx.SliderField);
 							
 								
 								<li>
+								<a href="DataTable-beta.js.html">DataTable-beta.js</a></li>
+							
+								
+								<li>
 								<a href="DateField.js.html">DateField.js</a></li>
 							
 								
 								<li>
 								<a href="DatePickerField.js.html">DatePickerField.js</a></li>
+							
+								
+								<li>
+								<a href="DateSplitField.js.html">DateSplitField.js</a></li>
 							
 								
 								<li>
@@ -420,15 +451,7 @@ inputEx.registerType("slider", inputEx.SliderField);
 							
 								
 								<li>
-								<a href="GroupInteractions-beta.js.html">GroupInteractions-beta.js</a></li>
-							
-								
-								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
-							
-								
-								<li>
-								<a href="IconPickerField.js.html">IconPickerField.js</a></li>
 							
 								
 								<li>
@@ -541,7 +564,7 @@ inputEx.registerType("slider", inputEx.SliderField);
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 16:05:40 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 15 Oct 2008 13:04:36 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

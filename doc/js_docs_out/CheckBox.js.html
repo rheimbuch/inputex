@@ -73,13 +73,12 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 	 */
 	renderComponent: function() {
 	
-	   this.el = inputEx.cn('input', {
-	        type: 'checkbox', 
-	        checked:(this.options.checked === false) ? false : true 
-	   });
+   	var checkBoxId = Dom.generateId();
+   	
+	   this.el = inputEx.cn('input', { id: checkBoxId, type: 'checkbox', checked:(this.options.checked === false) ? false : true });
 	   this.fieldContainer.appendChild(this.el);
 	
-	   this.rightLabelEl = inputEx.cn('div', {className: 'inputEx-CheckBox-rightLabel'}, null, this.options.rightLabel || '');
+	   this.rightLabelEl = inputEx.cn('label', {"for": checkBoxId, className: 'inputEx-CheckBox-rightLabel'}, null, this.options.rightLabel || '');
 	   this.fieldContainer.appendChild(this.rightLabelEl);
 	
 	   // Keep state of checkbox in a hidden field (format : this.checkedValue or this.uncheckedValue)
@@ -95,8 +94,11 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 	   
 	   // Awful Hack to work in IE6 and below (the checkbox doesn't fire the change event)
 	   // It seems IE 8 removed this behavior from IE7 so it only works with IE 7 ??
-	   if( YAHOO.env.ua.ie && parseInt(YAHOO.env.ua.ie,10) != 7 ) {
+	   /*if( YAHOO.env.ua.ie && parseInt(YAHOO.env.ua.ie,10) != 7 ) {
 	      Event.addListener(this.el, "click", function() { this.fireUpdatedEvt(); }, this, true);	
+	   }*/
+	   if( YAHOO.env.ua.ie ) {
+	      Event.addListener(this.el, "click", function() { YAHOO.lang.later(10,this,this.fireUpdatedEvt); }, this, true);	
 	   }
 	   
 	   Event.addListener(this.el, "focus", this.onFocus, this, true);
@@ -109,8 +111,11 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 	 */
 	onChange: function(e) {
 	   this.hiddenEl.value = this.el.checked ? this.checkedValue : this.uncheckedValue;
-	   
-	   inputEx.CheckBox.superclass.onChange.call(this,e);
+	
+      // In IE the fireUpdatedEvent is sent by the click ! We need to send it only once ! 
+      if( !YAHOO.env.ua.ie ) {
+	      inputEx.CheckBox.superclass.onChange.call(this,e);
+      }
 	},
 	
 	/**
@@ -130,13 +135,17 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 			this.hiddenEl.value = value;
 			this.el.checked = true;
 		}
-	   else if (value===this.uncheckedValue) {
+	   else {
+	      // DEBUG :
+	      if (value!==this.uncheckedValue && lang.isObject(console) && lang.isFunction(console.log) ) {
+	         console.log("inputEx.CheckBox: value is *"+value+"*, schould be in ["+this.checkedValue+","+this.uncheckedValue+"]");
+         }
 			this.hiddenEl.value = value;
 			this.el.checked = false;
 		}
-		else {
-		   throw new Error("inputEx.CheckBox.setValue: "+value+" schould be in ["+this.checkedValue+","+this.uncheckedValue+"]");
-		}
+		
+		// Call Field.setValue to set class and fire updated event
+		inputEx.CheckBox.superclass.setValue.call(this,value);
 	}
 	
 });   
@@ -202,7 +211,15 @@ inputEx.registerType("boolean", inputEx.CheckBox);
 							
 								
 								<li>
+									<a href="inputEx.html">inputEx</a></li>
+							
+								
+								<li>
 									<a href="inputEx.AutoComplete.html">inputEx.AutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.BirthdateField.html">inputEx.BirthdateField</a></li>
 							
 								
 								<li>
@@ -227,6 +244,10 @@ inputEx.registerType("boolean", inputEx.CheckBox);
 								
 								<li>
 									<a href="inputEx.DatePickerField.html">inputEx.DatePickerField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.DateSplitField.html">inputEx.DateSplitField</a></li>
 							
 								
 								<li>
@@ -259,10 +280,6 @@ inputEx.registerType("boolean", inputEx.CheckBox);
 								
 								<li>
 									<a href="inputEx.HiddenField.html">inputEx.HiddenField</a></li>
-							
-								
-								<li>
-									<a href="inputEx.IconPickerField.html">inputEx.IconPickerField</a></li>
 							
 								
 								<li>
@@ -358,11 +375,19 @@ inputEx.registerType("boolean", inputEx.CheckBox);
 							
 								
 								<li>
+									<a href="inputEx.widget.DataTable.html">inputEx.widget.DataTable</a></li>
+							
+								
+								<li>
 									<a href="inputEx.widget.DDList.html">inputEx.widget.DDList</a></li>
 							
 								
 								<li>
 									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
+							
+								
+								<li>
+									<a href="inputEx.widget.InputExCellEditor.html">inputEx.widget.InputExCellEditor</a></li>
 							
 								
 						</ul>
@@ -375,6 +400,10 @@ inputEx.registerType("boolean", inputEx.CheckBox);
 								
 								<li>
 								<a href="AutoComplete.js.html">AutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="BirthdateField.js.html">BirthdateField.js</a></li>
 							
 								<li class="selected">
 								
@@ -394,11 +423,19 @@ inputEx.registerType("boolean", inputEx.CheckBox);
 							
 								
 								<li>
+								<a href="DataTable-beta.js.html">DataTable-beta.js</a></li>
+							
+								
+								<li>
 								<a href="DateField.js.html">DateField.js</a></li>
 							
 								
 								<li>
 								<a href="DatePickerField.js.html">DatePickerField.js</a></li>
+							
+								
+								<li>
+								<a href="DateSplitField.js.html">DateSplitField.js</a></li>
 							
 								
 								<li>
@@ -438,15 +475,7 @@ inputEx.registerType("boolean", inputEx.CheckBox);
 							
 								
 								<li>
-								<a href="GroupInteractions-beta.js.html">GroupInteractions-beta.js</a></li>
-							
-								
-								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
-							
-								
-								<li>
-								<a href="IconPickerField.js.html">IconPickerField.js</a></li>
 							
 								
 								<li>
@@ -559,7 +588,7 @@ inputEx.registerType("boolean", inputEx.CheckBox);
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 16:05:40 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 15 Oct 2008 13:04:34 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

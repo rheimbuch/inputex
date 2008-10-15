@@ -59,11 +59,6 @@ inputEx.Field = function(options) {
 	// Call the render of the dom
 	this.render();
 	
-	// Set the initial value
-	if(!lang.isUndefined(this.options.value)) {
-		this.setValue(this.options.value);
-	}
-	
 	/**
 	 * @event
 	 * @param {Any} value The new value of the field
@@ -74,7 +69,12 @@ inputEx.Field = function(options) {
 	// initialize behaviour events
 	this.initEvents();
 	
-	// set the default styling
+	// Set the initial value
+	if(!lang.isUndefined(this.options.value)) {
+		this.setValue(this.options.value);
+	}
+	
+	// set default styling
 	this.setClassFromState();
 	
 	// append it immediatly to the parent DOM element
@@ -125,7 +125,7 @@ inputEx.Field.prototype = {
 	   }
 	   
 	   // Label element
-	   if(this.options.label && this.options.label != "") {
+	   if(this.options.label) {
 	      this.labelDiv = inputEx.cn('div', {className: 'inputEx-label'});
 	      this.labelEl = inputEx.cn('label');
 	      this.labelEl.appendChild( document.createTextNode(this.options.label) );
@@ -139,7 +139,7 @@ inputEx.Field.prototype = {
       this.renderComponent();
       
       // Description
-      if(this.options.description && this.options.description != "") {
+      if(this.options.description) {
          this.fieldContainer.appendChild(inputEx.cn('div', {className: 'inputEx-description'}, null, this.options.description));
       }
       
@@ -155,13 +155,13 @@ inputEx.Field.prototype = {
 	 * Escape the stack using a setTimeout
 	 */
 	fireUpdatedEvt: function() {
-      if(this.validate()) {
+      //if(this.validate()) {
          // Uses setTimeout to escape the stack (that originiated in an event)
          var that = this;
          setTimeout(function() {
       	   that.updatedEvt.fire(that.getValue(), that);
          },50);
-      }
+      //}
 	},
 
    /**
@@ -199,7 +199,12 @@ inputEx.Field.prototype = {
     * @param {Any} value The new value
     */
 	setValue: function(value) {
-	   // override me
+	   // to be inherited
+	   
+	   // set corresponding style
+	   this.setClassFromState();
+	   // fire update event
+      this.fireUpdatedEvt();
 	},
 
    /**
@@ -208,10 +213,12 @@ inputEx.Field.prototype = {
 	setClassFromState: function() {
 	
 	   if( this.previousState ) {
-		   Dom.removeClass(this.getEl(), 'inputEx-'+this.previousState );
+		   Dom.removeClass(this.divEl, 'inputEx-'+this.previousState );
 	   }
 	   var state = this.getState();
-	   Dom.addClass(this.getEl(), 'inputEx-'+state );
+	   if( !(state == "empty" && Dom.hasClass(this.divEl, 'inputEx-focused') ) ) {
+	      Dom.addClass(this.divEl, 'inputEx-'+state );
+      }
 	
 	   if(this.options.showMsg) {
 	      this.displayMessage( this.getStateString(state) );
@@ -241,7 +248,7 @@ inputEx.Field.prototype = {
     */
 	getState: function() { 
 	   // if the field is empty :
-	   if( this.getValue() === '' ) {
+	   if( this.isEmpty() ) {
 	      return this.options.required ? inputEx.stateRequired : inputEx.stateEmpty;
 	   }
 	   return this.validate() ? inputEx.stateValid : inputEx.stateInvalid;
@@ -325,7 +332,8 @@ inputEx.Field.prototype = {
    },
    
    /**
-    * Display a message 
+    * Update the message 
+    * @param {String} msg Message to display
     */
    displayMessage: function(msg) {
       if(!this.fieldContainer) { return; }
@@ -348,8 +356,22 @@ inputEx.Field.prototype = {
     */
    hide: function() {
       this.divEl.style.display = 'none';
+   },
+   
+   /**
+    * Clear the field by setting the field value to this.options.value
+    */
+   clear: function() {
+      this.setValue(this.options.value || '');
+   },
+   
+   /**
+    * Should return true if empty
+    */
+   isEmpty: function() {
+      return this.getValue() === '';
    }
-
+   
 };
 
 })();</textarea>
@@ -408,7 +430,15 @@ inputEx.Field.prototype = {
 							
 								
 								<li>
+									<a href="inputEx.html">inputEx</a></li>
+							
+								
+								<li>
 									<a href="inputEx.AutoComplete.html">inputEx.AutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.BirthdateField.html">inputEx.BirthdateField</a></li>
 							
 								
 								<li>
@@ -433,6 +463,10 @@ inputEx.Field.prototype = {
 								
 								<li>
 									<a href="inputEx.DatePickerField.html">inputEx.DatePickerField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.DateSplitField.html">inputEx.DateSplitField</a></li>
 							
 								
 								<li>
@@ -465,10 +499,6 @@ inputEx.Field.prototype = {
 								
 								<li>
 									<a href="inputEx.HiddenField.html">inputEx.HiddenField</a></li>
-							
-								
-								<li>
-									<a href="inputEx.IconPickerField.html">inputEx.IconPickerField</a></li>
 							
 								
 								<li>
@@ -564,11 +594,19 @@ inputEx.Field.prototype = {
 							
 								
 								<li>
+									<a href="inputEx.widget.DataTable.html">inputEx.widget.DataTable</a></li>
+							
+								
+								<li>
 									<a href="inputEx.widget.DDList.html">inputEx.widget.DDList</a></li>
 							
 								
 								<li>
 									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
+							
+								
+								<li>
+									<a href="inputEx.widget.InputExCellEditor.html">inputEx.widget.InputExCellEditor</a></li>
 							
 								
 						</ul>
@@ -581,6 +619,10 @@ inputEx.Field.prototype = {
 								
 								<li>
 								<a href="AutoComplete.js.html">AutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="BirthdateField.js.html">BirthdateField.js</a></li>
 							
 								
 								<li>
@@ -600,11 +642,19 @@ inputEx.Field.prototype = {
 							
 								
 								<li>
+								<a href="DataTable-beta.js.html">DataTable-beta.js</a></li>
+							
+								
+								<li>
 								<a href="DateField.js.html">DateField.js</a></li>
 							
 								
 								<li>
 								<a href="DatePickerField.js.html">DatePickerField.js</a></li>
+							
+								
+								<li>
+								<a href="DateSplitField.js.html">DateSplitField.js</a></li>
 							
 								
 								<li>
@@ -644,15 +694,7 @@ inputEx.Field.prototype = {
 							
 								
 								<li>
-								<a href="GroupInteractions-beta.js.html">GroupInteractions-beta.js</a></li>
-							
-								
-								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
-							
-								
-								<li>
-								<a href="IconPickerField.js.html">IconPickerField.js</a></li>
 							
 								
 								<li>
@@ -765,7 +807,7 @@ inputEx.Field.prototype = {
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 16:05:40 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 15 Oct 2008 13:04:36 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

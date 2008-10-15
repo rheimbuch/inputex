@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>inputEx Documentation - IconPickerField.js</title>
+<title>inputEx Documentation - BirthdateField.js</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="JsDoc Toolkit 2.0.0" />
 <link href="css/reset-fonts-grids.css" type="text/css" rel="stylesheet" media="all" /> 
@@ -18,7 +18,7 @@
 			
 			
 			<h3>
-				<a href="./index.html">inputEx Documentation</a> &gt; IconPickerField.js
+				<a href="./index.html">inputEx Documentation</a> &gt; BirthdateField.js
 				<span class="subtitle">0.2.0</span>
 			</h3>
 		
@@ -27,69 +27,101 @@
 			<div id="yui-main">
 				<div class="yui-b">
 <div class="summary description">
-	<p>This is the source view for IconPickerField.js</p>
+	<p>This is the source view for BirthdateField.js</p>
 </div>
 										
 <form>
 	<textarea name="code" class="JScript">(function() {
 
-   var inputEx = YAHOO.inputEx;
+   var inputEx = YAHOO.inputEx, lang = YAHOO.lang;
 
 /**
- * @class Abstract class menu button field
- * @extends inputEx.Field
- * @constructor
- * @param {Object} options Added options:
- * <ul>
- * </ul>
+ * @class inputEx.BirthdateField
+ * @extends inputEx.CombineField
  */
-inputEx.IconPickerField = function(options) {
-	inputEx.IconPickerField.superclass.constructor.call(this,options);
-};
-YAHOO.lang.extend(inputEx.IconPickerField, inputEx.Field, 
-/**
- * @scope inputEx.IconPickerField.prototype   
- */   
-{
+inputEx.BirthdateField = function(options) {
+   	
+   if(!options.dateFormat) {options.dateFormat = inputEx.messages.defaultDateFormat; }
    
-   setOptions: function() {
-      this.options.className = this.options.className || 'inputEx-Field inputEx-ColorPicker'
-      inputEx.IconPickerField.superclass.setOptions.call(this);
+   var formatSplit = options.dateFormat.split("/");
+   this.yearIndex = inputEx.indexOf('Y',formatSplit);
+   this.monthIndex = inputEx.indexOf('m',formatSplit);
+   this.dayIndex = inputEx.indexOf('d',formatSplit);
+   
+   options.fields = [];
+   for(var i = 0 ; i < 3 ; i++) {
+      if(i == this.dayIndex) {
+         options.fields.push({type: 'string', inputParams: { typeInvite: inputEx.messages.dayTypeInvite, size: 2} });
+      }
+      else if(i == this.yearIndex) {
+         options.fields.push({type: 'string', inputParams: { typeInvite: inputEx.messages.yearTypeInvite, size: 4} });
+      }
+      else {
+         options.fields.push({type: 'select', inputParams: {selectOptions: ([inputEx.messages.selectMonth]).concat(inputEx.messages.months), selectValues: [-1,0,1,2,3,4,5,6,7,8,9,10,11], value: -1} });
+      }
+   }
+
+   options.separators = options.separators || [false,"&nbsp;","&nbsp;",false];
+   
+	inputEx.BirthdateField.superclass.constructor.call(this,options);
+};
+lang.extend(inputEx.BirthdateField, inputEx.CombineField, {
+   
+   setValue: function(value) {
+      
+      var values = [];
+      
+      // !value catches "" (empty field), and invalid dates
+      if(!value || !lang.isFunction(value.getTime) || !lang.isNumber(value.getTime()) ) {
+         values[this.monthIndex] = -1;
+         values[this.yearIndex] = "";
+         values[this.dayIndex] = "";
+      } else {
+         for(var i = 0 ; i < 3 ; i++) {
+            values.push( i == this.dayIndex ? value.getDate() : (i==this.yearIndex ? value.getFullYear() : value.getMonth() ) );
+         }
+      }
+      inputEx.BirthdateField.superclass.setValue.call(this, values);
    },
    
-   /**
-    * Build a select tag with options
-    */
-   renderComponent: function() {
+   getValue: function() {
+      if (this.isEmpty()) return "";
       
-      // Creation de l'overlay
-      this.oOverlay = new YAHOO.widget.Overlay(YAHOO.util.Dom.generateId(), { visible: false });
-      var containerId = YAHOO.util.Dom.generateId();
-      this.oOverlay.setBody("<div id='"+containerId+"'></div>");
-        
-      YAHOO.util.Event.onAvailable(containerId, function() {
-         /*var grid = inputEx.cn('div');
-         this.colors = ["FFEA99","FFFF66","FFCC99","FFCAB2","FF99AD","FFD6FF","FF6666","E8EEF7","ADC2FF","ADADFF","CCFFFF","D6EAAD","B5EDBC","CCFF99"];
-         
-     	   for(var i = 0 ; i < this.colors.length ; i++) {
-     	      var square = inputEx.cn('div', {className: 'inputEx-ColorField-square'},{backgroundColor: '#'+this.colors[i] });
-     	   	//YAHOO.util.Event.addListener(square, "mousedown", this.onColorClick, this, true );
-     	   	grid.appendChild(square);
-         }     
-         this.appendChild(grid);*/
-         
-         //YAHOO.util.Dom.addClass(this,'inputEx-ColorPicker-overlay');
-      });
+      var values = inputEx.BirthdateField.superclass.getValue.call(this);
       
+      // if selected month index is -1, new Date(..) would create a valid date with month == December !!!)
+      if (values[this.monthIndex] == -1) {
+         return new Date(NaN,NaN,NaN); // "Invalid Date" 
+      }
       
-      this.button = new YAHOO.widget.Button({ type: "menu", menu: this.oOverlay });
-      this.button._button.innerHTML = "<div style='width: 20px; background-color: red; margin-bottom: 2px;'>&nbsp;</div>";
+      return new Date(parseInt(values[this.yearIndex],10), values[this.monthIndex], parseInt(values[this.dayIndex],10) );
+   },
+   
+   validate: function() {
+      var values = inputEx.BirthdateField.superclass.getValue.call(this);
+      var val = this.getValue();
       
-      this.button.appendTo(this.fieldContainer);
-      this.oOverlay.render(this.fieldContainer);
-   }
+      // val == "" -> true
+      // val == any date -> true
+      // val == "Invalid Date" -> false
+      return (val != "Invalid Date");
+   },
+   
+	isEmpty: function() {
+	   var values = inputEx.BirthdateField.superclass.getValue.call(this);
+	   return (values[this.monthIndex] == -1 && values[this.yearIndex] == "" &&  values[this.dayIndex] == "");
+	}
    
 });
+
+inputEx.messages.selectMonth = "- Select Month -";
+inputEx.messages.dayTypeInvite = "Day";
+inputEx.messages.yearTypeInvite = "Year";
+
+/**
+* Register this class as "birthdate" type
+*/
+inputEx.registerType("birthdate", inputEx.BirthdateField);
 
 })();</textarea>
 </form>
@@ -147,7 +179,15 @@ YAHOO.lang.extend(inputEx.IconPickerField, inputEx.Field,
 							
 								
 								<li>
+									<a href="inputEx.html">inputEx</a></li>
+							
+								
+								<li>
 									<a href="inputEx.AutoComplete.html">inputEx.AutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.BirthdateField.html">inputEx.BirthdateField</a></li>
 							
 								
 								<li>
@@ -172,6 +212,10 @@ YAHOO.lang.extend(inputEx.IconPickerField, inputEx.Field,
 								
 								<li>
 									<a href="inputEx.DatePickerField.html">inputEx.DatePickerField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.DateSplitField.html">inputEx.DateSplitField</a></li>
 							
 								
 								<li>
@@ -204,10 +248,6 @@ YAHOO.lang.extend(inputEx.IconPickerField, inputEx.Field,
 								
 								<li>
 									<a href="inputEx.HiddenField.html">inputEx.HiddenField</a></li>
-							
-								
-								<li>
-									<a href="inputEx.IconPickerField.html">inputEx.IconPickerField</a></li>
 							
 								
 								<li>
@@ -303,11 +343,19 @@ YAHOO.lang.extend(inputEx.IconPickerField, inputEx.Field,
 							
 								
 								<li>
+									<a href="inputEx.widget.DataTable.html">inputEx.widget.DataTable</a></li>
+							
+								
+								<li>
 									<a href="inputEx.widget.DDList.html">inputEx.widget.DDList</a></li>
 							
 								
 								<li>
 									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
+							
+								
+								<li>
+									<a href="inputEx.widget.InputExCellEditor.html">inputEx.widget.InputExCellEditor</a></li>
 							
 								
 						</ul>
@@ -320,6 +368,10 @@ YAHOO.lang.extend(inputEx.IconPickerField, inputEx.Field,
 								
 								<li>
 								<a href="AutoComplete.js.html">AutoComplete.js</a></li>
+							
+								<li class="selected">
+								
+								<a href="BirthdateField.js.html">BirthdateField.js</a></li>
 							
 								
 								<li>
@@ -339,11 +391,19 @@ YAHOO.lang.extend(inputEx.IconPickerField, inputEx.Field,
 							
 								
 								<li>
+								<a href="DataTable-beta.js.html">DataTable-beta.js</a></li>
+							
+								
+								<li>
 								<a href="DateField.js.html">DateField.js</a></li>
 							
 								
 								<li>
 								<a href="DatePickerField.js.html">DatePickerField.js</a></li>
+							
+								
+								<li>
+								<a href="DateSplitField.js.html">DateSplitField.js</a></li>
 							
 								
 								<li>
@@ -383,15 +443,7 @@ YAHOO.lang.extend(inputEx.IconPickerField, inputEx.Field,
 							
 								
 								<li>
-								<a href="GroupInteractions-beta.js.html">GroupInteractions-beta.js</a></li>
-							
-								
-								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
-							
-								<li class="selected">
-								
-								<a href="IconPickerField.js.html">IconPickerField.js</a></li>
 							
 								
 								<li>
@@ -504,7 +556,7 @@ YAHOO.lang.extend(inputEx.IconPickerField, inputEx.Field,
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 16:05:40 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 15 Oct 2008 13:04:34 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

@@ -29,12 +29,9 @@
 
 <!-- Class -->
 <h2>
-	Class <b>inputEx</b>
+	Static Class <b>inputEx</b>
 	
 </h2>
-
-<!-- Known subsclasses-->
-
 
 <!--
 
@@ -42,7 +39,13 @@
 -->
 <!-- class description -->
 <div class="summary description">The inputEx global namespace object.
-</div>
+Build a field from an object like: { type: 'color' or fieldClass: inputEx.ColorField, inputParams: {} }<br />
+The inputParams property is the object that will be passed as the <code>options</code> parameter to the field class constructor.<br />
+If the neither type or fieldClass are found, it uses inputEx.StringField</div>
+
+
+<!-- Known subsclasses -->
+
 
 <!--
 
@@ -63,6 +66,41 @@
 <div class="section field details">
 	<h3 id="properties">Properties</h3>
 	<div class="content">
+		
+			<div>
+				
+				<h4>
+					
+					<i>static</i>&nbsp;
+					<a name="JsonSchema">JsonSchema</a> 
+					<code>- Object</code>
+					
+				</h4>
+				
+				<div class="detail">
+					<div class="description">
+						WARNING: the json-schema methods are EXPERIMENTAL.
+
+Conversion between inputEx json format and JSON Schema
+based on "Json Schema Proposal Second Draft":
+http://groups.google.com/group/json-schema/web/json-schema-proposal---second-draft
+
+The proposal is still under discussion and the implementation is very minimalist.
+
+
+TODO:
+   - we should provide a lot of json schema examples and instances that should/should not validate
+   - use the $ref (async calls => provide callbacks to methods)
+
+Limitations:
+   - ??? Please do not trust inputEx: the getValue may return a value which do NOT validate the schema (provide an example ?)
+   - no tuple typing for arrays
+   - no "Union type definition"
+						
+					</div>
+				</div>
+			</div>
+			<hr>
 		
 			<div>
 				
@@ -282,9 +320,7 @@ Please register the types with the <code>registerType</code> method
 				
 				<div class="description">
 					
-					Build a field from an object like: { type: 'color' or fieldClass: inputEx.ColorField, inputParams: {} }<br />
-The inputParams property is the object that will be passed as the <code>options</code> parameter to the field class constructor.<br />
-If the neither type or fieldClass are found, it uses inputEx.StringField
+					Kept for backward compatibility
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -454,8 +490,8 @@ ex: inputEx.getFieldClass("color") returns inputEx.ColorField
 				<div class="description">
 				<b>Parameters:</b>
 					<ul>
-						<code>type</code>
-						 
+						<code>type&nbsp;<i>&lt;String&gt;</i>&nbsp;</code>
+						 - String type of the field 
 					</ul>
 					
 				</div>
@@ -509,50 +545,6 @@ ex: inputEx.getFieldClass("color") returns inputEx.ColorField
 						</ul>
 					
 					</div>
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-			<div>
-				<h4><a name="method_importJsonSchema">importJsonSchema</a></h4>
-			
-				<div class="detail">
-					<code><i>static</i>&nbsp;<b>importJsonSchema</b>(jsonSchema,groupName)</code> 
-				</div>
-				
-				<div class="description">
-					
-					Convert a json schema to a inputEx group object config
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<div class="description">
-				<b>Parameters:</b>
-					<ul>
-						<code>jsonSchema&nbsp;<i>&lt;Object&gt;</i>&nbsp;</code>
-						 - The evaled JSON schema 
-					</ul>
-					
-					<ul>
-						<code>groupName&nbsp;<i>&lt;String&gt;</i>&nbsp;</code>
-						 - optional, used for the "object" json schema type 
-					</ul>
-					
-				</div>
-				
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
 				
 				
 					
@@ -853,6 +845,10 @@ ex:   inputEx.registerType("color", inputEx.ColorField);
 							
 								
 								<li>
+									<a href="inputEx.BirthdateField.html">inputEx.BirthdateField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.CheckBox.html">inputEx.CheckBox</a></li>
 							
 								
@@ -861,11 +857,23 @@ ex:   inputEx.registerType("color", inputEx.ColorField);
 							
 								
 								<li>
+									<a href="inputEx.ColorField2.html">inputEx.ColorField2</a></li>
+							
+								
+								<li>
+									<a href="inputEx.CombineField.html">inputEx.CombineField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.DateField.html">inputEx.DateField</a></li>
 							
 								
 								<li>
 									<a href="inputEx.DatePickerField.html">inputEx.DatePickerField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.DateSplitField.html">inputEx.DateSplitField</a></li>
 							
 								
 								<li>
@@ -901,6 +909,10 @@ ex:   inputEx.registerType("color", inputEx.ColorField);
 							
 								
 								<li>
+									<a href="inputEx.ImagemapField.html">inputEx.ImagemapField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.InPlaceEdit.html">inputEx.InPlaceEdit</a></li>
 							
 								
@@ -917,6 +929,14 @@ ex:   inputEx.registerType("color", inputEx.ColorField);
 							
 								
 								<li>
+									<a href="inputEx.MultiAutoComplete.html">inputEx.MultiAutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.MultiSelectField.html">inputEx.MultiSelectField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.NumberField.html">inputEx.NumberField</a></li>
 							
 								
@@ -926,6 +946,10 @@ ex:   inputEx.registerType("color", inputEx.ColorField);
 								
 								<li>
 									<a href="inputEx.PasswordField.html">inputEx.PasswordField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.RadioField.html">inputEx.RadioField</a></li>
 							
 								
 								<li>
@@ -977,11 +1001,19 @@ ex:   inputEx.registerType("color", inputEx.ColorField);
 							
 								
 								<li>
-									<a href="inputEx.widget.calendar.html">inputEx.widget.calendar</a></li>
+									<a href="inputEx.widget.DataTable.html">inputEx.widget.DataTable</a></li>
 							
 								
 								<li>
-									<a href="inputEx.widget.DateEx.html">inputEx.widget.DateEx</a></li>
+									<a href="inputEx.widget.DDList.html">inputEx.widget.DDList</a></li>
+							
+								
+								<li>
+									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
+							
+								
+								<li>
+									<a href="inputEx.widget.InputExCellEditor.html">inputEx.widget.InputExCellEditor</a></li>
 							
 								
 						</ul>
@@ -997,7 +1029,7 @@ ex:   inputEx.registerType("color", inputEx.ColorField);
 							
 								
 								<li>
-								<a href="calendar.js.html">calendar.js</a></li>
+								<a href="BirthdateField.js.html">BirthdateField.js</a></li>
 							
 								
 								<li>
@@ -1009,6 +1041,18 @@ ex:   inputEx.registerType("color", inputEx.ColorField);
 							
 								
 								<li>
+								<a href="ColorField2.js.html">ColorField2.js</a></li>
+							
+								
+								<li>
+								<a href="CombineField.js.html">CombineField.js</a></li>
+							
+								
+								<li>
+								<a href="DataTable-beta.js.html">DataTable-beta.js</a></li>
+							
+								
+								<li>
 								<a href="DateField.js.html">DateField.js</a></li>
 							
 								
@@ -1017,7 +1061,15 @@ ex:   inputEx.registerType("color", inputEx.ColorField);
 							
 								
 								<li>
+								<a href="DateSplitField.js.html">DateSplitField.js</a></li>
+							
+								
+								<li>
 								<a href="DateTimeField.js.html">DateTimeField.js</a></li>
+							
+								
+								<li>
+								<a href="ddlist.js.html">ddlist.js</a></li>
 							
 								
 								<li>
@@ -1033,7 +1085,7 @@ ex:   inputEx.registerType("color", inputEx.ColorField);
 							
 								
 								<li>
-								<a href="fr_messages.js.html">fr_messages.js</a></li>
+								<a href="fr.js.html">fr.js</a></li>
 							
 								
 								<li>
@@ -1050,6 +1102,10 @@ ex:   inputEx.registerType("color", inputEx.ColorField);
 								
 								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
+							
+								
+								<li>
+								<a href="ImagemapField.js.html">ImagemapField.js</a></li>
 							
 								
 								<li>
@@ -1077,6 +1133,14 @@ ex:   inputEx.registerType("color", inputEx.ColorField);
 							
 								
 								<li>
+								<a href="MultiAutoComplete.js.html">MultiAutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="MultiSelectField.js.html">MultiSelectField.js</a></li>
+							
+								
+								<li>
 								<a href="NumberField.js.html">NumberField.js</a></li>
 							
 								
@@ -1086,6 +1150,10 @@ ex:   inputEx.registerType("color", inputEx.ColorField);
 								
 								<li>
 								<a href="PasswordField.js.html">PasswordField.js</a></li>
+							
+								
+								<li>
+								<a href="RadioField.js.html">RadioField.js</a></li>
 							
 								
 								<li>
@@ -1146,7 +1214,7 @@ ex:   inputEx.registerType("color", inputEx.ColorField);
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 04 Jun 2008 16:22:19 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 15 Oct 2008 13:04:36 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

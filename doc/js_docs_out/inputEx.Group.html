@@ -33,7 +33,15 @@
 	<span class="extends"> - extends <a href="inputEx.Field.html">inputEx.Field</a></span><br/>
 </h2>
 
-<!-- Known subsclasses-->
+<!--
+
+
+-->
+<!-- class description -->
+<div class="summary description">Handle a group of fields</div>
+
+
+<!-- Known subsclasses -->
 
 	<dl class="subclasses">
 		<dt>Known Subclasses:</dt>
@@ -44,13 +52,6 @@
 		</dd>
 	</dl>
 
-
-<!--
-
-
--->
-<!-- class description -->
-<div class="summary description">Handle a group of fields</div>
 
 <!--
 
@@ -147,6 +148,36 @@
 		<div class="content">
 
 		
+		
+			<div>
+				<h4><a name="method_clear">clear</a></h4>
+			
+				<div class="detail">
+					<code><b>clear</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Clear all subfields
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
 		
 			<div>
 				<h4><a name="method_close">close</a></h4>
@@ -384,6 +415,8 @@ Call this function before hidding the group to close any field popup
 		
 					
 		
+					
+		
 			<div>
 				<h4><a name="method_onChange">onChange</a></h4>
 			
@@ -393,7 +426,7 @@ Call this function before hidding the group to close any field popup
 				
 				<div class="description">
 					
-					
+					Called when one of the group subfields is updated.
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -406,13 +439,13 @@ Call this function before hidding the group to close any field popup
 				<div class="description">
 				<b>Parameters:</b>
 					<ul>
-						<code>eventName</code>
-						 
+						<code>eventName&nbsp;<i>&lt;String&gt;</i>&nbsp;</code>
+						 - Event name 
 					</ul>
 					
 					<ul>
-						<code>args</code>
-						 
+						<code>args&nbsp;<i>&lt;Array&gt;</i>&nbsp;</code>
+						 - Array of [fieldValue, fieldInstance] 
 					</ul>
 					
 				</div>
@@ -550,7 +583,7 @@ We use the parentEl so that inputEx.Form can append them to the FORM tag
 				
 				<div class="description">
 					
-					
+					Run an action (for interactions)
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -563,8 +596,8 @@ We use the parentEl so that inputEx.Form can append them to the FORM tag
 				<div class="description">
 				<b>Parameters:</b>
 					<ul>
-						<code>action</code>
-						 
+						<code>action&nbsp;<i>&lt;Object&gt;</i>&nbsp;</code>
+						 - inputEx action object 
 					</ul>
 					
 				</div>
@@ -584,12 +617,12 @@ We use the parentEl so that inputEx.Form can append them to the FORM tag
 				<h4><a name="method_runInteractions">runInteractions</a></h4>
 			
 				<div class="detail">
-					<code><b>runInteractions</b>(actions)</code> 
+					<code><b>runInteractions</b>(fieldInstance,fieldValue)</code> 
 				</div>
 				
 				<div class="description">
 					
-					
+					Run the interactions for the given field instance
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -602,8 +635,13 @@ We use the parentEl so that inputEx.Form can append them to the FORM tag
 				<div class="description">
 				<b>Parameters:</b>
 					<ul>
-						<code>actions</code>
-						 
+						<code>fieldInstance&nbsp;<i>&lt;inputEx.Field&gt;</i>&nbsp;</code>
+						 - Field that just changed 
+					</ul>
+					
+					<ul>
+						<code>fieldValue&nbsp;<i>&lt;Any&gt;</i>&nbsp;</code>
+						 - Field value 
 					</ul>
 					
 				</div>
@@ -806,6 +844,8 @@ We use the parentEl so that inputEx.Form can append them to the FORM tag
 						<a href="inputEx.Field.html#renderComponent">renderComponent</a>,
 					
 						<a href="inputEx.Field.html#destroy">destroy</a>,
+					
+						<a href="inputEx.Field.html#isEmpty">isEmpty</a>,
 							
 				</code>
 			</div>
@@ -877,7 +917,15 @@ We use the parentEl so that inputEx.Form can append them to the FORM tag
 							
 								
 								<li>
+									<a href="inputEx.html">inputEx</a></li>
+							
+								
+								<li>
 									<a href="inputEx.AutoComplete.html">inputEx.AutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.BirthdateField.html">inputEx.BirthdateField</a></li>
 							
 								
 								<li>
@@ -902,6 +950,10 @@ We use the parentEl so that inputEx.Form can append them to the FORM tag
 								
 								<li>
 									<a href="inputEx.DatePickerField.html">inputEx.DatePickerField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.DateSplitField.html">inputEx.DateSplitField</a></li>
 							
 								
 								<li>
@@ -934,10 +986,6 @@ We use the parentEl so that inputEx.Form can append them to the FORM tag
 								
 								<li>
 									<a href="inputEx.HiddenField.html">inputEx.HiddenField</a></li>
-							
-								
-								<li>
-									<a href="inputEx.IconPickerField.html">inputEx.IconPickerField</a></li>
 							
 								
 								<li>
@@ -1033,11 +1081,19 @@ We use the parentEl so that inputEx.Form can append them to the FORM tag
 							
 								
 								<li>
+									<a href="inputEx.widget.DataTable.html">inputEx.widget.DataTable</a></li>
+							
+								
+								<li>
 									<a href="inputEx.widget.DDList.html">inputEx.widget.DDList</a></li>
 							
 								
 								<li>
 									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
+							
+								
+								<li>
+									<a href="inputEx.widget.InputExCellEditor.html">inputEx.widget.InputExCellEditor</a></li>
 							
 								
 						</ul>
@@ -1050,6 +1106,10 @@ We use the parentEl so that inputEx.Form can append them to the FORM tag
 								
 								<li>
 								<a href="AutoComplete.js.html">AutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="BirthdateField.js.html">BirthdateField.js</a></li>
 							
 								
 								<li>
@@ -1069,11 +1129,19 @@ We use the parentEl so that inputEx.Form can append them to the FORM tag
 							
 								
 								<li>
+								<a href="DataTable-beta.js.html">DataTable-beta.js</a></li>
+							
+								
+								<li>
 								<a href="DateField.js.html">DateField.js</a></li>
 							
 								
 								<li>
 								<a href="DatePickerField.js.html">DatePickerField.js</a></li>
+							
+								
+								<li>
+								<a href="DateSplitField.js.html">DateSplitField.js</a></li>
 							
 								
 								<li>
@@ -1113,15 +1181,7 @@ We use the parentEl so that inputEx.Form can append them to the FORM tag
 							
 								
 								<li>
-								<a href="GroupInteractions-beta.js.html">GroupInteractions-beta.js</a></li>
-							
-								
-								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
-							
-								
-								<li>
-								<a href="IconPickerField.js.html">IconPickerField.js</a></li>
 							
 								
 								<li>
@@ -1234,7 +1294,7 @@ We use the parentEl so that inputEx.Form can append them to the FORM tag
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 16:05:41 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 15 Oct 2008 13:04:37 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

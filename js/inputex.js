@@ -9,6 +9,7 @@
  * Build a field from an object like: { type: 'color' or fieldClass: inputEx.ColorField, inputParams: {} }<br />
  * The inputParams property is the object that will be passed as the <code>options</code> parameter to the field class constructor.<br />
  * If the neither type or fieldClass are found, it uses inputEx.StringField
+ * @name inputEx
  * @namespace The inputEx global namespace object.
  * @static
  * @param {Object} fieldOptions
@@ -266,7 +267,5 @@ lang.augmentObject(inputEx,
 })();
 
 
-/**
- * The main inputEx namespace shortcut
- */
+// The main inputEx namespace shortcut
 var inputEx = YAHOO.inputEx;

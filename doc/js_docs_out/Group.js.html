@@ -48,6 +48,12 @@
  */
 inputEx.Group = function(options) {
    inputEx.Group.superclass.constructor.call(this,options);
+   
+   if(this.hasInteractions) {
+      for(var i = 0 ; i < this.inputs.length ; i++) {
+         this.runInteractions(this.inputs[i],this.inputs[i].getValue());
+      }
+   }
 };
 lang.extend(inputEx.Group, inputEx.Field, 
 /**
@@ -62,6 +68,7 @@ lang.extend(inputEx.Group, inputEx.Field,
    
       this.options.legend = this.options.legend || '';
    
+      // leave this for compatibility reasons
       this.inputConfigs = this.options.fields;
    
       this.options.collapsible = lang.isUndefined(this.options.collapsible) ? false : this.options.collapsible;
@@ -119,8 +126,8 @@ lang.extend(inputEx.Group, inputEx.Field,
       }
   	   
       // Iterate this.createInput on input fields
-      for (var i = 0 ; i < this.inputConfigs.length ; i++) {
-         var input = this.inputConfigs[i];
+      for (var i = 0 ; i < this.options.fields.length ; i++) {
+         var input = this.options.fields[i];
         
          // Render the field
          var field = this.renderField(input);
@@ -145,6 +152,11 @@ lang.extend(inputEx.Group, inputEx.Field,
       // Create an index to access fields by their name
       if(fieldInstance.options.name) {
          this.inputsNames[fieldInstance.options.name] = fieldInstance;
+      }
+      
+      // Create the this.hasInteractions to run interactions at startup
+      if(!this.hasInteractions && fieldOptions.interactions) {
+         this.hasInteractions = true;
       }
       
 	   // Subscribe to the field "updated" event to send the group "updated" event
@@ -216,10 +228,15 @@ lang.extend(inputEx.Group, inputEx.Field,
          return;
       }
 	   for (var i = 0 ; i < this.inputs.length ; i++) {
-	      if(this.inputs[i].options.name && !lang.isUndefined(oValues[this.inputs[i].options.name]) ) {
-	         this.inputs[i].setValue(oValues[this.inputs[i].options.name]);
-		      this.inputs[i].setClassFromState();
+	      var field = this.inputs[i];
+	      var name = field.options.name;
+	      if(name && !lang.isUndefined(oValues[name]) ) {
+	         field.setValue(oValues[name]);
 	      }
+	      else {
+	         field.clear();
+	      }
+		   //field.setClassFromState();
       }
    },
    
@@ -270,8 +287,73 @@ lang.extend(inputEx.Group, inputEx.Field,
          return null;
       }
       return this.inputsNames[fieldName];
-   }
+   },
+   
+   
+   /**
+    * Called when one of the group subfields is updated.
+    * @param {String} eventName Event name
+    * @param {Array} args Array of [fieldValue, fieldInstance] 
+    */
+   onChange: function(eventName, args) {
 
+      // Run interactions
+      var fieldValue = args[0];
+      var fieldInstance = args[1];
+      this.runInteractions(fieldInstance,fieldValue);
+      
+      //this.setClassFromState();      
+      this.fireUpdatedEvt();
+   },
+
+   /**
+    * Run an action (for interactions)
+    * @param {Object} action inputEx action object
+    */
+   runAction: function(action) {
+      var field = this.getFieldByName(action.name);
+      if( YAHOO.lang.isFunction(field[action.action]) ) {
+         field[action.action].call(field);
+      }
+      else {
+         throw new Error("action "+action.action+" is not a valid action for field "+action.name);
+      }
+   },
+   
+   /**
+    * Run the interactions for the given field instance
+    * @param {inputEx.Field} fieldInstance Field that just changed
+    * @param {Any} fieldValue Field value
+    */
+   runInteractions: function(fieldInstance,fieldValue) {
+      
+      var index = inputEx.indexOf(fieldInstance, this.inputs);
+      var fieldConfig = this.options.fields[index];
+      if( YAHOO.lang.isUndefined(fieldConfig.interactions) ) return;
+      
+      // Let's run the interactions !
+      var interactions = fieldConfig.interactions;
+      for(var i = 0 ; i < interactions.length ; i++) {
+         var interaction = interactions[i];
+         if(interaction.valueTrigger === fieldValue) {
+            for(var j = 0 ; j < interaction.actions.length ; j++) {
+               this.runAction(interaction.actions[j]);
+            }
+         }
+      }
+      
+   },
+   
+	/**
+	 * Clear all subfields
+	 */
+	clear: function() {
+	   for(var i = 0 ; i < this.inputs.length ; i++) {
+	      this.inputs[i].clear();
+	   }
+	}
+   
+   
 });
 
    
@@ -337,7 +419,15 @@ inputEx.registerType("group", inputEx.Group);
 							
 								
 								<li>
+									<a href="inputEx.html">inputEx</a></li>
+							
+								
+								<li>
 									<a href="inputEx.AutoComplete.html">inputEx.AutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.BirthdateField.html">inputEx.BirthdateField</a></li>
 							
 								
 								<li>
@@ -362,6 +452,10 @@ inputEx.registerType("group", inputEx.Group);
 								
 								<li>
 									<a href="inputEx.DatePickerField.html">inputEx.DatePickerField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.DateSplitField.html">inputEx.DateSplitField</a></li>
 							
 								
 								<li>
@@ -394,10 +488,6 @@ inputEx.registerType("group", inputEx.Group);
 								
 								<li>
 									<a href="inputEx.HiddenField.html">inputEx.HiddenField</a></li>
-							
-								
-								<li>
-									<a href="inputEx.IconPickerField.html">inputEx.IconPickerField</a></li>
 							
 								
 								<li>
@@ -493,11 +583,19 @@ inputEx.registerType("group", inputEx.Group);
 							
 								
 								<li>
+									<a href="inputEx.widget.DataTable.html">inputEx.widget.DataTable</a></li>
+							
+								
+								<li>
 									<a href="inputEx.widget.DDList.html">inputEx.widget.DDList</a></li>
 							
 								
 								<li>
 									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
+							
+								
+								<li>
+									<a href="inputEx.widget.InputExCellEditor.html">inputEx.widget.InputExCellEditor</a></li>
 							
 								
 						</ul>
@@ -510,6 +608,10 @@ inputEx.registerType("group", inputEx.Group);
 								
 								<li>
 								<a href="AutoComplete.js.html">AutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="BirthdateField.js.html">BirthdateField.js</a></li>
 							
 								
 								<li>
@@ -529,11 +631,19 @@ inputEx.registerType("group", inputEx.Group);
 							
 								
 								<li>
+								<a href="DataTable-beta.js.html">DataTable-beta.js</a></li>
+							
+								
+								<li>
 								<a href="DateField.js.html">DateField.js</a></li>
 							
 								
 								<li>
 								<a href="DatePickerField.js.html">DatePickerField.js</a></li>
+							
+								
+								<li>
+								<a href="DateSplitField.js.html">DateSplitField.js</a></li>
 							
 								
 								<li>
@@ -573,15 +683,7 @@ inputEx.registerType("group", inputEx.Group);
 							
 								
 								<li>
-								<a href="GroupInteractions-beta.js.html">GroupInteractions-beta.js</a></li>
-							
-								
-								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
-							
-								
-								<li>
-								<a href="IconPickerField.js.html">IconPickerField.js</a></li>
 							
 								
 								<li>
@@ -694,7 +796,7 @@ inputEx.registerType("group", inputEx.Group);
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 16:05:40 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 15 Oct 2008 13:04:36 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>inputEx Documentation - accordion.js</title>
+<title>inputEx Documentation - DateSplitField.js</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="JsDoc Toolkit 2.0.0" />
 <link href="css/reset-fonts-grids.css" type="text/css" rel="stylesheet" media="all" /> 
@@ -18,7 +18,7 @@
 			
 			
 			<h3>
-				<a href="./index.html">inputEx Documentation</a> &gt; accordion.js
+				<a href="./index.html">inputEx Documentation</a> &gt; DateSplitField.js
 				<span class="subtitle">0.2.0</span>
 			</h3>
 		
@@ -27,18 +27,113 @@
 			<div id="yui-main">
 				<div class="yui-b">
 <div class="summary description">
-	<p>This is the source view for accordion.js</p>
+	<p>This is the source view for DateSplitField.js</p>
 </div>
 										
 <form>
 	<textarea name="code" class="JScript">(function() {
 
-   var inputEx = YAHOO.inputEx, Event = YAHOO.util.Event, lang = YAHOO.lang;
+   var inputEx = YAHOO.inputEx, lang = YAHOO.lang;
 
-   inputEx.widget.accordionMenu = function() {
-   };
+/**
+ * @class inputEx.DateSplitField
+ * @extends inputEx.CombineField
+ */
+inputEx.DateSplitField = function(options) {
+   	
+   if(!options.dateFormat) {options.dateFormat = inputEx.messages.defaultDateFormat; }
+   
+   var formatSplit = options.dateFormat.split("/");
+   this.yearIndex = inputEx.indexOf('Y',formatSplit);
+   this.monthIndex = inputEx.indexOf('m',formatSplit);
+   this.dayIndex = inputEx.indexOf('d',formatSplit);
+   
+   options.fields = [];
+   for(var i = 0 ; i < 3 ; i++) {
+      if(i == this.dayIndex) {
+         options.fields.push({type: 'integer', inputParams: { typeInvite: inputEx.messages.dayTypeInvite, size: 2} });
+      }
+      else if(i == this.yearIndex) {
+         options.fields.push({type: 'integer', inputParams: { typeInvite: inputEx.messages.yearTypeInvite, size: 4} });
+      }
+      else {
+         options.fields.push({type: 'integer', inputParams: {typeInvite: inputEx.messages.monthTypeInvite, size: 2} });
+      }
+   }
 
-});</textarea>
+   options.separators = options.separators || [false,"&nbsp;","&nbsp;",false];
+   
+	inputEx.DateSplitField.superclass.constructor.call(this,options);
+};
+lang.extend(inputEx.DateSplitField, inputEx.CombineField, {
+   
+   setValue: function(value) {
+      var values = [];
+      
+      // !value catches "" (empty field), and invalid dates
+      if(!value || !lang.isFunction(value.getTime) || !lang.isNumber(value.getTime()) ) {
+         values[this.monthIndex] = "";
+         values[this.yearIndex] = "";
+         values[this.dayIndex] = "";
+      } else {
+         for(var i = 0 ; i < 3 ; i++) {
+            values.push( i == this.dayIndex ? value.getDate() : (i==this.yearIndex ? value.getFullYear() : value.getMonth()+1 ) );
+         }
+      }
+      inputEx.DateSplitField.superclass.setValue.call(this, values);
+   },
+   
+   getValue: function() {
+      if (this.isEmpty()) return "";
+      
+      var values = inputEx.DateSplitField.superclass.getValue.call(this);
+      
+      return new Date(values[this.yearIndex], values[this.monthIndex]-1, values[this.dayIndex] );
+   },
+   
+   validate: function() {
+      var subFieldsValidation = inputEx.DateSplitField.superclass.validate.call(this);
+      if (!subFieldsValidation) return false;
+      
+      var values = inputEx.DateSplitField.superclass.getValue.call(this);
+      var day = values[this.dayIndex];
+      var month = values[this.monthIndex];
+      var year = values[this.yearIndex];
+      
+      var val = this.getValue();
+      //console.log("datesplit value = ",val);
+      
+      // 3 empty fields
+      if (val == "") return true;
+      
+      // if a field is empty, it will be set by default (day : 31, month:12, year: 1899/1900)
+      //   -> val == "" MUST be checked first !
+      if (day == "" || month == "" || year == "") return false;
+      
+      if (year < 0 || year > 9999 || day < 1 || day > 31 || month < 1 || month > 12) return false;
+      
+      // val == any date -> true
+      // val == "Invalid Date" -> false
+      return (val != "Invalid Date");
+   },
+   
+	isEmpty: function() {
+	   var values = inputEx.DateSplitField.superclass.getValue.call(this);
+	   return (values[this.monthIndex] == "" && values[this.yearIndex] == "" &&  values[this.dayIndex] == "");
+	}
+   
+});
+
+inputEx.messages.monthTypeInvite = "Month";
+inputEx.messages.dayTypeInvite = "Day";
+inputEx.messages.yearTypeInvite = "Year";
+
+/**
+* Register this class as "birthdate" type
+*/
+inputEx.registerType("datesplit", inputEx.DateSplitField);
+
+})();</textarea>
 </form>
 					
 					
@@ -94,7 +189,15 @@
 							
 								
 								<li>
+									<a href="inputEx.html">inputEx</a></li>
+							
+								
+								<li>
 									<a href="inputEx.AutoComplete.html">inputEx.AutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.BirthdateField.html">inputEx.BirthdateField</a></li>
 							
 								
 								<li>
@@ -119,6 +222,10 @@
 								
 								<li>
 									<a href="inputEx.DatePickerField.html">inputEx.DatePickerField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.DateSplitField.html">inputEx.DateSplitField</a></li>
 							
 								
 								<li>
@@ -151,10 +258,6 @@
 								
 								<li>
 									<a href="inputEx.HiddenField.html">inputEx.HiddenField</a></li>
-							
-								
-								<li>
-									<a href="inputEx.IconPickerField.html">inputEx.IconPickerField</a></li>
 							
 								
 								<li>
@@ -250,11 +353,19 @@
 							
 								
 								<li>
+									<a href="inputEx.widget.DataTable.html">inputEx.widget.DataTable</a></li>
+							
+								
+								<li>
 									<a href="inputEx.widget.DDList.html">inputEx.widget.DDList</a></li>
 							
 								
 								<li>
 									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
+							
+								
+								<li>
+									<a href="inputEx.widget.InputExCellEditor.html">inputEx.widget.InputExCellEditor</a></li>
 							
 								
 						</ul>
@@ -264,13 +375,13 @@
 						<h4>Files</h4>
 						<ul class="content">
 							
-								<li class="selected">
-								
-								<a href="accordion.js.html">accordion.js</a></li>
-							
 								
 								<li>
 								<a href="AutoComplete.js.html">AutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="BirthdateField.js.html">BirthdateField.js</a></li>
 							
 								
 								<li>
@@ -290,11 +401,19 @@
 							
 								
 								<li>
+								<a href="DataTable-beta.js.html">DataTable-beta.js</a></li>
+							
+								
+								<li>
 								<a href="DateField.js.html">DateField.js</a></li>
 							
 								
 								<li>
 								<a href="DatePickerField.js.html">DatePickerField.js</a></li>
+							
+								<li class="selected">
+								
+								<a href="DateSplitField.js.html">DateSplitField.js</a></li>
 							
 								
 								<li>
@@ -318,7 +437,7 @@
 							
 								
 								<li>
-								<a href="fr_messages.js.html">fr_messages.js</a></li>
+								<a href="fr.js.html">fr.js</a></li>
 							
 								
 								<li>
@@ -334,15 +453,7 @@
 							
 								
 								<li>
-								<a href="GroupInteractions-beta.js.html">GroupInteractions-beta.js</a></li>
-							
-								
-								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
-							
-								
-								<li>
-								<a href="IconPickerField.js.html">IconPickerField.js</a></li>
 							
 								
 								<li>
@@ -455,7 +566,7 @@
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 14:27:39 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 15 Oct 2008 13:04:35 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

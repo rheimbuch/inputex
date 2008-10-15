@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>inputEx Documentation - IPv4Field.js</title>
+<title>inputEx Documentation - inputEx.BirthdateField</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="JsDoc Toolkit 2.0.0" />
 <link href="css/reset-fonts-grids.css" type="text/css" rel="stylesheet" media="all" /> 
@@ -18,7 +18,7 @@
 			
 			
 			<h3>
-				<a href="./index.html">inputEx Documentation</a> &gt; IPv4Field.js
+				<a href="./index.html">inputEx Documentation</a> &gt; inputEx.BirthdateField
 				<span class="subtitle">0.2.0</span>
 			</h3>
 		
@@ -26,54 +26,274 @@
 		<div id="bd">
 			<div id="yui-main">
 				<div class="yui-b">
-<div class="summary description">
-	<p>This is the source view for IPv4Field.js</p>
+
+<!-- Class -->
+<h2>
+	Static Class <b>inputEx.BirthdateField</b>
+	<span class="extends"> - extends <a href="inputEx.CombineField.html">inputEx.CombineField</a></span><br/>
+</h2>
+
+<!--
+
+
+-->
+<!-- class description -->
+<div class="summary description">inputEx.BirthdateField</div>
+
+
+<!-- Known subsclasses -->
+
+
+<!--
+
+<hr>
+-->
+
+
+<!-- ========= CONSTRUCTOR ======== -->
+
+<div class="section constructor details">
+	<h3 id="constructor">Constructor</h3>
+	<div class="content">
+		<div class="detail">
+			<a name="BirthdateField"> </a>
+			
+				<strong>inputEx.BirthdateField</strong>
+				<code>( options )</code>
+				<ul>
+					
+					
+				</ul>
+	
+				<!-- CONSTRUCTOR PARAMETERS START -->
+				
+					<div class="description">
+						<dl>
+							<dt>Parameters:</dt>
+							
+								<dd>
+									<code>options</code>
+									 
+								</dd>
+							
+						</dl>
+					</div>		
+				
+				<!-- CONSTRUCTOR PARAMETERS END -->
+			
+			
+		</div>
+	</div>	
 </div>
-										
-<form>
-	<textarea name="code" class="JScript">(function() {
 
-   var inputEx = YAHOO.inputEx;
+<!-- ========= CONSTRUCTOR END ======== -->
 
-/**
- * @class Adds an IPv4 address regexp
- * @extends inputEx.StringField
- * @constructor
- * @param {Object} options inputEx.Field options object
- */
-inputEx.IPv4Field = function(options) {
-	inputEx.IPv4Field.superclass.constructor.call(this,options);
-};
-YAHOO.lang.extend(inputEx.IPv4Field, inputEx.StringField, 
-/**
- * @scope inputEx.IPv4Field.prototype   
- */   
-{
-   
-   /**
-    * set IPv4 regexp and invalid string
-    */
-   setOptions: function() {
-      inputEx.IPv4Field.superclass.setOptions.call(this);
-      this.options.messages.invalid = inputEx.messages.invalidIPv4;
-      this.options.regexp = inputEx.regexps.ipv4;
-   }
-  
-});
 
-// Specific message for the email field
-inputEx.messages.invalidIPv4 = "Invalid IPv4 address, ex: 192.168.0.1";
 
-/**
- * Register this class as "IPv4" type
- */
-inputEx.registerType("IPv4", inputEx.IPv4Field);
 
-})();</textarea>
-</form>
+<!-- ============ Properties START ========= -->
+
+<a name="field_detail"> </a> 
+<div class="section field details">
+	<h3 id="properties">Properties</h3>
+	<div class="content">
+		
+			<div>
+				
+				<h4>
 					
 					
+					<a name="options">options</a> 
+					<code>- Object</code>
+					
+				</h4>
+				
+				<div class="detail">
+					<div class="description">
+						Configuration object to set the options for this class and the parent classes. See constructor details for options added by this class.
+						
 					</div>
+				</div>
+			</div>
+			<hr>
+		
+	</div>
+</div>
+
+<!-- ============ Properties END ========== -->
+
+
+
+
+<!-- ============ METHOD DETAIL START ======= -->
+
+	<a name="method_detail"> </a> 
+
+	<div class="section method details">
+		<h3 id="methods">Methods</h3>
+		<div class="content">
+
+		
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+
+				</div>
+			</div>
+
+
+<!-- ============ METHOD DETAIL END ========== -->
+
+
+
+
+<!-- ========== INHERITED METHODS SUMMARY =========== -->
+
+
+	
+	
+		<div class="section field inheritance">
+			<h4>Methods inherited from class <a href="inputEx.CombineField.html">inputEx.CombineField</a>:</h4>
+			<div class="content">
+				<code>
+					
+						<a href="inputEx.CombineField.html#setOptions">setOptions</a>,
+					
+						<a href="inputEx.CombineField.html#renderField">renderField</a>,
+					
+						<a href="inputEx.CombineField.html#setClassFromState">setClassFromState</a>,
+					
+						<a href="inputEx.CombineField.html#getValue">getValue</a>,
+					
+						<a href="inputEx.CombineField.html#renderComponent">renderComponent</a>,
+					
+						<a href="inputEx.CombineField.html#appendSeparator">appendSeparator</a>,
+					
+						<a href="inputEx.CombineField.html#setValue">setValue</a>,
+					
+						<a href="inputEx.CombineField.html#validate">validate</a>,
+					
+						<a href="inputEx.CombineField.html#clear">clear</a>,
+							
+				</code>
+			</div>
+		</div>
+	
+		<div class="section field inheritance">
+			<h4>Methods inherited from class <a href="inputEx.Field.html">inputEx.Field</a>:</h4>
+			<div class="content">
+				<code>
+					
+						<a href="inputEx.Field.html#focus">focus</a>,
+					
+						<a href="inputEx.Field.html#getEl">getEl</a>,
+					
+						<a href="inputEx.Field.html#fireUpdatedEvt">fireUpdatedEvt</a>,
+					
+						<a href="inputEx.Field.html#show">show</a>,
+					
+						<a href="inputEx.Field.html#close">close</a>,
+					
+						<a href="inputEx.Field.html#onBlur">onBlur</a>,
+					
+						<a href="inputEx.Field.html#onFocus">onFocus</a>,
+					
+						<a href="inputEx.Field.html#getStateString">getStateString</a>,
+					
+						<a href="inputEx.Field.html#disable">disable</a>,
+					
+						<a href="inputEx.Field.html#onChange">onChange</a>,
+					
+						<a href="inputEx.Field.html#render">render</a>,
+					
+						<a href="inputEx.Field.html#updatedEvt">updatedEvt</a>,
+					
+						<a href="inputEx.Field.html#initEvents">initEvents</a>,
+					
+						<a href="inputEx.Field.html#getState">getState</a>,
+					
+						<a href="inputEx.Field.html#hide">hide</a>,
+					
+						<a href="inputEx.Field.html#displayMessage">displayMessage</a>,
+					
+						<a href="inputEx.Field.html#destroy">destroy</a>,
+					
+						<a href="inputEx.Field.html#isEmpty">isEmpty</a>,
+					
+						<a href="inputEx.Field.html#enable">enable</a>,
+							
+				</code>
+			</div>
+		</div>
+	
+	<br/>
+	
+
+<br/>
+
+<!-- ========== END INHERITED METHODS SUMMARY =========== -->
+
+
+
+<!-- ============ EVENT DETAIL START ======= -->
+
+
+
+
+</div>
 			</div>
 			
 			<div class="yui-b">
@@ -131,8 +351,8 @@ inputEx.registerType("IPv4", inputEx.IPv4Field);
 								<li>
 									<a href="inputEx.AutoComplete.html">inputEx.AutoComplete</a></li>
 							
+								<li class="selected">
 								
-								<li>
 									<a href="inputEx.BirthdateField.html">inputEx.BirthdateField</a></li>
 							
 								
@@ -407,8 +627,8 @@ inputEx.registerType("IPv4", inputEx.IPv4Field);
 								<li>
 								<a href="IntegerField.js.html">IntegerField.js</a></li>
 							
-								<li class="selected">
 								
+								<li>
 								<a href="IPv4Field.js.html">IPv4Field.js</a></li>
 							
 								

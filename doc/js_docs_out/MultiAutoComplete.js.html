@@ -36,14 +36,11 @@
    var inputEx = YAHOO.inputEx;
 
 /**
- * @class Create a select field
- * @extends inputEx.Field
+ * @class Create a multi autocomplete field
+ * @extends inputEx.AutoComplete
  * @constructor
  * @param {Object} options Added options:
  * <ul>
- *	   <li>selectValues: contains the list of options values</li>
- *	   <li>selectOptions: list of option element texts</li>
- *    <li>multiple: boolean to allow multiple selections</li>
  * </ul>
  */
 inputEx.MultiAutoComplete = function(options) {
@@ -63,28 +60,18 @@ YAHOO.lang.extend(inputEx.MultiAutoComplete, inputEx.AutoComplete,
       
       this.ddlist = new inputEx.widget.DDList({parentEl: this.fieldContainer});
       this.ddlist.itemRemovedEvt.subscribe(function() {
+         this.setClassFromState();
          this.fireUpdatedEvt();
       }, this, true);
+      this.ddlist.listReorderedEvt.subscribe(this.fireUpdatedEvt, this, true);
    },  
    
-   validateItem: function() {
-       var pos = -1;
-       for(var i = 0 ; i < this.listEl.childNodes.length ; i++) {
-          if(this.listEl.childNodes[i]==this.highlightedItem) {
-             pos = i;
-             break;
-          }
-       }
-       if(pos == -1) { return; }
-   
-       this.el.value = "";
-       this.ddlist.addItem( this.options.displayAutocompleted.call(this, this.listValues[pos]) );
-       
-       this.hideList();
-       
-       // Fire the validateItem event
-       this.validateItemEvt.fire(this.listValues[pos]);
-    },
+   itemSelectHandler: function(sType, aArgs) {
+   	var aData = aArgs[2];
+   	this.ddlist.addItem( this.options.returnValue ? this.options.returnValue(aData) : aData[0] );
+   	this.el.value = "";
+   	this.fireUpdatedEvt();
+   },
    
    /**
     * Set the value
@@ -92,6 +79,10 @@ YAHOO.lang.extend(inputEx.MultiAutoComplete, inputEx.AutoComplete,
     */
    setValue: function(value) {
       this.ddlist.setValue(value);
+      // set corresponding style
+	   this.setClassFromState();
+      // fire update event
+      this.fireUpdatedEvt();
    },
    
    /**
@@ -100,7 +91,37 @@ YAHOO.lang.extend(inputEx.MultiAutoComplete, inputEx.AutoComplete,
     */
    getValue: function() {
       return this.ddlist.getValue();
-   }
+   },
+   
+   /**
+    * Return (stateEmpty|stateRequired) if the value equals the typeInvite attribute
+    */
+   getState: function() { 
+      var val = this.getValue();
+      
+	   // if nothing in the list
+	   if( val.length === 0) {
+	      return this.options.required ? inputEx.stateRequired : inputEx.stateEmpty;
+	   }
+      
+	   return this.validate() ? inputEx.stateValid : inputEx.stateInvalid;
+	},
+	
+	/**
+    * TODO : how to validate ?
+    */
+   validate: function() { 
+      return true;
+   },
+   
+   /**
+    * onChange event handler
+    * @param {Event} e The original 'change' event
+    */
+	onChange: function(e) {
+	   // erase inherited version, so don't trash previous value if input is empty
+	}
+   
    
 });
 
@@ -165,7 +186,15 @@ inputEx.registerType("multiautocomplete", inputEx.MultiAutoComplete);
 							
 								
 								<li>
+									<a href="inputEx.html">inputEx</a></li>
+							
+								
+								<li>
 									<a href="inputEx.AutoComplete.html">inputEx.AutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.BirthdateField.html">inputEx.BirthdateField</a></li>
 							
 								
 								<li>
@@ -190,6 +219,10 @@ inputEx.registerType("multiautocomplete", inputEx.MultiAutoComplete);
 								
 								<li>
 									<a href="inputEx.DatePickerField.html">inputEx.DatePickerField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.DateSplitField.html">inputEx.DateSplitField</a></li>
 							
 								
 								<li>
@@ -222,10 +255,6 @@ inputEx.registerType("multiautocomplete", inputEx.MultiAutoComplete);
 								
 								<li>
 									<a href="inputEx.HiddenField.html">inputEx.HiddenField</a></li>
-							
-								
-								<li>
-									<a href="inputEx.IconPickerField.html">inputEx.IconPickerField</a></li>
 							
 								
 								<li>
@@ -321,11 +350,19 @@ inputEx.registerType("multiautocomplete", inputEx.MultiAutoComplete);
 							
 								
 								<li>
+									<a href="inputEx.widget.DataTable.html">inputEx.widget.DataTable</a></li>
+							
+								
+								<li>
 									<a href="inputEx.widget.DDList.html">inputEx.widget.DDList</a></li>
 							
 								
 								<li>
 									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
+							
+								
+								<li>
+									<a href="inputEx.widget.InputExCellEditor.html">inputEx.widget.InputExCellEditor</a></li>
 							
 								
 						</ul>
@@ -338,6 +375,10 @@ inputEx.registerType("multiautocomplete", inputEx.MultiAutoComplete);
 								
 								<li>
 								<a href="AutoComplete.js.html">AutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="BirthdateField.js.html">BirthdateField.js</a></li>
 							
 								
 								<li>
@@ -357,11 +398,19 @@ inputEx.registerType("multiautocomplete", inputEx.MultiAutoComplete);
 							
 								
 								<li>
+								<a href="DataTable-beta.js.html">DataTable-beta.js</a></li>
+							
+								
+								<li>
 								<a href="DateField.js.html">DateField.js</a></li>
 							
 								
 								<li>
 								<a href="DatePickerField.js.html">DatePickerField.js</a></li>
+							
+								
+								<li>
+								<a href="DateSplitField.js.html">DateSplitField.js</a></li>
 							
 								
 								<li>
@@ -401,15 +450,7 @@ inputEx.registerType("multiautocomplete", inputEx.MultiAutoComplete);
 							
 								
 								<li>
-								<a href="GroupInteractions-beta.js.html">GroupInteractions-beta.js</a></li>
-							
-								
-								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
-							
-								
-								<li>
-								<a href="IconPickerField.js.html">IconPickerField.js</a></li>
 							
 								
 								<li>
@@ -522,7 +563,7 @@ inputEx.registerType("multiautocomplete", inputEx.MultiAutoComplete);
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 16:05:40 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 15 Oct 2008 13:04:36 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

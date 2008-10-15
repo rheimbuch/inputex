@@ -33,15 +33,25 @@
 	<span class="extends"> - extends <a href="inputEx.StringField.html">inputEx.StringField</a></span><br/>
 </h2>
 
-<!-- Known subsclasses-->
-
-
 <!--
 
 
 -->
 <!-- class description -->
 <div class="summary description">An autocomplete module</div>
+
+
+<!-- Known subsclasses -->
+
+	<dl class="subclasses">
+		<dt>Known Subclasses:</dt>
+		<dd>
+			
+				<a href="inputEx.MultiAutoComplete.html">inputEx.MultiAutoComplete</a>
+			
+		</dd>
+	</dl>
+
 
 <!--
 
@@ -74,12 +84,9 @@
 									<code>options<i>&nbsp;&lt;Object&gt;&nbsp;</i></code>
 									 - Added options for Autocompleter
 <ul>
-	  <li>highlightClass: the CSS className added to highlight selected item</li>
-	  <li>timerDelay: number of milliseconds to wait before sending the request (default is 300)</li>
-	  <li>query: function called for the querying</li>
-  <li>visuItem: the visualization object to display each item</li>
-  <li>displayAutocompleted: method taht should return the string set to the field when an item is selected</li>
-  <li>queryMinLength: minimum number of letters to type before sending the query (default is 2)</li>
+	  <li>datasource: the datasource</li>
+	  <li>autoComp: autocompleter options</li>
+  <li>returnValue: function to format the returned value (optional)</li>
 </ul> 
 								</dd>
 							
@@ -115,28 +122,16 @@
 
 		
 		
-					
-		
-					
-		
-					
-		
-					
-		
-					
-		
-					
-		
 			<div>
-				<h4><a name="method_hideList">hideList</a></h4>
+				<h4><a name="method_buildAutocomplete">buildAutocomplete</a></h4>
 			
 				<div class="detail">
-					<code><b>hideList</b>()</code> 
+					<code><b>buildAutocomplete</b>()</code> 
 				</div>
 				
 				<div class="description">
 					
-					Hide the list
+					
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -157,16 +152,26 @@
 					
 					
 		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
 			<div>
-				<h4><a name="method_highlightItem">highlightItem</a></h4>
+				<h4><a name="method_getValue">getValue</a></h4>
 			
 				<div class="detail">
-					<code><b>highlightItem</b>(liItem)</code> 
+					<code><b>getValue</b>()</code> 
 				</div>
 				
 				<div class="description">
 					
-					Set the highlighted item
+					
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -176,15 +181,6 @@
 				
 			<!-- METHOD PARAMETERS START -->
 			
-				<div class="description">
-				<b>Parameters:</b>
-					<ul>
-						<code>liItem&nbsp;<i>&lt;HTMLElement&gt;</i>&nbsp;</code>
-						 - The LI node to highlight 
-					</ul>
-					
-				</div>
-				
 				<!-- METHOD PARAMETERS END -->
 				<!-- ADDITIONAL ATTRIBUTES START -->
 				
@@ -205,7 +201,9 @@
 				
 				<div class="description">
 					
-					Register some additional events
+					Custom event init
+  -> listen to autocompleter textboxBlurEvent instead of this.el "blur" event
+  -> listener to autocompleter textboxBlurEvent added in buildAutocomplete method
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -226,18 +224,16 @@
 					
 					
 		
-					
-		
 			<div>
-				<h4><a name="method_onInput">onInput</a></h4>
+				<h4><a name="method_itemSelectHandler">itemSelectHandler</a></h4>
 			
 				<div class="detail">
-					<code><b>onInput</b>(e)</code> 
+					<code><b>itemSelectHandler</b>(sType,aArgs)</code> 
 				</div>
 				
 				<div class="description">
 					
-					Start the typing timer on Input
+					
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -250,128 +246,12 @@
 				<div class="description">
 				<b>Parameters:</b>
 					<ul>
-						<code>e&nbsp;<i>&lt;Event&gt;</i>&nbsp;</code>
-						 - The original input event 
+						<code>sType</code>
+						 
 					</ul>
 					
-				</div>
-				
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-			<div>
-				<h4><a name="method_onKeyDown">onKeyDown</a></h4>
-			
-				<div class="detail">
-					<code><b>onKeyDown</b>(e)</code> 
-				</div>
-				
-				<div class="description">
-					
-					Listen for up/down keys
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<div class="description">
-				<b>Parameters:</b>
 					<ul>
-						<code>e&nbsp;<i>&lt;Event&gt;</i>&nbsp;</code>
-						 - THe original keydown event 
-					</ul>
-					
-				</div>
-				
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-					
-		
-					
-		
-			<div>
-				<h4><a name="method_onListMouseOver">onListMouseOver</a></h4>
-			
-				<div class="detail">
-					<code><b>onListMouseOver</b>(e)</code> 
-				</div>
-				
-				<div class="description">
-					
-					Highlight the overed item
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<div class="description">
-				<b>Parameters:</b>
-					<ul>
-						<code>e&nbsp;<i>&lt;Event&gt;</i>&nbsp;</code>
-						 - The original mouseover event 
-					</ul>
-					
-				</div>
-				
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-			<div>
-				<h4><a name="method_queryList">queryList</a></h4>
-			
-				<div class="detail">
-					<code><b>queryList</b>(value)</code> 
-				</div>
-				
-				<div class="description">
-					
-					Run the query function
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<div class="description">
-				<b>Parameters:</b>
-					<ul>
-						<code>value</code>
+						<code>aArgs</code>
 						 
 					</ul>
 					
@@ -389,15 +269,15 @@
 					
 		
 			<div>
-				<h4><a name="method_renderComponent">renderComponent</a></h4>
+				<h4><a name="method_onChange">onChange</a></h4>
 			
 				<div class="detail">
-					<code><b>renderComponent</b>()</code> 
+					<code><b>onChange</b>(e)</code> 
 				</div>
 				
 				<div class="description">
 					
-					Render the hidden list element
+					onChange event handler
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -407,6 +287,15 @@
 				
 			<!-- METHOD PARAMETERS START -->
 			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>e&nbsp;<i>&lt;Event&gt;</i>&nbsp;</code>
+						 - The original 'change' event 
+					</ul>
+					
+				</div>
+				
 				<!-- METHOD PARAMETERS END -->
 				<!-- ADDITIONAL ATTRIBUTES START -->
 				
@@ -418,16 +307,22 @@
 					
 					
 		
+					
+		
+					
+		
+					
+		
 			<div>
-				<h4><a name="method_resetTimer">resetTimer</a></h4>
+				<h4><a name="method_renderComponent">renderComponent</a></h4>
 			
 				<div class="detail">
-					<code><b>resetTimer</b>()</code> 
+					<code><b>renderComponent</b>()</code> 
 				</div>
 				
 				<div class="description">
 					
-					The timer is used to wait a little before sending the request, so that we don't send too much requests.
+					Render the hidden list element
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -480,108 +375,16 @@
 					
 					
 		
-					
-		
 			<div>
-				<h4><a name="method_showList">showList</a></h4>
+				<h4><a name="method_setValue">setValue</a></h4>
 			
 				<div class="detail">
-					<code><b>showList</b>()</code> 
+					<code><b>setValue</b>(value)</code> 
 				</div>
 				
 				<div class="description">
 					
-					Show the list
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
 					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-			<div>
-				<h4><a name="method_stopTimer">stopTimer</a></h4>
-			
-				<div class="detail">
-					<code><b>stopTimer</b>()</code> 
-				</div>
-				
-				<div class="description">
-					
-					Stop the timer
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-			<div>
-				<h4><a name="method_timerEnd">timerEnd</a></h4>
-			
-				<div class="detail">
-					<code><b>timerEnd</b>()</code> 
-				</div>
-				
-				<div class="description">
-					
-					Send the request when the timer ends.
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-			<div>
-				<h4><a name="method_toggleHighlightItem">toggleHighlightItem</a></h4>
-			
-				<div class="detail">
-					<code><b>toggleHighlightItem</b>(liItem,highlight)</code> 
-				</div>
-				
-				<div class="description">
-					
-					Hightlight or unhighlight an item from the list
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -594,51 +397,7 @@
 				<div class="description">
 				<b>Parameters:</b>
 					<ul>
-						<code>liItem&nbsp;<i>&lt;HTMLElement&gt;</i>&nbsp;</code>
-						 - The LI node to highlight 
-					</ul>
-					
-					<ul>
-						<code>highlight&nbsp;<i>&lt;Boolean&gt;</i>&nbsp;</code>
-						 - The highlight state to set 
-					</ul>
-					
-				</div>
-				
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
-					
-		
-			<div>
-				<h4><a name="method_updateList">updateList</a></h4>
-			
-				<div class="detail">
-					<code><b>updateList</b>(list)</code> 
-				</div>
-				
-				<div class="description">
-					
-					Function to populate the list
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<div class="description">
-				<b>Parameters:</b>
-					<ul>
-						<code>list</code>
+						<code>value</code>
 						 
 					</ul>
 					
@@ -655,36 +414,6 @@
 					
 					
 		
-					
-		
-			<div>
-				<h4><a name="method_validateItem">validateItem</a></h4>
-			
-				<div class="detail">
-					<code><b>validateItem</b>()</code> 
-				</div>
-				
-				<div class="description">
-					
-					Called when the user clicked on an item or pressed the enter key
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
 					
 
 				</div>
@@ -708,13 +437,9 @@
 					
 						<a href="inputEx.StringField.html#getState">getState</a>,
 					
-						<a href="inputEx.StringField.html#getValue">getValue</a>,
-					
 						<a href="inputEx.StringField.html#disable">disable</a>,
 					
 						<a href="inputEx.StringField.html#enable">enable</a>,
-					
-						<a href="inputEx.StringField.html#setValue">setValue</a>,
 					
 						<a href="inputEx.StringField.html#validate">validate</a>,
 					
@@ -798,9 +523,17 @@
 						<h4>Classes <a href="treeview.html">(treeview)</a></h4>
 						<ul class="content">
 							
+								
+								<li>
+									<a href="inputEx.html">inputEx</a></li>
+							
 								<li class="selected">
 								
 									<a href="inputEx.AutoComplete.html">inputEx.AutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.BirthdateField.html">inputEx.BirthdateField</a></li>
 							
 								
 								<li>
@@ -825,6 +558,10 @@
 								
 								<li>
 									<a href="inputEx.DatePickerField.html">inputEx.DatePickerField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.DateSplitField.html">inputEx.DateSplitField</a></li>
 							
 								
 								<li>
@@ -857,10 +594,6 @@
 								
 								<li>
 									<a href="inputEx.HiddenField.html">inputEx.HiddenField</a></li>
-							
-								
-								<li>
-									<a href="inputEx.IconPickerField.html">inputEx.IconPickerField</a></li>
 							
 								
 								<li>
@@ -956,11 +689,19 @@
 							
 								
 								<li>
+									<a href="inputEx.widget.DataTable.html">inputEx.widget.DataTable</a></li>
+							
+								
+								<li>
 									<a href="inputEx.widget.DDList.html">inputEx.widget.DDList</a></li>
 							
 								
 								<li>
 									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
+							
+								
+								<li>
+									<a href="inputEx.widget.InputExCellEditor.html">inputEx.widget.InputExCellEditor</a></li>
 							
 								
 						</ul>
@@ -973,6 +714,10 @@
 								
 								<li>
 								<a href="AutoComplete.js.html">AutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="BirthdateField.js.html">BirthdateField.js</a></li>
 							
 								
 								<li>
@@ -992,11 +737,19 @@
 							
 								
 								<li>
+								<a href="DataTable-beta.js.html">DataTable-beta.js</a></li>
+							
+								
+								<li>
 								<a href="DateField.js.html">DateField.js</a></li>
 							
 								
 								<li>
 								<a href="DatePickerField.js.html">DatePickerField.js</a></li>
+							
+								
+								<li>
+								<a href="DateSplitField.js.html">DateSplitField.js</a></li>
 							
 								
 								<li>
@@ -1036,15 +789,7 @@
 							
 								
 								<li>
-								<a href="GroupInteractions-beta.js.html">GroupInteractions-beta.js</a></li>
-							
-								
-								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
-							
-								
-								<li>
-								<a href="IconPickerField.js.html">IconPickerField.js</a></li>
 							
 								
 								<li>
@@ -1157,7 +902,7 @@
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 16:05:40 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 15 Oct 2008 13:04:36 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

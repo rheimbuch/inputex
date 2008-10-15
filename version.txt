@@ -14,18 +14,21 @@ version 0.2.0:
 
 not released yet
 
-   - Added fields:
+	- Added fields:
 	 	* RadioField
 		* DatePickerField (type: datepicker)
 		* DateTimeField (type: datetime)
 		* IntegerField (type: integer) and removed the "numbersOnly" option from StringField
 		* NumberField (type: number)
 		* TimeField	(type: time)
-		* DDList widget: sortable list widget
 		* MultiAutoComplete
 		* MultiSelectField
 		* CombineField: replace PairField, but for N fields
 		* SliderField (type: slider)
+
+	- Added widgets:	
+		* DDList widget: sortable list widget
+		* Datatable (beta): combine YUI datatable widget with inputEx forms
 		
 	- Field enhancements:
 	   * Field: Added a "destroy" method, focus method to set the focus on inputs
@@ -36,7 +39,7 @@ not released yet
  		* PairField inherit from CombineField (deprecated, kept for compatibility)
 		* TypeField: implemented setValue, the builder can now "load" a group config
 		* UrlField: case sensitive URLs, make favicon optional otherwise it breaks https
-	 	* ListField: set the focus to the added element
+	 	* ListField: set the focus to the added element, use links or buttons
 		* RTEField: added SimpleEditor support and "opts" option to configure the toolbar (added by Dav Glass)
 		* TypeField/FormBuilder update: includes more options for more fields
 	

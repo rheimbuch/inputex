@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>inputEx Documentation - GroupInteractions-beta.js</title>
+<title>inputEx Documentation - inputEx.DateSplitField</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="JsDoc Toolkit 2.0.0" />
 <link href="css/reset-fonts-grids.css" type="text/css" rel="stylesheet" media="all" /> 
@@ -18,7 +18,7 @@
 			
 			
 			<h3>
-				<a href="./index.html">inputEx Documentation</a> &gt; GroupInteractions-beta.js
+				<a href="./index.html">inputEx Documentation</a> &gt; inputEx.DateSplitField
 				<span class="subtitle">0.2.0</span>
 			</h3>
 		
@@ -26,63 +26,162 @@
 		<div id="bd">
 			<div id="yui-main">
 				<div class="yui-b">
-<div class="summary description">
-	<p>This is the source view for GroupInteractions-beta.js</p>
+
+<!-- Class -->
+<h2>
+	Static Class <b>inputEx.DateSplitField</b>
+	<span class="extends"> - extends <a href="inputEx.CombineField.html">inputEx.CombineField</a></span><br/>
+</h2>
+
+<!--
+
+
+-->
+<!-- class description -->
+<div class="summary description">inputEx.DateSplitField</div>
+
+
+<!-- Known subsclasses -->
+
+
+<!--
+
+<hr>
+-->
+
+
+<!-- ========= CONSTRUCTOR ======== -->
+
+<div class="section constructor details">
+	<h3 id="constructor">Constructor</h3>
+	<div class="content">
+		<div class="detail">
+			<a name="DateSplitField"> </a>
+			
+				<strong>inputEx.DateSplitField</strong>
+				<code>( options )</code>
+				<ul>
+					
+					
+				</ul>
+	
+				<!-- CONSTRUCTOR PARAMETERS START -->
+				
+					<div class="description">
+						<dl>
+							<dt>Parameters:</dt>
+							
+								<dd>
+									<code>options</code>
+									 
+								</dd>
+							
+						</dl>
+					</div>		
+				
+				<!-- CONSTRUCTOR PARAMETERS END -->
+			
+			
+		</div>
+	</div>	
 </div>
-										
-<form>
-	<textarea name="code" class="JScript">(function() {
-   var inputEx = YAHOO.inputEx;
 
-inputEx.Group.prototype.onChange = function(eventName, args) {
-   
-   // Check if interactions are defined
-   var fieldValue = args[0];
-   var fieldInstance = args[1];
-   var index = inputEx.indexOf(fieldInstance, this.inputs);
-   var fieldConfig = this.inputConfigs[index];
-   if( !YAHOO.lang.isUndefined(fieldConfig.interactions) ) {
-      // Let's run the interactions !
-      var interactions = fieldConfig.interactions;
-      for(var i = 0 ; i < interactions.length ; i++) {
-         var interaction = interactions[i];
-         if(interaction.valueTrigger === fieldValue) {
-            this.runInteractions(interaction.actions);
-         }
-      }
-   }
-   
-   //this.setClassFromState();
-   this.fireUpdatedEvt();
-};
+<!-- ========= CONSTRUCTOR END ======== -->
 
 
-inputEx.Group.prototype.runAction = function(action) {
-   
-   try {
-      
-   var field = this.getFieldByName(action.name);
-   if( YAHOO.lang.isFunction(field[action.action]) ) {
-      field[action.action].call(field);
-   }
-   else {
-      console.log("action "+action.action+" is not a valid action for field "+action.name);
-   }
 
-   } catch(ex) {console.log(ex, action);}
-};
 
-inputEx.Group.prototype.runInteractions = function(actions) {
-   for(var i = 0 ; i < actions.length ; i++) {
-      this.runAction(actions[i]);
-   }
-};
+<!-- ============ Properties START ========= -->
 
-})();</textarea>
-</form>
+<!-- ============ Properties END ========== -->
+
+
+
+
+<!-- ============ METHOD DETAIL START ======= -->
+
+	<a name="method_detail"> </a> 
+
+	<div class="section method details">
+		<h3 id="methods">Methods</h3>
+		<div class="content">
+
+		
+		
 					
+		
 					
-					</div>
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+
+				</div>
+			</div>
+
+
+<!-- ============ METHOD DETAIL END ========== -->
+
+
+
+
+<!-- ========== INHERITED METHODS SUMMARY =========== -->
+
+
+	
+	
+		<div class="section field inheritance">
+			<h4>Methods inherited from class <a href="inputEx.CombineField.html">inputEx.CombineField</a>:</h4>
+			<div class="content">
+				<code>
+					
+						<a href="inputEx.CombineField.html#setOptions">setOptions</a>,
+					
+						<a href="inputEx.CombineField.html#renderField">renderField</a>,
+					
+						<a href="inputEx.CombineField.html#setClassFromState">setClassFromState</a>,
+					
+						<a href="inputEx.CombineField.html#getValue">getValue</a>,
+					
+						<a href="inputEx.CombineField.html#renderComponent">renderComponent</a>,
+					
+						<a href="inputEx.CombineField.html#appendSeparator">appendSeparator</a>,
+					
+						<a href="inputEx.CombineField.html#setValue">setValue</a>,
+					
+						<a href="inputEx.CombineField.html#validate">validate</a>,
+					
+						<a href="inputEx.CombineField.html#clear">clear</a>,
+							
+				</code>
+			</div>
+		</div>
+	
+	<br/>
+	
+
+<br/>
+
+<!-- ========== END INHERITED METHODS SUMMARY =========== -->
+
+
+
+<!-- ============ EVENT DETAIL START ======= -->
+
+
+
+
+</div>
 			</div>
 			
 			<div class="yui-b">
@@ -134,7 +233,15 @@ inputEx.Group.prototype.runInteractions = function(actions) {
 							
 								
 								<li>
+									<a href="inputEx.html">inputEx</a></li>
+							
+								
+								<li>
 									<a href="inputEx.AutoComplete.html">inputEx.AutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.BirthdateField.html">inputEx.BirthdateField</a></li>
 							
 								
 								<li>
@@ -159,6 +266,10 @@ inputEx.Group.prototype.runInteractions = function(actions) {
 								
 								<li>
 									<a href="inputEx.DatePickerField.html">inputEx.DatePickerField</a></li>
+							
+								<li class="selected">
+								
+									<a href="inputEx.DateSplitField.html">inputEx.DateSplitField</a></li>
 							
 								
 								<li>
@@ -191,10 +302,6 @@ inputEx.Group.prototype.runInteractions = function(actions) {
 								
 								<li>
 									<a href="inputEx.HiddenField.html">inputEx.HiddenField</a></li>
-							
-								
-								<li>
-									<a href="inputEx.IconPickerField.html">inputEx.IconPickerField</a></li>
 							
 								
 								<li>
@@ -290,11 +397,19 @@ inputEx.Group.prototype.runInteractions = function(actions) {
 							
 								
 								<li>
+									<a href="inputEx.widget.DataTable.html">inputEx.widget.DataTable</a></li>
+							
+								
+								<li>
 									<a href="inputEx.widget.DDList.html">inputEx.widget.DDList</a></li>
 							
 								
 								<li>
 									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
+							
+								
+								<li>
+									<a href="inputEx.widget.InputExCellEditor.html">inputEx.widget.InputExCellEditor</a></li>
 							
 								
 						</ul>
@@ -307,6 +422,10 @@ inputEx.Group.prototype.runInteractions = function(actions) {
 								
 								<li>
 								<a href="AutoComplete.js.html">AutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="BirthdateField.js.html">BirthdateField.js</a></li>
 							
 								
 								<li>
@@ -326,11 +445,19 @@ inputEx.Group.prototype.runInteractions = function(actions) {
 							
 								
 								<li>
+								<a href="DataTable-beta.js.html">DataTable-beta.js</a></li>
+							
+								
+								<li>
 								<a href="DateField.js.html">DateField.js</a></li>
 							
 								
 								<li>
 								<a href="DatePickerField.js.html">DatePickerField.js</a></li>
+							
+								
+								<li>
+								<a href="DateSplitField.js.html">DateSplitField.js</a></li>
 							
 								
 								<li>
@@ -368,17 +495,9 @@ inputEx.Group.prototype.runInteractions = function(actions) {
 								<li>
 								<a href="Group.js.html">Group.js</a></li>
 							
-								<li class="selected">
-								
-								<a href="GroupInteractions-beta.js.html">GroupInteractions-beta.js</a></li>
-							
 								
 								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
-							
-								
-								<li>
-								<a href="IconPickerField.js.html">IconPickerField.js</a></li>
 							
 								
 								<li>
@@ -491,7 +610,7 @@ inputEx.Group.prototype.runInteractions = function(actions) {
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 16:05:40 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 15 Oct 2008 13:04:37 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

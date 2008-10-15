@@ -47,6 +47,7 @@ inputEx.widget.DDListItem = function(id) {
 
     inputEx.widget.DDListItem.superclass.constructor.call(this, id);
 
+    // Prevent lateral draggability
     this.setXConstraint(0,0);
 
     this.goingUp = false;
@@ -60,12 +61,20 @@ YAHOO.extend(inputEx.widget.DDListItem, YAHOO.util.DDProxy, {
         var dragEl = this.getDragEl();
         var clickEl = this.getEl();
         Dom.setStyle(clickEl, "visibility", "hidden");
+        this._originalIndex = inputEx.indexOf(clickEl ,clickEl.parentNode.childNodes);
         dragEl.className = clickEl.className;
         dragEl.innerHTML = clickEl.innerHTML;
     },
 
     endDrag: function(e) {
         Dom.setStyle(this.id, "visibility", "");
+        
+        // Fire the reordered event if position in list has changed
+        var clickEl = this.getEl();
+        var newIndex = inputEx.indexOf(clickEl ,clickEl.parentNode.childNodes);
+        if(this._originalIndex != newIndex) {
+           this._list.listReorderedEvt.fire();
+        }
     },
 
     onDragDrop: function(e, id) {
@@ -161,7 +170,12 @@ inputEx.widget.DDList = function(options) {
 	 * @desc YAHOO custom event fired when an item is removed
 	 */
 	this.itemRemovedEvt = new YAHOO.util.CustomEvent('itemRemoved', this);
-   
+	
+	/**
+	 * @event
+	 * @desc YAHOO custom event fired when the list is reordered
+	 */
+   this.listReorderedEvt = new YAHOO.util.CustomEvent('listReordered', this);
    
    // append it immediatly to the parent DOM element
 	if(options.parentEl) {
@@ -186,15 +200,29 @@ inputEx.widget.DDList.prototype = {
          var li = a.parentNode;
          this.removeItem( inputEx.indexOf(li,this.ul.childNodes) );
       }, this, true);
-      new inputEx.widget.DDListItem(li);
+      var item = new inputEx.widget.DDListItem(li);
+      item._list = this;
       this.ul.appendChild(li);
    },
    
-   removeItem: function(i) {
+   /*
+   * private method to remove an item
+   */
+   _removeItem: function(i) {
       
       var itemValue = this.ul.childNodes[i].childNodes[0].innerHTML;
       
       this.ul.removeChild(this.ul.childNodes[i]);
+      
+      return itemValue;
+   },
+   
+   /*
+   *  public metnod to remove an item
+   *    _removeItem function + event firing
+   */
+   removeItem: function(i) {
+      var itemValue = this._removeItem(i);
       
       // Fire the itemRemoved Event
       this.itemRemovedEvt.fire(itemValue);
@@ -209,17 +237,30 @@ inputEx.widget.DDList.prototype = {
    },
    
    updateItem: function(i,value) {
-      this.ul.childNodes[i].childeNodes[0].innerHTML = value;
+      this.ul.childNodes[i].childNodes[0].innerHTML = value;
    },
    
    setValue: function(value) {
-      for(var i = 0 ; i < value.length ; i++) {
-         if(this.ul.childNodes.length > i) {
+      // if trying to set wrong value (or ""), reset
+      if (!YAHOO.lang.isArray(value)) {
+         value = [];
+      }
+      
+      var oldNb = this.ul.childNodes.length;
+      var newNb = value.length;
+      
+      for(var i = 0 ; i < newNb ; i++) {
+         if(i < oldNb) {
             this.updateItem(i, value[i]);
          }
          else {
             this.addItem(value[i]);
          }
+      }
+      
+      // remove extra li items if any
+      for(var j = newNb; j < oldNb; j++) {
+         this._removeItem(newNb); // newNb is always the index of first li to remove (not j !)
       }
    }
    
@@ -282,7 +323,15 @@ inputEx.widget.DDList.prototype = {
 							
 								
 								<li>
+									<a href="inputEx.html">inputEx</a></li>
+							
+								
+								<li>
 									<a href="inputEx.AutoComplete.html">inputEx.AutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.BirthdateField.html">inputEx.BirthdateField</a></li>
 							
 								
 								<li>
@@ -307,6 +356,10 @@ inputEx.widget.DDList.prototype = {
 								
 								<li>
 									<a href="inputEx.DatePickerField.html">inputEx.DatePickerField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.DateSplitField.html">inputEx.DateSplitField</a></li>
 							
 								
 								<li>
@@ -339,10 +392,6 @@ inputEx.widget.DDList.prototype = {
 								
 								<li>
 									<a href="inputEx.HiddenField.html">inputEx.HiddenField</a></li>
-							
-								
-								<li>
-									<a href="inputEx.IconPickerField.html">inputEx.IconPickerField</a></li>
 							
 								
 								<li>
@@ -438,11 +487,19 @@ inputEx.widget.DDList.prototype = {
 							
 								
 								<li>
+									<a href="inputEx.widget.DataTable.html">inputEx.widget.DataTable</a></li>
+							
+								
+								<li>
 									<a href="inputEx.widget.DDList.html">inputEx.widget.DDList</a></li>
 							
 								
 								<li>
 									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
+							
+								
+								<li>
+									<a href="inputEx.widget.InputExCellEditor.html">inputEx.widget.InputExCellEditor</a></li>
 							
 								
 						</ul>
@@ -455,6 +512,10 @@ inputEx.widget.DDList.prototype = {
 								
 								<li>
 								<a href="AutoComplete.js.html">AutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="BirthdateField.js.html">BirthdateField.js</a></li>
 							
 								
 								<li>
@@ -474,11 +535,19 @@ inputEx.widget.DDList.prototype = {
 							
 								
 								<li>
+								<a href="DataTable-beta.js.html">DataTable-beta.js</a></li>
+							
+								
+								<li>
 								<a href="DateField.js.html">DateField.js</a></li>
 							
 								
 								<li>
 								<a href="DatePickerField.js.html">DatePickerField.js</a></li>
+							
+								
+								<li>
+								<a href="DateSplitField.js.html">DateSplitField.js</a></li>
 							
 								
 								<li>
@@ -518,15 +587,7 @@ inputEx.widget.DDList.prototype = {
 							
 								
 								<li>
-								<a href="GroupInteractions-beta.js.html">GroupInteractions-beta.js</a></li>
-							
-								
-								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
-							
-								
-								<li>
-								<a href="IconPickerField.js.html">IconPickerField.js</a></li>
 							
 								
 								<li>
@@ -639,7 +700,7 @@ inputEx.widget.DDList.prototype = {
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 16:05:40 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 15 Oct 2008 13:04:36 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

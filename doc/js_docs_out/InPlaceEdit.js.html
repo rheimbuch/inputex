@@ -55,23 +55,19 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
  */   
 {
 
+   setOptions: function() {
+      inputEx.InPlaceEdit.superclass.setOptions.call(this);
+      
+      if (!YAHOO.lang.isObject(this.options.animColors)) {
+         this.options.animColors =  {from: '#ffff99' , to: '#ffffff'};
+      }
+   },
+
    /**
-    * Override render to create 2 divs: the visualization one, and the edit in place form
+    * Override renderComponent to create 2 divs: the visualization one, and the edit in place form
     */
-   /*render: function() {
-      
-	   // Create a DIV element to wrap the editing el and the image
-	   this.divEl = inputEx.cn('div', {className: this.options.className});
-   	
-      this.renderVisuDiv();
-	   
-	   this.renderEditor();
-   },*/
-   
    renderComponent: function() {
-      
       this.renderVisuDiv();
-	   
 	   this.renderEditor();
    },
    
@@ -88,11 +84,11 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
       this.editorContainer.appendChild( this.editorField.getEl() );
       Dom.setStyle(this.editorField.getEl(), 'float', 'left');
       
-      this.okButton = inputEx.cn('input', {type: 'button', value: 'Ok', className: 'inputEx-InPlaceEdit-OkButton'});
+      this.okButton = inputEx.cn('input', {type: 'button', value: inputEx.messages.okEditor, className: 'inputEx-InPlaceEdit-OkButton'});
       Dom.setStyle(this.okButton, 'float', 'left');
       this.editorContainer.appendChild(this.okButton);
       
-      this.cancelLink = inputEx.cn('a', {className: 'inputEx-InPlaceEdit-CancelLink'}, null, "cancel");
+      this.cancelLink = inputEx.cn('a', {className: 'inputEx-InPlaceEdit-CancelLink'}, null, inputEx.messages.cancelEditor);
       this.cancelLink.href = ""; // IE required (here, not in the cn fct)
       Dom.setStyle(this.cancelLink, 'float', 'left');
       this.editorContainer.appendChild(this.cancelLink);
@@ -113,7 +109,7 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
       if(this.colorAnim) {
          this.colorAnim.stop(true);
       }
-      inputEx.sn(this.formattedContainer, null, {backgroundColor: '#eeee33' });
+      inputEx.sn(this.formattedContainer, null, {backgroundColor: this.options.animColors.from });
    },
    
    /**
@@ -125,7 +121,7 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
       if(this.colorAnim) {
          this.colorAnim.stop(true);
       }
-      this.colorAnim = new YAHOO.util.ColorAnim(this.formattedContainer, {backgroundColor: { from: '#eeee33' , to: '#eeeeee' }}, 1);
+      this.colorAnim = new YAHOO.util.ColorAnim(this.formattedContainer, {backgroundColor: this.options.animColors}, 1);
       this.colorAnim.onComplete.subscribe(function() { Dom.setStyle(this.formattedContainer, 'background-color', ''); }, this, true);
       this.colorAnim.animate();   
    },
@@ -146,7 +142,6 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
          this.formattedContainer.innerHTML = lang.isUndefined(this.options.value) ? inputEx.messages.emptyInPlaceEdit: this.options.value;
       }
       
-      //this.divEl.appendChild(this.formattedContainer);
       this.fieldContainer.appendChild(this.formattedContainer);
       
    },
@@ -169,8 +164,6 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
          // Register some listeners
          Event.addListener(this.editorField.el, "keyup", this.onKeyUp, this, true);
          Event.addListener(this.editorField.el, "keydown", this.onKeyDown, this, true);
-         // BLur
-         Event.addListener(this.editorField.el, "blur", this.onCancelEditor, this, true);
       }
    },
    
@@ -252,7 +245,8 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
     * @return {Any} The value of the subfield
     */
    getValue: function() {
-	   return this.value;
+      var editorOpened = (this.editorContainer.style.display == '');
+	   return editorOpened ? this.editorField.getValue() : this.value;
    },
 
    /**
@@ -269,11 +263,28 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
       else {
          inputEx.renderVisu(this.options.visu, this.value, this.formattedContainer);
       }
-   }
+      
+      // If the editor is opened, update it 
+      if(this.editorContainer.style.display == '') {
+         this.editorField.setValue(value);
+      }
+      
+      inputEx.InPlaceEdit.superclass.setValue.call(this, value);
+   },
+   
+   /**
+    * Close the editor when calling the close function on this field
+    */
+   close: function() {
+      this.editorContainer.style.display = 'none';
+      this.formattedContainer.style.display = '';
+	}
 
 });
   
 inputEx.messages.emptyInPlaceEdit = "(click to edit)";
+inputEx.messages.cancelEditor = "cancel";
+inputEx.messages.okEditor = "Ok";
 
 /**
  * Register this class as "inplaceedit" type
@@ -336,7 +347,15 @@ inputEx.registerType("inplaceedit", inputEx.InPlaceEdit);
 							
 								
 								<li>
+									<a href="inputEx.html">inputEx</a></li>
+							
+								
+								<li>
 									<a href="inputEx.AutoComplete.html">inputEx.AutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.BirthdateField.html">inputEx.BirthdateField</a></li>
 							
 								
 								<li>
@@ -361,6 +380,10 @@ inputEx.registerType("inplaceedit", inputEx.InPlaceEdit);
 								
 								<li>
 									<a href="inputEx.DatePickerField.html">inputEx.DatePickerField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.DateSplitField.html">inputEx.DateSplitField</a></li>
 							
 								
 								<li>
@@ -393,10 +416,6 @@ inputEx.registerType("inplaceedit", inputEx.InPlaceEdit);
 								
 								<li>
 									<a href="inputEx.HiddenField.html">inputEx.HiddenField</a></li>
-							
-								
-								<li>
-									<a href="inputEx.IconPickerField.html">inputEx.IconPickerField</a></li>
 							
 								
 								<li>
@@ -492,11 +511,19 @@ inputEx.registerType("inplaceedit", inputEx.InPlaceEdit);
 							
 								
 								<li>
+									<a href="inputEx.widget.DataTable.html">inputEx.widget.DataTable</a></li>
+							
+								
+								<li>
 									<a href="inputEx.widget.DDList.html">inputEx.widget.DDList</a></li>
 							
 								
 								<li>
 									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
+							
+								
+								<li>
+									<a href="inputEx.widget.InputExCellEditor.html">inputEx.widget.InputExCellEditor</a></li>
 							
 								
 						</ul>
@@ -509,6 +536,10 @@ inputEx.registerType("inplaceedit", inputEx.InPlaceEdit);
 								
 								<li>
 								<a href="AutoComplete.js.html">AutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="BirthdateField.js.html">BirthdateField.js</a></li>
 							
 								
 								<li>
@@ -528,11 +559,19 @@ inputEx.registerType("inplaceedit", inputEx.InPlaceEdit);
 							
 								
 								<li>
+								<a href="DataTable-beta.js.html">DataTable-beta.js</a></li>
+							
+								
+								<li>
 								<a href="DateField.js.html">DateField.js</a></li>
 							
 								
 								<li>
 								<a href="DatePickerField.js.html">DatePickerField.js</a></li>
+							
+								
+								<li>
+								<a href="DateSplitField.js.html">DateSplitField.js</a></li>
 							
 								
 								<li>
@@ -572,15 +611,7 @@ inputEx.registerType("inplaceedit", inputEx.InPlaceEdit);
 							
 								
 								<li>
-								<a href="GroupInteractions-beta.js.html">GroupInteractions-beta.js</a></li>
-							
-								
-								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
-							
-								
-								<li>
-								<a href="IconPickerField.js.html">IconPickerField.js</a></li>
 							
 								
 								<li>
@@ -693,7 +724,7 @@ inputEx.registerType("inplaceedit", inputEx.InPlaceEdit);
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 16:05:40 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 15 Oct 2008 13:04:36 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

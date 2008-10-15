@@ -45,9 +45,9 @@
  * </ul>
  */
 inputEx.DateField = function(options) {
-   if(!options) { var options = {}; }
+   if(!options) { options = {}; }
    if(!options.messages) { options.messages = {}; }
-	if(!options.dateFormat) {options.dateFormat = 'm/d/Y'; }
+	if(!options.dateFormat) {options.dateFormat = inputEx.messages.defaultDateFormat; }
 	options.messages.invalid = inputEx.messages.invalidDate;
 	inputEx.DateField.superclass.constructor.call(this,options);
 };
@@ -72,7 +72,7 @@ lang.extend(inputEx.DateField, inputEx.StringField,
 	   var value = this.el.value;
 	   var ladate = value.split("/");
 	   if( ladate.length != 3) { return false; }
-	   if ( isNaN(parseInt(ladate[0])) || isNaN(parseInt(ladate[1])) || isNaN(parseInt(ladate[2]))) { return false; }
+	   if ( isNaN(parseInt(ladate[0],10)) || isNaN(parseInt(ladate[1],10)) || isNaN(parseInt(ladate[2],10))) { return false; }
 	   var formatSplit = this.options.dateFormat.split("/");
 	   var yearIndex = inputEx.indexOf('Y',formatSplit);
 	   if (ladate[yearIndex].length!=4) { return false; } // Avoid 3-digits years...
@@ -93,7 +93,7 @@ lang.extend(inputEx.DateField, inputEx.StringField,
 	
 	   // Don't try to parse a date if there is no date
 	   if( val === '' ) {
-	      this.el.value = '';
+	      inputEx.DateField.superclass.setValue.call(this, '');
 	      return;
 	   }
 	   var str = "";
@@ -110,7 +110,7 @@ lang.extend(inputEx.DateField, inputEx.StringField,
 	     str = val;
 	   }
 	
-	   this.el.value = str;
+	   inputEx.DateField.superclass.setValue.call(this, str);
 	},
 	   
 	/**
@@ -118,16 +118,21 @@ lang.extend(inputEx.DateField, inputEx.StringField,
 	 * @return {Date} The javascript Date object
 	 */
 	getValue: function() {
+	   // let parent class function check if typeInvite, etc...
+	   var value = inputEx.DateField.superclass.getValue.call(this);
+
 	   // Hack to validate if field not required and empty
-	   if (this.el.value === '') { return '';}
-	   var ladate = this.el.value.split("/");
+	   if (value === '') { return '';}
+	   
+	   //var ladate = this.el.value.split("/");
+	   var ladate = value.split("/");
 	   var formatSplit = this.options.dateFormat.split('/');
 	   var d = parseInt(ladate[ inputEx.indexOf('d',formatSplit) ],10);
 	   var Y = parseInt(ladate[ inputEx.indexOf('Y',formatSplit) ],10);
 	   var m = parseInt(ladate[ inputEx.indexOf('m',formatSplit) ],10)-1;
 	   return (new Date(Y,m,d));
 	}
-	   
+
 });
 	
 // Specific message for the container
@@ -194,7 +199,15 @@ inputEx.registerType("date", inputEx.DateField);
 							
 								
 								<li>
+									<a href="inputEx.html">inputEx</a></li>
+							
+								
+								<li>
 									<a href="inputEx.AutoComplete.html">inputEx.AutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.BirthdateField.html">inputEx.BirthdateField</a></li>
 							
 								
 								<li>
@@ -219,6 +232,10 @@ inputEx.registerType("date", inputEx.DateField);
 								
 								<li>
 									<a href="inputEx.DatePickerField.html">inputEx.DatePickerField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.DateSplitField.html">inputEx.DateSplitField</a></li>
 							
 								
 								<li>
@@ -251,10 +268,6 @@ inputEx.registerType("date", inputEx.DateField);
 								
 								<li>
 									<a href="inputEx.HiddenField.html">inputEx.HiddenField</a></li>
-							
-								
-								<li>
-									<a href="inputEx.IconPickerField.html">inputEx.IconPickerField</a></li>
 							
 								
 								<li>
@@ -350,11 +363,19 @@ inputEx.registerType("date", inputEx.DateField);
 							
 								
 								<li>
+									<a href="inputEx.widget.DataTable.html">inputEx.widget.DataTable</a></li>
+							
+								
+								<li>
 									<a href="inputEx.widget.DDList.html">inputEx.widget.DDList</a></li>
 							
 								
 								<li>
 									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
+							
+								
+								<li>
+									<a href="inputEx.widget.InputExCellEditor.html">inputEx.widget.InputExCellEditor</a></li>
 							
 								
 						</ul>
@@ -367,6 +388,10 @@ inputEx.registerType("date", inputEx.DateField);
 								
 								<li>
 								<a href="AutoComplete.js.html">AutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="BirthdateField.js.html">BirthdateField.js</a></li>
 							
 								
 								<li>
@@ -384,6 +409,10 @@ inputEx.registerType("date", inputEx.DateField);
 								<li>
 								<a href="CombineField.js.html">CombineField.js</a></li>
 							
+								
+								<li>
+								<a href="DataTable-beta.js.html">DataTable-beta.js</a></li>
+							
 								<li class="selected">
 								
 								<a href="DateField.js.html">DateField.js</a></li>
@@ -391,6 +420,10 @@ inputEx.registerType("date", inputEx.DateField);
 								
 								<li>
 								<a href="DatePickerField.js.html">DatePickerField.js</a></li>
+							
+								
+								<li>
+								<a href="DateSplitField.js.html">DateSplitField.js</a></li>
 							
 								
 								<li>
@@ -430,15 +463,7 @@ inputEx.registerType("date", inputEx.DateField);
 							
 								
 								<li>
-								<a href="GroupInteractions-beta.js.html">GroupInteractions-beta.js</a></li>
-							
-								
-								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
-							
-								
-								<li>
-								<a href="IconPickerField.js.html">IconPickerField.js</a></li>
 							
 								
 								<li>
@@ -551,7 +576,7 @@ inputEx.registerType("date", inputEx.DateField);
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 16:05:40 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 15 Oct 2008 13:04:35 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

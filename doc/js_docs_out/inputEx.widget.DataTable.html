@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>inputEx Documentation - inputEx.IconPickerField</title>
+<title>inputEx Documentation - inputEx.widget.DataTable</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="JsDoc Toolkit 2.0.0" />
 <link href="css/reset-fonts-grids.css" type="text/css" rel="stylesheet" media="all" /> 
@@ -18,7 +18,7 @@
 			
 			
 			<h3>
-				<a href="./index.html">inputEx Documentation</a> &gt; inputEx.IconPickerField
+				<a href="./index.html">inputEx Documentation</a> &gt; inputEx.widget.DataTable
 				<span class="subtitle">0.2.0</span>
 			</h3>
 		
@@ -29,19 +29,20 @@
 
 <!-- Class -->
 <h2>
-	Static Class <b>inputEx.IconPickerField</b>
-	<span class="extends"> - extends <a href="inputEx.Field.html">inputEx.Field</a></span><br/>
+	Static Class <b>inputEx.widget.DataTable</b>
+	
 </h2>
-
-<!-- Known subsclasses-->
-
 
 <!--
 
 
 -->
 <!-- class description -->
-<div class="summary description">Abstract class menu button field</div>
+<div class="summary description">Create an editable datatable</div>
+
+
+<!-- Known subsclasses -->
+
 
 <!--
 
@@ -55,9 +56,9 @@
 	<h3 id="constructor">Constructor</h3>
 	<div class="content">
 		<div class="detail">
-			<a name="IconPickerField"> </a>
+			<a name="DataTable"> </a>
 			
-				<strong>inputEx.IconPickerField</strong>
+				<strong>inputEx.widget.DataTable</strong>
 				<code>( options )</code>
 				<ul>
 					
@@ -72,8 +73,11 @@
 							
 								<dd>
 									<code>options<i>&nbsp;&lt;Object&gt;&nbsp;</i></code>
-									 - Added options:
+									 - Options:
 <ul>
+   <li>id</li>
+   <li>parentEl</li>
+   <li>editing 'formeditor' (default) or 'celleditor'</li>
 </ul> 
 								</dd>
 							
@@ -94,33 +98,6 @@
 
 <!-- ============ Properties START ========= -->
 
-<a name="field_detail"> </a> 
-<div class="section field details">
-	<h3 id="properties">Properties</h3>
-	<div class="content">
-		
-			<div>
-				
-				<h4>
-					
-					
-					<a name="options">options</a> 
-					<code>- Object</code>
-					
-				</h4>
-				
-				<div class="detail">
-					<div class="description">
-						Configuration object to set the options for this class and the parent classes. See constructor details for options added by this class.
-						
-					</div>
-				</div>
-			</div>
-			<hr>
-		
-	</div>
-</div>
-
 <!-- ============ Properties END ========== -->
 
 
@@ -136,50 +113,94 @@
 
 		
 		
-					
-		
-					
-		
-					
-		
-					
-		
-					
-		
-					
-		
-					
-		
-					
-		
-					
-		
-					
-		
-					
-		
-					
-		
-					
-		
-					
-		
-					
-		
-					
-		
-					
-		
 			<div>
-				<h4><a name="method_renderComponent">renderComponent</a></h4>
+				<h4><a name="method_fieldsToColumndefs">fieldsToColumndefs</a></h4>
 			
 				<div class="detail">
-					<code><b>renderComponent</b>()</code> 
+					<code><b>fieldsToColumndefs</b>(fields)</code> 
 				</div>
 				
 				<div class="description">
 					
-					Build a select tag with options
+					Convert an inputEx fields definition to a DataTable columns definition
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>fields</code>
+						 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_fieldToColumndef">fieldToColumndef</a></h4>
+			
+				<div class="detail">
+					<code><b>fieldToColumndef</b>(field)</code> 
+				</div>
+				
+				<div class="description">
+					
+					Convert a single inputEx field definition to a DataTable column definition
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>field</code>
+						 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_hideSubform">hideSubform</a></h4>
+			
+				<div class="detail">
+					<code><b>hideSubform</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Hide the form
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -200,18 +221,17 @@
 					
 					
 		
-					
-		
 			<div>
-				<h4><a name="method_setOptions">setOptions</a></h4>
+				<h4><a name="method_initCellEditor">initCellEditor</a></h4>
 			
 				<div class="detail">
-					<code><b>setOptions</b>()</code> 
+					<code><b>initCellEditor</b>()</code> 
 				</div>
 				
 				<div class="description">
 					
-					
+					Make the datatable inplace editable with inputEx fields
+If this.options.editing == "celleditor"
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -232,12 +252,442 @@
 					
 					
 		
+			<div>
+				<h4><a name="method_initFormEditor">initFormEditor</a></h4>
+			
+				<div class="detail">
+					<code><b>initFormEditor</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Create an inputEx form next to the datatable.
+If this.options.editing == "formeditor"
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
 					
 		
+			<div>
+				<h4><a name="method_itemAddedEvt">itemAddedEvt</a></h4>
+			
+				<div class="detail">
+					<code><b>itemAddedEvt</b>(Added)</code> 
+				</div>
+				
+				<div class="description">
+					
+					YAHOO custom event fired when an item is added
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>Added&nbsp;<i>&lt;YAHOO.widget.Record&gt;</i>&nbsp;</code>
+						 - record 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
 					
 		
+			<div>
+				<h4><a name="method_itemModifiedEvt">itemModifiedEvt</a></h4>
+			
+				<div class="detail">
+					<code><b>itemModifiedEvt</b>(Modified)</code> 
+				</div>
+				
+				<div class="description">
+					
+					YAHOO custom event fired when an item is modified
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>Modified&nbsp;<i>&lt;YAHOO.widget.Record&gt;</i>&nbsp;</code>
+						 - record 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
 					
 		
+			<div>
+				<h4><a name="method_itemRemovedEvt">itemRemovedEvt</a></h4>
+			
+				<div class="detail">
+					<code><b>itemRemovedEvt</b>(Removed)</code> 
+				</div>
+				
+				<div class="description">
+					
+					YAHOO custom event fired when an item is removed
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>Removed&nbsp;<i>&lt;YAHOO.widget.Record&gt;</i>&nbsp;</code>
+						 - record 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_onCancelForm">onCancelForm</a></h4>
+			
+				<div class="detail">
+					<code><b>onCancelForm</b>(e)</code> 
+				</div>
+				
+				<div class="description">
+					
+					Cancel row edition
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>e</code>
+						 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_onCellClick">onCellClick</a></h4>
+			
+				<div class="detail">
+					<code><b>onCellClick</b>(ev,args)</code> 
+				</div>
+				
+				<div class="description">
+					
+					Handling cell click events
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>ev</code>
+						 
+					</ul>
+					
+					<ul>
+						<code>args</code>
+						 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_onEventSelectRow">onEventSelectRow</a></h4>
+			
+				<div class="detail">
+					<code><b>onEventSelectRow</b>(args)</code> 
+				</div>
+				
+				<div class="description">
+					
+					Set the subForm value when a row is selected
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>args</code>
+						 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_onInsertButton">onInsertButton</a></h4>
+			
+				<div class="detail">
+					<code><b>onInsertButton</b>(e)</code> 
+				</div>
+				
+				<div class="description">
+					
+					Insert button event handler
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>e</code>
+						 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_onSaveForm">onSaveForm</a></h4>
+			
+				<div class="detail">
+					<code><b>onSaveForm</b>(e)</code> 
+				</div>
+				
+				<div class="description">
+					
+					Save the form value in the dataset
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>e</code>
+						 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_removeUnsavedRecord">removeUnsavedRecord</a></h4>
+			
+				<div class="detail">
+					<code><b>removeUnsavedRecord</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Remove the record that has not been saved
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_renderDatatable">renderDatatable</a></h4>
+			
+				<div class="detail">
+					<code><b>renderDatatable</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Render the datatable
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_showSubform">showSubform</a></h4>
+			
+				<div class="detail">
+					<code><b>showSubform</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Show the form
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
 					
 
 				</div>
@@ -253,59 +703,6 @@
 
 
 	
-	
-		<div class="section field inheritance">
-			<h4>Methods inherited from class <a href="inputEx.Field.html">inputEx.Field</a>:</h4>
-			<div class="content">
-				<code>
-					
-						<a href="inputEx.Field.html#focus">focus</a>,
-					
-						<a href="inputEx.Field.html#getEl">getEl</a>,
-					
-						<a href="inputEx.Field.html#validate">validate</a>,
-					
-						<a href="inputEx.Field.html#fireUpdatedEvt">fireUpdatedEvt</a>,
-					
-						<a href="inputEx.Field.html#show">show</a>,
-					
-						<a href="inputEx.Field.html#close">close</a>,
-					
-						<a href="inputEx.Field.html#onBlur">onBlur</a>,
-					
-						<a href="inputEx.Field.html#onFocus">onFocus</a>,
-					
-						<a href="inputEx.Field.html#getStateString">getStateString</a>,
-					
-						<a href="inputEx.Field.html#setClassFromState">setClassFromState</a>,
-					
-						<a href="inputEx.Field.html#disable">disable</a>,
-					
-						<a href="inputEx.Field.html#onChange">onChange</a>,
-					
-						<a href="inputEx.Field.html#render">render</a>,
-					
-						<a href="inputEx.Field.html#updatedEvt">updatedEvt</a>,
-					
-						<a href="inputEx.Field.html#initEvents">initEvents</a>,
-					
-						<a href="inputEx.Field.html#getState">getState</a>,
-					
-						<a href="inputEx.Field.html#getValue">getValue</a>,
-					
-						<a href="inputEx.Field.html#hide">hide</a>,
-					
-						<a href="inputEx.Field.html#displayMessage">displayMessage</a>,
-					
-						<a href="inputEx.Field.html#destroy">destroy</a>,
-					
-						<a href="inputEx.Field.html#setValue">setValue</a>,
-					
-						<a href="inputEx.Field.html#enable">enable</a>,
-							
-				</code>
-			</div>
-		</div>
 	
 	<br/>
 	
@@ -373,7 +770,15 @@
 							
 								
 								<li>
+									<a href="inputEx.html">inputEx</a></li>
+							
+								
+								<li>
 									<a href="inputEx.AutoComplete.html">inputEx.AutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.BirthdateField.html">inputEx.BirthdateField</a></li>
 							
 								
 								<li>
@@ -398,6 +803,10 @@
 								
 								<li>
 									<a href="inputEx.DatePickerField.html">inputEx.DatePickerField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.DateSplitField.html">inputEx.DateSplitField</a></li>
 							
 								
 								<li>
@@ -430,10 +839,6 @@
 								
 								<li>
 									<a href="inputEx.HiddenField.html">inputEx.HiddenField</a></li>
-							
-								<li class="selected">
-								
-									<a href="inputEx.IconPickerField.html">inputEx.IconPickerField</a></li>
 							
 								
 								<li>
@@ -527,6 +932,10 @@
 								<li>
 									<a href="inputEx.widget.html">inputEx.widget</a></li>
 							
+								<li class="selected">
+								
+									<a href="inputEx.widget.DataTable.html">inputEx.widget.DataTable</a></li>
+							
 								
 								<li>
 									<a href="inputEx.widget.DDList.html">inputEx.widget.DDList</a></li>
@@ -534,6 +943,10 @@
 								
 								<li>
 									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
+							
+								
+								<li>
+									<a href="inputEx.widget.InputExCellEditor.html">inputEx.widget.InputExCellEditor</a></li>
 							
 								
 						</ul>
@@ -546,6 +959,10 @@
 								
 								<li>
 								<a href="AutoComplete.js.html">AutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="BirthdateField.js.html">BirthdateField.js</a></li>
 							
 								
 								<li>
@@ -565,11 +982,19 @@
 							
 								
 								<li>
+								<a href="DataTable-beta.js.html">DataTable-beta.js</a></li>
+							
+								
+								<li>
 								<a href="DateField.js.html">DateField.js</a></li>
 							
 								
 								<li>
 								<a href="DatePickerField.js.html">DatePickerField.js</a></li>
+							
+								
+								<li>
+								<a href="DateSplitField.js.html">DateSplitField.js</a></li>
 							
 								
 								<li>
@@ -609,15 +1034,7 @@
 							
 								
 								<li>
-								<a href="GroupInteractions-beta.js.html">GroupInteractions-beta.js</a></li>
-							
-								
-								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
-							
-								
-								<li>
-								<a href="IconPickerField.js.html">IconPickerField.js</a></li>
 							
 								
 								<li>
@@ -730,7 +1147,7 @@
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 16:05:41 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 15 Oct 2008 13:04:37 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

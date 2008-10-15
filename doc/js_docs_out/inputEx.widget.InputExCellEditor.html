@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>inputEx Documentation - IPv4Field.js</title>
+<title>inputEx Documentation - inputEx.widget.InputExCellEditor</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="JsDoc Toolkit 2.0.0" />
 <link href="css/reset-fonts-grids.css" type="text/css" rel="stylesheet" media="all" /> 
@@ -18,7 +18,7 @@
 			
 			
 			<h3>
-				<a href="./index.html">inputEx Documentation</a> &gt; IPv4Field.js
+				<a href="./index.html">inputEx Documentation</a> &gt; inputEx.widget.InputExCellEditor
 				<span class="subtitle">0.2.0</span>
 			</h3>
 		
@@ -26,54 +26,268 @@
 		<div id="bd">
 			<div id="yui-main">
 				<div class="yui-b">
-<div class="summary description">
-	<p>This is the source view for IPv4Field.js</p>
+
+<!-- Class -->
+<h2>
+	Static Class <b>inputEx.widget.InputExCellEditor</b>
+	<span class="extends"> - extends <a href="YAHOO.widget.BaseCellEditor.html">YAHOO.widget.BaseCellEditor</a></span><br/>
+</h2>
+
+<!--
+
+
+-->
+<!-- class description -->
+<div class="summary description">InputExCellEditor</div>
+
+
+<!-- Known subsclasses -->
+
+
+<!--
+
+<hr>
+-->
+
+
+<!-- ========= CONSTRUCTOR ======== -->
+
+<div class="section constructor details">
+	<h3 id="constructor">Constructor</h3>
+	<div class="content">
+		<div class="detail">
+			<a name="InputExCellEditor"> </a>
+			
+				<strong>inputEx.widget.InputExCellEditor</strong>
+				<code>( inputExFieldDef )</code>
+				<ul>
+					
+					The InputExCellEditor class provides functionality for inline editing
+using the inputEx field definition.
+				</ul>
+	
+				<!-- CONSTRUCTOR PARAMETERS START -->
+				
+					<div class="description">
+						<dl>
+							<dt>Parameters:</dt>
+							
+								<dd>
+									<code>inputExFieldDef<i>&nbsp;&lt;Object&gt;&nbsp;</i></code>
+									 - InputEx field definition object 
+								</dd>
+							
+						</dl>
+					</div>		
+				
+				<!-- CONSTRUCTOR PARAMETERS END -->
+			
+			
+		</div>
+	</div>	
 </div>
-										
-<form>
-	<textarea name="code" class="JScript">(function() {
 
-   var inputEx = YAHOO.inputEx;
+<!-- ========= CONSTRUCTOR END ======== -->
 
-/**
- * @class Adds an IPv4 address regexp
- * @extends inputEx.StringField
- * @constructor
- * @param {Object} options inputEx.Field options object
- */
-inputEx.IPv4Field = function(options) {
-	inputEx.IPv4Field.superclass.constructor.call(this,options);
-};
-YAHOO.lang.extend(inputEx.IPv4Field, inputEx.StringField, 
-/**
- * @scope inputEx.IPv4Field.prototype   
- */   
-{
-   
-   /**
-    * set IPv4 regexp and invalid string
-    */
-   setOptions: function() {
-      inputEx.IPv4Field.superclass.setOptions.call(this);
-      this.options.messages.invalid = inputEx.messages.invalidIPv4;
-      this.options.regexp = inputEx.regexps.ipv4;
-   }
-  
-});
 
-// Specific message for the email field
-inputEx.messages.invalidIPv4 = "Invalid IPv4 address, ex: 192.168.0.1";
 
-/**
- * Register this class as "IPv4" type
- */
-inputEx.registerType("IPv4", inputEx.IPv4Field);
 
-})();</textarea>
-</form>
+<!-- ============ Properties START ========= -->
+
+<!-- ============ Properties END ========== -->
+
+
+
+
+<!-- ============ METHOD DETAIL START ======= -->
+
+	<a name="method_detail"> </a> 
+
+	<div class="section method details">
+		<h3 id="methods">Methods</h3>
+		<div class="content">
+
+		
+		
+			<div>
+				<h4><a name="method_focus">focus</a></h4>
+			
+				<div class="detail">
+					<code><b>focus</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Sets focus in InputExCellEditor.
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
 					
 					
-					</div>
+		
+			<div>
+				<h4><a name="method_getInputValue">getInputValue</a></h4>
+			
+				<div class="detail">
+					<code><b>getInputValue</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Returns new value for InputExCellEditor.
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_renderForm">renderForm</a></h4>
+			
+				<div class="detail">
+					<code><b>renderForm</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Render the inputEx field editor
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_resetForm">resetForm</a></h4>
+			
+				<div class="detail">
+					<code><b>resetForm</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Resets InputExCellEditor UI to initial state.
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_show">show</a></h4>
+			
+				<div class="detail">
+					<code><b>show</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Hack to NOT close the field at the first updatedEvt (fired when we set the value)
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+
+				</div>
+			</div>
+
+
+<!-- ============ METHOD DETAIL END ========== -->
+
+
+
+
+<!-- ========== INHERITED METHODS SUMMARY =========== -->
+
+
+	
+	
+	<br/>
+	
+
+<br/>
+
+<!-- ========== END INHERITED METHODS SUMMARY =========== -->
+
+
+
+<!-- ============ EVENT DETAIL START ======= -->
+
+
+
+
+</div>
 			</div>
 			
 			<div class="yui-b">
@@ -299,8 +513,8 @@ inputEx.registerType("IPv4", inputEx.IPv4Field);
 								<li>
 									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
 							
+								<li class="selected">
 								
-								<li>
 									<a href="inputEx.widget.InputExCellEditor.html">inputEx.widget.InputExCellEditor</a></li>
 							
 								
@@ -407,8 +621,8 @@ inputEx.registerType("IPv4", inputEx.IPv4Field);
 								<li>
 								<a href="IntegerField.js.html">IntegerField.js</a></li>
 							
-								<li class="selected">
 								
+								<li>
 								<a href="IPv4Field.js.html">IPv4Field.js</a></li>
 							
 								
@@ -502,7 +716,7 @@ inputEx.registerType("IPv4", inputEx.IPv4Field);
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 15 Oct 2008 13:04:36 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 15 Oct 2008 13:04:37 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

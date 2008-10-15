@@ -33,15 +33,16 @@
 	<span class="extends"> - extends <a href="inputEx.Group.html">inputEx.Group</a></span><br/>
 </h2>
 
-<!-- Known subsclasses-->
-
-
 <!--
 
 
 -->
 <!-- class description -->
-<div class="summary description">Create a group of fields within a FORM tag</div>
+<div class="summary description">Create a group of fields within a FORM tag and adds buttons</div>
+
+
+<!-- Known subsclasses -->
+
 
 <!--
 
@@ -175,8 +176,66 @@
 		
 					
 		
+			<div>
+				<h4><a name="method_disable">disable</a></h4>
+			
+				<div class="detail">
+					<code><b>disable</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Disable all fields and buttons in the form
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
 					
 		
+					
+		
+			<div>
+				<h4><a name="method_enable">enable</a></h4>
+			
+				<div class="detail">
+					<code><b>enable</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Enable all fields and buttons in the form
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
 					
 		
 					
@@ -253,6 +312,8 @@
 						<hr>
 						</div>
 					
+					
+		
 					
 		
 					
@@ -517,6 +578,8 @@ If the ajax option object is set, use YUI async Request to send the form
 						<a href="inputEx.Field.html#renderComponent">renderComponent</a>,
 					
 						<a href="inputEx.Field.html#destroy">destroy</a>,
+					
+						<a href="inputEx.Field.html#isEmpty">isEmpty</a>,
 							
 				</code>
 			</div>
@@ -537,6 +600,8 @@ If the ajax option object is set, use YUI async Request to send the form
 					
 						<a href="inputEx.Group.html#setValue">setValue</a>,
 					
+						<a href="inputEx.Group.html#clear">clear</a>,
+					
 						<a href="inputEx.Group.html#onChange">onChange</a>,
 					
 						<a href="inputEx.Group.html#focus">focus</a>,
@@ -547,13 +612,9 @@ If the ajax option object is set, use YUI async Request to send the form
 					
 						<a href="inputEx.Group.html#renderFields">renderFields</a>,
 					
-						<a href="inputEx.Group.html#disable">disable</a>,
-					
 						<a href="inputEx.Group.html#close">close</a>,
 					
 						<a href="inputEx.Group.html#runInteractions">runInteractions</a>,
-					
-						<a href="inputEx.Group.html#enable">enable</a>,
 							
 				</code>
 			</div>
@@ -625,7 +686,15 @@ If the ajax option object is set, use YUI async Request to send the form
 							
 								
 								<li>
+									<a href="inputEx.html">inputEx</a></li>
+							
+								
+								<li>
 									<a href="inputEx.AutoComplete.html">inputEx.AutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.BirthdateField.html">inputEx.BirthdateField</a></li>
 							
 								
 								<li>
@@ -650,6 +719,10 @@ If the ajax option object is set, use YUI async Request to send the form
 								
 								<li>
 									<a href="inputEx.DatePickerField.html">inputEx.DatePickerField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.DateSplitField.html">inputEx.DateSplitField</a></li>
 							
 								
 								<li>
@@ -682,10 +755,6 @@ If the ajax option object is set, use YUI async Request to send the form
 								
 								<li>
 									<a href="inputEx.HiddenField.html">inputEx.HiddenField</a></li>
-							
-								
-								<li>
-									<a href="inputEx.IconPickerField.html">inputEx.IconPickerField</a></li>
 							
 								
 								<li>
@@ -781,11 +850,19 @@ If the ajax option object is set, use YUI async Request to send the form
 							
 								
 								<li>
+									<a href="inputEx.widget.DataTable.html">inputEx.widget.DataTable</a></li>
+							
+								
+								<li>
 									<a href="inputEx.widget.DDList.html">inputEx.widget.DDList</a></li>
 							
 								
 								<li>
 									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
+							
+								
+								<li>
+									<a href="inputEx.widget.InputExCellEditor.html">inputEx.widget.InputExCellEditor</a></li>
 							
 								
 						</ul>
@@ -798,6 +875,10 @@ If the ajax option object is set, use YUI async Request to send the form
 								
 								<li>
 								<a href="AutoComplete.js.html">AutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="BirthdateField.js.html">BirthdateField.js</a></li>
 							
 								
 								<li>
@@ -817,11 +898,19 @@ If the ajax option object is set, use YUI async Request to send the form
 							
 								
 								<li>
+								<a href="DataTable-beta.js.html">DataTable-beta.js</a></li>
+							
+								
+								<li>
 								<a href="DateField.js.html">DateField.js</a></li>
 							
 								
 								<li>
 								<a href="DatePickerField.js.html">DatePickerField.js</a></li>
+							
+								
+								<li>
+								<a href="DateSplitField.js.html">DateSplitField.js</a></li>
 							
 								
 								<li>
@@ -861,15 +950,7 @@ If the ajax option object is set, use YUI async Request to send the form
 							
 								
 								<li>
-								<a href="GroupInteractions-beta.js.html">GroupInteractions-beta.js</a></li>
-							
-								
-								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
-							
-								
-								<li>
-								<a href="IconPickerField.js.html">IconPickerField.js</a></li>
 							
 								
 								<li>
@@ -982,7 +1063,7 @@ If the ajax option object is set, use YUI async Request to send the form
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 16:05:41 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 15 Oct 2008 13:04:37 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

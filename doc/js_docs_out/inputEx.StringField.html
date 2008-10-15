@@ -33,7 +33,15 @@
 	<span class="extends"> - extends <a href="inputEx.Field.html">inputEx.Field</a></span><br/>
 </h2>
 
-<!-- Known subsclasses-->
+<!--
+
+
+-->
+<!-- class description -->
+<div class="summary description">Basic string field (equivalent to the input type "text")</div>
+
+
+<!-- Known subsclasses -->
 
 	<dl class="subclasses">
 		<dt>Known Subclasses:</dt>
@@ -42,6 +50,8 @@
 				<a href="inputEx.AutoComplete.html">inputEx.AutoComplete</a>
 			
 				<a href="inputEx.NumberField.html">inputEx.NumberField</a>
+			
+				<a href="inputEx.FrenchPhone.html">inputEx.FrenchPhone</a>
 			
 				<a href="inputEx.PasswordField.html">inputEx.PasswordField</a>
 			
@@ -60,13 +70,6 @@
 		</dd>
 	</dl>
 
-
-<!--
-
-
--->
-<!-- class description -->
-<div class="summary description">Basic string field (equivalent to the input type "text")</div>
 
 <!--
 
@@ -166,6 +169,8 @@
 		<div class="content">
 
 		
+		
+					
 		
 					
 		
@@ -276,7 +281,7 @@
 				
 				<div class="description">
 					
-					Return (stateEmpty|stateRequired) if the value equals the typeInvite attribute
+					Return (stateEmpty|stateRequired)
 					<!--
 					for each="since" in="method.doc.getTag('since')">
 						<br><b>Since:</b> undefined<br/>
@@ -405,6 +410,8 @@
 						<hr>
 						</div>
 					
+					
+		
 					
 		
 					
@@ -590,34 +597,6 @@
 					
 					
 		
-			<div>
-				<h4><a name="method_setOptions">setOptions</a></h4>
-			
-				<div class="detail">
-					<code><b>setOptions</b>()</code> 
-				</div>
-				
-				<div class="description">
-					
-					Add the option "size"
-					<!--
-					for each="since" in="method.doc.getTag('since')">
-						<br><b>Since:</b> undefined<br/>
-					/for>
-				-->
-				</div>
-				
-			<!-- METHOD PARAMETERS START -->
-			
-				<!-- METHOD PARAMETERS END -->
-				<!-- ADDITIONAL ATTRIBUTES START -->
-				
-				
-					
-						<!-- ADDITIONAL ATTRIBUTES  END -->
-						<hr>
-						</div>
-					
 					
 		
 			<div>
@@ -728,11 +707,17 @@
 					
 						<a href="inputEx.Field.html#updatedEvt">updatedEvt</a>,
 					
+						<a href="inputEx.Field.html#setOptions">setOptions</a>,
+					
 						<a href="inputEx.Field.html#hide">hide</a>,
 					
 						<a href="inputEx.Field.html#displayMessage">displayMessage</a>,
 					
 						<a href="inputEx.Field.html#destroy">destroy</a>,
+					
+						<a href="inputEx.Field.html#isEmpty">isEmpty</a>,
+					
+						<a href="inputEx.Field.html#clear">clear</a>,
 							
 				</code>
 			</div>
@@ -804,7 +789,15 @@
 							
 								
 								<li>
+									<a href="inputEx.html">inputEx</a></li>
+							
+								
+								<li>
 									<a href="inputEx.AutoComplete.html">inputEx.AutoComplete</a></li>
+							
+								
+								<li>
+									<a href="inputEx.BirthdateField.html">inputEx.BirthdateField</a></li>
 							
 								
 								<li>
@@ -829,6 +822,10 @@
 								
 								<li>
 									<a href="inputEx.DatePickerField.html">inputEx.DatePickerField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.DateSplitField.html">inputEx.DateSplitField</a></li>
 							
 								
 								<li>
@@ -861,10 +858,6 @@
 								
 								<li>
 									<a href="inputEx.HiddenField.html">inputEx.HiddenField</a></li>
-							
-								
-								<li>
-									<a href="inputEx.IconPickerField.html">inputEx.IconPickerField</a></li>
 							
 								
 								<li>
@@ -960,11 +953,19 @@
 							
 								
 								<li>
+									<a href="inputEx.widget.DataTable.html">inputEx.widget.DataTable</a></li>
+							
+								
+								<li>
 									<a href="inputEx.widget.DDList.html">inputEx.widget.DDList</a></li>
 							
 								
 								<li>
 									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
+							
+								
+								<li>
+									<a href="inputEx.widget.InputExCellEditor.html">inputEx.widget.InputExCellEditor</a></li>
 							
 								
 						</ul>
@@ -977,6 +978,10 @@
 								
 								<li>
 								<a href="AutoComplete.js.html">AutoComplete.js</a></li>
+							
+								
+								<li>
+								<a href="BirthdateField.js.html">BirthdateField.js</a></li>
 							
 								
 								<li>
@@ -996,11 +1001,19 @@
 							
 								
 								<li>
+								<a href="DataTable-beta.js.html">DataTable-beta.js</a></li>
+							
+								
+								<li>
 								<a href="DateField.js.html">DateField.js</a></li>
 							
 								
 								<li>
 								<a href="DatePickerField.js.html">DatePickerField.js</a></li>
+							
+								
+								<li>
+								<a href="DateSplitField.js.html">DateSplitField.js</a></li>
 							
 								
 								<li>
@@ -1040,15 +1053,7 @@
 							
 								
 								<li>
-								<a href="GroupInteractions-beta.js.html">GroupInteractions-beta.js</a></li>
-							
-								
-								<li>
 								<a href="HiddenField.js.html">HiddenField.js</a></li>
-							
-								
-								<li>
-								<a href="IconPickerField.js.html">IconPickerField.js</a></li>
 							
 								
 								<li>
@@ -1161,7 +1166,7 @@
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 05 Sep 2008 16:05:41 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 15 Oct 2008 13:04:37 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>
