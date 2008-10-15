@@ -266,6 +266,16 @@ div.inputEx-ListField-ArrowDown {
    background: transparent url(../images/bullet_arrow_down.png) no-repeat scroll 0%;
 }
 
+a.inputEx-List-link {
+   color: blue;
+   cursor: pointer;
+   margin-left: 10px;
+}
+
+a.inputEx-List-link:hover {
+   text-decoration: underline;
+}
+
 
 /**
  * inputEx.InPlaceEdit

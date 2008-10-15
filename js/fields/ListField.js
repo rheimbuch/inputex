@@ -8,8 +8,9 @@
  * @constructor
  * @param {Object} options Added options:
  * <ul>
- *   <li>sortable: </li>
+ *   <li>sortable: Add arrows to sort the items if true (default false)</li>
  *   <li>elementType: an element type definition (default is {type: 'string'})</li>
+ *   <li>useButtons: use buttons instead of links (default false)</li>
  * </ul>
  */
 inputEx.ListField = function(options) {
@@ -34,9 +35,8 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	   inputEx.ListField.superclass.setOptions.call(this);
 	   this.options.className='inputEx-Field inputEx-ListField';
 	   this.options.sortable = lang.isUndefined(this.options.sortable) ? false : this.options.sortable;
-	   
 	   this.options.elementType = this.options.elementType || {type: 'string'};
-	   
+	   this.options.useButtons = lang.isUndefined(this.options.useButtons) ? false : this.options.useButtons;
 	},
 	   
 	/**
@@ -45,8 +45,10 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	renderComponent: function() {
 	      
 	   // Add element button
-	   this.addButton = inputEx.cn('img', {src: inputEx.spacerUrl, className: 'inputEx-ListField-addButton'});
-	   this.fieldContainer.appendChild(this.addButton);
+	   if(this.options.useButtons) {
+	      this.addButton = inputEx.cn('img', {src: inputEx.spacerUrl, className: 'inputEx-ListField-addButton'});
+	      this.fieldContainer.appendChild(this.addButton);
+      }
 	      
 	   // List label
 	   this.fieldContainer.appendChild( inputEx.cn('span', null, {marginLeft: "4px"}, this.options.listLabel) );
@@ -54,6 +56,12 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	   // Div element to contain the children
 	   this.childContainer = inputEx.cn('div', {className: 'inputEx-ListField-childContainer'});
 	   this.fieldContainer.appendChild(this.childContainer);
+	   
+	   // Add link
+	   if(!this.options.useButtons) {
+	      this.addButton = inputEx.cn('a', {className: 'inputEx-List-link'}, null, inputEx.messages.listAddLink);
+	      this.fieldContainer.appendChild(this.addButton);
+      }
 	},
 	   
 	/**
@@ -151,9 +159,11 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	   var newDiv = inputEx.cn('div');
 	      
 	   // Delete button
-	   var delButton = inputEx.cn('img', {src: inputEx.spacerUrl, className: 'inputEx-ListField-delButton'});
-	   Event.addListener( delButton, 'click', this.onDelete, this, true);
-	   newDiv.appendChild( delButton );
+	   if(this.options.useButtons) {
+	      var delButton = inputEx.cn('img', {src: inputEx.spacerUrl, className: 'inputEx-ListField-delButton'});
+	      Event.addListener( delButton, 'click', this.onDelete, this, true);
+	      newDiv.appendChild( delButton );
+      }
 	      
 	   // Instanciate the new subField
 	   var opts = lang.merge({}, this.options.elementType);
@@ -179,6 +189,13 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	      newDiv.appendChild( arrowUp );
 	      newDiv.appendChild( arrowDown );
 	   }
+	   
+	   // Delete link
+	   if(!this.options.useButtons) {
+	      var delButton = inputEx.cn('a', {className: 'inputEx-List-link'}, null, inputEx.messages.listRemoveLink);
+	      Event.addListener( delButton, 'click', this.onDelete, this, true);
+	      newDiv.appendChild( delButton );
+      }
 	
 	   // Line breaker
 	   newDiv.appendChild( inputEx.cn('div', null, {clear: "both"}) );
@@ -285,13 +302,11 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	      
 	   // Get the wrapping div element
 	   var elementDiv = Event.getTarget(e).parentNode;
-	      
+	   
 	   // Get the index of the subField
 	   var index = -1;
 	   
-	   //console.log(elementDiv);
-	   
-	   var subFieldEl = elementDiv.childNodes[1];
+	   var subFieldEl = elementDiv.childNodes[this.options.useButtons ? 1 : 0];
 	   for(var i = 0 ; i < this.subFields.length ; i++) {
 	      if(this.subFields[i].getEl() == subFieldEl) {
 	         index = i;
@@ -327,5 +342,9 @@ lang.extend(inputEx.ListField,inputEx.Field,
  * Register this class as "list" type
  */
 inputEx.registerType("list", inputEx.ListField);
+
+
+inputEx.messages.listAddLink = "Add";
+inputEx.messages.listRemoveLink = "remove";
 	
 })();
