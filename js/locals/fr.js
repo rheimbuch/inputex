@@ -38,4 +38,13 @@
       start_weekday: 1 // la semaine commence un lundi
    };
    
+   
+   // Datatable
+   msgs.saveText = "Sauver";
+   msgs.cancelText = "Annuler";
+   msgs.modifyText = "modifier";
+   msgs.deleteText = "supprimer";
+   msgs.insertItemText = "Ajouter";
+   msgs.confirmDeletion = "Êtes-vous sûr ?"
+   
 })();

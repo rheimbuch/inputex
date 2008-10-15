@@ -124,16 +124,28 @@ YAHOO.util.Event.addListener(window, 'load', function() {
   var formatAddress = function(elCell, oRecord, oColumn, oData) {
   	elCell.innerHTML = "<pre class=\"address\">" + oData + "</pre>";
   };
-	new YAHOO.inputEx.widget.DataTable({
+	var myDataTable = new YAHOO.inputEx.widget.DataTable({
 		parentEl: 'container1', 
-		
 		editing: 'formeditor', // Uses a form editor
-		
 		fields: myFields,
 		datasource: myDataSource,
 		datatableOpts: {caption: "DataTable Caption"}
 	});
-	
+	myDataTable.itemRemovedEvt.subscribe(function(e, args) {
+		var record = args[0];
+		var data = record.getData();
+		console.log("itemRemovedEvt", data);
+	});
+	myDataTable.itemAddedEvt.subscribe(function(e, args) {
+		var record = args[0];
+		var data = record.getData();
+		console.log("itemAddedEvt", data);
+	});
+	myDataTable.itemModifiedEvt.subscribe(function(e, args) {
+		var record = args[0];
+		var data = record.getData();
+		console.log("itemModifiedEvt", data);
+	});
 	
 	// Example 2
 	new YAHOO.inputEx.widget.DataTable({
