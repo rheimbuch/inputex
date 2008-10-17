@@ -54,7 +54,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			new YAHOO.inputEx.DatePickerField({parentEl: 'container2', value: new Date(), dateFormat: 'd/m/Y'});
+			new YAHOO.inputEx.DatePickerField({parentEl: 'container2', value: new Date(1984,0,6), dateFormat: 'd/m/Y'});
 		</textarea>
 		</form>
 	</div>
@@ -105,14 +105,13 @@
 <script src="../js/fields/DatePickerField.js"  type='text/javascript'></script>
 
 <script>
-
 YAHOO.util.Event.addListener(window, 'load', function() {
 
 	// Example 1
 	new YAHOO.inputEx.DatePickerField({parentEl: 'container1', value: new Date()});
 	
 	// Example 2
-	new YAHOO.inputEx.DatePickerField({parentEl: 'container2', value: new Date(), dateFormat: 'd/m/Y'});
+	new YAHOO.inputEx.DatePickerField({parentEl: 'container2', value: new Date(1984,0,6), dateFormat: 'd/m/Y'});
 	
 	// Example 3
 	var dp = new YAHOO.inputEx.DatePickerField({parentEl: 'container3', value: new Date(), dateFormat: 'd/m/Y'});

@@ -118,10 +118,13 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
       // the Calendar when the month changes (renderEvent is fired)
       this.calendar.renderEvent.subscribe(focusDay, this.calendar, true);
       
-      // Render the calendar
-      this.calendar.render();
-         
-      // Set the field value when a date is selected
+      // Open minical on correct date / month if field contains a value
+      this.oOverlay.beforeShowEvent.subscribe(this.beforeShowOverlay, this, true);
+      
+      // Render the calendar on the right page !
+      //    ->  this.calendar.render(); is not enough...
+      this.beforeShowOverlay();
+      
       this.calendar.selectEvent.subscribe(function (type,args,obj) {
          this.oOverlay.hide();
          var date = args[0][0];
@@ -131,9 +134,19 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
          this.setValue(new Date(year,month-1, day) );
          
       }, this, true);
-      
+            
       // Unsubscribe the event so this function is called only once
       this.button.unsubscribe("click", this.renderCalendar); 
+   },
+   
+   // Select the right date and display the right page on calendar, when the field has a value
+   beforeShowOverlay: function() {
+      var date = this.getValue();
+      if (!!date && !!this.calendar) {
+         this.calendar.select(date);
+         this.calendar.cfg.setProperty("pagedate",(date.getMonth()+1)+"/"+date.getFullYear());
+         this.calendar.render(); // refresh calendar
+      }
    }
    
 });
