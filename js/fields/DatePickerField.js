@@ -50,6 +50,22 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
       // HACK: Set position absolute to the overlay
       Dom.setStyle(this.oOverlay.body.parentNode, "position", "absolute");
       
+      
+      YAHOO.util.Event.addListener(this.el,'click',function(){
+         // calendar may not have been rendered yet
+         this.renderCalendar();
+         
+         if (!this.oOverlay.justHidden) {
+            this.button._showMenu();
+         }
+      },this,true);
+      
+      this.oOverlay.hideEvent.subscribe(function() {
+         this.oOverlay.justHidden = true;
+         YAHOO.lang.later(250,this,function(){this.oOverlay.justHidden=false;});
+      },this,true);
+      
+      
       // Subscribe to the first click
       this.button.on('click', this.renderCalendar, this, true);
    },
@@ -59,6 +75,8 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
     * Called ONCE to render the calendar lazily
     */
    renderCalendar: function() {
+      // if already rendered, ignore call
+      if (!!this.calendarRendered) return;
       
       // Render the calendar
       var calendarId = Dom.generateId();
@@ -137,6 +155,8 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
             
       // Unsubscribe the event so this function is called only once
       this.button.unsubscribe("click", this.renderCalendar); 
+      
+      this.calendarRendered = true;
    },
    
    // Select the right date and display the right page on calendar, when the field has a value
