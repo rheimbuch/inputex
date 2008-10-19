@@ -31,7 +31,10 @@ inputEx.DateSplitField = function(options) {
    options.separators = options.separators || [false,"&nbsp;","&nbsp;",false];
    
 	inputEx.DateSplitField.superclass.constructor.call(this,options);
+
+   this.initAutoTab();
 };
+
 lang.extend(inputEx.DateSplitField, inputEx.CombineField, {
    
    setValue: function(value) {
@@ -87,6 +90,47 @@ lang.extend(inputEx.DateSplitField, inputEx.CombineField, {
 	isEmpty: function() {
 	   var values = inputEx.DateSplitField.superclass.getValue.call(this);
 	   return (values[this.monthIndex] == "" && values[this.yearIndex] == "" &&  values[this.dayIndex] == "");
+	},
+	
+	initAutoTab: function() {
+	   // "keypress" event codes for numeric keys (keyboard & numpad) 
+	   //  (warning : "keydown" codes are different with numpad)
+	   var numKeyCodes = [48,49,50,51,52,53,54,55,56,57];
+	   
+      // verify charCode (don't auto tab when pressing "tab", "arrow", etc...)
+	   var checkNumKey = function(charCode) {
+   	   for (var i=0, length=numKeyCodes.length; i < length; i++) {
+   	      if (charCode == numKeyCodes[i]) return true;
+   	   }
+   	   return false;       
+	   };
+	   
+	   // Function that checks charCode and execute tab action
+	   var that = this;
+	   var autoTab = function(inputIndex) {
+         // later to let input update its value
+   	   YAHOO.lang.later(0, that, function() {
+      	   var input = that.inputs[inputIndex];
+      	   
+      	   // check input.el.value (string) because getValue doesn't work
+      	   // example : if input.el.value == "06", getValue() == 6 (length == 1 instead of 2)
+      	   if (input.el.value.length == input.options.size) {
+      	      that.inputs[inputIndex+1].focus();
+      	   }
+   	   });
+	   };
+	   
+	   // add listeners on inputs
+	   YAHOO.util.Event.addListener(this.inputs[0].el, "keypress", function(e) {
+	      if (checkNumKey(YAHOO.util.Event.getCharCode(e))) {
+            autoTab(0);
+         }
+   	}, this, true);
+	   YAHOO.util.Event.addListener(this.inputs[1].el, "keypress", function(e) {
+	      if (checkNumKey(YAHOO.util.Event.getCharCode(e))) {
+            autoTab(1);
+         }
+   	}, this, true);
 	}
    
 });
