@@ -33,7 +33,8 @@ YAHOO.lang.extend(inputEx.SelectField, inputEx.Field,
       
       this.optionEls = [];
       for( var i = 0 ; i < this.options.selectValues.length ; i++) {
-         this.optionEls[i] = inputEx.cn('option', {value: this.options.selectValues[i]}, null, (this.options.selectOptions) ? this.options.selectOptions[i] : this.options.selectValues[i]);
+         // ""+  hack to convert into text (values may be 0 for example)
+         this.optionEls[i] = inputEx.cn('option', {value: this.options.selectValues[i]}, null, ""+((this.options.selectOptions) ? this.options.selectOptions[i] : this.options.selectValues[i]));
          this.el.appendChild(this.optionEls[i]);
       }
       this.fieldContainer.appendChild(this.el);

@@ -58,7 +58,7 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	         radio = inputEx.cn('input', { id: radioId,type: 'radio', name: this.options.name, value: this.options.values[i] });
          }
          div.appendChild(radio);
-         var label = inputEx.cn('label', {"for": radioId, className: 'inputEx-RadioField-rightLabel'}, null, this.options.choices[i]);
+         var label = inputEx.cn('label', {"for": radioId, className: 'inputEx-RadioField-rightLabel'}, null, ""+this.options.choices[i]);
       	div.appendChild(label);
 	      
       	
