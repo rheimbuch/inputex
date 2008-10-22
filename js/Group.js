@@ -276,11 +276,15 @@ lang.extend(inputEx.Group, inputEx.Field,
    /**
     * Run an action (for interactions)
     * @param {Object} action inputEx action object
+    * @param {Any} triggerValue The value that triggered the interaction
     */
-   runAction: function(action) {
+   runAction: function(action, triggerValue) {
       var field = this.getFieldByName(action.name);
       if( YAHOO.lang.isFunction(field[action.action]) ) {
          field[action.action].call(field);
+      }
+      else if( YAHOO.lang.isFunction(action.action) ) {
+         action.action.call(field, triggerValue);
       }
       else {
          throw new Error("action "+action.action+" is not a valid action for field "+action.name);
@@ -304,7 +308,7 @@ lang.extend(inputEx.Group, inputEx.Field,
          var interaction = interactions[i];
          if(interaction.valueTrigger === fieldValue) {
             for(var j = 0 ; j < interaction.actions.length ; j++) {
-               this.runAction(interaction.actions[j]);
+               this.runAction(interaction.actions[j], fieldValue);
             }
          }
       }
