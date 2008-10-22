@@ -90,6 +90,7 @@
 <script src="../js/Form.js"  type='text/javascript'></script>
 <script src="../js/fields/SelectField.js"  type='text/javascript'></script>
 <script src="../js/fields/StringField.js"  type='text/javascript'></script>
+<script src="../js/fields/HiddenField.js"  type='text/javascript'></script>
 <script src="../js/fields/IntegerField.js"  type='text/javascript'></script>
 <script src="../js/fields/NumberField.js"  type='text/javascript'></script>
 <script src="../js/fields/DateField.js"  type='text/javascript'></script>
@@ -109,7 +110,7 @@ YAHOO.util.Event.addListener(window, 'load', function() {
   myDataSource.responseSchema = { fields: ["id","date","quantity","amount","title", "category"] };
 
 	var myFields = [
-		{type: 'string', inputParams: {label: 'Id', name: 'id'}, formatter:formatAddress },
+		{type: 'hidden', inputParams: {label: 'Id', name: 'id'}, formatter:formatAddress },
 		{type: 'date', inputParams: {label: 'Date', name: 'date'} }, // formatter is auto-generated
 		{type: 'integer', inputParams: {label: 'Quantity', name: 'quantity'} },
 		{type: 'number', inputParams: {label: 'Amount', name: 'amount'} },
@@ -128,6 +129,7 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 		parentEl: 'container1', 
 		editing: 'formeditor', // Uses a form editor
 		fields: myFields,
+		tableColumns: ["date","quantity","amount","title", "category"],
 		datasource: myDataSource,
 		datatableOpts: {caption: "DataTable Caption"}
 	});

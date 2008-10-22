@@ -10,6 +10,9 @@
  *    <li>id</li>
  *    <li>parentEl</li>
  *    <li>editing 'formeditor' (default) or 'celleditor'</li>
+ *    <li>tableColumns: (optional) list of visible columns in the datatable</li>
+ *    <li>sortable: (optional) are the columns sortable, default true</li>
+ *    <li>resizeable: (optional) are the columns resizeable, default true</li>
  * </ul>
  */
 inputEx.widget.DataTable = function(options) {
@@ -17,8 +20,11 @@ inputEx.widget.DataTable = function(options) {
    // Options
    this.options = options || {};
    this.options.id = this.options.id ||  Dom.generateId();
-   this.options.parentEl = YAHOO.lang.isString(options.parentEl) ? Dom.get(options.parentEl) : options.parentEl;
+   this.options.parentEl = lang.isString(options.parentEl) ? Dom.get(options.parentEl) : options.parentEl;
    this.options.editing =  this.options.editing || 'formeditor';
+   // + this.options.tableColumns
+   this.options.sortable = lang.isUndefined(this.options.sortable) ? true : this.options.sortable;
+   this.options.resizeable = lang.isUndefined(this.options.resizeable) ? true : this.options.resizeable;
    
    // Create main container and append it immediatly to the parent DOM element
    this.element = inputEx.cn('div', {id: this.options.id });
@@ -279,7 +285,9 @@ inputEx.widget.DataTable.prototype = {
    fieldsToColumndefs: function(fields) {
       var columndefs = [];
     	for(var i = 0 ; i < fields.length ; i++) {
-    	   columndefs.push( this.fieldToColumndef(fields[i]) );
+    	   if(!this.options.tableColumns || inputEx.indexOf(fields[i].inputParams.name, this.options.tableColumns) != -1 ) {
+    	      columndefs.push( this.fieldToColumndef(fields[i]) );
+ 	      }
     	}
     	
     	// Adding modify column if we use form editing
@@ -314,12 +322,13 @@ inputEx.widget.DataTable.prototype = {
    fieldToColumndef: function(field) {
       var columnDef = {
          key: field.inputParams.name,
-         sortable:true, 
-         resizeable:true
+         label: field.inputParams.label,
+         sortable: this.options.sortable, 
+         resizeable: this.options.resizeable
       };
 
       // In cell editing if the field is listed in this.options.editableFields
-      if(this.options.editing && YAHOO.lang.isArray(this.options.editableFields) ) {
+      if(this.options.editing && lang.isArray(this.options.editableFields) ) {
          if(inputEx.indexOf(field.inputParams.name, this.options.editableFields) != -1) {
              columnDef.editor = new inputEx.widget.InputExCellEditor(field);
          }
