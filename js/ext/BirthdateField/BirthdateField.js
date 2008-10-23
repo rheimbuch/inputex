@@ -3,7 +3,7 @@
    var inputEx = YAHOO.inputEx, lang = YAHOO.lang;
 
 /**
- * @class inputEx.BirthdateField
+ * @class A field to enter a date with 2 strings and a select
  * @extends inputEx.CombineField
  */
 inputEx.BirthdateField = function(options) {

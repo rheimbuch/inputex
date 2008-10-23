@@ -3,7 +3,7 @@
    var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Event = YAHOO.util.Event, Dom = YAHOO.util.Dom;
 
 /**
- * @class An autocomplete module
+ * @class An autocomplete field that wraps the YUI autocompleter
  * @constructor
  * @extends inputEx.StringField
  * @param {Object} options Added options for Autocompleter
@@ -33,8 +33,10 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
    
    /**
     * Custom event init
-    *   -> listen to autocompleter textboxBlurEvent instead of this.el "blur" event
-    *   -> listener to autocompleter textboxBlurEvent added in buildAutocomplete method
+    * <ul>
+    *   <li>listen to autocompleter textboxBlurEvent instead of this.el "blur" event</li>
+    *   <li>listener to autocompleter textboxBlurEvent added in buildAutocomplete method</li>
+    * </ul>
     */
    initEvents: function() {	
 	   inputEx.AutoComplete.superclass.initEvents.call(this);
@@ -83,6 +85,9 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
       Event.onAvailable([this.el, this.listEl], this.buildAutocomplete, this, true);
    },
    
+   /**
+    * Build the YUI autocompleter
+    */
    buildAutocomplete: function() {
       // Call this function only when this.el AND this.listEl are available
       if(!this._nElementsReady) { this._nElementsReady = 0; }
@@ -102,7 +107,11 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
       this.oAutoComp.textboxBlurEvent.subscribe(this.onBlur, this, true);
    },
    
-   //define your itemSelect handler function:
+   /**
+    * itemSelect handler
+    * @param {} sType
+    * @param {} aArgs
+    */
    itemSelectHandler: function(sType, aArgs) {
    	var aData = aArgs[2];
    	this.setValue( this.options.returnValue ? this.options.returnValue(aData) : aData[0] );
@@ -125,6 +134,10 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
       this.fireUpdatedEvt();
 	},
    
+   /**
+    * Set the value
+    * @param {Any} value Value to set
+    */
    setValue: function(value) {
       this.hiddenEl.value = value;
       
@@ -137,6 +150,9 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
          this.fireUpdatedEvt();
    },
    
+   /**
+    * Return the hidden value (stored in a hidden input)
+    */
    getValue: function() {
       return this.hiddenEl.value;
    }

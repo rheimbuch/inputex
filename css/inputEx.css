@@ -495,3 +495,14 @@ div.inputEx-RadioField-choice {
    margin-left: 10px;
 }
 
+/**
+ * Datatable
+ */
+
+div.inputEx-DataTable-formContainer {
+	float: left;
+}
+div.inputEx-DataTable-formContainer div.inputEx-Group {
+	width: auto;
+	background-color: white;
+}

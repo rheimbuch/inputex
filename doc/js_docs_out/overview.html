@@ -31,6 +31,7 @@
 	<p>inputEx is built around the <b>Field</b> class. It is an <b>abstract</b> class (we <i>never</i> instantiate it).<br/>
 		 All the other field classes inherits directly or indirectly from this base class. (see diagram below)</p>
 	
+	<p><u>Warning:</u> this diagram is not complete. See <a href="treeview.html">treeview</a> for the full class diagram</p>
 	<center>
 		<img src="../images/inputEx-class-diagram.png" />
 	</center>
@@ -39,24 +40,21 @@
 
 <h2>Instantiating a Field / the "type" property :</h2>
 	
-	<p>There are 4 ways to instanciate a Field :</p>
+	<p>There are 3 ways to instantiate a Field :</p>
   <ul>
 		<li>Calling the class constructor (classic) :<br />
 <form><textarea name="code" class="JScript">
 	var field = new inputEx.StringField({name: 'test'});
 </textarea></form></li><br />
-	  <li>Using the inputEx.buildField function with the "type" construction:<br /> 
+	  <li>Using the inputEx function with the "type" construction:<br /> 
 <form><textarea name="code" class="JScript">
-	var field = inputEx.buildField({ type: 'string', inputParams: {name: 'test'} });
+	var field = inputEx({ type: 'string', inputParams: {name: 'test'} });
 </textarea></form></li><br/>
-		<li>Using the inputEx.buildField function with the "fieldClass" construction:<br /> 
-<form><textarea name="code" class="JScript">
-	var field = inputEx.buildField({ fieldClass: inputEx.ColorField, inputParams: {name: 'test'} });
-</textarea></form></li><br />
+
 		<li>Through a meta-field (see below)</li>
 	</ul>
 	
-	<p>The default "type" associations :</p>
+	<p>The default "type" associations : (<u>Warning:</u> this table is not complete, but each class follow the same naming conventions.)</p>
 	
 <style>
 #associationTypes {
@@ -64,33 +62,114 @@
 }
 #associationTypes td {
 	width: 200px;
+	padding: 2px;
 }
 #associationTypes tr.odd {
 	background-color: #aaaaff;
 }
+#associationTypes th {
+	font-weight: bold;
+	text-align: center;
+	padding: 5px;
+	background-color: white;
+}
 </style>
 	<table id="associationTypes">
+		<thead>
+			<tr>
+				<th>type string</th>
+				<th>class</th>
+				<th>loader module</th>
+			</tr>
+		</thead>
 		<tbody>
-			
-			<tr class="odd"><td>boolean</td><td>inputEx.CheckBox</td></tr>
-			<tr><td>color</td><td>inputEx.ColorField</td></tr>
-			<tr class="odd"><td>date</td><td>inputEx.DateField</td></tr>
-			<tr><td>email</td><td>inputEx.EmailField</td></tr>
-			<tr class="odd"><td>form</td><td>inputEx.Form</td></tr>
-			<tr><td>group</td><td>inputEx.Group</td></tr>
-			<tr class="odd"><td>hidden</td><td>inputEx.HiddenField</td></tr>
-			<tr><td>html</td><td>inputEx.RTEField</td></tr>
-			<tr class="odd"><td>inplaceedit</td><td>inputEx.InPlaceEdit</td></tr>
-			<tr><td>IPv4</td><td>inputEx.IPv4Field</td></tr>
-			<tr class="odd"><td>list</td><td>inputEx.ListField</td></tr>
-			<tr><td>pair</td><td>inputEx.PairField</td></tr>
-			<tr class="odd"><td>password</td><td>inputEx.PasswordField</td></tr>
-			<tr><td>select</td><td>inputEx.SelectField</td></tr>
-			<tr class="odd"><td>string</td><td>inputEx.StringField</td></tr>
-			<tr><td>text</td><td>inputEx.Textarea</td></tr>
-			<tr class="odd"><td>type</td><td>inputEx.TypeField</td></tr>
-			<tr><td>uneditable</td><td>inputEx.UneditableField</td></tr>
-			<tr class="odd"><td>url</td><td>inputEx.UrlField</td></tr>
+			<tr class="odd">
+				<td>boolean</td>
+				<td>inputEx.CheckBox</td>
+				<td>inputex-checkbox</td>
+			</tr>
+			<tr>
+				<td>color</td>
+				<td>inputEx.ColorField</td>
+				<td>inputex-colorfield</td>
+			</tr>
+			<tr class="odd">
+				<td>date</td>
+				<td>inputEx.DateField</td>
+				<td>inputex-datefield</td>
+			</tr>
+			<tr>
+				<td>email</td>
+				<td>inputEx.EmailField</td>
+				<td>inputex-emailfield</td>
+			</tr>
+			<tr class="odd">
+				<td>form</td>
+				<td>inputEx.Form</td>
+				<td>inputex-form</td>
+			</tr>
+			<tr>
+				<td>group</td>
+				<td>inputEx.Group</td>
+				<td>inputex-group</td>
+			</tr>
+			<tr class="odd">
+				<td>hidden</td>
+				<td>inputEx.HiddenField</td>
+				<td>inputex-hiddenfield</td>
+			</tr>
+			<tr>
+				<td>html</td>
+				<td>inputEx.RTEField</td>
+				<td>inputex-rtefield</td>
+			</tr>
+			<tr class="odd">
+				<td>inplaceedit</td>
+				<td>inputEx.InPlaceEdit</td>
+				<td>inputex-inplaceedit</td>
+			</tr>
+			<tr>
+				<td>IPv4</td>
+				<td>inputEx.IPv4Field</td>
+				<td>inputex-ipv4field</td>
+			</tr>
+			<tr class="odd"><td>list</td>
+				<td>inputEx.ListField</td>
+				<td>inputex-listfield</td>
+			</tr>
+			<tr class="odd">
+				<td>password</td>
+				<td>inputEx.PasswordField</td>
+				<td>inputex-passwordfield</td>
+			</tr>
+			<tr>
+				<td>select</td>
+				<td>inputEx.SelectField</td>
+				<td>inputex-selectfield</td>
+			</tr>
+			<tr class="odd"><td>string</td>
+				<td>inputEx.StringField</td>
+				<td>inputex-stringfield</td>
+			</tr>
+			<tr>
+				<td>text</td>
+				<td>inputEx.Textarea</td>
+				<td>inputex-textarea</td>
+			</tr>
+			<tr class="odd"><td>type</td>
+				<td>inputEx.TypeField</td>
+				<td>inputex-typefield</td>
+			</tr>
+			<tr>
+				<td>uneditable</td>
+				<td>inputEx.UneditableField</td>
+				<td>inputex-uneditablefield</td>
+			</tr>
+			<tr class="odd">
+				<td>url</td>
+				<td>inputEx.UrlField</td>
+				<td>inputex-urlfield</td>
+			</tr>
 
 		</tbody>
 	</table>
@@ -602,7 +681,7 @@
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Thu, 23 Oct 2008 20:19:05 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Thu, 23 Oct 2008 21:53:47 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

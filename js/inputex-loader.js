@@ -125,7 +125,7 @@ YAHOO.addInputExModules = function(yuiLoader, inputExPath) {
 			type: 'js',
 	  	   fullpath: pathToInputEx+'js/fields/AutoComplete.js',
 	  	   varName: 'inputEx.AutoComplete',
-			requires: ['inputex-stringfield']
+			requires: ['inputex-stringfield', 'autocomplete']
 		},
 		{
 		   name: 'inputex-checkbox',
