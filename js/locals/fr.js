@@ -47,4 +47,7 @@
    msgs.insertItemText = "Ajouter";
    msgs.confirmDeletion = "Êtes-vous sûr ?"
    
+   // for YUI loader 
+   YAHOO.inputEx.lang_fr = true;
+   
 })();

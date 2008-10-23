@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>inputEx Documentation - fr.js</title>
+<title>inputEx Documentation - YAHOO.inputEx</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="JsDoc Toolkit 2.0.0" />
 <link href="css/reset-fonts-grids.css" type="text/css" rel="stylesheet" media="all" /> 
@@ -18,7 +18,7 @@
 			
 			
 			<h3>
-				<a href="./index.html">inputEx Documentation</a> &gt; fr.js
+				<a href="./index.html">inputEx Documentation</a> &gt; YAHOO.inputEx
 				<span class="subtitle">0.2.0</span>
 			</h3>
 		
@@ -26,68 +26,74 @@
 		<div id="bd">
 			<div id="yui-main">
 				<div class="yui-b">
-<div class="summary description">
-	<p>This is the source view for fr.js</p>
-</div>
-										
-<form>
-	<textarea name="code" class="JScript">/**
- * InputEx French localization
- */
-(function() {
-   
-   var msgs = YAHOO.inputEx.messages;
 
-   msgs.required = "Ce champ est obligatoire";
-   msgs.invalid = "Ce champ n'est pas valide";
-   msgs.valid = "Ce champ est valide";
-   msgs.invalidEmail = "Email non valide; ex: michel.dupont@fai.fr";
-   msgs.selectColor = "S&eacute;lectionnez une couleur :";
-   msgs.invalidPassword = ["Le mot de passe doit contenir au moins "," caract&egrave;res (lettres ou chiffres)"];
-   msgs.invalidPasswordConfirmation = "Les mots de passe entrés ne sont pas identiques !";
-   msgs.capslockWarning = "Attention: touche majuscule activée";
-   msgs.invalidDate = "Date non valide; ex: 25/01/2007";
-   msgs.defaultDateFormat = "d/m/Y";
-   msgs.shortMonths = ["Jan", "Fév", "Mars", "Avril", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"];
-   msgs.months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
-   msgs.weekdays1char =  ["D", "L", "M", "M", "J", "V", "S"];
-   msgs.shortWeekdays = ["Di","Lu","Ma","Me","Je","Ve","Sa"];
-   msgs.selectMonth = "- Choisissez -";
-   msgs.dayTypeInvite = "Jour";
-   msgs.monthTypeInvite = "Mois";
-   msgs.yearTypeInvite = "Année";
-   msgs.cancelEditor = "annuler";
-   msgs.okEditor = "Ok";
-   msgs.defautCalendarOpts = {
-      navigator: {
-               strings : {
-                   month: "Choisissez un mois",
-                   year: "Entrez une année",
-                   submit: "Ok",
-                   cancel: "Annuler",
-                   invalidYear: "Année non valide"
-               }
-      },
-      start_weekday: 1 // la semaine commence un lundi
-   };
-   
-   
-   // Datatable
-   msgs.saveText = "Sauver";
-   msgs.cancelText = "Annuler";
-   msgs.modifyText = "modifier";
-   msgs.deleteText = "supprimer";
-   msgs.insertItemText = "Ajouter";
-   msgs.confirmDeletion = "Êtes-vous sûr ?"
-   
-   // for YUI loader 
-   YAHOO.inputEx.lang_fr = true;
-   
-})();</textarea>
-</form>
-					
-					
-					</div>
+<!-- Class -->
+<h2>
+	Static Class <b>YAHOO.inputEx</b>
+	
+</h2>
+
+<!--
+
+
+-->
+<!-- class description -->
+<div class="summary description">The inputEx global namespace object.
+Build a field from an object like: { type: 'color' or fieldClass: inputEx.ColorField, inputParams: {} }<br />
+The inputParams property is the object that will be passed as the <code>options</code> parameter to the field class constructor.<br />
+If the neither type or fieldClass are found, it uses inputEx.StringField</div>
+
+
+<!-- Known subsclasses -->
+
+
+<!--
+
+<hr>
+-->
+
+
+<!-- ========= CONSTRUCTOR ======== -->
+
+<!-- ========= CONSTRUCTOR END ======== -->
+
+
+
+
+<!-- ============ Properties START ========= -->
+
+<!-- ============ Properties END ========== -->
+
+
+
+
+<!-- ============ METHOD DETAIL START ======= -->
+
+<!-- ============ METHOD DETAIL END ========== -->
+
+
+
+
+<!-- ========== INHERITED METHODS SUMMARY =========== -->
+
+
+	
+	
+	<br/>
+	
+
+<br/>
+
+<!-- ========== END INHERITED METHODS SUMMARY =========== -->
+
+
+
+<!-- ============ EVENT DETAIL START ======= -->
+
+
+
+
+</div>
 			</div>
 			
 			<div class="yui-b">
@@ -108,14 +114,6 @@
 								
 								<li>
 								<a href="overview.html">Overview</a></li>
-							
-								
-								<li>
-								<a href="markup.html">Markup structure</a></li>
-							
-								
-								<li>
-								<a href="migrate.html">Migrate from 0.1.0</a></li>
 							
 								
 								<li>
@@ -144,10 +142,6 @@
 					<div class="module">
 						<h4>Classes <a href="treeview.html">(treeview)</a></h4>
 						<ul class="content">
-							
-								
-								<li>
-									<a href="inputEx.html">inputEx</a></li>
 							
 								
 								<li>
@@ -188,10 +182,6 @@
 								
 								<li>
 									<a href="inputEx.DateTimeField.html">inputEx.DateTimeField</a></li>
-							
-								
-								<li>
-									<a href="inputEx.DSSelectField.html">inputEx.DSSelectField</a></li>
 							
 								
 								<li>
@@ -329,6 +319,10 @@
 								<li>
 									<a href="inputEx.widget.InputExCellEditor.html">inputEx.widget.InputExCellEditor</a></li>
 							
+								<li class="selected">
+								
+									<a href="YAHOO.inputEx.html">YAHOO.inputEx</a></li>
+							
 								
 						</ul>
 					</div>
@@ -387,10 +381,6 @@
 							
 								
 								<li>
-								<a href="DSSelectField.js.html">DSSelectField.js</a></li>
-							
-								
-								<li>
 								<a href="EmailField.js.html">EmailField.js</a></li>
 							
 								
@@ -401,8 +391,8 @@
 								<li>
 								<a href="Form.js.html">Form.js</a></li>
 							
-								<li class="selected">
 								
+								<li>
 								<a href="fr.js.html">fr.js</a></li>
 							
 								
@@ -428,10 +418,6 @@
 								
 								<li>
 								<a href="InPlaceEdit.js.html">InPlaceEdit.js</a></li>
-							
-								
-								<li>
-								<a href="inputex-loader.js.html">inputex-loader.js</a></li>
 							
 								
 								<li>
@@ -536,7 +522,7 @@
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Thu, 23 Oct 2008 20:19:03 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 15 Oct 2008 13:03:17 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>inputEx Documentation - fr.js</title>
+<title>inputEx Documentation - inputEx.DSSelectField</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="JsDoc Toolkit 2.0.0" />
 <link href="css/reset-fonts-grids.css" type="text/css" rel="stylesheet" media="all" /> 
@@ -18,7 +18,7 @@
 			
 			
 			<h3>
-				<a href="./index.html">inputEx Documentation</a> &gt; fr.js
+				<a href="./index.html">inputEx Documentation</a> &gt; inputEx.DSSelectField
 				<span class="subtitle">0.2.0</span>
 			</h3>
 		
@@ -26,68 +26,571 @@
 		<div id="bd">
 			<div id="yui-main">
 				<div class="yui-b">
-<div class="summary description">
-	<p>This is the source view for fr.js</p>
-</div>
-										
-<form>
-	<textarea name="code" class="JScript">/**
- * InputEx French localization
- */
-(function() {
-   
-   var msgs = YAHOO.inputEx.messages;
 
-   msgs.required = "Ce champ est obligatoire";
-   msgs.invalid = "Ce champ n'est pas valide";
-   msgs.valid = "Ce champ est valide";
-   msgs.invalidEmail = "Email non valide; ex: michel.dupont@fai.fr";
-   msgs.selectColor = "S&eacute;lectionnez une couleur :";
-   msgs.invalidPassword = ["Le mot de passe doit contenir au moins "," caract&egrave;res (lettres ou chiffres)"];
-   msgs.invalidPasswordConfirmation = "Les mots de passe entrés ne sont pas identiques !";
-   msgs.capslockWarning = "Attention: touche majuscule activée";
-   msgs.invalidDate = "Date non valide; ex: 25/01/2007";
-   msgs.defaultDateFormat = "d/m/Y";
-   msgs.shortMonths = ["Jan", "Fév", "Mars", "Avril", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"];
-   msgs.months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
-   msgs.weekdays1char =  ["D", "L", "M", "M", "J", "V", "S"];
-   msgs.shortWeekdays = ["Di","Lu","Ma","Me","Je","Ve","Sa"];
-   msgs.selectMonth = "- Choisissez -";
-   msgs.dayTypeInvite = "Jour";
-   msgs.monthTypeInvite = "Mois";
-   msgs.yearTypeInvite = "Année";
-   msgs.cancelEditor = "annuler";
-   msgs.okEditor = "Ok";
-   msgs.defautCalendarOpts = {
-      navigator: {
-               strings : {
-                   month: "Choisissez un mois",
-                   year: "Entrez une année",
-                   submit: "Ok",
-                   cancel: "Annuler",
-                   invalidYear: "Année non valide"
-               }
-      },
-      start_weekday: 1 // la semaine commence un lundi
-   };
-   
-   
-   // Datatable
-   msgs.saveText = "Sauver";
-   msgs.cancelText = "Annuler";
-   msgs.modifyText = "modifier";
-   msgs.deleteText = "supprimer";
-   msgs.insertItemText = "Ajouter";
-   msgs.confirmDeletion = "Êtes-vous sûr ?"
-   
-   // for YUI loader 
-   YAHOO.inputEx.lang_fr = true;
-   
-})();</textarea>
-</form>
+<!-- Class -->
+<h2>
+	Static Class <b>inputEx.DSSelectField</b>
+	<span class="extends"> - extends <a href="inputEx.SelectField.html">inputEx.SelectField</a></span><br/>
+</h2>
+
+<!--
+
+
+-->
+<!-- class description -->
+<div class="summary description">Create a select field from a datasource</div>
+
+
+<!-- Known subsclasses -->
+
+
+<!--
+
+<hr>
+-->
+
+
+<!-- ========= CONSTRUCTOR ======== -->
+
+<div class="section constructor details">
+	<h3 id="constructor">Constructor</h3>
+	<div class="content">
+		<div class="detail">
+			<a name="DSSelectField"> </a>
+			
+				<strong>inputEx.DSSelectField</strong>
+				<code>( options )</code>
+				<ul>
 					
+					
+				</ul>
+	
+				<!-- CONSTRUCTOR PARAMETERS START -->
+				
+					<div class="description">
+						<dl>
+							<dt>Parameters:</dt>
+							
+								<dd>
+									<code>options<i>&nbsp;&lt;Object&gt;&nbsp;</i></code>
+									 - Added options:
+<ul>
+	   <li>selectValues: contains the list of options values</li>
+	   <li>selectOptions: list of option element texts</li>
+   <li>multiple: boolean to allow multiple selections</li>
+   <li>datasource: the datasource</li>
+   <li>valueKey: value key</li>
+   <li>labelKey: label key</li>
+</ul> 
+								</dd>
+							
+						</dl>
+					</div>		
+				
+				<!-- CONSTRUCTOR PARAMETERS END -->
+			
+			
+		</div>
+	</div>	
+</div>
+
+<!-- ========= CONSTRUCTOR END ======== -->
+
+
+
+
+<!-- ============ Properties START ========= -->
+
+<a name="field_detail"> </a> 
+<div class="section field details">
+	<h3 id="properties">Properties</h3>
+	<div class="content">
+		
+			<div>
+				
+				<h4>
+					
+					
+					<a name="options">options</a> 
+					<code>- Object</code>
+					
+				</h4>
+				
+				<div class="detail">
+					<div class="description">
+						Configuration object to set the options for this class and the parent classes. See constructor details for options added by this class.
+						
+					</div>
+				</div>
+			</div>
+			<hr>
+		
+	</div>
+</div>
+
+<!-- ============ Properties END ========== -->
+
+
+
+
+<!-- ============ METHOD DETAIL START ======= -->
+
+	<a name="method_detail"> </a> 
+
+	<div class="section method details">
+		<h3 id="methods">Methods</h3>
+		<div class="content">
+
+		
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+			<div>
+				<h4><a name="method_getValue">getValue</a></h4>
+			
+				<div class="detail">
+					<code><i>&lt;Any&gt;</i>&nbsp;<b>getValue</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Return the value
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+					<div class="description">
+					<b>Returns:</b>
+						<ul>
+							<code><i>&lt;Any&gt;</i>&nbsp;</code>the selected value from the selectValues array 
+						</ul>
 					
 					</div>
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+					
+		
+			<div>
+				<h4><a name="method_onDatasourceFailure">onDatasourceFailure</a></h4>
+			
+				<div class="detail">
+					<code><b>onDatasourceFailure</b>(oRequest,oParsedResponse,oPayload)</code> 
+				</div>
+				
+				<div class="description">
+					
+					Callback for request failure
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>oRequest</code>
+						 
+					</ul>
+					
+					<ul>
+						<code>oParsedResponse</code>
+						 
+					</ul>
+					
+					<ul>
+						<code>oPayload</code>
+						 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_onDatasourceSuccess">onDatasourceSuccess</a></h4>
+			
+				<div class="detail">
+					<code><b>onDatasourceSuccess</b>(oRequest,oParsedResponse,oPayload)</code> 
+				</div>
+				
+				<div class="description">
+					
+					Callback for request success
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>oRequest</code>
+						 
+					</ul>
+					
+					<ul>
+						<code>oParsedResponse</code>
+						 
+					</ul>
+					
+					<ul>
+						<code>oPayload</code>
+						 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+					
+		
+			<div>
+				<h4><a name="method_populateSelect">populateSelect</a></h4>
+			
+				<div class="detail">
+					<code><b>populateSelect</b>(items)</code> 
+				</div>
+				
+				<div class="description">
+					
+					Insert the options
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>items</code>
+						 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+					
+		
+			<div>
+				<h4><a name="method_renderComponent">renderComponent</a></h4>
+			
+				<div class="detail">
+					<code><b>renderComponent</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Build a select tag with options
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_sendDataRequest">sendDataRequest</a></h4>
+			
+				<div class="detail">
+					<code><b>sendDataRequest</b>(oRequest)</code> 
+				</div>
+				
+				<div class="description">
+					
+					Send the datasource request
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>oRequest</code>
+						 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+					
+		
+			<div>
+				<h4><a name="method_setOptions">setOptions</a></h4>
+			
+				<div class="detail">
+					<code><b>setOptions</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Setup the additional options for selectfield
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_setValue">setValue</a></h4>
+			
+				<div class="detail">
+					<code><b>setValue</b>(value)</code> 
+				</div>
+				
+				<div class="description">
+					
+					Set the value
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>value&nbsp;<i>&lt;String&gt;</i>&nbsp;</code>
+						 - The value to set 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+					
+		
+					
+		
+					
+
+				</div>
+			</div>
+
+
+<!-- ============ METHOD DETAIL END ========== -->
+
+
+
+
+<!-- ========== INHERITED METHODS SUMMARY =========== -->
+
+
+	
+	
+		<div class="section field inheritance">
+			<h4>Methods inherited from class <a href="inputEx.Field.html">inputEx.Field</a>:</h4>
+			<div class="content">
+				<code>
+					
+						<a href="inputEx.Field.html#focus">focus</a>,
+					
+						<a href="inputEx.Field.html#getEl">getEl</a>,
+					
+						<a href="inputEx.Field.html#validate">validate</a>,
+					
+						<a href="inputEx.Field.html#fireUpdatedEvt">fireUpdatedEvt</a>,
+					
+						<a href="inputEx.Field.html#show">show</a>,
+					
+						<a href="inputEx.Field.html#close">close</a>,
+					
+						<a href="inputEx.Field.html#onBlur">onBlur</a>,
+					
+						<a href="inputEx.Field.html#onFocus">onFocus</a>,
+					
+						<a href="inputEx.Field.html#getStateString">getStateString</a>,
+					
+						<a href="inputEx.Field.html#setClassFromState">setClassFromState</a>,
+					
+						<a href="inputEx.Field.html#onChange">onChange</a>,
+					
+						<a href="inputEx.Field.html#render">render</a>,
+					
+						<a href="inputEx.Field.html#updatedEvt">updatedEvt</a>,
+					
+						<a href="inputEx.Field.html#getState">getState</a>,
+					
+						<a href="inputEx.Field.html#hide">hide</a>,
+					
+						<a href="inputEx.Field.html#displayMessage">displayMessage</a>,
+					
+						<a href="inputEx.Field.html#destroy">destroy</a>,
+					
+						<a href="inputEx.Field.html#isEmpty">isEmpty</a>,
+					
+						<a href="inputEx.Field.html#clear">clear</a>,
+							
+				</code>
+			</div>
+		</div>
+	
+		<div class="section field inheritance">
+			<h4>Methods inherited from class <a href="inputEx.SelectField.html">inputEx.SelectField</a>:</h4>
+			<div class="content">
+				<code>
+					
+						<a href="inputEx.SelectField.html#disable">disable</a>,
+					
+						<a href="inputEx.SelectField.html#enable">enable</a>,
+					
+						<a href="inputEx.SelectField.html#initEvents">initEvents</a>,
+							
+				</code>
+			</div>
+		</div>
+	
+	<br/>
+	
+
+<br/>
+
+<!-- ========== END INHERITED METHODS SUMMARY =========== -->
+
+
+
+<!-- ============ EVENT DETAIL START ======= -->
+
+
+
+
+</div>
 			</div>
 			
 			<div class="yui-b">
@@ -189,8 +692,8 @@
 								<li>
 									<a href="inputEx.DateTimeField.html">inputEx.DateTimeField</a></li>
 							
+								<li class="selected">
 								
-								<li>
 									<a href="inputEx.DSSelectField.html">inputEx.DSSelectField</a></li>
 							
 								
@@ -401,8 +904,8 @@
 								<li>
 								<a href="Form.js.html">Form.js</a></li>
 							
-								<li class="selected">
 								
+								<li>
 								<a href="fr.js.html">fr.js</a></li>
 							
 								
@@ -536,7 +1039,7 @@
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Thu, 23 Oct 2008 20:19:03 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Thu, 23 Oct 2008 20:19:04 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

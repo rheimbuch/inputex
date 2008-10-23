@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>inputEx Documentation - fr.js</title>
+<title>inputEx Documentation - inputex-loader.js</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="JsDoc Toolkit 2.0.0" />
 <link href="css/reset-fonts-grids.css" type="text/css" rel="stylesheet" media="all" /> 
@@ -18,7 +18,7 @@
 			
 			
 			<h3>
-				<a href="./index.html">inputEx Documentation</a> &gt; fr.js
+				<a href="./index.html">inputEx Documentation</a> &gt; inputex-loader.js
 				<span class="subtitle">0.2.0</span>
 			</h3>
 		
@@ -27,62 +27,335 @@
 			<div id="yui-main">
 				<div class="yui-b">
 <div class="summary description">
-	<p>This is the source view for fr.js</p>
+	<p>This is the source view for inputex-loader.js</p>
 </div>
 										
 <form>
-	<textarea name="code" class="JScript">/**
- * InputEx French localization
+	<textarea name="code" class="JScript">(function() {
+/**
+ * Add inputEx modules to a YUI loader
+ * @static
+ * @param {YUILoader} yuiLoader YUI Loader instance
+ * @param {String} inputExPath (optional) inputExPath
  */
-(function() {
-   
-   var msgs = YAHOO.inputEx.messages;
-
-   msgs.required = "Ce champ est obligatoire";
-   msgs.invalid = "Ce champ n'est pas valide";
-   msgs.valid = "Ce champ est valide";
-   msgs.invalidEmail = "Email non valide; ex: michel.dupont@fai.fr";
-   msgs.selectColor = "S&eacute;lectionnez une couleur :";
-   msgs.invalidPassword = ["Le mot de passe doit contenir au moins "," caract&egrave;res (lettres ou chiffres)"];
-   msgs.invalidPasswordConfirmation = "Les mots de passe entrés ne sont pas identiques !";
-   msgs.capslockWarning = "Attention: touche majuscule activée";
-   msgs.invalidDate = "Date non valide; ex: 25/01/2007";
-   msgs.defaultDateFormat = "d/m/Y";
-   msgs.shortMonths = ["Jan", "Fév", "Mars", "Avril", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"];
-   msgs.months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
-   msgs.weekdays1char =  ["D", "L", "M", "M", "J", "V", "S"];
-   msgs.shortWeekdays = ["Di","Lu","Ma","Me","Je","Ve","Sa"];
-   msgs.selectMonth = "- Choisissez -";
-   msgs.dayTypeInvite = "Jour";
-   msgs.monthTypeInvite = "Mois";
-   msgs.yearTypeInvite = "Année";
-   msgs.cancelEditor = "annuler";
-   msgs.okEditor = "Ok";
-   msgs.defautCalendarOpts = {
-      navigator: {
-               strings : {
-                   month: "Choisissez un mois",
-                   year: "Entrez une année",
-                   submit: "Ok",
-                   cancel: "Annuler",
-                   invalidYear: "Année non valide"
-               }
+YAHOO.addInputExModules = function(yuiLoader, inputExPath) {
+	var pathToInputEx = inputExPath || '../';
+	var modules = [
+	   /**
+	    * inputEx base
+	    */
+		{
+			name: 'inputex-css',
+			type: 'css',
+			fullpath: pathToInputEx+'css/inputEx.css',
+			requires: ['reset', 'fonts']
+		},
+   	{
+   	   name: 'inputex',
+   	   type: 'js',
+   	   fullpath: pathToInputEx+'js/inputex.js',
+   	 	varName: 'inputEx',
+   		requires: ['yahoo', 'dom', 'event', 'inputex-css']
+   	},
+		{
+			name: 'inputex-field',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/Field.js',
+	  	   varName: 'inputEx.Field',
+			requires: ['inputex']
+		},
+      {
+			name: 'inputex-visus',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/Visus.js',
+	  	   varName: 'inputEx.visus',
+			requires: ['inputex']
+		},
+		{
+ 			name: 'inputex-jsonschema',
+ 			type: 'js',
+ 	  	   fullpath: pathToInputEx+'js/json-schema.js',
+ 	  	   varName: 'inputEx.JsonSchema',
+ 			requires: ['inputex']
+ 		},
+		/**
+		 * Widgets
+		 */
+		{
+ 			name: 'inputex-ddlist',
+ 			type: 'js',
+ 	  	   fullpath: pathToInputEx+'js/widgets/ddlist.js',
+ 	  	   varName: 'inputEx.widget.DDList',
+ 			requires: ['inputex', 'dragdrop']
+ 		},
+ 		{
+ 			name: 'inputex-ddlist',
+ 			type: 'js',
+ 	  	   fullpath: pathToInputEx+'js/widgets/ddlist.js',
+ 	  	   varName: 'inputEx.widget.DDList',
+ 			requires: ['inputex', 'dragdrop']
+ 		},
+ 		
+ 		
+		/**
+		 * MetaFields
+		 */
+		{
+			name: 'inputex-group',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/Group.js',
+	  	   varName: 'inputEx.Group',
+			requires: ['inputex-field']
+		},
+		{
+			name: 'inputex-form',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/Form.js',
+	  	   varName: 'inputEx.Form',
+			requires: ['inputex-group']
+		},
+		{
+			name: 'inputex-listfield',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/ListField.js',
+	  	   varName: 'inputEx.ListField',
+			requires: ['inputex-field']
+		},
+		{
+			name: 'inputex-treefield',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/TreeField.js',
+	  	   varName: 'inputEx.TreeField',
+			requires: ['inputex-listfield']
+		},
+		{
+			name: 'inputex-combinefield',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/CombineField.js',
+	  	   varName: 'inputEx.CombineField',
+			requires: ['inputex-field']
+		},
+		{
+			name: 'inputex-inplaceedit',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/InPlaceEdit.js',
+	  	   varName: 'inputEx.InPlaceEdit',
+			requires: ['inputex-field', 'animation']
+		},
+		
+		/**
+		 * Fields
+		 */
+		{
+			name: 'inputex-stringfield',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/StringField.js',
+	  	   varName: 'inputEx.StringField',
+			requires: ['inputex-field']
+		},
+		{
+		   name: 'inputex-autocomplete',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/AutoComplete.js',
+	  	   varName: 'inputEx.AutoComplete',
+			requires: ['inputex-stringfield']
+		},
+		{
+		   name: 'inputex-checkbox',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/CheckBox.js',
+	  	   varName: 'inputEx.CheckBox',
+			requires: ['inputex-field']
+		},
+		{
+		   name: 'inputex-colorfield',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/ColorField.js',
+	  	   varName: 'inputEx.ColorField',
+			requires: ['inputex-field']
+		},
+		{
+		   name: 'inputex-datefield',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/DateField.js',
+	  	   varName: 'inputEx.DateField',
+			requires: ['inputex-stringfield']
+		},
+		{
+		   name: 'inputex-datepickerfield',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/DatePickerField.js',
+	  	   varName: 'inputEx.DatePickerField',
+			requires: ['inputex-datefield', 'calendar', 'container']
+		},
+		{
+		   name: 'inputex-integerfield',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/IntegerField.js',
+	  	   varName: 'inputEx.IntegerField',
+			requires: ['inputex-stringfield']
+		},
+		{
+		   name: 'inputex-datesplitfield',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/DateSplitField.js',
+	  	   varName: 'inputEx.DateSplitField',
+			requires: ['inputex-combinefield', 'inputex-integerfield']
+		},
+		{
+			name: 'inputex-selectfield',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/SelectField.js',
+	  	   varName: 'inputEx.SelectField',
+			requires: ['inputex-field']
+		},
+		{
+		   name: 'inputex-timefield',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/TimeField.js',
+	  	   varName: 'inputEx.TimeField',
+			requires: ['inputex-combinefield', 'inputex-selectfield']
+		},
+		{
+		   name: 'inputex-datetimefield',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/DateTimeField.js',
+	  	   varName: 'inputEx.DateTimeField',
+			requires: ['inputex-combinefield', 'inputex-datepickerfield', 'inputex-timefield']
+		},
+		{
+		   name: 'inputex-dsselectfield',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/DSSelectField.js',
+	  	   varName: 'inputEx.DSSelectField',
+			requires: ['inputex-selectfield', 'datasource']
+		},
+		{
+			name: 'inputex-emailfield',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/EmailField.js',
+	  	   varName: 'inputEx.EmailField',
+			requires: ['inputex-stringfield']
+		},
+		{
+		   name: 'inputex-hiddenfield',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/HiddenField.js',
+	  	   varName: 'inputEx.HiddenField',
+			requires: ['inputex-field']
+		},
+      {
+		   name: 'inputex-multiautocomplete',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/MultiAutoComplete.js',
+	  	   varName: 'inputEx.MultiAutoComplete',
+			requires: ['inputex-autocomplete', 'inputex-ddlist']
       },
-      start_weekday: 1 // la semaine commence un lundi
-   };
-   
-   
-   // Datatable
-   msgs.saveText = "Sauver";
-   msgs.cancelText = "Annuler";
-   msgs.modifyText = "modifier";
-   msgs.deleteText = "supprimer";
-   msgs.insertItemText = "Ajouter";
-   msgs.confirmDeletion = "Êtes-vous sûr ?"
-   
-   // for YUI loader 
-   YAHOO.inputEx.lang_fr = true;
-   
+      {
+		   name: 'inputex-multiselectfield',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/MultiSelectField.js',
+	  	   varName: 'inputEx.MultiSelectField',
+			requires: ['inputex-selectfield', 'inputex-ddlist']
+      },
+      {
+		   name: 'inputex-numberfield',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/NumberField.js',
+	  	   varName: 'inputEx.NumberField',
+			requires: ['inputex-stringfield']
+		},
+ 		{
+		   name: 'inputex-passwordfield',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/PasswordField.js',
+	  	   varName: 'inputEx.PasswordField',
+			requires: ['inputex-stringfield']
+		},
+ 		{
+		   name: 'inputex-radiofield',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/RadioField.js',
+	  	   varName: 'inputEx.RadioField',
+			requires: ['inputex-field']
+		},
+		{
+		   name: 'inputex-rtefield',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/RTEField.js',
+	  	   varName: 'inputEx.RTEField',
+			requires: ['inputex-field', 'editor']
+		},
+		{
+		   name: 'inputex-sliderfield',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/SliderField.js',
+	  	   varName: 'inputEx.SliderField',
+			requires: ['inputex-field', 'slider']
+		},
+		{
+		   name: 'inputex-textarea',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/Textarea.js',
+	  	   varName: 'inputEx.Textarea',
+			requires: ['inputex-field']
+		},
+		{
+		   name: 'inputex-typefield',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/TypeField.js',
+	  	   varName: 'inputEx.TypeField',
+			requires: ['inputex-field']
+		},
+		{
+		   name: 'inputex-uneditable',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/UneditableField.js',
+	  	   varName: 'inputEx.UneditableField',
+			requires: ['inputex-field', 'inputex-visus']
+		},
+		{
+			name: 'inputex-urlfield',
+			type: 'js',
+	  	   fullpath: pathToInputEx+'js/fields/UrlField.js',
+	  	   varName: 'inputEx.UrlField',
+			requires: ['inputex-stringfield']
+		},
+ 		
+ 		/**
+ 		 * Ext fields
+ 		 */
+ 		{
+  			name: 'inputex-birthdatefield',
+  			type: 'js',
+  	  	   fullpath: pathToInputEx+'js/ext/BirthdateField/BirthdateField.js',
+  	  	   varName: 'inputEx.BirthdateField',
+  			requires: ['inputex-combinefield', 'inputex-stringfield', 'inputex-selectfield']
+  		},
+  		{
+  			name: 'inputex-ipv4field',
+  			type: 'js',
+  	  	   fullpath: pathToInputEx+'js/ext/IPv4Field/IPv4Field.js',
+  	  	   varName: 'inputEx.IPv4Field',
+  			requires: ['inputex-stringfield']
+  		},
+  		
+  		/**
+  		 * Locals
+  		 */
+  		{
+  		   name: 'inputex-lang-fr',
+  			type: 'js',
+  	  	   fullpath: pathToInputEx+'js/locals/fr.js',
+  	  	   varName: 'inputEx.lang_fr',
+  			requires: ['inputex']
+  		}
+	];
+	for(var i = 0 ; i < modules.length ; i++) {
+		yuiLoader.addModule(modules[i]);
+	}
+};
+
 })();</textarea>
 </form>
 					
@@ -401,8 +674,8 @@
 								<li>
 								<a href="Form.js.html">Form.js</a></li>
 							
-								<li class="selected">
 								
+								<li>
 								<a href="fr.js.html">fr.js</a></li>
 							
 								
@@ -429,8 +702,8 @@
 								<li>
 								<a href="InPlaceEdit.js.html">InPlaceEdit.js</a></li>
 							
+								<li class="selected">
 								
-								<li>
 								<a href="inputex-loader.js.html">inputex-loader.js</a></li>
 							
 								

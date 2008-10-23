@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>inputEx Documentation - fr.js</title>
+<title>inputEx Documentation - DSSelectField.js</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="JsDoc Toolkit 2.0.0" />
 <link href="css/reset-fonts-grids.css" type="text/css" rel="stylesheet" media="all" /> 
@@ -18,7 +18,7 @@
 			
 			
 			<h3>
-				<a href="./index.html">inputEx Documentation</a> &gt; fr.js
+				<a href="./index.html">inputEx Documentation</a> &gt; DSSelectField.js
 				<span class="subtitle">0.2.0</span>
 			</h3>
 		
@@ -27,62 +27,146 @@
 			<div id="yui-main">
 				<div class="yui-b">
 <div class="summary description">
-	<p>This is the source view for fr.js</p>
+	<p>This is the source view for DSSelectField.js</p>
 </div>
 										
 <form>
-	<textarea name="code" class="JScript">/**
- * InputEx French localization
- */
-(function() {
-   
-   var msgs = YAHOO.inputEx.messages;
+	<textarea name="code" class="JScript">(function() {
 
-   msgs.required = "Ce champ est obligatoire";
-   msgs.invalid = "Ce champ n'est pas valide";
-   msgs.valid = "Ce champ est valide";
-   msgs.invalidEmail = "Email non valide; ex: michel.dupont@fai.fr";
-   msgs.selectColor = "S&eacute;lectionnez une couleur :";
-   msgs.invalidPassword = ["Le mot de passe doit contenir au moins "," caract&egrave;res (lettres ou chiffres)"];
-   msgs.invalidPasswordConfirmation = "Les mots de passe entrés ne sont pas identiques !";
-   msgs.capslockWarning = "Attention: touche majuscule activée";
-   msgs.invalidDate = "Date non valide; ex: 25/01/2007";
-   msgs.defaultDateFormat = "d/m/Y";
-   msgs.shortMonths = ["Jan", "Fév", "Mars", "Avril", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"];
-   msgs.months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
-   msgs.weekdays1char =  ["D", "L", "M", "M", "J", "V", "S"];
-   msgs.shortWeekdays = ["Di","Lu","Ma","Me","Je","Ve","Sa"];
-   msgs.selectMonth = "- Choisissez -";
-   msgs.dayTypeInvite = "Jour";
-   msgs.monthTypeInvite = "Mois";
-   msgs.yearTypeInvite = "Année";
-   msgs.cancelEditor = "annuler";
-   msgs.okEditor = "Ok";
-   msgs.defautCalendarOpts = {
-      navigator: {
-               strings : {
-                   month: "Choisissez un mois",
-                   year: "Entrez une année",
-                   submit: "Ok",
-                   cancel: "Annuler",
-                   invalidYear: "Année non valide"
-               }
-      },
-      start_weekday: 1 // la semaine commence un lundi
-   };
+   var inputEx = YAHOO.inputEx, Event = YAHOO.util.Event;
+
+/**
+ * @class Create a select field from a datasource
+ * @extends inputEx.SelectField
+ * @constructor
+ * @param {Object} options Added options:
+ * <ul>
+ *	   <li>selectValues: contains the list of options values</li>
+ *	   <li>selectOptions: list of option element texts</li>
+ *    <li>multiple: boolean to allow multiple selections</li>
+ *    <li>datasource: the datasource</li>
+ *    <li>valueKey: value key</li>
+ *    <li>labelKey: label key</li>
+ * </ul>
+ */
+inputEx.DSSelectField = function(options) {
+	inputEx.DSSelectField.superclass.constructor.call(this,options);
+ };
+YAHOO.lang.extend(inputEx.DSSelectField, inputEx.SelectField, 
+/**
+ * @scope inputEx.DSSelectField.prototype   
+ */   
+{
+   /**
+    * Setup the additional options for selectfield
+    */
+	setOptions: function() {
+	   inputEx.DSSelectField.superclass.setOptions.call(this);
+	   
+	   this.options.valueKey = this.options.valueKey || "value";
+	   this.options.labelKey = this.options.labelKey || "label";
+	   
+	   // Create a datasource from selectValues/selectOptions backward compatibility
+	   if(!this.options.datasource) {
+         var items = [];
+         for(var i = 0 ; i < this.options.selectValues.length ; i++) {
+            items.push({
+               value: this.options.selectValues[i],
+               label: (this.options.selectOptions) ? this.options.selectOptions[i] : this.options.selectValues[i]
+            });
+         }
+         this.options.datasource = new YAHOO.util.DataSource(items);
+         this.options.datasource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+         this.options.datasource.responseSchema = { fields: ["value","label"] };
+      }
+   },
+   
+   /**
+    * Build a select tag with options
+    */
+   renderComponent: function() {
+
+      this.el = inputEx.cn('select', {name: this.options.name || ''});
+      
+      if (this.options.multiple) {
+         this.el.multiple = true; 
+         this.el.size = this.options.selectValues.length;
+      }
+      
+      this.fieldContainer.appendChild(this.el);
+      
+      // Send the data request
+      this.sendDataRequest(null); // TODO: configurable default request ?
+   }, 
+   
+   /**
+    * Send the datasource request
+    */
+   sendDataRequest: function(oRequest) {
+      this.options.datasource.sendRequest(oRequest, {success: this.onDatasourceSuccess, failure: this.onDatasourceFailure, scope: this});
+   },
+   
+   /**
+    * Insert the options
+    */
+   populateSelect: function(items) {
+      this.el.innerHTML = "";
+      this.optionEls = [];
+      for( var i = 0 ; i < items.length ; i++) {
+         this.optionEls[i] = inputEx.cn('option', {value: items[i][this.options.valueKey]}, null, items[i][this.options.labelKey]);
+         this.el.appendChild(this.optionEls[i]);
+      }
+   },
+   
+   /**
+    * Callback for request success 
+    */
+   onDatasourceSuccess: function(oRequest, oParsedResponse, oPayload) {
+      this.populateSelect(oParsedResponse.results);
+   },
+   
+   /**
+    * Callback for request failure 
+    */
+   onDatasourceFailure: function(oRequest, oParsedResponse, oPayload) {
+      // TODO
+      this.el.innerHTML = "<option>error</option>";
+   },
    
    
-   // Datatable
-   msgs.saveText = "Sauver";
-   msgs.cancelText = "Annuler";
-   msgs.modifyText = "modifier";
-   msgs.deleteText = "supprimer";
-   msgs.insertItemText = "Ajouter";
-   msgs.confirmDeletion = "Êtes-vous sûr ?"
+   /**
+    * Set the value
+    * @param {String} value The value to set
+    */
+   setValue: function(value) {
+      var index = 0;
+      var option;
+      for(var i = 0 ; i < this.options.datasource.liveData.length ; i++) {
+         if(value === this.options.datasource.liveData[i][this.options.valueKey]) {
+            option = this.el.childNodes[i];
+		      option.selected = "selected";
+         }
+      }
+      
+		// Call Field.setValue to set class and fire updated event
+		inputEx.DSSelectField.superclass.setValue.call(this,value);
+   },
    
-   // for YUI loader 
-   YAHOO.inputEx.lang_fr = true;
+   /**
+    * Return the value
+    * @return {Any} the selected value from the selectValues array
+    */
+   getValue: function() {
+      return this.options.datasource.liveData[this.el.selectedIndex][this.options.valueKey];
+   }
    
+});
+
+/**
+ * Register this class as "dsselect" type
+ */
+inputEx.registerType("dsselect", inputEx.DSSelectField);
+
 })();</textarea>
 </form>
 					
@@ -385,8 +469,8 @@
 								<li>
 								<a href="ddlist.js.html">ddlist.js</a></li>
 							
+								<li class="selected">
 								
-								<li>
 								<a href="DSSelectField.js.html">DSSelectField.js</a></li>
 							
 								
@@ -401,8 +485,8 @@
 								<li>
 								<a href="Form.js.html">Form.js</a></li>
 							
-								<li class="selected">
 								
+								<li>
 								<a href="fr.js.html">fr.js</a></li>
 							
 								

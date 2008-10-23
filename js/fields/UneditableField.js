@@ -21,12 +21,6 @@ YAHOO.lang.extend(inputEx.UneditableField, inputEx.Field,
  * @scope inputEx.UneditableField.prototype   
  */
 {
-   /**
-    * Minimal rendering
-    */
-   /*render: function() {
-      this.divEl = inputEx.cn('div');
-   },*/
    
    /**
     * Store the value and update the visu
