@@ -57,18 +57,6 @@ YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 YAHOO.util.Event.addListener(window, "load", function() {
 	
-	/*var value = {
-	  "name" : "John Doe",
-	  "born" : "",
-	  "gender" : "male",
-	  "address" : {
-			"street":"123 S Main St",
-	    "city":"Springfield",
-	    "state":"CA"
-		},
-		"various" : "I am <b>John Doe</b>"
-	};*/
-	
 	var myJsonSchema = {
 		"description":"A person",
 	 	"type":"object",
@@ -96,10 +84,6 @@ YAHOO.util.Event.addListener(window, "load", function() {
 			"favoritecolors": {
 				"type": "array"
 			},
-			/*"various" : {
-					"type":"string",
-					"format":"html"
-			},*/
 	    "address": {
 				"type":"object",
 	      "properties":{

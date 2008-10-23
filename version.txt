@@ -25,6 +25,7 @@ not released yet
 		* MultiSelectField
 		* CombineField: replace PairField, but for N fields
 		* SliderField (type: slider)
+		* DSSelectField (type: dsselect) : uses YUI datasources to populate a SelectField
 
 	- Added widgets:	
 		* DDList widget: sortable list widget
@@ -44,11 +45,12 @@ not released yet
 		* TypeField/FormBuilder update: includes more options for more fields
 	
 	- Various:
+		* module definitions for the YUI loader
 		* Markup and CSS refactoring: the "description" and "label" attributes are now in the field JSON, uses "label" and "fieldset" tags
 		* small visualization/templating engine (Visus.js)
 		* Added an inputEx.importJsonSchema (experimental) method to create a form from a JSON Schema
 		* Documentation now uses JsDocToolkit 2 and http://code.google.com/p/neyricjslibs-template/
-		* moved the namespace from inputEx to YAHOO.inputEx (declared using YAHOO.namespace) => breaks namespace
+		* alias namespace from inputEx to YAHOO.inputEx
 		* enclosed components in anonymous functions with shortcuts
 		* use YAHOO.lang.extend(...,...,{ methods: }) to save some bytes
 		* moved build/inputex-all.js to build/inputex.js for YUI loader

@@ -1,0 +1,56 @@
+<html>
+<head>
+<title>inputEx - How to use the YUI loader</title>
+
+<!-- YUI loader-->	
+<script src="http://yui.yahooapis.com/2.6.0/build/yuiloader/yuiloader-min.js"></script> 
+
+<!-- inputEx loader -->
+<script src="../js/inputex-loader.js"></script>
+
+</head>
+<body>
+	
+	<div id="formContainer" class='exampleDiv'></div>
+	
+<script>
+
+
+/**
+ * The function to call when all script/css resources have been loaded
+ */
+function init() {
+
+	// Required for the tooltips
+	YAHOO.inputEx.spacerUrl = "../images/space.gif";
+
+	new YAHOO.inputEx.Form( { 
+		fields: [ 
+			{type: 'select', inputParams: {label: 'Title', name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
+			{inputParams: {label: 'Firstname', name: 'firstname', required: true, value:'Jacques' } }, 
+			{inputParams: {label: 'Lastname', name: 'lastname', value:'Dupont' } }, 
+			{type:'email', inputParams: {label: 'Email', name: 'email'}}, 
+			{type:'url', inputParams: {label: 'Website',name:'website'}} 
+		], 
+		buttons: [{type: 'submit', value: 'Change'}], 	
+		parentEl: 'formContainer' 
+	});
+};
+
+var loader = new YAHOO.util.YUILoader({
+    require: ["inputex-emailfield", "inputex-urlfield", "inputex-selectfield", "inputex-form"],
+    loadOptional: true,
+		//base: "../lib/yui/", // remove the comment if you want to load YUI locally
+    onSuccess: init
+});
+
+/**
+ * Important: this functions declares all inputEx Modules to YUI
+ */
+YAHOO.addInputExModules(loader, '../');
+loader.insert();
+
+</script>
+
+</body>
+</html>

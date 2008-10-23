@@ -98,7 +98,7 @@ inputEx.widget.DataTable.prototype = {
       this.datatable.subscribe("rowSelectEvent", this.onEventSelectRow, this, true); 
    
       // Form container
-      this.formContainer = inputEx.cn('div', null, null, "&nbsp;");
+      this.formContainer = inputEx.cn('div', {className: "inputEx-DataTable-formContainer"}, null, "&nbsp;");
       this.options.parentEl.appendChild(this.formContainer);
    
       // Build the form
@@ -106,7 +106,7 @@ inputEx.widget.DataTable.prototype = {
       this.subForm = new inputEx.Form({
          parentEl: this.formContainer,
          fields: this.options.fields,
-         legend: "Row edition",
+         legend: this.options.legend,
          buttons: [ 
             { type: 'submit', onClick: function(e) {that.onSaveForm(e); }, value: inputEx.messages.saveText},
             { type: 'button', onClick: function(e) {that.onCancelForm(e);}, value: inputEx.messages.cancelText}
@@ -122,11 +122,6 @@ inputEx.widget.DataTable.prototype = {
       // Positionning
       var dt = this.datatable.get('element');
       Dom.setStyle(dt, "float", "left");
-      Dom.setStyle(this.formContainer, "float", "left");
-      Dom.setStyle(this.formContainer, "width", "360px");
-      Dom.setStyle(this.formContainer, "margin-top", "30px");
-      Dom.setStyle(this.formContainer, "margin-left", "30px");
-      Dom.setStyle(this.formContainer, "position", "relative");
       
       // Hiding subform
       this.hideSubform();
