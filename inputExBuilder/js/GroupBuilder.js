@@ -10,8 +10,6 @@ YAHOO.inputEx.GroupBuilder = function(options) {
 YAHOO.extend(YAHOO.inputEx.GroupBuilder, YAHOO.inputEx.Group, {
    
    initEvents: function() {
-      // Update the preview event
-      this.updatedEvt.subscribe(this.rebuildPreview, this, true);
    },
    
    rebuildPreview: function() {      
@@ -36,7 +34,7 @@ YAHOO.extend(YAHOO.inputEx.GroupBuilder, YAHOO.inputEx.Group, {
 
 
 YAHOO.util.Event.addListener(window, 'load', function() {
-   new YAHOO.inputEx.GroupBuilder({parentEl: 'container', value: {
+   var g = new YAHOO.inputEx.GroupBuilder({parentEl: 'container', value: {
    	"fields" : [
    		{
    			"type" : "string",
@@ -92,6 +90,11 @@ YAHOO.util.Event.addListener(window, 'load', function() {
    	"legend" : "User"
    }
    
+   });
+   
+   // Update the preview event
+   YAHOO.lang.later(1000, this, function() {
+      g.updatedEvt.subscribe(g.rebuildPreview, g, true);
    });
 });
 

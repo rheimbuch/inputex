@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>inputEx Documentation - DateSplitField.js</title>
+<title>inputEx Documentation - inputEx.widget.Dialog</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="JsDoc Toolkit 2.0.0" />
 <link href="css/reset-fonts-grids.css" type="text/css" rel="stylesheet" media="all" /> 
@@ -18,7 +18,7 @@
 			
 			
 			<h3>
-				<a href="./index.html">inputEx Documentation</a> &gt; DateSplitField.js
+				<a href="./index.html">inputEx Documentation</a> &gt; inputEx.widget.Dialog
 				<span class="subtitle">0.2.0</span>
 			</h3>
 		
@@ -26,162 +26,269 @@
 		<div id="bd">
 			<div id="yui-main">
 				<div class="yui-b">
-<div class="summary description">
-	<p>This is the source view for DateSplitField.js</p>
-</div>
-										
-<form>
-	<textarea name="code" class="JScript">(function() {
 
-   var inputEx = YAHOO.inputEx, lang = YAHOO.lang;
-
-/**
- * @class inputEx.DateSplitField
- * @extends inputEx.CombineField
- */
-inputEx.DateSplitField = function(options) {
-   	
-   if(!options.dateFormat) {options.dateFormat = inputEx.messages.defaultDateFormat; }
-   
-   var formatSplit = options.dateFormat.split("/");
-   this.yearIndex = inputEx.indexOf('Y',formatSplit);
-   this.monthIndex = inputEx.indexOf('m',formatSplit);
-   this.dayIndex = inputEx.indexOf('d',formatSplit);
-   
-   options.fields = [];
-   for(var i = 0 ; i < 3 ; i++) {
-      if(i == this.dayIndex) {
-         options.fields.push({type: 'integer', inputParams: { typeInvite: inputEx.messages.dayTypeInvite, size: 2} });
-      }
-      else if(i == this.yearIndex) {
-         options.fields.push({type: 'integer', inputParams: { typeInvite: inputEx.messages.yearTypeInvite, size: 4} });
-      }
-      else {
-         options.fields.push({type: 'integer', inputParams: {typeInvite: inputEx.messages.monthTypeInvite, size: 2} });
-      }
-   }
-
-   options.separators = options.separators || [false,"&nbsp;","&nbsp;",false];
-   
-	inputEx.DateSplitField.superclass.constructor.call(this,options);
-
-   this.initAutoTab();
-};
-
-lang.extend(inputEx.DateSplitField, inputEx.CombineField, {
-   
-   setValue: function(value) {
-      var values = [];
-      
-      // !value catches "" (empty field), and invalid dates
-      if(!value || !lang.isFunction(value.getTime) || !lang.isNumber(value.getTime()) ) {
-         values[this.monthIndex] = "";
-         values[this.yearIndex] = "";
-         values[this.dayIndex] = "";
-      } else {
-         for(var i = 0 ; i < 3 ; i++) {
-            values.push( i == this.dayIndex ? value.getDate() : (i==this.yearIndex ? value.getFullYear() : value.getMonth()+1 ) );
-         }
-      }
-      inputEx.DateSplitField.superclass.setValue.call(this, values);
-   },
-   
-   getValue: function() {
-      if (this.isEmpty()) return "";
-      
-      var values = inputEx.DateSplitField.superclass.getValue.call(this);
-      
-      return new Date(values[this.yearIndex], values[this.monthIndex]-1, values[this.dayIndex] );
-   },
-   
-   validate: function() {
-      var subFieldsValidation = inputEx.DateSplitField.superclass.validate.call(this);
-      if (!subFieldsValidation) return false;
-      
-      var values = inputEx.DateSplitField.superclass.getValue.call(this);
-      var day = values[this.dayIndex];
-      var month = values[this.monthIndex];
-      var year = values[this.yearIndex];
-      
-      var val = this.getValue();
-      //console.log("datesplit value = ",val);
-      
-      // 3 empty fields
-      if (val == "") return true;
-      
-      // if a field is empty, it will be set by default (day : 31, month:12, year: 1899/1900)
-      //   -> val == "" MUST be checked first !
-      if (day == "" || month == "" || year == "") return false;
-      
-      if (year < 0 || year > 9999 || day < 1 || day > 31 || month < 1 || month > 12) return false;
-      
-      // val == any date -> true
-      // val == "Invalid Date" -> false
-      return (val != "Invalid Date");
-   },
-   
-	isEmpty: function() {
-	   var values = inputEx.DateSplitField.superclass.getValue.call(this);
-	   return (values[this.monthIndex] == "" && values[this.yearIndex] == "" &&  values[this.dayIndex] == "");
-	},
+<!-- Class -->
+<h2>
+	Static Class <b>inputEx.widget.Dialog</b>
 	
-	initAutoTab: function() {
-	   // "keypress" event codes for numeric keys (keyboard & numpad) 
-	   //  (warning : "keydown" codes are different with numpad)
-	   var numKeyCodes = [48,49,50,51,52,53,54,55,56,57];
-	   
-      // verify charCode (don't auto tab when pressing "tab", "arrow", etc...)
-	   var checkNumKey = function(charCode) {
-   	   for (var i=0, length=numKeyCodes.length; i < length; i++) {
-   	      if (charCode == numKeyCodes[i]) return true;
-   	   }
-   	   return false;       
-	   };
-	   
-	   // Function that checks charCode and execute tab action
-	   var that = this;
-	   var autoTab = function(inputIndex) {
-         // later to let input update its value
-   	   YAHOO.lang.later(0, that, function() {
-      	   var input = that.inputs[inputIndex];
-      	   
-      	   // check input.el.value (string) because getValue doesn't work
-      	   // example : if input.el.value == "06", getValue() == 6 (length == 1 instead of 2)
-      	   if (input.el.value.length == input.options.size) {
-      	      that.inputs[inputIndex+1].focus();
-      	   }
-   	   });
-	   };
-	   
-	   // add listeners on inputs
-	   YAHOO.util.Event.addListener(this.inputs[0].el, "keypress", function(e) {
-	      if (checkNumKey(YAHOO.util.Event.getCharCode(e))) {
-            autoTab(0);
-         }
-   	}, this, true);
-	   YAHOO.util.Event.addListener(this.inputs[1].el, "keypress", function(e) {
-	      if (checkNumKey(YAHOO.util.Event.getCharCode(e))) {
-            autoTab(1);
-         }
-   	}, this, true);
-	}
-   
-});
+</h2>
 
-inputEx.messages.monthTypeInvite = "Month";
-inputEx.messages.dayTypeInvite = "Day";
-inputEx.messages.yearTypeInvite = "Year";
+<!--
 
-/**
-* Register this class as "birthdate" type
-*/
-inputEx.registerType("datesplit", inputEx.DateSplitField);
 
-})();</textarea>
-</form>
+-->
+<!-- class description -->
+<div class="summary description">Create a Dialog from an inputEx field definition</div>
+
+
+<!-- Known subsclasses -->
+
+
+<!--
+
+<hr>
+-->
+
+
+<!-- ========= CONSTRUCTOR ======== -->
+
+<div class="section constructor details">
+	<h3 id="constructor">Constructor</h3>
+	<div class="content">
+		<div class="detail">
+			<a name="Dialog"> </a>
+			
+				<strong>inputEx.widget.Dialog</strong>
+				<code>( options )</code>
+				<ul>
 					
+					
+				</ul>
+	
+				<!-- CONSTRUCTOR PARAMETERS START -->
+				
+					<div class="description">
+						<dl>
+							<dt>Parameters:</dt>
+							
+								<dd>
+									<code>options<i>&nbsp;&lt;Object&gt;&nbsp;</i></code>
+									 - Config object, options are :
+<ul>
+  <li>inputExDef: an inputEx type definition (ex: {type: 'form', inputParams: {fields: [...]}})</li>
+  <li>id: an optional id for the dialog</li>
+  <li>parentEl: optional parentEl (default document.body)</li>
+  <li>title: the dialog title</li>
+  <li>panelConfig: the YAHOO.widget.Panel userConfig object</li>
+</ul> 
+								</dd>
+							
+						</dl>
+					</div>		
+				
+				<!-- CONSTRUCTOR PARAMETERS END -->
+			
+			
+		</div>
+	</div>	
+</div>
+
+<!-- ========= CONSTRUCTOR END ======== -->
+
+
+
+
+<!-- ============ Properties START ========= -->
+
+<!-- ============ Properties END ========== -->
+
+
+
+
+<!-- ============ METHOD DETAIL START ======= -->
+
+	<a name="method_detail"> </a> 
+
+	<div class="section method details">
+		<h3 id="methods">Methods</h3>
+		<div class="content">
+
+		
+		
+			<div>
+				<h4><a name="method_buildForm">buildForm</a></h4>
+			
+				<div class="detail">
+					<code><i>static</i>&nbsp;<b>buildForm</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					render the inputExDef as a inputEx field
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_getForm">getForm</a></h4>
+			
+				<div class="detail">
+					<code><i>static</i>&nbsp;<i>&lt;inputEx.Field&gt;</i>&nbsp;<b>getForm</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Return the inputEx field instance created
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+					<div class="description">
+					<b>Returns:</b>
+						<ul>
+							<code><i>&lt;inputEx.Field&gt;</i>&nbsp;</code>the field instance 
+						</ul>
 					
 					</div>
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_getValue">getValue</a></h4>
+			
+				<div class="detail">
+					<code><i>static</i>&nbsp;<i>&lt;Any&gt;</i>&nbsp;<b>getValue</b>()</code> 
+				</div>
+				
+				<div class="description">
+					
+					Shortcut to get value
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+					<div class="description">
+					<b>Returns:</b>
+						<ul>
+							<code><i>&lt;Any&gt;</i>&nbsp;</code>the field value 
+						</ul>
+					
+					</div>
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+		
+			<div>
+				<h4><a name="method_setValue">setValue</a></h4>
+			
+				<div class="detail">
+					<code><i>static</i>&nbsp;<b>setValue</b>(value)</code> 
+				</div>
+				
+				<div class="description">
+					
+					Shortcut to set value
+					<!--
+					for each="since" in="method.doc.getTag('since')">
+						<br><b>Since:</b> undefined<br/>
+					/for>
+				-->
+				</div>
+				
+			<!-- METHOD PARAMETERS START -->
+			
+				<div class="description">
+				<b>Parameters:</b>
+					<ul>
+						<code>value&nbsp;<i>&lt;Any&gt;</i>&nbsp;</code>
+						 - The value to set on the field 
+					</ul>
+					
+				</div>
+				
+				<!-- METHOD PARAMETERS END -->
+				<!-- ADDITIONAL ATTRIBUTES START -->
+				
+				
+					
+						<!-- ADDITIONAL ATTRIBUTES  END -->
+						<hr>
+						</div>
+					
+					
+
+				</div>
+			</div>
+
+
+<!-- ============ METHOD DETAIL END ========== -->
+
+
+
+
+<!-- ========== INHERITED METHODS SUMMARY =========== -->
+
+
+	
+	
+	<br/>
+	
+
+<br/>
+
+<!-- ========== END INHERITED METHODS SUMMARY =========== -->
+
+
+
+<!-- ============ EVENT DETAIL START ======= -->
+
+
+
+
+</div>
 			</div>
 			
 			<div class="yui-b">
@@ -419,8 +526,8 @@ inputEx.registerType("datesplit", inputEx.DateSplitField);
 								<li>
 									<a href="inputEx.widget.DDListItem.html">inputEx.widget.DDListItem</a></li>
 							
+								<li class="selected">
 								
-								<li>
 									<a href="inputEx.widget.Dialog.html">inputEx.widget.Dialog</a></li>
 							
 								
@@ -471,8 +578,8 @@ inputEx.registerType("datesplit", inputEx.DateSplitField);
 								<li>
 								<a href="DatePickerField.js.html">DatePickerField.js</a></li>
 							
-								<li class="selected">
 								
+								<li>
 								<a href="DateSplitField.js.html">DateSplitField.js</a></li>
 							
 								
@@ -638,7 +745,7 @@ inputEx.registerType("datesplit", inputEx.DateSplitField);
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Sun, 26 Oct 2008 12:34:58 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Sun, 26 Oct 2008 12:35:00 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

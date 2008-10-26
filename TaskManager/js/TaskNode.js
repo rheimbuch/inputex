@@ -261,7 +261,7 @@ YAHOO.extend(YAHOO.widget.TaskNode, YAHOO.widget.TextNode, {
         sb[sb.length] = ' class="' + this.labelStyle + '"';
         sb[sb.length] = ' href="' + this.href + '"';
         sb[sb.length] = ' target="' + this.target + '"';
-        sb[sb.length] = ' onclick="return ' + getNode + '.onLabelClick(' + getNode +')"';
+        sb[sb.length] = ' onclick="return ' + getNode + '.onLabelClick(' + getNode +',event);"';
         if (this.hasChildren(true)) {
             sb[sb.length] = ' onmouseover="document.getElementById(\'';
             sb[sb.length] = this.getToggleElId() + '\').className=';
@@ -292,9 +292,14 @@ YAHOO.extend(YAHOO.widget.TaskNode, YAHOO.widget.TextNode, {
     /**
      * Call TaskManager.setEditingTaskNode
      */
-    onLabelClick: function(node) {
+    onLabelClick: function(node, event) {
+       
+       YAHOO.util.Event.stopEvent(event);
+        
        YAHOO.widget.TaskNode.superclass.onLabelClick.call(this, node);
        TaskManager.setEditingTaskNode(node);
+       
+       this.toggle();
     },
 
     
@@ -307,7 +312,7 @@ YAHOO.extend(YAHOO.widget.TaskNode, YAHOO.widget.TextNode, {
           checked: this.checked,
           children: [],
           _taskDetails: this._taskDetails
-       }
+       };
        for(var i = 0 ; i < this.children.length ; i++) {
           var childNode = this.children[i];
           obj.children.push( childNode.toJsObject() );

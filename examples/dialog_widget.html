@@ -1,0 +1,74 @@
+<html>
+<head>
+<title>inputEx - How to use the Dialog widget</title>
+
+
+<!-- YUI loader-->	
+<script src="http://yui.yahooapis.com/2.6.0/build/yuiloader/yuiloader-min.js"></script> 
+
+<!-- inputEx loader -->
+<script src="../js/inputex-loader.js"></script>
+
+</head>
+<body class="yui-skin-sam">
+	
+	<button onclick="Example1.myPanel.show();" style="margin: 50px;">Show Panel</button>
+	
+<script>
+
+
+/**
+ * The function to call when all script/css resources have been loaded
+ */
+function init() {
+	
+	// Required for the UrlField
+	YAHOO.inputEx.spacerUrl = "../images/space.gif";
+			
+	Example1 = {};
+			
+	var formConfig =		{
+	         type: 'form',
+	         inputParams: {
+	            fields: [ 
+									{type: 'select', inputParams: {label: 'Title', name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
+									{inputParams: {label: 'Firstname', name: 'firstname', required: true, value:'Jacques' } }, 
+									{inputParams: {label: 'Lastname', name: 'lastname', value:'Dupont' } }, 
+									{type:'email', inputParams: {label: 'Email', name: 'email'}}, 
+									{type:'url', inputParams: {label: 'Website',name:'website'}} 
+								],
+	            buttons: [
+	               {type: 'button', value: 'Send', onClick: function() { 
+											alert(YAHOO.lang.JSON.stringify(Example1.myPanel.getForm().getValue())); 
+								 }},
+	               {type: 'button', value: 'Cancel', onClick: function() { Example1.myPanel.hide(); } }
+	            ]
+	         }
+	      }
+			
+	Example1.myPanel = new inputEx.widget.Dialog({
+		inputExDef: formConfig,
+		title: 'Here the title of your dialog'
+	});
+	
+	Example1.myPanel.show();
+	
+};
+
+
+var loader = new YAHOO.util.YUILoader({
+    require: ["inputex-emailfield", "inputex-urlfield", "inputex-selectfield", "inputex-form", "inputex-dialog", "json"],
+    loadOptional: true,
+    onSuccess: init
+});
+
+/**
+ * Important: this functions declares all inputEx Modules to YUI
+ */
+YAHOO.addInputExModules(loader, '../');
+loader.insert();
+
+</script>
+
+</body>
+</html>

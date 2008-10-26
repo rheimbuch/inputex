@@ -30,6 +30,7 @@ released on October 24th 2008
 	- Added widgets:	
 		* DDList widget: sortable list widget
 		* Datatable (beta): combine YUI datatable widget with inputEx forms
+		* Dialog (beta): create a panel from a inputEx type definition
 		
 	- Field enhancements:
 	   * Field: Added a "destroy" method, focus method to set the focus on inputs

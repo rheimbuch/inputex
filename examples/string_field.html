@@ -267,9 +267,7 @@
 
 
 <!-- YUI Library -->
-<script type="text/javascript" src="../lib/yui/yahoo/yahoo-min.js"></script> 
-<script type="text/javascript" src="../lib/yui/dom/dom-min.js"></script> 
-<script type="text/javascript" src="../lib/yui/event/event-min.js"></script>
+<script type="text/javascript" src="../lib/yui/yahoo-dom-events/yahoo-dom-events.js"></script>
 <script type="text/javascript" src="../lib/yui/container/container-min.js"></script>
 
 <!-- InputEx -->
@@ -281,8 +279,6 @@
 <script>
 
 YAHOO.util.Event.addListener(window, 'load', function() {
-	// Required for the tooltips
-	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 	// Example 1
 	new YAHOO.inputEx.StringField({parentEl: 'container1' });
