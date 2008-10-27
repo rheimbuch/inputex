@@ -15,20 +15,12 @@
 inputEx.Textarea = function(options) {
 	inputEx.Textarea.superclass.constructor.call(this,options);
 };
-YAHOO.lang.extend(inputEx.Textarea, inputEx.Field, 
+YAHOO.lang.extend(inputEx.Textarea, inputEx.StringField, 
 /**
  * @scope inputEx.Textarea.prototype   
  */   
 {
-   /**
-    * Register the change event
-    */
-   initEvents: function() {
-      Event.addListener(this.el, "change", this.onChange, this, true);
-	   Event.addListener(this.el, "focus", this.onFocus, this, true);
-	   Event.addListener(this.el, "blur", this.onBlur, this, true);
-   },
-   
+
    /**
     * Set the specific options (rows and cols)
     */
@@ -37,39 +29,64 @@ YAHOO.lang.extend(inputEx.Textarea, inputEx.Field,
       this.options.rows = this.options.rows || 6;
       this.options.cols = this.options.cols || 23;
    },
+   
+   /**
+    * Render an 'INPUT' DOM node
+    */
+   renderComponent: function() {
       
-   /**
-    * Render a textarea node
-    */
-   renderComponent: function() {      
-      this.el = inputEx.cn('textarea', {
-         rows: this.options.rows,
-         cols: this.options.cols
-      }, null, this.options.value);
+      // This element wraps the input node in a float: none div
+      this.wrapEl = inputEx.cn('div', {className: 'inputEx-StringField-wrapper'});
       
-      this.fieldContainer.appendChild(this.el);
+      // Attributes of the input field
+      var attributes = {};
+      attributes.id = YAHOO.util.Dom.generateId();
+      attributes.rows = this.options.rows;
+      attributes.cols = this.options.cols;
+      if(this.options.name) attributes.name = this.options.name;
+      
+      //if(this.options.maxLength) attributes.maxLength = this.options.maxLength;
+   
+      // Create the node
+      this.el = inputEx.cn('textarea', attributes, null, this.options.value);
+      
+      // Append it to the main element
+      this.wrapEl.appendChild(this.el);
+      this.fieldContainer.appendChild(this.wrapEl);
    },
-
-   /**
-    * Set the value
-    * @param {String} value value to set
+   
+	/**
+    * Uses the optional regexp to validate the field value
     */
-   setValue: function(value) {
-      this.el.value = value;
-
-      // call parent class method to set style and fire updatedEvt
-      inputEx.StringField.superclass.setValue.call(this, value);
+   validate: function() { 
+      var previous = inputEx.Textarea.superclass.validate.call(this);
+      
+      // emulate maxLength property for textarea
+      //   -> user can still type but field is invalid
+      if (this.options.maxLength) {
+         previous = previous && this.getValue().length <= this.options.maxLength;
+      }
+      
+      return previous;
    },
-
+   
    /**
-    * Return the value
-    * @return {String} The value
+    * Add the minLength string message handling
     */
-   getValue: function() {
-      return this.el.value;
-   }
+    getStateString: function(state) {
+	   if(state == inputEx.stateInvalid && this.options.minLength && this.el.value.length < this.options.minLength) {  
+	      return inputEx.messages.stringTooShort[0]+this.options.minLength+inputEx.messages.stringTooShort[1];
+	   
+	   // Add message too long
+      } else if (state == inputEx.stateInvalid && this.options.maxLength && this.el.value.length > this.options.maxLength) {
+         return inputEx.messages.stringTooLong[0]+this.options.maxLength+inputEx.messages.stringTooLong[1];
+      }
+	   return inputEx.Textarea.superclass.getStateString.call(this, state);
+	}
 
 });
+
+inputEx.messages.stringTooLong = ["This field should contain at most "," numbers or caracters"];
 
 /**
  * Register this class as "text" type

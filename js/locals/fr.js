@@ -37,6 +37,8 @@
       },
       start_weekday: 1 // la semaine commence un lundi
    };
+   msgs.stringTooShort = ["Ce champ doit contenir au moins "," caract&egrave;res (lettres ou chiffres)"];
+   msgs.stringTooLong = ["Ce champ doit contenir au plus "," caract&egrave;res (lettres ou chiffres)"];
    
    
    // Datatable
@@ -45,7 +47,7 @@
    msgs.modifyText = "modifier";
    msgs.deleteText = "supprimer";
    msgs.insertItemText = "Ajouter";
-   msgs.confirmDeletion = "Êtes-vous sûr ?"
+   msgs.confirmDeletion = "Êtes-vous sûr ?";
    
    // for YUI loader 
    YAHOO.inputEx.lang_fr = true;

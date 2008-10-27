@@ -96,6 +96,26 @@
 
 </div>
 
+
+<!-- Example 4 -->
+<div class='exampleDiv'>
+
+	<p class="title">More options</p>
+	
+	<p>Set the min/max length, typeInvite...</p>
+
+	<div class='demoContainer' id='container4'></div>
+
+	<div class='codeContainer'>
+		<form>
+		<textarea name="code" class="JScript">
+			new YAHOO.inputEx.Textarea({parentEl: 'container4', showMsg:true, required:true, typeInvite:"Type text here", minLength:10, maxLength:20});
+		</textarea>
+		</form>
+	</div>
+
+</div>
+
 <!-- YUI Library -->
 <script type="text/javascript" src="../lib/yui/yahoo-dom-event/yahoo-dom-event.js"></script>
 <script type="text/javascript" src="../lib/yui/container/container-min.js"></script>
@@ -133,6 +153,8 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	// Example 3
 	new YAHOO.inputEx.Textarea({parentEl: 'container3', value: 'Set the size...\nusing "rows" and "cols" attributes !\n', rows: 8, cols: 40});
 	
+	// Example 4
+	new YAHOO.inputEx.Textarea({parentEl: 'container4', showMsg:true, required:true, typeInvite:"Type text here", minLength:10, maxLength:20});
 	
 });
 

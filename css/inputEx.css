@@ -79,14 +79,14 @@ div.inputEx-empty > div.inputEx-label label {
 }
 
 
-div.inputEx-typeInvite > div.inputEx-Field input {
+div.inputEx-typeInvite > div.inputEx-Field input, div.inputEx-typeInvite > div.inputEx-Field textarea {
    color: #aaa;
 }
-div.inputEx-empty div.inputEx-valid div.inputEx-Field input {
+div.inputEx-empty div.inputEx-valid div.inputEx-Field input, div.inputEx-empty div.inputEx-valid div.inputEx-Field textarea {
    color: black;
 }
 
-inputEx-focused div.inputEx-Field input {
+inputEx-focused div.inputEx-Field input, inputEx-focused div.inputEx-Field textarea {
    color: black;
 }
 
