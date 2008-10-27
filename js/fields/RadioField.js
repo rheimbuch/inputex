@@ -94,8 +94,8 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	initEvents: function() {
 	   Event.addListener(this.optionEls, "change", this.onChange, this, true);
 	   
-	   Event.addListener(this.optionEls, "focus", this.onFocus, this, true);
-	   Event.addListener(this.optionEls, "blur", this.onBlur, this, true);
+	   Event.addFocusListener(this.optionEls, this.onFocus, this, true);
+	   Event.addBlurListener(this.optionEls, this.onBlur, this, true);
 
 
 	   if( YAHOO.env.ua.ie ) {

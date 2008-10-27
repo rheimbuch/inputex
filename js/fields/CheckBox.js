@@ -68,8 +68,8 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 	      Event.addListener(this.el, "click", function() { YAHOO.lang.later(10,this,this.fireUpdatedEvt); }, this, true);	
 	   }
 	   
-	   Event.addListener(this.el, "focus", this.onFocus, this, true);
-	   Event.addListener(this.el, "blur", this.onBlur, this, true);
+	   Event.addFocusListener(this.el, this.onFocus, this, true);
+	   Event.addBlurListener(this.el, this.onBlur, this, true);
 	},
 	   
 	/**

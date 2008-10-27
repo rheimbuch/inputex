@@ -42,7 +42,7 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
 	   inputEx.AutoComplete.superclass.initEvents.call(this);
 	   
 	   // remove standard blur listener
-	   Event.removeListener(this.el, "blur", this.onBlur);
+	   Event.removeBlurListener(this.el, this.onBlur);
    },
 
    /**

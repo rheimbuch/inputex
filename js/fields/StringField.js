@@ -56,8 +56,8 @@ lang.extend(inputEx.StringField, inputEx.Field,
     */
    initEvents: function() {	
 	   Event.addListener(this.el, "change", this.onChange, this, true);
-	   Event.addListener(this.el, "focus", this.onFocus, this, true);
-	   Event.addListener(this.el, "blur", this.onBlur, this, true);	  
+	   Event.addFocusListener(this.el, this.onFocus, this, true);
+	   Event.addBlurListener(this.el, this.onBlur, this, true);	  
 	   
 	   Event.addListener(this.el, "keypress", this.onKeyPress, this, true);
 	   Event.addListener(this.el, "keyup", this.onKeyUp, this, true);

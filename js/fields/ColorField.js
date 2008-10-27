@@ -57,7 +57,7 @@ lang.extend(inputEx.ColorField, inputEx.Field,
 	 */
 	initEvents: function() {
 	   Event.addListener(this.colorEl, "click", this.toggleColorPopUp, this, true);
-	   Event.addListener(this.colorEl, "blur", this.closeColorPopUp, this, true);
+	   Event.addBlurListener(this.colorEl, this.closeColorPopUp, this, true);
 	},
 	   
 	/**
