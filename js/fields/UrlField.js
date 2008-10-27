@@ -55,45 +55,48 @@ lang.extend(inputEx.UrlField, inputEx.StringField,
 
       // Create the favicon image tag
       if(this.options.favicon) {
-         this.favicon = inputEx.cn('img', {src: inputEx.spacerUrl});
+         this.favicon = inputEx.cn('img', {src: inputEx.spacerUrl});         
          this.fieldContainer.insertBefore(this.favicon,this.fieldContainer.childNodes[0]);
+         
+         // focus field when clicking on favicon
+         YAHOO.util.Event.addListener(this.favicon,"click",function(){this.focus();},this,true);
       }
    },
    
-   /**
-    * Validate the field with an url regexp and set the favicon url
-    * @return {Boolean} Validation state
-    */
-   validate: function() {
-      // check superclass validation (including regexp for url and emptiness test) 
-      var url = inputEx.UrlField.superclass.validate.call(this); 
+   setClassFromState: function() {
+      inputEx.UrlField.superclass.setClassFromState.call(this);
       
       if(this.options.favicon) {
-         var newSrc = url ? (url[0]+"/favicon.ico") : inputEx.spacerUrl;
-         if(newSrc != this.favicon.src) {
-         
-            // Hide the favicon
-            inputEx.sn(this.favicon, null, {visibility: 'hidden'});
-      
-            // Change the src
-            this.favicon.src = newSrc;
-      
-            // Set the timer to launch displayFavicon in 1s
-            if(this.timer) { clearTimeout(this.timer); }
-	         var that = this;
-	         this.timer = setTimeout(function(){that.displayFavicon();}, 1000);
-	      }
+         // try to update with url only if valid url (else pass null to display inputEx.spacerUrl)
+         this.updateFavicon((this.previousState == inputEx.stateValid) ? this.getValue() : null);
       }
-
-      return !!url;
    },
    
+
+   updateFavicon: function(url) {
+      var newSrc = url ? (url+"/favicon.ico") : inputEx.spacerUrl;
+      if(newSrc != this.favicon.src) {
+      
+         // Hide the favicon
+         inputEx.sn(this.favicon, null, {visibility: 'hidden'});
+   
+         // Change the src
+         this.favicon.src = newSrc;
+   
+         // Set the timer to launch displayFavicon in 1s
+         if(this.timer) { clearTimeout(this.timer); }
+         var that = this;
+         this.timer = setTimeout(function(){that.displayFavicon();}, 1000);
+      }
+   },
+
    /**
     * Display the favicon if the icon was found (use of the naturalWidth property)
     */
    displayFavicon: function() {
       inputEx.sn(this.favicon, null, {visibility: (this.favicon.naturalWidth!=0) ? 'visible' : 'hidden'});
    }
+
 
 });
 
