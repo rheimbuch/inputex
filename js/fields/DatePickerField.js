@@ -21,7 +21,7 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
     * Set the default date picker CSS classes
     */
    setOptions: function() {
-      this.options.className = this.options.className || 'inputEx-Field inputEx-DateField inputEx-DatePickerField';
+      this.options.className = this.options.className || 'inputEx-Field inputEx-DateField inputEx-PickerField inputEx-DatePickerField';
       inputEx.DatePickerField.superclass.setOptions.call(this);
       
       this.options.calendar = this.options.calendar || inputEx.messages.defautCalendarOpts;

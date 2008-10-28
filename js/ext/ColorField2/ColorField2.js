@@ -47,14 +47,14 @@ lang.extend(inputEx.ColorField2, inputEx.Field,
 	      value: this.options.value || this.options.colors[0]});
 
 	   // Create a colored area
-	   this.colorEl = inputEx.cn('div', {className: 'inputEx-ColorField'}, {backgroundColor: this.el.value});
+	   this.colorEl = inputEx.cn('div', {className: 'inputEx-ColorField-button'}, {backgroundColor: this.el.value});
 
 	   // Render the popup
 	   this.renderPopUp();
 
 	   // Elements are bound to divEl
-	   this.divEl.appendChild(this.el);
-	   this.divEl.appendChild(this.colorEl);
+	   this.fieldContainer.appendChild(this.el);
+	   this.fieldContainer.appendChild(this.colorEl);
 	},
 
 	/**
