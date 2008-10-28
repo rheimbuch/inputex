@@ -269,7 +269,7 @@ lang.extend(inputEx.Group, inputEx.Field,
       var fieldInstance = args[1];
       this.runInteractions(fieldInstance,fieldValue);
       
-      //this.setClassFromState();      
+      //this.setClassFromState();
       this.fireUpdatedEvt();
    },
 

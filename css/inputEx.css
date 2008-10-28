@@ -56,9 +56,6 @@ div.inputEx-invalid > div.inputEx-label label, div.inputEx-required > div.inputE
    padding-left:20px;
 }
 
-div.inputEx-invalid, div.inputEx-required {
-}
-
 div.inputEx-valid > div.inputEx-message {
    color:#505050;
    font-weight: normal;
