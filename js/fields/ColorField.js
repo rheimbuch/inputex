@@ -88,7 +88,7 @@ lang.extend(inputEx.ColorField, inputEx.Field,
 	},
 	
 	renderPalette: function() {
-
+      
       // render once !
       if (this.paletteRendered) return;
 
@@ -118,12 +118,12 @@ lang.extend(inputEx.ColorField, inputEx.Field,
       overlayBody.appendChild(colorGrid);
 
       // Set overlay dimensions
-      var width = (this.cellWidth + 2*this.cellMargin) * this.cellPerLine + (YAHOO.env.ua.ie ? 2*this.overlayPadding : 0);
-      var height = (this.cellHeight + 2*this.cellMargin) * this.cellPerColumn + (YAHOO.env.ua.ie ? 2*this.overlayPadding : 0);
+      var width = (this.cellWidth + 2*this.cellMargin) * this.cellPerLine + (YAHOO.env.ua.ie == 6 ? 3*this.overlayPadding : 0);
+      var height = (this.cellHeight + 2*this.cellMargin) * this.cellPerColumn + (YAHOO.env.ua.ie == 6 ? 3*this.overlayPadding : 0);
 
-      Dom.setStyle(overlayBody, "width", width);
-      Dom.setStyle(overlayBody, "height", height);
-      Dom.setStyle(overlayBody, "padding", this.overlayPadding);
+      Dom.setStyle(overlayBody, "width", width+"px");
+      Dom.setStyle(overlayBody, "height", height+"px");
+      Dom.setStyle(overlayBody, "padding", this.overlayPadding+"px");
 
       // Unsubscribe the event so this function is called only once
       this.button.unsubscribe("mousedown", this.renderPalette); 
@@ -146,7 +146,7 @@ lang.extend(inputEx.ColorField, inputEx.Field,
 	renderColorGrid: function() {
 	   var grid = inputEx.cn('div');
 	   for(var i = 0 ; i < this.length ; i++) {
-	      var square = inputEx.cn('div', {className: 'inputEx-ColorField-square'},{backgroundColor: '#'+this.colors[i], width:this.cellWidth, height:this.cellHeight, margin:this.cellMargin });
+	      var square = inputEx.cn('div', {className: 'inputEx-ColorField-square'},{backgroundColor: '#'+this.colors[i], width:this.cellWidth+"px", height:this.cellHeight+"px", margin:this.cellMargin+"px" });
 	   	Event.addListener(square, "mousedown", this.onColorClick, this, true );
 	   	grid.appendChild(square);
       }
@@ -165,7 +165,7 @@ lang.extend(inputEx.ColorField, inputEx.Field,
 		Event.stopEvent(e);
 	   		   	
 	   // Overlay closure
-      this.oOverlay.hide();	  
+      this.oOverlay.hide();
        
 	   // SetValue
 		var color = Dom.getStyle(square,'background-color');
