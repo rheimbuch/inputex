@@ -489,6 +489,10 @@ div.inputEx-DataTable-formContainer {
 	float: left;
 }
 div.inputEx-DataTable-formContainer div.inputEx-Group {
-	width: auto;
+	width: 300px;
 	background-color: white;
+	-moz-border-radius-bottomright: 10px;
+	-moz-border-radius-topright: 10px;
+	border: 1px solid #7F7F7F;
+	padding: 10px;
 }

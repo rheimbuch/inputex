@@ -38,8 +38,7 @@
 	<div class='demoContainer' id='container1'></div>
 
 	<div class='codeContainer'>
-		<form>
-		<textarea name="code" class="JScript">
+				<textarea name="code" class="JScript">
 			var contactFormFields = [ 
 					{type: 'select', inputParams: {label: 'Title', name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
 					{inputParams: {label: 'Firstname', name: 'firstname', required: true } }, 
@@ -50,8 +49,7 @@
 			];
 			new YAHOO.inputEx.Group({parentEl: 'container1', fields: contactFormFields, legend: 'Tell us about yourself...'});
 		</textarea>
-		</form>
-	</div>
+			</div>
 
 </div>
 
@@ -68,8 +66,7 @@
 	<div class='demoContainer' id='container2'></div>
 
 	<div class='codeContainer'>
-		<form>
-		<textarea name="code" class="JScript">
+				<textarea name="code" class="JScript">
 			new YAHOO.inputEx.ListField({
 				elementType: {
 					type: 'group',
@@ -80,8 +77,7 @@
 				parentEl: 'container2'
 			});
 		</textarea>
-		</form>
-	</div>
+			</div>
 
 </div>
 
@@ -96,8 +92,7 @@
 	<div class='demoContainer' id='container3'></div>
 
 	<div class='codeContainer'>
-		<form>
-		<textarea name="code" class="JScript" cols="60" rows="1">
+				<textarea name="code" class="JScript" cols="60" rows="1">
 			var el = YAHOO.util.Dom.get('container3');
 			var group = new YAHOO.inputEx.Group({parentEl: el, fields: contactFormFields });
 			var logDiv = inputEx.cn('div', null, null, "Log :<br />");
@@ -106,8 +101,7 @@
 				logDiv.innerHTML += "Updated at "+(new Date())+"<br />";
 			});
 		</textarea>
-		</form>
-	</div>
+			</div>
 
 </div>
 
@@ -123,12 +117,10 @@
 	<div class='demoContainer' id='container4'></div>
 
 	<div class='codeContainer'>
-		<form>
-		<textarea name="code" class="JScript" cols="60" rows="1">
+				<textarea name="code" class="JScript" cols="60" rows="1">
 			new YAHOO.inputEx.Group({parentEl: 'container4', fields: contactFormFields, legend: 'User Informations', collapsible: true});
 		</textarea>
-		</form>
-	</div>
+			</div>
 
 </div>
 
@@ -144,8 +136,7 @@
 	<div class='demoContainer' id='container5'></div>
 
 	<div class='codeContainer'>
-		<form>
-		<textarea name="code" class="JScript" cols="60" rows="1">
+				<textarea name="code" class="JScript" cols="60" rows="1">
 			contactFormFields.push({
 				type: 'group',
 				inputParams: {
@@ -167,8 +158,7 @@
 				alert( YAHOO.lang.JSON.stringify(field5.getValue()) );
 			});
 		</textarea>
-		</form>
-	</div>
+			</div>
 
 </div>
 
@@ -185,8 +175,7 @@
 	<div class='demoContainer' id='container6'></div>
 
 	<div class='codeContainer'>
-		<form>
-		<textarea name="code" class="JScript">
+				<textarea name="code" class="JScript">
 			var descriptedFields = [ 
 					{type: 'select', inputParams: {label: 'Title', name: 'title', description: 'Select your gender',  selectValues: ['Mr','Mrs','Mme'] } },
 					{ inputParams: {label: 'Firstname', description: 'Your firstname', name: 'firstname', required: true, value:'Jacques' } }, 
@@ -197,8 +186,7 @@
 			];
 			new YAHOO.inputEx.Group({parentEl: 'container6', fields: descriptedFields, legend: 'User Informations'});
 		</textarea>
-		</form>
-	</div>
+			</div>
 
 </div>
 
@@ -215,8 +203,7 @@
 	<div class='demoContainer' id='container7'></div>
 
 	<div class='codeContainer'>
-		<form>
-		<textarea name="code" class="JScript">
+				<textarea name="code" class="JScript">
 			var flattenGroup = new YAHOO.inputEx.Group({
 				parentEl: 'container7', 
 				legend: 'Flatten demo', 
@@ -241,8 +228,7 @@
 				YAHOO.util.Dom.get('container7').appendChild( inputEx.cn('div',null,null, YAHOO.lang.JSON.stringify(value)) );
 			});
 		</textarea>
-		</form>
-	</div>
+			</div>
 
 </div>
 

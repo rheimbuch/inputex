@@ -34,12 +34,10 @@
 	<div class='demoContainer' id='container1'></div>
 
 	<div class='codeContainer'>
-		<form>
-		<textarea name="code" class="JScript">
+				<textarea name="code" class="JScript">
 			new YAHOO.inputEx.DateField({parentEl: 'container1', value: new Date(), showMsg: true});
 		</textarea>
-		</form>
-	</div>
+			</div>
 
 </div>
 
@@ -54,12 +52,10 @@
 	<div class='demoContainer' id='container2'></div>
 
 	<div class='codeContainer'>
-		<form>
-		<textarea name="code" class="JScript">
+				<textarea name="code" class="JScript">
 			new YAHOO.inputEx.DateField({dateFormat: 'd/m/Y', value: '03/27/2008', parentEl: 'container2', showMsg: true});
 		</textarea>
-		</form>
-	</div>
+			</div>
 
 </div>
 
@@ -74,8 +70,7 @@
 	<div class='demoContainer' id='container3'></div>
 
 	<div class='codeContainer'>
-		<form>
-		<textarea name="code" class="JScript">
+				<textarea name="code" class="JScript">
 			var exampleDiv = YAHOO.util.Dom.get('container3');
 			var dateField = new YAHOO.inputEx.DateField({value: new Date(),  parentEl: exampleDiv, showMsg: true, required:true, typeInvite:'m/d/Y'}); 
 			dateField.updatedEvt.subscribe(function() {
@@ -90,8 +85,7 @@
 			exampleDiv.appendChild(button2); 
 			YAHOO.util.Event.addListener(button2, 'click', function() { alert(dateField.getValue()); });
 		</textarea>
-		</form>
-	</div>
+			</div>
 
 </div>
 

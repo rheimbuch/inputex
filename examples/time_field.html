@@ -33,8 +33,7 @@
 	<div class='demoContainer' id='container1'></div>
 
 	<div class='codeContainer'>
-		<form>
-		<textarea name="code" class="JScript">
+				<textarea name="code" class="JScript">
 			field = new YAHOO.inputEx.TimeField({parentEl: 'container1', showMsg: true, value:'15:17:34'});
 			var button = YAHOO.inputEx.cn('button', null, null, 'getValue');
 			YAHOO.util.Event.addListener(button, "click",function() {
@@ -42,8 +41,7 @@
 			});
 			YAHOO.util.Dom.get('container1').appendChild(button);
 		</textarea>
-		</form>
-	</div>
+			</div>
 
 </div>
 
@@ -58,16 +56,14 @@
 	<div class='demoContainer' id='container2'></div>
 
 	<div class='codeContainer'>
-		<form>
-		<textarea name="code" class="JScript">
+				<textarea name="code" class="JScript">
 			new YAHOO.inputEx.TimeField({
 				parentEl: 'container2', 
 				separators: [false,"h","m","s"],
 				value:'15:17:34'
 			});
 		</textarea>
-		</form>
-	</div>
+			</div>
 
 </div>
 

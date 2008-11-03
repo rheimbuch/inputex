@@ -32,8 +32,7 @@
 	<div class='demoContainer' id='container1'></div>
 
 	<div class='codeContainer'>
-		<form>
-		<textarea name="code" class="JScript">
+				<textarea name="code" class="JScript">
 			var exampleDiv = YAHOO.util.Dom.get('container1');
 			var group = new YAHOO.inputEx.Group({
 				 	fields: [ 
@@ -46,8 +45,7 @@
 			exampleDiv.appendChild(button); 
 			YAHOO.util.Event.addListener(button, 'click', function(){ alert(YAHOO.lang.JSON.stringify(group.getValue()) ); });
 		</textarea>
-		</form>
-	</div>
+			</div>
 
 </div>
 

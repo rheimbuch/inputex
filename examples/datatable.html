@@ -45,10 +45,60 @@
 		<div class='demoContainer' id='container1'></div>
 
 		<div class='codeContainer'>
-			<form>
 			<textarea name="code" class="JScript">
+				
+				/**
+				 * Datasource and inputEx fields used for both examples
+				 */
+				var myDataSource = new YAHOO.util.DataSource([
+			        {id:"po-0167", date:new Date(1980, 2, 24), quantity:1, amount:4, title:"A Book About Nothing", category: "SF"},
+			        {id:"po-0783", date:new Date("January 3, 1983"), quantity:null, amount:12.12345, title:"The Meaning of Life", category: "Novel"},
+			        {id:"po-0297", date:new Date(1978, 11, 12), quantity:12, amount:1.25, title:"This Book Was Meant to Be Read Aloud", category: "SF"},
+			        {id:"po-1482", date:new Date("March 11, 1985"), quantity:6, amount:3.5, title:"Read Me Twice", category: "Philosophy"}
+			  ]);
+			  myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+			  myDataSource.responseSchema = { fields: ["id","date","quantity","amount","title", "category"] };
+
+				var myFields = [
+					{type: 'hidden', inputParams: {label: 'Id', name: 'id'}, formatter:formatAddress },
+					{type: 'date', inputParams: {label: 'Date', name: 'date'} }, // formatter is auto-generated
+					{type: 'integer', inputParams: {label: 'Quantity', name: 'quantity'} },
+					{type: 'number', inputParams: {label: 'Amount', name: 'amount'} },
+					{type: 'string', inputParams: {label: 'Title', name: 'title'} },
+					{type: 'select', inputParams: {label: 'Category', name: 'category', selectValues: ['SF', 'Novel', 'Philosophy']}}
+				];
+
+
+				// Example 1
+
+			  // Custom formatter for "address" column to preserve line breaks
+			  var formatAddress = function(elCell, oRecord, oColumn, oData) {
+			  	elCell.innerHTML = "<pre class=\"address\">" + oData + "</pre>";
+			  };
+				var myDataTable = new YAHOO.inputEx.widget.DataTable({
+					parentEl: 'container1', 
+					editing: 'formeditor', // Uses a form editor
+					fields: myFields,
+					tableColumns: ["date","quantity","amount","title", "category"],
+					datasource: myDataSource,
+					datatableOpts: {caption: "DataTable Caption"}
+				});
+				myDataTable.itemRemovedEvt.subscribe(function(e, args) {
+					var record = args[0];
+					var data = record.getData();
+					//console.log("itemRemovedEvt", data);
+				});
+				myDataTable.itemAddedEvt.subscribe(function(e, args) {
+					var record = args[0];
+					var data = record.getData();
+					//console.log("itemAddedEvt", data);
+				});
+				myDataTable.itemModifiedEvt.subscribe(function(e, args) {
+					var record = args[0];
+					var data = record.getData();
+					//console.log("itemModifiedEvt", data);
+				});
 			</textarea>
-			</form>
 		</div>
 
 	</div>
@@ -66,10 +116,18 @@
 		<div class='demoContainer' id='container2'></div>
 
 		<div class='codeContainer'>
-			<form>
 			<textarea name="code" class="JScript">
+				new YAHOO.inputEx.widget.DataTable({
+					parentEl: 'container2', 
+
+					editing: 'celleditor', // using cell editing
+					editableFields: ['title', 'amount', 'quantity', 'date', 'category'],
+
+					fields: myFields,
+					datasource: myDataSource,
+					datatableOpts: {caption:"DataTable Caption"}
+				});
 			</textarea>
-			</form>
 		</div>
 
 	</div>
@@ -101,6 +159,9 @@
 
 YAHOO.util.Event.addListener(window, 'load', function() {
 
+	/**
+	 * Datasource and inputEx fields used for both examples
+	 */
 	var myDataSource = new YAHOO.util.DataSource([
         {id:"po-0167", date:new Date(1980, 2, 24), quantity:1, amount:4, title:"A Book About Nothing", category: "SF"},
         {id:"po-0783", date:new Date("January 3, 1983"), quantity:null, amount:12.12345, title:"The Meaning of Life", category: "Novel"},
@@ -137,17 +198,17 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	myDataTable.itemRemovedEvt.subscribe(function(e, args) {
 		var record = args[0];
 		var data = record.getData();
-		console.log("itemRemovedEvt", data);
+		//console.log("itemRemovedEvt", data);
 	});
 	myDataTable.itemAddedEvt.subscribe(function(e, args) {
 		var record = args[0];
 		var data = record.getData();
-		console.log("itemAddedEvt", data);
+		//console.log("itemAddedEvt", data);
 	});
 	myDataTable.itemModifiedEvt.subscribe(function(e, args) {
 		var record = args[0];
 		var data = record.getData();
-		console.log("itemModifiedEvt", data);
+		//console.log("itemModifiedEvt", data);
 	});
 	
 	// Example 2

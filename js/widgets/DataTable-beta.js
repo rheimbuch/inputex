@@ -154,7 +154,8 @@ inputEx.widget.DataTable.prototype = {
     */
    onCellClick: function(ev,args) {
       var target = Event.getTarget(ev);
-      var column = this.datatable.getColumn(target);
+      var column = this.datatable.getColumn(target);      
+      var rowIndex = this.datatable.getTrIndex(target);
       if (column.key == 'delete') {
          if (confirm(inputEx.messages.confirmDeletion)) {
             var record = this.datatable.getRecord(target);
@@ -170,9 +171,9 @@ inputEx.widget.DataTable.prototype = {
       }
       else if(column.key == 'modify') {
          // make the form appear
-         this.showSubform();
+         this.showSubform(rowIndex);
       } 
-      else {
+      else {      
          this.datatable.onEventShowCellEditor(ev);
       }
    },
@@ -193,7 +194,7 @@ inputEx.widget.DataTable.prototype = {
       
       if(this.options.editing == "formeditor") {
          this.editingNewRecord = true;
-         this.showSubform();
+         this.showSubform(rs.getLength()-1);
       }
       
    },
@@ -220,7 +221,7 @@ inputEx.widget.DataTable.prototype = {
       Event.stopEvent(e);
       
       // Update the record
-      var newvalues = this.subForm.getValue();      
+      var newvalues = this.subForm.getValue();
       this.datatable.updateRow( this.selectedRecord , newvalues );
       
       // Hide the subForm
@@ -267,13 +268,30 @@ inputEx.widget.DataTable.prototype = {
    
    /**
     * Show the form
+    * @param {Integer} rowIndex rowIndex to position the sub form
     */
-   showSubform: function() {
-       Dom.setStyle(this.formContainer, "display", "");
-       this.subForm.focus();
+   showSubform: function(rowIndex) {
+      this.positionSubForm(rowIndex);
+      Dom.setStyle(this.formContainer, "display", "");
+      this.subForm.focus();
    },
    
-   
+   /**
+    * Deplace the form
+    * @param {Integer} rowIndex rowIndex to position the sub form
+    */  
+   positionSubForm: function(rowIndex) {
+       var columnSet = this.datatable.getColumnSet();
+       // Hack : it seems that the getTdEl function add a bug for rowIndex == 0
+       if ( rowIndex == 0 ) {
+           var tableFirstRow = this.datatable.getFirstTrEl();
+           Dom.setY(this.formContainer,Dom.getY(tableFirstRow) - 18);
+       } else {
+           var column = columnSet.keys[columnSet.keys.length-1];           
+           var cell = this.datatable.getTdEl({column: column, record: rowIndex});
+           Dom.setY(this.formContainer,Dom.getY(cell) - 18);
+       }
+   },
    /**
     * Convert an inputEx fields definition to a DataTable columns definition
     */
