@@ -63,12 +63,12 @@ lang.extend(inputEx.ColorField, inputEx.Field,
       Dom.setStyle(this.oOverlay.body.parentNode, "position", "absolute");
       
       // toggle Menu when clicking on colorEl
-      YAHOO.util.Event.addListener(this.colorEl,'mousedown',function(e){
+      Event.addListener(this.colorEl,'mousedown',function(e){
          
          if (!this.oOverlay.cfg.getProperty("visible")) {
             
             // Stop event to prevent following "click" event to hide the menu !
-            YAHOO.util.Event.stopEvent(e); 
+            Event.stopEvent(e); 
             
             // palette may not have been rendered yet
             this.renderPalette();
@@ -185,6 +185,10 @@ lang.extend(inputEx.ColorField, inputEx.Field,
 		inputEx.ColorField.superclass.setValue.call(this,value);
 	},
 	   
+	/**
+	 * Return the color value
+	 * @return {String} Color value
+	 */
 	getValue: function() {
 	   return this.el.value;
 	},

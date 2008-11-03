@@ -51,7 +51,7 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
       Dom.setStyle(this.oOverlay.body.parentNode, "position", "absolute");
       
       
-      YAHOO.util.Event.addListener(this.el,'click',function(){
+      Event.addListener(this.el,'click',function(){
          // calendar may not have been rendered yet
          this.renderCalendar();
          
@@ -121,7 +121,7 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
             // Focus the anchor element using a timer since Calendar will try 
             // to set focus to its next button by default
             
-            YAHOO.lang.later(0, oAnchor, function () {
+            lang.later(0, oAnchor, function () {
                try {
                   oAnchor.focus();
                }

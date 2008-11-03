@@ -1,6 +1,6 @@
 (function() {
 
-   var inputEx = YAHOO.inputEx, Event = YAHOO.util.Event, Dom = YAHOO.util.Dom;
+   var inputEx = YAHOO.inputEx, Event = YAHOO.util.Event, Dom = YAHOO.util.Dom, lang = YAHOO.lang;
 
 /**
  * @class Creates a type field with all the types in inpuEx.typeClasses.
@@ -19,7 +19,7 @@ inputEx.TypeField = function(options) {
    inputEx.TypeField.superclass.constructor.call(this, options);
 };
 
-YAHOO.lang.extend(inputEx.TypeField, inputEx.Field, 
+lang.extend(inputEx.TypeField, inputEx.Field, 
 /**
  * @scope inputEx.TypeField.prototype   
  */   
@@ -32,7 +32,7 @@ YAHOO.lang.extend(inputEx.TypeField, inputEx.Field,
    setValue: function(value) {
       
       // Label: 
-      this.inplaceEditLabel.setValue(value.label);
+      this.inplaceEditLabel.setValue(value.inputParams.label);
       
       // Field:
       this.typePropertiesGroup.setValue({
@@ -264,9 +264,17 @@ inputEx.registerType("type", inputEx.TypeField);
 /**
  * group Options for each field
  */
+ 
+
+inputEx.StringField.groupOptions = [
+    { type: 'string',  inputParams: { label: 'Type invite', name: 'typeInvite'}},
+    { type: 'integer', inputParams: { label: 'Size', name: 'size', value: 20}},
+    { type: 'integer', inputParams: { label: 'Min. length', name: 'minLength'}}
+];
+
 
 if(inputEx.CheckBox) {
-   inputEx.CheckBox.groupOptions = [ {type: 'string', inputParams: {label: 'Label', name: 'label'} } ];
+   inputEx.CheckBox.groupOptions = [ {type: 'string', inputParams: {label: 'Label', name: 'rightLabel'} } ];
 }
 
 if(inputEx.ColorField) {
@@ -281,7 +289,8 @@ if(inputEx.DateField) {
 
 if(inputEx.CombineField) {
    inputEx.CombineField.groupOptions = [
-      { type: 'list', inputParams: {name: 'fields', label: 'Elements', required: true, elementType: {type: 'type'} } }
+      { type: 'list', inputParams: {name: 'fields', label: 'Elements', required: true, elementType: {type: 'type'} } },
+      { type: 'list', inputParams: {name: 'separators', label: 'Separators', required: true } }
    ];
 }
 
@@ -293,7 +302,7 @@ if(inputEx.PairField) {
 }
 
 if(inputEx.EmailField) {
-   inputEx.EmailField.groupOptions = [];
+   inputEx.EmailField.groupOptions = ([]).concat(inputEx.StringField.groupOptions);
 }
 
 if(inputEx.IPv4Field) {
@@ -362,11 +371,6 @@ if(inputEx.NumberField) {
    inputEx.NumberField.groupOptions = [];
 }
  
-inputEx.StringField.groupOptions = [
-   { inputParams: { label: 'Type invite', name: 'typeInvite'}},
-   { type: 'integer', inputParams: { label: 'Size', name: 'size', value: 20}},
-   { type: 'integer', inputParams: { label: 'Min. length', name: 'minLength'}}
-];
 
 inputEx.TypeField.groupOptions = [
    //{ type: 'boolean', inputParams: {label: 'default value field', name:'createValueField', value: false}}

@@ -10,8 +10,61 @@
 <!-- InputEx CSS -->
 <link type='text/css' rel='stylesheet' href='../css/inputEx.css' />
 
-<!-- InputEx Builder  CSS-->
-<link type='text/css' rel='stylesheet' href='css/inputExBuilder.css' />
+<style>
+
+
+#mainTable {
+   width: 100%;
+}
+
+#mainTable td.mainTableTd {
+   vertical-align: top; 
+   width: 50%;
+   padding: 10px;
+}
+
+
+#groupContainer {
+    border: 1px solid #9999ff; background-color: #eeeeff; padding: 10px;
+     width: 90%;
+   margin: auto;
+}
+
+#container {
+   border: 1px solid #9999ff; background-color: #eeeeff; padding: 10px;
+    width: 90%;
+   margin: auto;
+}
+
+p.tdTitle {
+   font-size: 14pt;
+   margin: 5px;
+   text-align: center;
+}
+
+#codeGenerator {
+   width: 100%;
+}
+
+#pagetitle {
+background:#B6CDE1 url(http://us.i1.yimg.com/us.yimg.com/i/ydn/bg_hd.gif) repeat-x scroll 0pt;
+border:1px solid #93B2CC;
+position:relative;
+margin: 10px;
+}
+
+#pageTitle h1 {
+   font-size:120%;
+   font-weight:bold;
+   left:-1px;
+   margin:0pt -2px 0pt 0pt;
+   padding:4px 0pt 2px;
+   position:relative;
+   text-indent:15px;
+   top:-1px;
+}
+</style>
+
 
 </head>
 
@@ -49,6 +102,8 @@
 <script type="text/javascript" src="../lib/yui/button/button-min.js"></script>
 <script type="text/javascript" src="../lib/yui/calendar/calendar-min.js"></script>
 
+<!-- Other libraries -->
+<script src="../lib/jsonPretty.js"  type='text/javascript'></script>
 
 <!-- InputEx -->
 <script src="../js/inputex.js"  type='text/javascript'></script>
@@ -85,9 +140,68 @@
 <script src="../js/ext/UpperCaseField/UpperCaseField.js"  type='text/javascript'></script>
 <script src="../js/ext/IPv4Field/IPv4Field.js"  type='text/javascript'></script>
 
-<script src="js/GroupBuilder.js"  type='text/javascript'></script>
-<script src="js/jsonPretty.js"  type='text/javascript'></script>
+<script src="../js/GroupBuilder.js"  type='text/javascript'></script>
 
+<script>
+YAHOO.util.Event.addListener(window, 'load', function() {
+	
+	YAHOO.inputEx.spacerUrl = "../images/space.gif";
+	
+	var g = new inputEx.Group({parentEl: 'container', fields: inputEx.Group.groupOptions});
+	
+  g.setValue({
+   	"fields" : [
+		  {
+   			"type" : "string",
+   			"inputParams" : {
+   				"typeInvite" : "firstname",
+   				"name" : "firstname",
+   				"label" : "Firstname"
+   			}
+   		},
+   		{
+   			"type" : "string",
+   			"inputParams" : {
+   				"typeInvite" : "lastname",
+   				"name" : "lastname",
+   				"label" : "Lastname"
+   			}
+   		},
+   		{
+   			"type" : "email",
+   			"inputParams" : {
+	   			"label" : "Email",
+   				"name" : "",
+   				"required" : false
+   			}
+   		}
+   	],
+   	"collapsible" : true,
+   	"legend" : "User"
+   });
+
+	
+	var rebuildPreview = function() { 
+      var value = g.getValue();
+      var previewGroup = new inputEx.Group(value);
+
+      var groupContainer = YAHOO.util.Dom.get('groupContainer');
+      groupContainer.innerHTML = "";
+      groupContainer.appendChild(previewGroup.getEl());
+
+      var codeContainer = YAHOO.util.Dom.get('codeGenerator');
+      codeContainer.innerHTML = value.toPrettyJSONString(true);
+   };
+
+	rebuildPreview();
+   
+   // Update the preview event
+   YAHOO.lang.later(1000, window, function() {
+      g.updatedEvt.subscribe(rebuildPreview);
+   });
+});
+
+</script>
 	
 </body>
 </html>
