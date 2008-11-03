@@ -34,8 +34,14 @@
 	<div class='demoContainer' id='container1'></div>
 
 	<div class='codeContainer'>
-				<textarea name="code" class="JScript">
-			new YAHOO.inputEx.MultiSelectField({label: 'Javascript libraries you use', name: 'country', selectValues: ['Choose a library', 'YUI','Dojo','Prototype','Scriptaculous', 'mootools'], parentEl: 'container1', description: 'Select and order your favorite libraries'});
+		<textarea name="code" class="JScript">
+			new YAHOO.inputEx.MultiSelectField({
+				label: 'Javascript libraries you use', 
+				name: 'country', 
+				selectValues: ['Choose a library', 'YUI','Dojo','Prototype','Scriptaculous', 'mootools'], 
+				parentEl: 'container1', 
+				description: 'Select and order your favorite libraries'
+			});
 		</textarea>
 			</div>
 
@@ -65,7 +71,13 @@
 YAHOO.util.Event.addListener(window, 'load', function() {
 
 	// Example 1
-	var ms = new YAHOO.inputEx.MultiSelectField({label: 'Javascript libraries you use', name: 'country', selectValues: ['Choose a library', 'YUI','Dojo','Prototype','Scriptaculous', 'mootools'], parentEl: 'container1', description: 'Select and order your favorite libraries'});
+	var ms = new YAHOO.inputEx.MultiSelectField({
+		label: 'Javascript libraries you use', 
+		name: 'country', 
+		selectValues: ['Choose a library', 'YUI','Dojo','Prototype','Scriptaculous', 'mootools'], 
+		parentEl: 'container1', 
+		description: 'Select and order your favorite libraries'
+	});
 	ms.updatedEvt.subscribe(function(e,params) {
 		var value = YAHOO.lang.JSON.stringify(params[0]);
 		YAHOO.util.Dom.get('container1').appendChild( YAHOO.inputEx.cn('div',null,null,"Updated at "+(new Date())+" "+value+"<br />") );
