@@ -1,3 +1,16 @@
+/**
+*  Fix bug with "float:left + position:relative" which results in disappearing fields
+*
+*  -> set zoom (proprietary to IE6) to force hasLayout = true, so boxes have standard behavior.
+*/
+div.inputEx-fieldWrapper, div.inputEx-Field {
+   zoom:1;
+}
+
+
+/**
+*  CSS patches because IE 6 doesn't support child selector (>) :
+*/
 div.inputEx-valid div.inputEx-message {
    color:#505050;
    font-weight: normal;
@@ -23,8 +36,6 @@ div.inputEx-invalid div.inputEx-label label, div.inputEx-required div.inputEx-la
    padding-left:20px;
 }
 
-
-/* Properties set by an invalid higher hierarchy field are disabled for valid or empty subfields */
 div.inputEx-valid div.inputEx-label label,
 div.inputEx-empty div.inputEx-label label {
    background: none;
