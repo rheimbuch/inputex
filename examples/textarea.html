@@ -107,7 +107,7 @@
 
 	<div class='codeContainer'>
 				<textarea name="code" class="JScript">
-			new YAHOO.inputEx.Textarea({parentEl: 'container4', showMsg:true, required:true, typeInvite:"Type text here", minLength:10, maxLength:20});
+			new YAHOO.inputEx.Textarea({parentEl: 'container4', showMsg:true, required:true, typeInvite:"Type text here", minLength:10, maxLength:20, name: "Test4"});
 		</textarea>
 			</div>
 
@@ -151,7 +151,7 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	new YAHOO.inputEx.Textarea({parentEl: 'container3', value: 'Set the size...\nusing "rows" and "cols" attributes !\n', rows: 8, cols: 40});
 	
 	// Example 4
-	new YAHOO.inputEx.Textarea({parentEl: 'container4', showMsg:true, required:true, typeInvite:"Type text here", minLength:10, maxLength:20});
+	new YAHOO.inputEx.Textarea({parentEl: 'container4', showMsg:true, required:true, typeInvite:"Type text here", minLength:10, maxLength:20, name: "Test4"});
 	
 });
 

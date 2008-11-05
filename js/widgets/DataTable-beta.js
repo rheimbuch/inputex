@@ -13,6 +13,9 @@
  *    <li>tableColumns: (optional) list of visible columns in the datatable</li>
  *    <li>sortable: (optional) are the columns sortable, default true</li>
  *    <li>resizeable: (optional) are the columns resizeable, default true</li>
+ *    <li>allowInsert: default true</li>
+ *    <li>allowModify: default true</li>
+ *    <li>allowDelete: default true</li>
  * </ul>
  */
 inputEx.widget.DataTable = function(options) {
@@ -25,6 +28,9 @@ inputEx.widget.DataTable = function(options) {
    // + this.options.tableColumns
    this.options.sortable = lang.isUndefined(this.options.sortable) ? true : this.options.sortable;
    this.options.resizeable = lang.isUndefined(this.options.resizeable) ? true : this.options.resizeable;
+   this.options.allowInsert = lang.isUndefined(this.options.allowInsert) ? true : this.options.allowInsert;
+   this.options.allowModify = lang.isUndefined(this.options.allowModify) ? true : this.options.allowModify;
+   this.options.allowDelete = lang.isUndefined(this.options.allowDelete) ? true : this.options.allowDelete;
    
    // Create main container and append it immediatly to the parent DOM element
    this.element = inputEx.cn('div', {id: this.options.id });
@@ -78,9 +84,11 @@ inputEx.widget.DataTable.prototype = {
       }
       
       // Insert button
-      this.insertButton = inputEx.cn('button', null, null, inputEx.messages.insertItemText);
-      Event.addListener(this.insertButton, 'click', this.onInsertButton, this, true);
-      this.options.parentEl.appendChild(this.insertButton);
+      if ( this.options.allowInsert ){
+         this.insertButton = inputEx.cn('button', null, null, inputEx.messages.insertItemText);
+         Event.addListener(this.insertButton, 'click', this.onInsertButton, this, true);
+         this.options.parentEl.appendChild(this.insertButton);
+      }
    },
    
    /**
@@ -172,9 +180,11 @@ inputEx.widget.DataTable.prototype = {
       else if(column.key == 'modify') {
          // make the form appear
          this.showSubform(rowIndex);
+         
       } 
       else {      
          this.datatable.onEventShowCellEditor(ev);
+         this.deplaceSubForm(rowIndex);
       }
    },
    
@@ -221,8 +231,8 @@ inputEx.widget.DataTable.prototype = {
       Event.stopEvent(e);
       
       // Update the record
-      var newvalues = this.subForm.getValue();
-      this.datatable.updateRow( this.selectedRecord , newvalues );
+      var newvalues = this.subForm.getValue();       
+      this.datatable.updateRow( this.selectedRecord , newvalues ); 
       
       // Hide the subForm
       this.hideSubform();
@@ -268,19 +278,17 @@ inputEx.widget.DataTable.prototype = {
    
    /**
     * Show the form
-    * @param {Integer} rowIndex rowIndex to position the sub form
     */
    showSubform: function(rowIndex) {
-      this.positionSubForm(rowIndex);
-      Dom.setStyle(this.formContainer, "display", "");
-      this.subForm.focus();
+       Dom.setStyle(this.formContainer, "display", "");
+       this.deplaceSubForm(rowIndex);
+       this.subForm.focus();
    },
    
    /**
     * Deplace the form
-    * @param {Integer} rowIndex rowIndex to position the sub form
     */  
-   positionSubForm: function(rowIndex) {
+   deplaceSubForm: function(rowIndex) {
        var columnSet = this.datatable.getColumnSet();
        // Hack : it seems that the getTdEl function add a bug for rowIndex == 0
        if ( rowIndex == 0 ) {
@@ -303,8 +311,8 @@ inputEx.widget.DataTable.prototype = {
  	      }
     	}
     	
-    	// Adding modify column if we use form editing
-      if(this.options.editing == "formeditor") {
+    	// Adding modify column if we use form editing and if allowModify is true
+      if(this.options.editing == "formeditor" && this.options.allowModify ) {
     	   columndefs.push({
     	      key:'modify',
     	      label:' ',
@@ -316,14 +324,16 @@ inputEx.widget.DataTable.prototype = {
       }
       
       // Adding delete column
-    	columndefs.push({
-    	   key:'delete',
-    	   label:' ',
-    	   formatter:function(elCell) {
-            elCell.innerHTML = inputEx.messages.deleteText;
-            elCell.style.cursor = 'pointer';
-         }
-      });
+      if(this.options.allowDelete) {
+      	 columndefs.push({
+      	    key:'delete',
+      	    label:' ',
+      	    formatter:function(elCell) {
+               elCell.innerHTML = inputEx.messages.deleteText;
+               elCell.style.cursor = 'pointer';
+            }
+         });
+      }
       
       
     	return columndefs;
