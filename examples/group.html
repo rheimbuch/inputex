@@ -284,12 +284,24 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	
 	// Example 3
 	var el = YAHOO.util.Dom.get('container3');
-	var group = new YAHOO.inputEx.Group({parentEl: el, fields: contactFormFields });
+	var group3 = new YAHOO.inputEx.Group({parentEl: el, fields: contactFormFields });
 	var logDiv = YAHOO.inputEx.cn('div', null, null, "Log :<br />");
 	el.appendChild(logDiv);
-	group.updatedEvt.subscribe(function() {
+	group3.updatedEvt.subscribe(function() {
 		logDiv.innerHTML += "Updated at "+(new Date())+"<br />";
 	});
+	
+	var setValueButton = inputEx.cn('button', null, null, "SetValue");
+	YAHOO.util.Event.addListener(setValueButton, 'click', function() {
+		group3.setValue({
+			title: 'Mme',
+			firstname: 'Eric',
+			lastname: 'Abouaf', 
+			email: 'something@email.com',
+			website: 'http://javascript.neyric.com/inputex'
+		});
+	});
+	el.appendChild(setValueButton);
 	
 	
 	// Example 4
