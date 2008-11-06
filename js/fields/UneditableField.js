@@ -25,13 +25,14 @@ YAHOO.lang.extend(inputEx.UneditableField, inputEx.Field,
    /**
     * Store the value and update the visu
     * @param {Any} val The value that will be sent to the visu
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(val) {
+   setValue: function(val, sendUpdatedEvt) {
       this.value = val;
       
       inputEx.renderVisu(this.options.visu, val, this.fieldContainer);
       
-	   inputEx.UneditableField.superclass.setValue.call(this, val);
+	   inputEx.UneditableField.superclass.setValue.call(this, val, sendUpdatedEvt);
    },
    
    /**

@@ -71,8 +71,9 @@ YAHOO.lang.extend(inputEx.MultiSelectField, inputEx.SelectField,
    /**
     * Set the value of the list
     * @param {String} value The value to set
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(value) {
+   setValue: function(value, sendUpdatedEvt) {
       
       this.ddlist.setValue(value);
       
@@ -84,6 +85,11 @@ YAHOO.lang.extend(inputEx.MultiSelectField, inputEx.SelectField,
       for(i = 0 ; i < value.length ; i++) {
          var index = inputEx.indexOf(value[i], this.options.selectValues);
          this.el.childNodes[index].disabled = true;
+      }
+	   
+	   if(sendUpdatedEvt !== false) {
+	      // fire update event
+         this.fireUpdatedEvt();
       }
    },
    

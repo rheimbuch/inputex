@@ -22,7 +22,7 @@ inputEx.DateTimeField = function(options) {
    options.separators = options.separators || [false, "&nbsp;&nbsp;", false];
    inputEx.DateTimeField.superclass.constructor.call(this,options);
 };
-YAHOO.lang.extend(inputEx.DateTimeField, inputEx.CombineField, 
+lang.extend(inputEx.DateTimeField, inputEx.CombineField, 
 /**
  * @scope inputEx.DateTimeField.prototype   
  */
@@ -46,14 +46,15 @@ YAHOO.lang.extend(inputEx.DateTimeField, inputEx.CombineField,
    /**
     * Set the value of both subfields
     * @param {Date} val Date to set
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(val) {
-      if(!YAHOO.lang.isObject(val)) {return;}
-      this.inputs[0].setValue(val);
+   setValue: function(val, sendUpdatedEvt) {
+      if(!lang.isObject(val)) {return;}
       var h = val.getHours();
       var m = val.getMinutes();
       var s = val.getSeconds();
-      this.inputs[1].setValue( ([(h < 10 ? '0':'')+h, (m < 10 ? '0':'')+m, (s < 10 ? '0':'')+s]).join(':') );
+      var time = ([(h < 10 ? '0':'')+h, (m < 10 ? '0':'')+m, (s < 10 ? '0':'')+s]).join(':');
+      inputEx.DateTimeField.superclass.setValue.call(this, [val, time], sendUpdatedEvt);
    }
 
 });

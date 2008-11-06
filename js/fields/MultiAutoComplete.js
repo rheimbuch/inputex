@@ -43,13 +43,18 @@ YAHOO.lang.extend(inputEx.MultiAutoComplete, inputEx.AutoComplete,
    /**
     * Set the value
     * @param {String} value The value to set
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(value) {
+   setValue: function(value, sendUpdatedEvt) {
       this.ddlist.setValue(value);
+      
       // set corresponding style
 	   this.setClassFromState();
-      // fire update event
-      this.fireUpdatedEvt();
+	   
+	   if(sendUpdatedEvt !== false) {
+	      // fire update event
+         this.fireUpdatedEvt();
+      }
    },
    
    /**

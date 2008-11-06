@@ -35,14 +35,6 @@ lang.extend(inputEx.UrlField, inputEx.StringField,
    },
    
    /**
-    * Validate after setValue to display the favicon
-    * @param {String} value The url string
-    */
-   setValue: function(value) {
-	   inputEx.UrlField.superclass.setValue.call(this, value);
-   },
-   
-   /**
     * Adds a img tag before the field to display the favicon
     */
    render: function() {

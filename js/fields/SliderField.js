@@ -63,8 +63,13 @@ YAHOO.lang.extend(inputEx.SliderField, inputEx.Field,
          }, this, true);
       }
    },
-        
-   setValue: function(val) {
+   
+   /**
+    * Function to set the value
+    * @param {Any} value The new value
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
+    */  
+   setValue: function(val, sendUpdatedEvt) {
       
       var v = val;
       if(v < this.options.minValue) {
@@ -78,7 +83,7 @@ YAHOO.lang.extend(inputEx.SliderField, inputEx.Field,
       
       this.slider.setValue(percent);
       
-      inputEx.SliderField.superclass.setValue.call(this, val);
+      inputEx.SliderField.superclass.setValue.call(this, val, sendUpdatedEvt);
    },
 
    /**

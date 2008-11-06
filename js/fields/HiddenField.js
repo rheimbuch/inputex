@@ -33,12 +33,13 @@ YAHOO.lang.extend(inputEx.HiddenField, inputEx.Field,
    /**
     * Stores the value in a local variable
     * @param {Any} val The value to set
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(val) {
+   setValue: function(val, sendUpdatedEvt) {
       this.el.value = val;
 
       // Call Field.setValue to set class and fire updated event
-		inputEx.HiddenField.superclass.setValue.call(this,val);
+		inputEx.HiddenField.superclass.setValue.call(this,val, sendUpdatedEvt);
    },
 
    /**

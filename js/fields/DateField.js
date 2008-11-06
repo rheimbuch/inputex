@@ -55,12 +55,13 @@ lang.extend(inputEx.DateField, inputEx.StringField,
 	/**
 	 * Format the date according to options.dateFormat
 	 * @param {Date} val Date to set
+	 * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
 	 */
-	setValue: function(val) {
+	setValue: function(val, sendUpdatedEvt) {
 	
 	   // Don't try to parse a date if there is no date
 	   if( val === '' ) {
-	      inputEx.DateField.superclass.setValue.call(this, '');
+	      inputEx.DateField.superclass.setValue.call(this, '', sendUpdatedEvt);
 	      return;
 	   }
 	   var str = "";
@@ -77,7 +78,7 @@ lang.extend(inputEx.DateField, inputEx.StringField,
 	     str = val;
 	   }
 	
-	   inputEx.DateField.superclass.setValue.call(this, str);
+	   inputEx.DateField.superclass.setValue.call(this, str, sendUpdatedEvt);
 	},
 	   
 	/**

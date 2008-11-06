@@ -80,10 +80,11 @@ YAHOO.lang.extend(inputEx.TreeField, inputEx.ListField,
 	/**
 	 * Set the value 
 	 * @param {Any} obj The tree object
+	 * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
 	 */
-	setValue: function(obj) {
-	   this.subField.setValue(obj.value);
-	   inputEx.TreeField.superclass.setValue.call(this, obj.childValues);
+	setValue: function(obj, sendUpdatedEvt) {
+	   this.subField.setValue(obj.value, false);
+	   inputEx.TreeField.superclass.setValue.call(this, obj.childValues, sendUpdatedEvt);
 	},
 	
 	/**

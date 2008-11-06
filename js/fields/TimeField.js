@@ -41,9 +41,10 @@ YAHOO.lang.extend(inputEx.TimeField, inputEx.CombineField,
    /**
     * Set the value 
     * @param {String} str Hour string (format HH:MM:SS)
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(str) {
-      inputEx.TimeField.superclass.setValue.call(this, str.split(':'));
+   setValue: function(str, sendUpdatedEvt) {
+      inputEx.TimeField.superclass.setValue.call(this, str.split(':'), sendUpdatedEvt);
    }
 
 });

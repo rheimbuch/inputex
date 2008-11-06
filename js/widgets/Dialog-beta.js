@@ -79,9 +79,10 @@ YAHOO.lang.extend(inputEx.widget.Dialog, YAHOO.widget.Panel,
    /**
     * Shortcut to set value
     * @param {Any} value The value to set on the field
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(value) {
-      this.getForm().setValue(value);
+   setValue: function(value, sendUpdatedEvt) {
+      this.getForm().setValue(value, sendUpdatedEvt);
    },
    
 });

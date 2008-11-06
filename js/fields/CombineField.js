@@ -97,14 +97,15 @@ lang.extend( inputEx.CombineField, inputEx.Field,
 	/**
 	 * Set the value
 	 * @param {Array} values [value1, value2, ...]
+	 * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
 	 */
-	setValue: function(values) {
+	setValue: function(values, sendUpdatedEvt) {
 	   for(var i = 0 ; i < this.inputs.length ; i++) {
-	      this.inputs[i].setValue(values[i]);
+	      this.inputs[i].setValue(values[i], false);
 	   }
 	   
 	   // Call Field.setValue to set class and fire updated event
-		inputEx.CombineField.superclass.setValue.call(this,values);
+		inputEx.CombineField.superclass.setValue.call(this,values, sendUpdatedEvt);
 	},
 	
 	/**

@@ -137,17 +137,21 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
    /**
     * Set the value
     * @param {Any} value Value to set
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(value) {
+   setValue: function(value, sendUpdatedEvt) {
       this.hiddenEl.value = value;
       
       // "inherited" from inputex.Field :
       //    (can't inherit of inputex.StringField because would set this.el.value...)
       //
-	      // set corresponding style
-   	   this.setClassFromState();
+	   // set corresponding style
+   	this.setClassFromState();
+	   
+	   if(sendUpdatedEvt !== false) {
 	      // fire update event
          this.fireUpdatedEvt();
+      }
    },
    
    /**

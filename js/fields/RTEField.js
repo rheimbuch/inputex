@@ -64,10 +64,17 @@ lang.extend(inputEx.RTEField, inputEx.Field,
 	/**
 	 * Set the html content
 	 * @param {String} value The html string
+	 * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
 	 */
-	setValue: function(value) {
-	   if(this.editor)
+	setValue: function(value, sendUpdatedEvt) {
+	   if(this.editor) {
 	      this.editor.setEditorHTML(value);
+      }
+	   
+   	if(sendUpdatedEvt !== false) {
+   	   // fire update event
+         this.fireUpdatedEvt();
+      }
 	},
 	
 	/**

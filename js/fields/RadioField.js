@@ -150,8 +150,9 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	/**
 	 * Set the value of the checkedbox
 	 * @param {Any} value The value schould be one of this.options.values (which defaults to this.options.choices if missing) if allowAny option not true.
+	 * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
 	 */
-	setValue: function(value) {
+	setValue: function(value, sendUpdatedEvt) {
 	   var checkAny = true, anyEl;
 	   
 	   for(var i = 0 ; i < this.optionEls.length ; i++) {
@@ -170,11 +171,11 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	   if(this.radioAny && checkAny) {
          anyEl.checked = true;
          this.anyField.enable(); // enable anyField
-         this.anyField.setValue(value);
+         this.anyField.setValue(value, false);
       }
 	   
       // call parent class method to set style and fire updatedEvt
-      inputEx.StringField.superclass.setValue.call(this, value);
+      inputEx.StringField.superclass.setValue.call(this, value, sendUpdatedEvt);
 	}
 	
 });   

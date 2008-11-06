@@ -176,13 +176,14 @@ lang.extend(inputEx.ColorField, inputEx.Field,
 	/**
 	 * Set the value
 	 * @param {String} value Color to set
+	 * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
 	 */
-	setValue: function(value) {
+	setValue: function(value, sendUpdatedEvt) {
 	   this.el.value = value;
 	   Dom.setStyle(this.colorEl, 'background-color', this.el.value);
 
 		// Call Field.setValue to set class and fire updated event
-		inputEx.ColorField.superclass.setValue.call(this,value);
+		inputEx.ColorField.superclass.setValue.call(this,value, sendUpdatedEvt);
 	},
 	   
 	/**

@@ -74,12 +74,13 @@ lang.extend(inputEx.StringField, inputEx.Field,
    /**
     * Function to set the value
     * @param {String} value The new value
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(value) {
+   setValue: function(value, sendUpdatedEvt) {
       this.el.value = value;
       
       // call parent class method to set style and fire updatedEvt
-      inputEx.StringField.superclass.setValue.call(this, value);
+      inputEx.StringField.superclass.setValue.call(this, value, sendUpdatedEvt);
    },	
 	
    /**

@@ -52,8 +52,9 @@ lang.extend(inputEx.SelectField, inputEx.Field,
    /**
     * Set the value
     * @param {String} value The value to set
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(value) {
+   setValue: function(value, sendUpdatedEvt) {
       var index = 0;
       var option;
       for(var i = 0 ; i < this.options.selectValues.length ; i++) {
@@ -64,7 +65,7 @@ lang.extend(inputEx.SelectField, inputEx.Field,
       }
       
 		// Call Field.setValue to set class and fire updated event
-		inputEx.SelectField.superclass.setValue.call(this,value);
+		inputEx.SelectField.superclass.setValue.call(this,value, sendUpdatedEvt);
    },
    
    /**

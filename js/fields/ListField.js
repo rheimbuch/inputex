@@ -74,8 +74,9 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	/**
 	 * Set the value of all the subfields
 	 * @param {Array} value The list of values to set
+	 * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
 	 */
-	setValue: function(value) {
+	setValue: function(value, sendUpdatedEvt) {
 	   
 	   if(!lang.isArray(value) ) {
 	      // TODO: throw exceptions ?
@@ -88,7 +89,7 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	         this.addElement(value[i]);
 	      }
 	      else {
-	         this.subFields[i].setValue(value[i]);
+	         this.subFields[i].setValue(value[i], false);
 	      }
 	   }
 	      
@@ -100,7 +101,7 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	      }
 	   };
 	   
-	   inputEx.ListField.superclass.setValue.call(this, value);
+	   inputEx.ListField.superclass.setValue.call(this, value, sendUpdatedEvt);
 	},
 	   
 	/**
@@ -319,7 +320,8 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	      this.removeElement(index);
 	   }
 	      
-	   this.updatedEvt.fire(this.getValue());
+	   // Fire the updated event
+	   this.fireUpdatedEvt();
 	},
 	   
 	/**

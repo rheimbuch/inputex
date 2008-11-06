@@ -149,28 +149,23 @@ lang.extend(inputEx.TypeField, inputEx.Field,
    /**
     * Set the value of the label, typeProperties and group
     * @param {Object} value Type object configuration
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(value) {
+   setValue: function(value, sendUpdatedEvt) {
       
       // Set type in property panel
-      //this.typeSelect.setValue(value.type);
-      var index = 0;
-      var option;
-      for(var i = 0 ; i < this.typeSelect.options.selectValues.length ; i++) {
-         if(value.type === this.typeSelect.options.selectValues[i]) {
-            option = this.typeSelect.el.childNodes[i];
-		      option.selected = "selected";
-         }
-      }
+      this.typeSelect.setValue(value.type, false);
       
       // Rebuild the panel propertues
       this.rebuildGroupOptions();
       
       // Set the parameters value
-      this.group.setValue(value.inputParams);
+      this.group.setValue(value.inputParams, false);
       
-      // Fire updated Evt
-      this.fireUpdatedEvt();
+	   if(sendUpdatedEvt !== false) {
+	      // fire update event
+         this.fireUpdatedEvt();
+      }
    },
    
    /**
@@ -216,7 +211,7 @@ inputEx.Field.groupOptions = [
    { type: "boolean", inputParams: {label: "Show messages",name: "showMsg", value: false} }
 ];
 
-inputEx.StringField.groupOptions = inputEx.Field.groupOptions.concat([
+inputEx.StringField.groupOptions = inputEx.StringField.superclass.constructor.groupOptions.concat([
     { type: 'string',  inputParams: { label: 'Type invite', name: 'typeInvite', value: ''}},
     { type: 'integer', inputParams: { label: 'Size', name: 'size', value: 20}},
     { type: 'integer', inputParams: { label: 'Min. length', name: 'minLength', value: 0}}

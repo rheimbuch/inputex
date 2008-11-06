@@ -34,7 +34,7 @@ inputEx.BirthdateField = function(options) {
 };
 lang.extend(inputEx.BirthdateField, inputEx.CombineField, {
    
-   setValue: function(value) {
+   setValue: function(value, sendUpdatedEvt) {
       
       var values = [];
       
@@ -48,7 +48,7 @@ lang.extend(inputEx.BirthdateField, inputEx.CombineField, {
             values.push( i == this.dayIndex ? value.getDate() : (i==this.yearIndex ? value.getFullYear() : value.getMonth() ) );
          }
       }
-      inputEx.BirthdateField.superclass.setValue.call(this, values);
+      inputEx.BirthdateField.superclass.setValue.call(this, values, sendUpdatedEvt);
    },
    
    getValue: function() {

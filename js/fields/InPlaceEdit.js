@@ -219,8 +219,9 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
    /**
     * Set the value and update the display
     * @param {Any} value The value to set
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(value) {   
+   setValue: function(value, sendUpdatedEvt) {   
       // Store the value
 	   this.value = value;
    
@@ -236,7 +237,7 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
          this.editorField.setValue(value);
       }
       
-      inputEx.InPlaceEdit.superclass.setValue.call(this, value);
+      inputEx.InPlaceEdit.superclass.setValue.call(this, value, sendUpdatedEvt);
    },
    
    /**

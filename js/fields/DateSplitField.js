@@ -1,6 +1,6 @@
 (function() {
 
-   var inputEx = YAHOO.inputEx, lang = YAHOO.lang;
+   var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Event = YAHOO.util.Event;
 
 /**
  * @class inputEx.DateSplitField
@@ -37,7 +37,12 @@ inputEx.DateSplitField = function(options) {
 
 lang.extend(inputEx.DateSplitField, inputEx.CombineField, {
    
-   setValue: function(value) {
+   /**
+	 * Set the value. Format the date according to options.dateFormat
+	 * @param {Date} val Date to set
+	 * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
+	 */
+   setValue: function(value, sendUpdatedEvt) {
       var values = [];
       
       // !value catches "" (empty field), and invalid dates
@@ -50,7 +55,7 @@ lang.extend(inputEx.DateSplitField, inputEx.CombineField, {
             values.push( i == this.dayIndex ? value.getDate() : (i==this.yearIndex ? value.getFullYear() : value.getMonth()+1 ) );
          }
       }
-      inputEx.DateSplitField.superclass.setValue.call(this, values);
+      inputEx.DateSplitField.superclass.setValue.call(this, values, sendUpdatedEvt);
    },
    
    getValue: function() {
@@ -109,7 +114,7 @@ lang.extend(inputEx.DateSplitField, inputEx.CombineField, {
 	   var that = this;
 	   var autoTab = function(inputIndex) {
          // later to let input update its value
-   	   YAHOO.lang.later(0, that, function() {
+   	   lang.later(0, that, function() {
       	   var input = that.inputs[inputIndex];
       	   
       	   // check input.el.value (string) because getValue doesn't work
@@ -121,13 +126,13 @@ lang.extend(inputEx.DateSplitField, inputEx.CombineField, {
 	   };
 	   
 	   // add listeners on inputs
-	   YAHOO.util.Event.addListener(this.inputs[0].el, "keypress", function(e) {
-	      if (checkNumKey(YAHOO.util.Event.getCharCode(e))) {
+	   Event.addListener(this.inputs[0].el, "keypress", function(e) {
+	      if (checkNumKey(Event.getCharCode(e))) {
             autoTab(0);
          }
    	}, this, true);
-	   YAHOO.util.Event.addListener(this.inputs[1].el, "keypress", function(e) {
-	      if (checkNumKey(YAHOO.util.Event.getCharCode(e))) {
+	   Event.addListener(this.inputs[1].el, "keypress", function(e) {
+	      if (checkNumKey(Event.getCharCode(e))) {
             autoTab(1);
          }
    	}, this, true);

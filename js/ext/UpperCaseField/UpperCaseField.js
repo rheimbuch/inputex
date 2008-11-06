@@ -20,12 +20,13 @@ YAHOO.lang.extend(inputEx.UpperCaseField, inputEx.StringField,
    /**
     * Set the value and call toUpperCase
     * @param {String} val The string
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(val) {
+   setValue: function(val, sendUpdatedEvt) {
       // don't always rewrite the value to able selections with Ctrl+A
       var uppered = val.toUpperCase();
       if(uppered != this.getValue()) {
-         inputEx.UpperCaseField.superclass.setValue.call(this, uppered);
+         inputEx.UpperCaseField.superclass.setValue.call(this, uppered, sendUpdatedEvt);
       }
    },
 

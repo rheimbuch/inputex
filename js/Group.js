@@ -189,8 +189,10 @@ lang.extend(inputEx.Group, inputEx.Field,
    
    /**
     * Set the values of each field from a key/value hash object
+     * @param {Any} value The group value
+     * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(oValues) {
+   setValue: function(oValues, sendUpdatedEvt) {
       if(!oValues) {
          return;
       }
@@ -198,12 +200,16 @@ lang.extend(inputEx.Group, inputEx.Field,
 	      var field = this.inputs[i];
 	      var name = field.options.name;
 	      if(name && !lang.isUndefined(oValues[name]) ) {
-	         field.setValue(oValues[name]);
+	         field.setValue(oValues[name], false); // don't fire the updated event !
 	      }
 	      else {
 	         field.clear();
 	      }
-		   //field.setClassFromState();
+      }
+      
+	   if(sendUpdatedEvt !== false) {
+	      // fire update event
+         this.fireUpdatedEvt();
       }
    },
    
