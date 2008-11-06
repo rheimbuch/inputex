@@ -508,6 +508,12 @@ div.inputEx-TypeField-EditButton {
    cursor: pointer;
    float: left;
    margin-left:4px;
+   position: relative;
+}
+
+div.inputEx-TypeField-FieldValueWrapper {
+   float: left;
+   margin-left: 4px;
 }
 
 div.inputEx-TypeField-PropertiesPanel {
@@ -518,5 +524,5 @@ div.inputEx-TypeField-PropertiesPanel {
    top: 0px;
    left: 16px;
    z-index:1;
-   width: 350px;
+   width: 380px;
 }

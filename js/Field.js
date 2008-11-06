@@ -289,9 +289,12 @@ inputEx.Field.prototype = {
    destroy: function() {
       var el = this.getEl();
       
+      // Unsubscribe all listeners on the updatedEvt
+      this.updatedEvt.unsubscribeAll();
+      
       // Remove from DOM
       if(Dom.inDocument(el)) {
-         el.parentEl.removeChild(el);
+         el.parentNode.removeChild(el);
       }
       
       // recursively purge element
