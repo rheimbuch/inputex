@@ -219,23 +219,23 @@ inputEx.StringField.groupOptions = inputEx.StringField.superclass.constructor.gr
 
 
 if(inputEx.CheckBox) {
-   inputEx.CheckBox.groupOptions = inputEx.Field.groupOptions.concat([ 
+   inputEx.CheckBox.groupOptions = inputEx.CheckBox.superclass.constructor.groupOptions.concat([ 
       {type: 'string', inputParams: {label: 'Label', name: 'rightLabel'} } 
    ]);
 }
 
 if(inputEx.ColorField) {
-   inputEx.ColorField.groupOptions = inputEx.Field.groupOptions.concat([]);
+   inputEx.ColorField.groupOptions = inputEx.ColorField.superclass.constructor.groupOptions.concat([]);
 }
 
 if(inputEx.DateField) {
-   inputEx.DateField.groupOptions = inputEx.StringField.groupOptions.concat([
+   inputEx.DateField.groupOptions = inputEx.DateField.superclass.constructor.groupOptions.concat([
       {type: 'select', inputParams: {label: 'Date format', name: 'dateFormat', selectOptions: ["m/d/Y", "d/m/Y"], selectValues: ["m/d/Y", "d/m/Y"] } }
    ]);
 }
 
 if(inputEx.CombineField) {
-   inputEx.CombineField.groupOptions = inputEx.Field.groupOptions.concat([
+   inputEx.CombineField.groupOptions = inputEx.CombineField.superclass.constructor.groupOptions.concat([
       { type: 'list', inputParams: {name: 'fields', label: 'Elements', required: true, elementType: {type: 'type'} } },
       { type: 'list', inputParams: {name: 'separators', label: 'Separators', required: true } }
    ]);
@@ -257,7 +257,7 @@ if(inputEx.IPv4Field) {
 }
 
 if(inputEx.PasswordField) {
-   inputEx.PasswordField.groupOptions = inputEx.StringField.groupOptions.concat([
+   inputEx.PasswordField.groupOptions = inputEx.PasswordField.superclass.constructor.groupOptions.concat([
       {type: 'boolean', inputParams: {label: 'Strength indicator', name: 'strengthIndicator', value: false} },
       {type: 'boolean', inputParams: {label: 'CapsLock warning', name: 'capsLockWarning', value: false} }
    ]);
@@ -265,31 +265,31 @@ if(inputEx.PasswordField) {
 
 
 if(inputEx.RadioField) {
-   inputEx.RadioField.groupOptions = inputEx.Field.groupOptions.concat([
+   inputEx.RadioField.groupOptions = inputEx.RadioField.superclass.constructor.groupOptions.concat([
       {type: 'list', inputParams: {label: 'Options', name: 'choices', elementType: {type: 'string'} } },
       {type: 'boolean', inputParams: {label: 'Allow custom value', name: 'allowAny'} }
    ]);
 }
 
 if(inputEx.RTEField) {
-   inputEx.RTEField.groupOptions = inputEx.Field.groupOptions.concat([]);
+   inputEx.RTEField.groupOptions = inputEx.RTEField.superclass.constructor.groupOptions.concat([]);
 }
 
 if(inputEx.UrlField) {
-   inputEx.UrlField.groupOptions = inputEx.StringField.groupOptions.concat([
+   inputEx.UrlField.groupOptions = inputEx.UrlField.superclass.constructor.groupOptions.concat([
       {  type: 'boolean', inputParams: {label: 'Display favicon', name:'favicon', value: true}}
    ]);
 }
 
 if(inputEx.Textarea) {
-   inputEx.Textarea.groupOptions = inputEx.StringField.groupOptions.concat([
+   inputEx.Textarea.groupOptions = inputEx.Textarea.superclass.constructor.groupOptions.concat([
       { type: 'integer', inputParams: {label: 'Rows',  name: 'rows', value: 6} },
       { type: 'integer', inputParams: {label: 'Cols', name: 'cols', value: 23} }
    ]);
 }
  
 if(inputEx.SelectField) {
-   inputEx.SelectField.groupOptions = inputEx.Field.groupOptions.concat([
+   inputEx.SelectField.groupOptions = inputEx.SelectField.superclass.constructor.groupOptions.concat([
       {  type: 'list', inputParams: {name: 'selectValues', label: 'Values', elementType: {type: 'string'}, required: true } },
       {  type: 'list', inputParams: {name: 'selectOptions', label: 'Options', elementType: {type: 'string'} } }
    ]);
@@ -297,14 +297,14 @@ if(inputEx.SelectField) {
 
 
 if(inputEx.SliderField) {
-   inputEx.SliderField.groupOptions = inputEx.Field.groupOptions.concat([
+   inputEx.SliderField.groupOptions = inputEx.SliderField.superclass.constructor.groupOptions.concat([
       { type: 'integer', inputParams: {label: 'Min. value',  name: 'minValue', value: 0} },
       { type: 'integer', inputParams: {label: 'Max. value', name: 'maxValue', value: 100} }
    ]);
 }
 
 if(inputEx.ListField) {
-   inputEx.ListField.groupOptions = inputEx.Field.groupOptions.concat([
+   inputEx.ListField.groupOptions = inputEx.ListField.superclass.constructor.groupOptions.concat([
       { type: 'string', inputParams: {label: 'List label', name: 'listLabel'}},
       { type: 'type', inputParams: {label: 'List element type', required: true, name: 'elementType'} }
    ]);
@@ -312,17 +312,17 @@ if(inputEx.ListField) {
  
 
 if(inputEx.IntegerField) {
-   inputEx.IntegerField.groupOptions = inputEx.StringField.groupOptions.concat([
+   inputEx.IntegerField.groupOptions = inputEx.IntegerField.superclass.constructor.groupOptions.concat([
       { type: 'integer', inputParams: {label: 'Radix', name: 'radix'}}
    ]);
 }
 
 if(inputEx.NumberField) {
-   inputEx.NumberField.groupOptions = inputEx.StringField.groupOptions.concat([]);
+   inputEx.NumberField.groupOptions = inputEx.NumberField.superclass.constructor.groupOptions.concat([]);
 }
  
 
-inputEx.TypeField.groupOptions = inputEx.Field.groupOptions.concat([]);
+inputEx.TypeField.groupOptions = inputEx.TypeField.superclass.constructor.groupOptions.concat([]);
 
 
 inputEx.Group.groupOptions = [
@@ -333,7 +333,7 @@ inputEx.Group.groupOptions = [
 
 
 if(inputEx.Form) {
-   inputEx.Form.groupOptions = inputEx.Group.groupOptions.concat([
+   inputEx.Form.groupOptions = inputEx.Form.superclass.constructor.groupOptions.concat([
       {type: 'list', inputParams:{ 
          label: 'Buttons', 
          name: 'buttons', 
@@ -353,7 +353,7 @@ if(inputEx.Form) {
 
 
 if(inputEx.InPlaceEdit) {
-   inputEx.InPlaceEdit.groupOptions = inputEx.Field.groupOptions.concat([
+   inputEx.InPlaceEdit.groupOptions = inputEx.InPlaceEdit.superclass.constructor.groupOptions.concat([
       { type:'type', inputParams: {label: 'Editor', name: 'editorField'} }
    ]);
 }
