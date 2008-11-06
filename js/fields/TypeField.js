@@ -295,8 +295,8 @@ if(inputEx.Textarea) {
  
 if(inputEx.SelectField) {
    inputEx.SelectField.groupOptions = inputEx.Field.groupOptions.concat([
-      {  type: 'list', inputParams: {name: 'selectOptions', label: 'Options', elementType: {type: 'string'}, required: true } },
-      {  type: 'list', inputParams: {name: 'selectValues', label: 'Values', elementType: {type: 'string'} } }
+      {  type: 'list', inputParams: {name: 'selectValues', label: 'Values', elementType: {type: 'string'}, required: true } },
+      {  type: 'list', inputParams: {name: 'selectOptions', label: 'Options', elementType: {type: 'string'} } }
    ]);
 }
 

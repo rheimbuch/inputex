@@ -1,6 +1,6 @@
 (function() {
 
-   var inputEx = YAHOO.inputEx, Event = YAHOO.util.Event;
+   var inputEx = YAHOO.inputEx, Event = YAHOO.util.Event, lang = YAHOO.lang;
 
 /**
  * @class Create a select field
@@ -16,7 +16,7 @@
 inputEx.SelectField = function(options) {
 	inputEx.SelectField.superclass.constructor.call(this,options);
  };
-YAHOO.lang.extend(inputEx.SelectField, inputEx.Field, 
+lang.extend(inputEx.SelectField, inputEx.Field, 
 /**
  * @scope inputEx.SelectField.prototype   
  */   
@@ -34,7 +34,7 @@ YAHOO.lang.extend(inputEx.SelectField, inputEx.Field,
       this.optionEls = [];
       for( var i = 0 ; i < this.options.selectValues.length ; i++) {
          // ""+  hack to convert into text (values may be 0 for example)
-         this.optionEls[i] = inputEx.cn('option', {value: this.options.selectValues[i]}, null, ""+((this.options.selectOptions) ? this.options.selectOptions[i] : this.options.selectValues[i]));
+         this.optionEls[i] = inputEx.cn('option', {value: this.options.selectValues[i]}, null, ""+((this.options.selectOptions && !lang.isUndefined(this.options.selectOptions[i])) ? this.options.selectOptions[i] : this.options.selectValues[i]));
          this.el.appendChild(this.optionEls[i]);
       }
       this.fieldContainer.appendChild(this.el);
