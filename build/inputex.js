@@ -283,6 +283,38 @@ lang.augmentObject(inputEx,
          }
       }
       return n;
+   },
+   
+   deepObjCopy:  function (dupeObj) {
+       var retObj = {};
+       if (typeof(dupeObj) == 'object') {
+           if (typeof(dupeObj.length) != 'undefined') {
+               retObj = [];
+           }
+           for (var objInd in dupeObj) {
+             if(dupeObj.hasOwnProperty(objInd)) {
+               if (typeof(dupeObj[objInd]) == 'object') {
+                   // DOM NODE
+                   if( typeof(dupeObj[objInd].nodeType) == "number"){
+                       retObj[objInd] = dupeObj[objInd];
+                   } 
+                   else {
+                      retObj[objInd] = inputEx.deepObjCopy(dupeObj[objInd]);
+                   }
+               } else if (typeof(dupeObj[objInd]) == 'string') {
+                   retObj[objInd] = dupeObj[objInd];
+               } else if (typeof(dupeObj[objInd]) == 'number') {
+                   retObj[objInd] = dupeObj[objInd];
+               } else if (typeof(dupeObj[objInd]) == 'boolean') {
+                   ((dupeObj[objInd] == true) ? retObj[objInd] = true : retObj[objInd] = false);
+               }
+               else if (typeof(dupeObj[objInd]) == 'function') {
+                   retObj[objInd] = dupeObj[objInd];
+                }
+             }
+           }
+       }
+       return retObj;
    }
    
 });
@@ -538,7 +570,7 @@ inputEx.Field = function(options) {
 	/**
 	 * Configuration object to set the options for this class and the parent classes. See constructor details for options added by this class.
 	 */
-	this.options = options || {};
+	this.options = /*options || {};*/inputEx.deepObjCopy(options) || {};
 	
 	// Set the default values of the options
 	this.setOptions();
@@ -558,7 +590,7 @@ inputEx.Field = function(options) {
 	
 	// Set the initial value
 	if(!lang.isUndefined(this.options.value)) {
-		this.setValue(this.options.value);
+		this.setValue(this.options.value, false);
 	}
 	
 	// set default styling
@@ -684,14 +716,18 @@ inputEx.Field.prototype = {
    /**
     * Function to set the value
     * @param {Any} value The new value
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-	setValue: function(value) {
+	setValue: function(value, sendUpdatedEvt) {
 	   // to be inherited
 	   
 	   // set corresponding style
 	   this.setClassFromState();
-	   // fire update event
-      this.fireUpdatedEvt();
+	   
+	   if(sendUpdatedEvt !== false) {
+	      // fire update event
+         this.fireUpdatedEvt();
+      }
 	},
 
    /**
@@ -809,9 +845,12 @@ inputEx.Field.prototype = {
    destroy: function() {
       var el = this.getEl();
       
+      // Unsubscribe all listeners on the updatedEvt
+      this.updatedEvt.unsubscribeAll();
+      
       // Remove from DOM
       if(Dom.inDocument(el)) {
-         el.parentEl.removeChild(el);
+         el.parentNode.removeChild(el);
       }
       
       // recursively purge element
@@ -847,9 +886,10 @@ inputEx.Field.prototype = {
    
    /**
     * Clear the field by setting the field value to this.options.value
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this clear should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   clear: function() {
-      this.setValue(this.options.value || '');
+   clear: function(sendUpdatedEvt) {
+      this.setValue(this.options.value || '', sendUpdatedEvt);
    },
    
    /**
@@ -946,12 +986,11 @@ lang.extend(inputEx.Group, inputEx.Field,
          inputEx.sn(this.fieldset,{className:'inputEx-Expanded'});
       }
    
-      if(!YAHOO.lang.isUndefined(this.options.legend) && this.options.legend !== ''){
-         //this.legend.innerHTML += (" "+this.options.legend);
+      if(!lang.isUndefined(this.options.legend) && this.options.legend !== ''){
          this.legend.appendChild( document.createTextNode(" "+this.options.legend) );
       }
    
-      if( this.options.collapsible || (!YAHOO.lang.isUndefined(this.options.legend) && this.options.legend !== '') ) {
+      if( this.options.collapsible || (!lang.isUndefined(this.options.legend) && this.options.legend !== '') ) {
          this.fieldset.appendChild(this.legend);
       }
   	   
@@ -1052,8 +1091,10 @@ lang.extend(inputEx.Group, inputEx.Field,
    
    /**
     * Set the values of each field from a key/value hash object
+     * @param {Any} value The group value
+     * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(oValues) {
+   setValue: function(oValues, sendUpdatedEvt) {
       if(!oValues) {
          return;
       }
@@ -1061,12 +1102,16 @@ lang.extend(inputEx.Group, inputEx.Field,
 	      var field = this.inputs[i];
 	      var name = field.options.name;
 	      if(name && !lang.isUndefined(oValues[name]) ) {
-	         field.setValue(oValues[name]);
+	         field.setValue(oValues[name], false); // don't fire the updated event !
 	      }
 	      else {
-	         field.clear();
+	         field.clear(false);
 	      }
-		   //field.setClassFromState();
+      }
+      
+	   if(sendUpdatedEvt !== false) {
+	      // fire update event
+         this.fireUpdatedEvt();
       }
    },
    
@@ -1133,6 +1178,7 @@ lang.extend(inputEx.Group, inputEx.Field,
       this.runInteractions(fieldInstance,fieldValue);
       
       //this.setClassFromState();
+      
       this.fireUpdatedEvt();
    },
 
@@ -1180,11 +1226,16 @@ lang.extend(inputEx.Group, inputEx.Field,
    
 	/**
 	 * Clear all subfields
+	 * @param {boolean} [sendUpdatedEvt] (optional) Wether this clear should fire the updatedEvt or not (default is true, pass false to NOT send the event)
 	 */
-	clear: function() {
+	clear: function(sendUpdatedEvt) {
 	   for(var i = 0 ; i < this.inputs.length ; i++) {
-	      this.inputs[i].clear();
+	      this.inputs[i].clear(false);
 	   }
+	   if(sendUpdatedEvt !== false) {
+	      // fire update event
+         this.fireUpdatedEvt();
+      }
 	}
    
    
@@ -1342,15 +1393,23 @@ lang.extend(inputEx.Form, inputEx.Group,
     */
    renderMask: function() {
       if(this.maskRendered) return;
-   
+      
+      // position as "relative" to position formMask inside as "absolute"
       Dom.setStyle(this.divEl, "position", "relative");
+      
+      // set zoom = 1 to fix hasLayout issue with IE6/7
+      if (YAHOO.env.ua.ie) { Dom.setStyle(this.divEl, "zoom", 1); }
+      
+      // Render mask over the divEl
       this.formMask = inputEx.cn('div', {className: 'inputEx-Form-Mask'}, 
          {
             display: 'none', 
-            width: Dom.getStyle(this.divEl,"width"),
-            height: Dom.getStyle(this.divEl,"height")
-         }, 
-         "<div/><center><br /><img src='../images/spinner.gif'/><br /><span>Envoi en cours...</span></center>");
+            // Use offsetWidth instead of Dom.getStyle(this.divEl,"width") because 
+            // would return "auto" with IE instead of size in px
+            width: this.divEl.offsetWidth+"px",
+            height: this.divEl.offsetHeight+"px"
+         },
+         "<div/><center><br /><img src='../images/spinner.gif'/><br /><span>"+inputEx.messages.ajaxWait+"</span></center>");
       this.divEl.appendChild(this.formMask);
       this.maskRendered = true;
    },
@@ -1360,6 +1419,10 @@ lang.extend(inputEx.Form, inputEx.Group,
     */
    showMask: function() {
       this.renderMask();
+      
+      // Hide selects in IE 6
+      this.toggleSelectsInIE(false);
+      
       this.formMask.style.display = '';
    },
 
@@ -1367,7 +1430,28 @@ lang.extend(inputEx.Form, inputEx.Group,
     * Hide the form mask
     */
    hideMask: function() {
+      
+      // Show selects back in IE 6
+      this.toggleSelectsInIE(true);
+
       this.formMask.style.display = 'none';
+   },
+   
+   /*
+   * Method to hide selects in IE 6 when masking the form (else they would appear over the mask)
+   */
+   toggleSelectsInIE: function(show) {
+      // IE 6 only
+      if (!!YAHOO.env.ua.ie && YAHOO.env.ua.ie < 7) {
+         var method = !!show ? YAHOO.util.Dom.removeClass : YAHOO.util.Dom.addClass;
+         var that = this;
+         YAHOO.util.Dom.getElementsBy(
+            function() {return true;},
+            "select",
+            this.divEl,
+            function(el) {method.call(that,el,"inputEx-hidden");}
+         );
+      }
    },
    
    
@@ -1392,6 +1476,10 @@ lang.extend(inputEx.Form, inputEx.Group,
    }
 
 });
+
+
+// Specific waiting message in ajax submit 
+inputEx.messages.ajaxWait = "Please wait...";;
 
 /**
 * Register this class as "form" type
@@ -1499,14 +1587,15 @@ lang.extend( inputEx.CombineField, inputEx.Field,
 	/**
 	 * Set the value
 	 * @param {Array} values [value1, value2, ...]
+	 * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
 	 */
-	setValue: function(values) {
+	setValue: function(values, sendUpdatedEvt) {
 	   for(var i = 0 ; i < this.inputs.length ; i++) {
-	      this.inputs[i].setValue(values[i]);
+	      this.inputs[i].setValue(values[i], false);
 	   }
 	   
 	   // Call Field.setValue to set class and fire updated event
-		inputEx.CombineField.superclass.setValue.call(this,values);
+		inputEx.CombineField.superclass.setValue.call(this,values, sendUpdatedEvt);
 	},
 	
 	/**
@@ -1533,12 +1622,17 @@ lang.extend( inputEx.CombineField, inputEx.Field,
 	},
 	
 	/**
-	 * Clear
+	 * Clear all subfields
+	 * @param {boolean} [sendUpdatedEvt] (optional) Wether this clear should fire the updatedEvt or not (default is true, pass false to NOT send the event)
 	 */
-	clear: function() {
+	clear: function(sendUpdatedEvt) {
 	   for(var i = 0 ; i < this.inputs.length ; i++) {
-	      this.inputs[i].clear();
+	      this.inputs[i].clear(false);
 	   }
+	   if(sendUpdatedEvt !== false) {
+	      // fire update event
+         this.fireUpdatedEvt();
+      }
 	}
 	
 });
@@ -1624,12 +1718,13 @@ lang.extend(inputEx.StringField, inputEx.Field,
    /**
     * Function to set the value
     * @param {String} value The new value
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(value) {
+   setValue: function(value, sendUpdatedEvt) {
       this.el.value = value;
       
       // call parent class method to set style and fire updatedEvt
-      inputEx.StringField.superclass.setValue.call(this, value);
+      inputEx.StringField.superclass.setValue.call(this, value, sendUpdatedEvt);
    },	
 	
    /**
@@ -1897,17 +1992,21 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
    /**
     * Set the value
     * @param {Any} value Value to set
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(value) {
+   setValue: function(value, sendUpdatedEvt) {
       this.hiddenEl.value = value;
       
       // "inherited" from inputex.Field :
       //    (can't inherit of inputex.StringField because would set this.el.value...)
       //
-	      // set corresponding style
-   	   this.setClassFromState();
+	   // set corresponding style
+   	this.setClassFromState();
+	   
+	   if(sendUpdatedEvt !== false) {
 	      // fire update event
          this.fireUpdatedEvt();
+      }
    },
    
    /**
@@ -2024,8 +2123,9 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 	/**
 	 * Set the value of the checkedbox
 	 * @param {Any} value The value schould be one of [checkedValue,uncheckedValue]
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
 	 */
-	setValue: function(value) {
+	setValue: function(value, sendUpdatedEvt) {
 	   if (value===this.checkedValue) {
 			this.hiddenEl.value = value;
 			this.el.checked = true;
@@ -2040,7 +2140,7 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 		}
 		
 		// Call Field.setValue to set class and fire updated event
-		inputEx.CheckBox.superclass.setValue.call(this,value);
+		inputEx.CheckBox.superclass.setValue.call(this,value, sendUpdatedEvt);
 	}
 	
 });   
@@ -2115,12 +2215,12 @@ lang.extend(inputEx.ColorField, inputEx.Field,
       Dom.setStyle(this.oOverlay.body.parentNode, "position", "absolute");
       
       // toggle Menu when clicking on colorEl
-      YAHOO.util.Event.addListener(this.colorEl,'mousedown',function(e){
+      Event.addListener(this.colorEl,'mousedown',function(e){
          
          if (!this.oOverlay.cfg.getProperty("visible")) {
             
             // Stop event to prevent following "click" event to hide the menu !
-            YAHOO.util.Event.stopEvent(e); 
+            Event.stopEvent(e); 
             
             // palette may not have been rendered yet
             this.renderPalette();
@@ -2228,15 +2328,20 @@ lang.extend(inputEx.ColorField, inputEx.Field,
 	/**
 	 * Set the value
 	 * @param {String} value Color to set
+	 * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
 	 */
-	setValue: function(value) {
+	setValue: function(value, sendUpdatedEvt) {
 	   this.el.value = value;
 	   Dom.setStyle(this.colorEl, 'background-color', this.el.value);
 
 		// Call Field.setValue to set class and fire updated event
-		inputEx.ColorField.superclass.setValue.call(this,value);
+		inputEx.ColorField.superclass.setValue.call(this,value, sendUpdatedEvt);
 	},
 	   
+	/**
+	 * Return the color value
+	 * @return {String} Color value
+	 */
 	getValue: function() {
 	   return this.el.value;
 	},
@@ -2359,12 +2464,13 @@ lang.extend(inputEx.DateField, inputEx.StringField,
 	/**
 	 * Format the date according to options.dateFormat
 	 * @param {Date} val Date to set
+	 * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
 	 */
-	setValue: function(val) {
+	setValue: function(val, sendUpdatedEvt) {
 	
 	   // Don't try to parse a date if there is no date
 	   if( val === '' ) {
-	      inputEx.DateField.superclass.setValue.call(this, '');
+	      inputEx.DateField.superclass.setValue.call(this, '', sendUpdatedEvt);
 	      return;
 	   }
 	   var str = "";
@@ -2381,7 +2487,7 @@ lang.extend(inputEx.DateField, inputEx.StringField,
 	     str = val;
 	   }
 	
-	   inputEx.DateField.superclass.setValue.call(this, str);
+	   inputEx.DateField.superclass.setValue.call(this, str, sendUpdatedEvt);
 	},
 	   
 	/**
@@ -2416,7 +2522,7 @@ inputEx.registerType("date", inputEx.DateField);
 	
 })();(function() {
 
-   var inputEx = YAHOO.inputEx, lang = YAHOO.lang;
+   var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Event = YAHOO.util.Event;
 
 /**
  * @class inputEx.DateSplitField
@@ -2453,7 +2559,12 @@ inputEx.DateSplitField = function(options) {
 
 lang.extend(inputEx.DateSplitField, inputEx.CombineField, {
    
-   setValue: function(value) {
+   /**
+	 * Set the value. Format the date according to options.dateFormat
+	 * @param {Date} val Date to set
+	 * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
+	 */
+   setValue: function(value, sendUpdatedEvt) {
       var values = [];
       
       // !value catches "" (empty field), and invalid dates
@@ -2466,7 +2577,7 @@ lang.extend(inputEx.DateSplitField, inputEx.CombineField, {
             values.push( i == this.dayIndex ? value.getDate() : (i==this.yearIndex ? value.getFullYear() : value.getMonth()+1 ) );
          }
       }
-      inputEx.DateSplitField.superclass.setValue.call(this, values);
+      inputEx.DateSplitField.superclass.setValue.call(this, values, sendUpdatedEvt);
    },
    
    getValue: function() {
@@ -2525,7 +2636,7 @@ lang.extend(inputEx.DateSplitField, inputEx.CombineField, {
 	   var that = this;
 	   var autoTab = function(inputIndex) {
          // later to let input update its value
-   	   YAHOO.lang.later(0, that, function() {
+   	   lang.later(0, that, function() {
       	   var input = that.inputs[inputIndex];
       	   
       	   // check input.el.value (string) because getValue doesn't work
@@ -2537,13 +2648,13 @@ lang.extend(inputEx.DateSplitField, inputEx.CombineField, {
 	   };
 	   
 	   // add listeners on inputs
-	   YAHOO.util.Event.addListener(this.inputs[0].el, "keypress", function(e) {
-	      if (checkNumKey(YAHOO.util.Event.getCharCode(e))) {
+	   Event.addListener(this.inputs[0].el, "keypress", function(e) {
+	      if (checkNumKey(Event.getCharCode(e))) {
             autoTab(0);
          }
    	}, this, true);
-	   YAHOO.util.Event.addListener(this.inputs[1].el, "keypress", function(e) {
-	      if (checkNumKey(YAHOO.util.Event.getCharCode(e))) {
+	   Event.addListener(this.inputs[1].el, "keypress", function(e) {
+	      if (checkNumKey(Event.getCharCode(e))) {
             autoTab(1);
          }
    	}, this, true);
@@ -2613,7 +2724,7 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
       Dom.setStyle(this.oOverlay.body.parentNode, "position", "absolute");
       
       
-      YAHOO.util.Event.addListener(this.el,'click',function(){
+      Event.addListener(this.el,'click',function(){
          // calendar may not have been rendered yet
          this.renderCalendar();
          
@@ -2683,7 +2794,7 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
             // Focus the anchor element using a timer since Calendar will try 
             // to set focus to its next button by default
             
-            YAHOO.lang.later(0, oAnchor, function () {
+            lang.later(0, oAnchor, function () {
                try {
                   oAnchor.focus();
                }
@@ -2833,12 +2944,13 @@ YAHOO.lang.extend(inputEx.HiddenField, inputEx.Field,
    /**
     * Stores the value in a local variable
     * @param {Any} val The value to set
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(val) {
+   setValue: function(val, sendUpdatedEvt) {
       this.el.value = val;
 
       // Call Field.setValue to set class and fire updated event
-		inputEx.HiddenField.superclass.setValue.call(this,val);
+		inputEx.HiddenField.superclass.setValue.call(this,val, sendUpdatedEvt);
    },
 
    /**
@@ -3077,8 +3189,9 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
    /**
     * Set the value and update the display
     * @param {Any} value The value to set
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(value) {   
+   setValue: function(value, sendUpdatedEvt) {   
       // Store the value
 	   this.value = value;
    
@@ -3094,7 +3207,7 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
          this.editorField.setValue(value);
       }
       
-      inputEx.InPlaceEdit.superclass.setValue.call(this, value);
+      inputEx.InPlaceEdit.superclass.setValue.call(this, value, sendUpdatedEvt);
    },
    
    /**
@@ -3246,8 +3359,9 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	/**
 	 * Set the value of all the subfields
 	 * @param {Array} value The list of values to set
+	 * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
 	 */
-	setValue: function(value) {
+	setValue: function(value, sendUpdatedEvt) {
 	   
 	   if(!lang.isArray(value) ) {
 	      // TODO: throw exceptions ?
@@ -3260,7 +3374,7 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	         this.addElement(value[i]);
 	      }
 	      else {
-	         this.subFields[i].setValue(value[i]);
+	         this.subFields[i].setValue(value[i], false);
 	      }
 	   }
 	      
@@ -3272,7 +3386,7 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	      }
 	   };
 	   
-	   inputEx.ListField.superclass.setValue.call(this, value);
+	   inputEx.ListField.superclass.setValue.call(this, value, sendUpdatedEvt);
 	},
 	   
 	/**
@@ -3491,7 +3605,8 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	      this.removeElement(index);
 	   }
 	      
-	   this.updatedEvt.fire(this.getValue());
+	   // Fire the updated event
+	   this.fireUpdatedEvt();
 	},
 	   
 	/**
@@ -4000,8 +4115,9 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	/**
 	 * Set the value of the checkedbox
 	 * @param {Any} value The value schould be one of this.options.values (which defaults to this.options.choices if missing) if allowAny option not true.
+	 * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
 	 */
-	setValue: function(value) {
+	setValue: function(value, sendUpdatedEvt) {
 	   var checkAny = true, anyEl;
 	   
 	   for(var i = 0 ; i < this.optionEls.length ; i++) {
@@ -4020,11 +4136,11 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	   if(this.radioAny && checkAny) {
          anyEl.checked = true;
          this.anyField.enable(); // enable anyField
-         this.anyField.setValue(value);
+         this.anyField.setValue(value, false);
       }
 	   
       // call parent class method to set style and fire updatedEvt
-      inputEx.StringField.superclass.setValue.call(this, value);
+      inputEx.StringField.superclass.setValue.call(this, value, sendUpdatedEvt);
 	}
 	
 });   
@@ -4100,10 +4216,17 @@ lang.extend(inputEx.RTEField, inputEx.Field,
 	/**
 	 * Set the html content
 	 * @param {String} value The html string
+	 * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
 	 */
-	setValue: function(value) {
-	   if(this.editor)
+	setValue: function(value, sendUpdatedEvt) {
+	   if(this.editor) {
 	      this.editor.setEditorHTML(value);
+      }
+	   
+   	if(sendUpdatedEvt !== false) {
+   	   // fire update event
+         this.fireUpdatedEvt();
+      }
 	},
 	
 	/**
@@ -4126,7 +4249,7 @@ inputEx.registerType("html", inputEx.RTEField);
 	
 })();(function() {
 
-   var inputEx = YAHOO.inputEx, Event = YAHOO.util.Event;
+   var inputEx = YAHOO.inputEx, Event = YAHOO.util.Event, lang = YAHOO.lang;
 
 /**
  * @class Create a select field
@@ -4142,7 +4265,7 @@ inputEx.registerType("html", inputEx.RTEField);
 inputEx.SelectField = function(options) {
 	inputEx.SelectField.superclass.constructor.call(this,options);
  };
-YAHOO.lang.extend(inputEx.SelectField, inputEx.Field, 
+lang.extend(inputEx.SelectField, inputEx.Field, 
 /**
  * @scope inputEx.SelectField.prototype   
  */   
@@ -4160,7 +4283,7 @@ YAHOO.lang.extend(inputEx.SelectField, inputEx.Field,
       this.optionEls = [];
       for( var i = 0 ; i < this.options.selectValues.length ; i++) {
          // ""+  hack to convert into text (values may be 0 for example)
-         this.optionEls[i] = inputEx.cn('option', {value: this.options.selectValues[i]}, null, ""+((this.options.selectOptions) ? this.options.selectOptions[i] : this.options.selectValues[i]));
+         this.optionEls[i] = inputEx.cn('option', {value: this.options.selectValues[i]}, null, ""+((this.options.selectOptions && !lang.isUndefined(this.options.selectOptions[i])) ? this.options.selectOptions[i] : this.options.selectValues[i]));
          this.el.appendChild(this.optionEls[i]);
       }
       this.fieldContainer.appendChild(this.el);
@@ -4178,8 +4301,9 @@ YAHOO.lang.extend(inputEx.SelectField, inputEx.Field,
    /**
     * Set the value
     * @param {String} value The value to set
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(value) {
+   setValue: function(value, sendUpdatedEvt) {
       var index = 0;
       var option;
       for(var i = 0 ; i < this.options.selectValues.length ; i++) {
@@ -4190,7 +4314,7 @@ YAHOO.lang.extend(inputEx.SelectField, inputEx.Field,
       }
       
 		// Call Field.setValue to set class and fire updated event
-		inputEx.SelectField.superclass.setValue.call(this,value);
+		inputEx.SelectField.superclass.setValue.call(this,value, sendUpdatedEvt);
    },
    
    /**
@@ -4360,9 +4484,10 @@ YAHOO.lang.extend(inputEx.TimeField, inputEx.CombineField,
    /**
     * Set the value 
     * @param {String} str Hour string (format HH:MM:SS)
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(str) {
-      inputEx.TimeField.superclass.setValue.call(this, str.split(':'));
+   setValue: function(str, sendUpdatedEvt) {
+      inputEx.TimeField.superclass.setValue.call(this, str.split(':'), sendUpdatedEvt);
    }
 
 });
@@ -4396,7 +4521,7 @@ inputEx.DateTimeField = function(options) {
    options.separators = options.separators || [false, "&nbsp;&nbsp;", false];
    inputEx.DateTimeField.superclass.constructor.call(this,options);
 };
-YAHOO.lang.extend(inputEx.DateTimeField, inputEx.CombineField, 
+lang.extend(inputEx.DateTimeField, inputEx.CombineField, 
 /**
  * @scope inputEx.DateTimeField.prototype   
  */
@@ -4420,14 +4545,15 @@ YAHOO.lang.extend(inputEx.DateTimeField, inputEx.CombineField,
    /**
     * Set the value of both subfields
     * @param {Date} val Date to set
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(val) {
-      if(!YAHOO.lang.isObject(val)) {return;}
-      this.inputs[0].setValue(val);
+   setValue: function(val, sendUpdatedEvt) {
+      if(!lang.isObject(val)) {return;}
       var h = val.getHours();
       var m = val.getMinutes();
       var s = val.getSeconds();
-      this.inputs[1].setValue( ([(h < 10 ? '0':'')+h, (m < 10 ? '0':'')+m, (s < 10 ? '0':'')+s]).join(':') );
+      var time = ([(h < 10 ? '0':'')+h, (m < 10 ? '0':'')+m, (s < 10 ? '0':'')+s]).join(':');
+      inputEx.DateTimeField.superclass.setValue.call(this, [val, time], sendUpdatedEvt);
    }
 
 });
@@ -4466,13 +4592,14 @@ YAHOO.lang.extend(inputEx.UneditableField, inputEx.Field,
    /**
     * Store the value and update the visu
     * @param {Any} val The value that will be sent to the visu
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(val) {
+   setValue: function(val, sendUpdatedEvt) {
       this.value = val;
       
       inputEx.renderVisu(this.options.visu, val, this.fieldContainer);
       
-	   inputEx.UneditableField.superclass.setValue.call(this, val);
+	   inputEx.UneditableField.superclass.setValue.call(this, val, sendUpdatedEvt);
    },
    
    /**
@@ -4524,14 +4651,6 @@ lang.extend(inputEx.UrlField, inputEx.StringField,
       
       // validate with url regexp
       this.options.regexp = inputEx.regexps.url;
-   },
-   
-   /**
-    * Validate after setValue to display the favicon
-    * @param {String} value The url string
-    */
-   setValue: function(value) {
-	   inputEx.UrlField.superclass.setValue.call(this, value);
    },
    
    /**
@@ -4909,8 +5028,9 @@ YAHOO.lang.extend(inputEx.MultiSelectField, inputEx.SelectField,
    /**
     * Set the value of the list
     * @param {String} value The value to set
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(value) {
+   setValue: function(value, sendUpdatedEvt) {
       
       this.ddlist.setValue(value);
       
@@ -4922,6 +5042,11 @@ YAHOO.lang.extend(inputEx.MultiSelectField, inputEx.SelectField,
       for(i = 0 ; i < value.length ; i++) {
          var index = inputEx.indexOf(value[i], this.options.selectValues);
          this.el.childNodes[index].disabled = true;
+      }
+	   
+	   if(sendUpdatedEvt !== false) {
+	      // fire update event
+         this.fireUpdatedEvt();
       }
    },
    
@@ -5079,17 +5204,21 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
    /**
     * Set the value
     * @param {Any} value Value to set
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(value) {
+   setValue: function(value, sendUpdatedEvt) {
       this.hiddenEl.value = value;
       
       // "inherited" from inputex.Field :
       //    (can't inherit of inputex.StringField because would set this.el.value...)
       //
-	      // set corresponding style
-   	   this.setClassFromState();
+	   // set corresponding style
+   	this.setClassFromState();
+	   
+	   if(sendUpdatedEvt !== false) {
 	      // fire update event
          this.fireUpdatedEvt();
+      }
    },
    
    /**
@@ -5153,13 +5282,18 @@ YAHOO.lang.extend(inputEx.MultiAutoComplete, inputEx.AutoComplete,
    /**
     * Set the value
     * @param {String} value The value to set
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(value) {
+   setValue: function(value, sendUpdatedEvt) {
       this.ddlist.setValue(value);
+      
       // set corresponding style
 	   this.setClassFromState();
-      // fire update event
-      this.fireUpdatedEvt();
+	   
+	   if(sendUpdatedEvt !== false) {
+	      // fire update event
+         this.fireUpdatedEvt();
+      }
    },
    
    /**
@@ -5234,13 +5368,14 @@ YAHOO.lang.extend(inputEx.UneditableField, inputEx.Field,
    /**
     * Store the value and update the visu
     * @param {Any} val The value that will be sent to the visu
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   setValue: function(val) {
+   setValue: function(val, sendUpdatedEvt) {
       this.value = val;
       
       inputEx.renderVisu(this.options.visu, val, this.fieldContainer);
       
-	   inputEx.UneditableField.superclass.setValue.call(this, val);
+	   inputEx.UneditableField.superclass.setValue.call(this, val, sendUpdatedEvt);
    },
    
    /**
@@ -5323,8 +5458,13 @@ YAHOO.lang.extend(inputEx.SliderField, inputEx.Field,
          }, this, true);
       }
    },
-        
-   setValue: function(val) {
+   
+   /**
+    * Function to set the value
+    * @param {Any} value The new value
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
+    */  
+   setValue: function(val, sendUpdatedEvt) {
       
       var v = val;
       if(v < this.options.minValue) {
@@ -5338,7 +5478,7 @@ YAHOO.lang.extend(inputEx.SliderField, inputEx.Field,
       
       this.slider.setValue(percent);
       
-      inputEx.SliderField.superclass.setValue.call(this, val);
+      inputEx.SliderField.superclass.setValue.call(this, val, sendUpdatedEvt);
    },
 
    /**
