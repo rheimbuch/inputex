@@ -143,15 +143,23 @@ lang.extend(inputEx.Form, inputEx.Group,
     */
    renderMask: function() {
       if(this.maskRendered) return;
-   
+      
+      // position as "relative" to position formMask inside as "absolute"
       Dom.setStyle(this.divEl, "position", "relative");
+      
+      // set zoom = 1 to fix hasLayout issue with IE6/7
+      if (YAHOO.env.ua.ie) { Dom.setStyle(this.divEl, "zoom", 1); }
+      
+      // Render mask over the divEl
       this.formMask = inputEx.cn('div', {className: 'inputEx-Form-Mask'}, 
          {
             display: 'none', 
-            width: Dom.getStyle(this.divEl,"width"),
-            height: Dom.getStyle(this.divEl,"height")
-         }, 
-         "<div/><center><br /><img src='../images/spinner.gif'/><br /><span>Envoi en cours...</span></center>");
+            // Use offsetWidth instead of Dom.getStyle(this.divEl,"width") because 
+            // would return "auto" with IE instead of size in px
+            width: this.divEl.offsetWidth+"px",
+            height: this.divEl.offsetHeight+"px"
+         },
+         "<div/><center><br /><img src='../images/spinner.gif'/><br /><span>"+inputEx.messages.ajaxWait+"</span></center>");
       this.divEl.appendChild(this.formMask);
       this.maskRendered = true;
    },
@@ -161,6 +169,10 @@ lang.extend(inputEx.Form, inputEx.Group,
     */
    showMask: function() {
       this.renderMask();
+      
+      // Hide selects in IE 6
+      this.toggleSelectsInIE(false);
+      
       this.formMask.style.display = '';
    },
 
@@ -168,7 +180,28 @@ lang.extend(inputEx.Form, inputEx.Group,
     * Hide the form mask
     */
    hideMask: function() {
+      
+      // Show selects back in IE 6
+      this.toggleSelectsInIE(true);
+
       this.formMask.style.display = 'none';
+   },
+   
+   /*
+   * Method to hide selects in IE 6 when masking the form (else they would appear over the mask)
+   */
+   toggleSelectsInIE: function(show) {
+      // IE 6 only
+      if (!!YAHOO.env.ua.ie && YAHOO.env.ua.ie < 7) {
+         var method = !!show ? YAHOO.util.Dom.removeClass : YAHOO.util.Dom.addClass;
+         var that = this;
+         YAHOO.util.Dom.getElementsBy(
+            function() {return true;},
+            "select",
+            this.divEl,
+            function(el) {method.call(that,el,"inputEx-hidden");}
+         );
+      }
    },
    
    
@@ -193,6 +226,10 @@ lang.extend(inputEx.Form, inputEx.Group,
    }
 
 });
+
+
+// Specific waiting message in ajax submit 
+inputEx.messages.ajaxWait = "Please wait...";;
 
 /**
 * Register this class as "form" type

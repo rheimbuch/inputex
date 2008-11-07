@@ -20,7 +20,10 @@
 <!-- Demo CSS -->
 <link rel="stylesheet" type="text/css" href="css/demo.css"/>
 <link rel="stylesheet" type="text/css" href="css/dpSyntaxHighlighter.css">
-
+<style>
+div.inputEx-Form-Mask div { background-color:#DDDDFF; }
+div#container2 { width:400px }
+</style>
  </head>
 
  <body>
@@ -79,9 +82,10 @@
 					method: 'POST',
 					url: 'default.php',
 					callback: {
-						success: function(o) { console.log("success", o); },
-						failure: function(o) { console.log("failure", o); }
-					}
+						success: function(o) { alert("success", o); },
+						failure: function(o) { alert("failure", o); }
+					},
+					showMask:true
 				}
 			});
 		</textarea>
@@ -140,9 +144,10 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 			method: 'POST',
 			url: 'default.php',
 			callback: {
-				success: function(o) { console.log("success", o); },
-				failure: function(o) { console.log("failure", o); }
-			}
+				success: function(o) { alert("success", o); },
+				failure: function(o) { alert("failure", o); }
+			},
+			showMask:true
 		}
 	});
 	

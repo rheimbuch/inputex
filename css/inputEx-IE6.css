@@ -7,6 +7,10 @@ div.inputEx-fieldWrapper, div.inputEx-Field {
    zoom:1;
 }
 
+/** 
+* Hide selects behind a form mask 
+*/
+select.inputEx-hidden { visibility:hidden;}
 
 /**
 *  CSS patches because IE 6 doesn't support child selector (>) :
