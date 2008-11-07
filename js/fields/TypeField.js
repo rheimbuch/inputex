@@ -10,6 +10,9 @@
  */
 inputEx.TypeField = function(options) {
    inputEx.TypeField.superclass.constructor.call(this, options);
+   
+   // Build the updateFieldValue
+   this.updateFieldValue();
 };
 
 lang.extend(inputEx.TypeField, inputEx.Field, 
@@ -173,13 +176,36 @@ lang.extend(inputEx.TypeField, inputEx.Field,
     * @return {Object} Type object configuration
     */
    getValue: function() {
+      
+      function getDefaultValueForField(classObj, paramName) {
+         for(var i = 0 ; i < classObj.groupOptions.length ; i++) {
+            var f = classObj.groupOptions[i];
+            if(f.inputParams.name == paramName) return f.inputParams.value;
+         }
+         return undefined;
+      };
+      
+      var inputParams = this.group.getValue();
+      var classObj = inputEx.getFieldClass(this.typeSelect.getValue());
+      
+      for(var key in inputParams) {
+         if( inputParams.hasOwnProperty(key) ) {
+            var value1 = getDefaultValueForField(classObj, key);
+            var value2 = inputParams[key];
+            if(value1 == value2) {
+               inputParams[key] = undefined;
+            }
+         }
+      }
+      
+      
+      
       var obj = { 
          // The field type
          type: this.typeSelect.getValue(),
          
          // The field parameters
-         // TODO: don't return the default values !!!
-         inputParams: this.group.getValue()
+         inputParams: inputParams
       };
       
       // The value defined by the fieldValue
@@ -305,7 +331,7 @@ if(inputEx.SliderField) {
 
 if(inputEx.ListField) {
    inputEx.ListField.groupOptions = inputEx.ListField.superclass.constructor.groupOptions.concat([
-      { type: 'string', inputParams: {label: 'List label', name: 'listLabel'}},
+      { type: 'string', inputParams: {label: 'List label', name: 'listLabel', value: ''}},
       { type: 'type', inputParams: {label: 'List element type', required: true, name: 'elementType'} }
    ]);
 }

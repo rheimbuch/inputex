@@ -18,7 +18,7 @@ inputEx.Field = function(options) {
 	/**
 	 * Configuration object to set the options for this class and the parent classes. See constructor details for options added by this class.
 	 */
-	this.options = options || {};
+	this.options = /*options || {};*/inputEx.deepObjCopy(options) || {};
 	
 	// Set the default values of the options
 	this.setOptions();
@@ -38,7 +38,7 @@ inputEx.Field = function(options) {
 	
 	// Set the initial value
 	if(!lang.isUndefined(this.options.value)) {
-		this.setValue(this.options.value);
+		this.setValue(this.options.value, false);
 	}
 	
 	// set default styling
@@ -334,9 +334,10 @@ inputEx.Field.prototype = {
    
    /**
     * Clear the field by setting the field value to this.options.value
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this clear should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   clear: function() {
-      this.setValue(this.options.value || '');
+   clear: function(sendUpdatedEvt) {
+      this.setValue(this.options.value || '', sendUpdatedEvt);
    },
    
    /**

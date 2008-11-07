@@ -170,7 +170,7 @@ YAHOO.util.Event.addListener(window, 'load', function() {
    	],
    	"collapsible" : true,
    	"legend" : "User"
-   });
+   }, false);
 
 	
 	var rebuildPreview = function() { 
@@ -188,9 +188,8 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	rebuildPreview();
    
    // Update the preview event
-   YAHOO.lang.later(1000, window, function() {
-      g.updatedEvt.subscribe(rebuildPreview);
-   });
+   g.updatedEvt.subscribe(rebuildPreview);
+
 });
 
 </script>

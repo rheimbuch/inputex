@@ -83,12 +83,11 @@ lang.extend(inputEx.Group, inputEx.Field,
          inputEx.sn(this.fieldset,{className:'inputEx-Expanded'});
       }
    
-      if(!YAHOO.lang.isUndefined(this.options.legend) && this.options.legend !== ''){
-         //this.legend.innerHTML += (" "+this.options.legend);
+      if(!lang.isUndefined(this.options.legend) && this.options.legend !== ''){
          this.legend.appendChild( document.createTextNode(" "+this.options.legend) );
       }
    
-      if( this.options.collapsible || (!YAHOO.lang.isUndefined(this.options.legend) && this.options.legend !== '') ) {
+      if( this.options.collapsible || (!lang.isUndefined(this.options.legend) && this.options.legend !== '') ) {
          this.fieldset.appendChild(this.legend);
       }
   	   
@@ -203,7 +202,7 @@ lang.extend(inputEx.Group, inputEx.Field,
 	         field.setValue(oValues[name], false); // don't fire the updated event !
 	      }
 	      else {
-	         field.clear();
+	         field.clear(false);
 	      }
       }
       
@@ -276,6 +275,7 @@ lang.extend(inputEx.Group, inputEx.Field,
       this.runInteractions(fieldInstance,fieldValue);
       
       //this.setClassFromState();
+      
       this.fireUpdatedEvt();
    },
 
@@ -323,11 +323,16 @@ lang.extend(inputEx.Group, inputEx.Field,
    
 	/**
 	 * Clear all subfields
+	 * @param {boolean} [sendUpdatedEvt] (optional) Wether this clear should fire the updatedEvt or not (default is true, pass false to NOT send the event)
 	 */
-	clear: function() {
+	clear: function(sendUpdatedEvt) {
 	   for(var i = 0 ; i < this.inputs.length ; i++) {
-	      this.inputs[i].clear();
+	      this.inputs[i].clear(false);
 	   }
+	   if(sendUpdatedEvt !== false) {
+	      // fire update event
+         this.fireUpdatedEvt();
+      }
 	}
    
    

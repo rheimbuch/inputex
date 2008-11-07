@@ -132,12 +132,17 @@ lang.extend( inputEx.CombineField, inputEx.Field,
 	},
 	
 	/**
-	 * Clear
+	 * Clear all subfields
+	 * @param {boolean} [sendUpdatedEvt] (optional) Wether this clear should fire the updatedEvt or not (default is true, pass false to NOT send the event)
 	 */
-	clear: function() {
+	clear: function(sendUpdatedEvt) {
 	   for(var i = 0 ; i < this.inputs.length ; i++) {
-	      this.inputs[i].clear();
+	      this.inputs[i].clear(false);
 	   }
+	   if(sendUpdatedEvt !== false) {
+	      // fire update event
+         this.fireUpdatedEvt();
+      }
 	}
 	
 });
