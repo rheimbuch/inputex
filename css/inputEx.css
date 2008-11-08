@@ -493,6 +493,8 @@ div.inputEx-DataTable-formContainer div.inputEx-Group {
 	background-color: white;
 	-moz-border-radius-bottomright: 10px;
 	-moz-border-radius-topright: 10px;
+	-webkit-border-bottom-right-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
 	border: 1px solid #7F7F7F;
 	padding: 10px;
 }
