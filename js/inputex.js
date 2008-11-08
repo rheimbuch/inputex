@@ -29,9 +29,9 @@ YAHOO.inputEx = function(fieldOptions) {
    var inputInstance = new fieldClass(fieldOptions.inputParams);
 
    // Add the flatten attribute if present in the params
-   if(fieldOptions.flatten) {
+   /*if(fieldOptions.flatten) {
       inputInstance._flatten = true;
-   }
+   }*/
 	  
    return inputInstance;
 };
@@ -259,38 +259,6 @@ lang.augmentObject(inputEx,
          }
       }
       return n;
-   },
-   
-   deepObjCopy:  function (dupeObj) {
-       var retObj = {};
-       if (typeof(dupeObj) == 'object') {
-           if (typeof(dupeObj.length) != 'undefined') {
-               retObj = [];
-           }
-           for (var objInd in dupeObj) {
-             if(dupeObj.hasOwnProperty(objInd)) {
-               if (typeof(dupeObj[objInd]) == 'object') {
-                   // DOM NODE
-                   if( typeof(dupeObj[objInd].nodeType) == "number"){
-                       retObj[objInd] = dupeObj[objInd];
-                   } 
-                   else {
-                      retObj[objInd] = inputEx.deepObjCopy(dupeObj[objInd]);
-                   }
-               } else if (typeof(dupeObj[objInd]) == 'string') {
-                   retObj[objInd] = dupeObj[objInd];
-               } else if (typeof(dupeObj[objInd]) == 'number') {
-                   retObj[objInd] = dupeObj[objInd];
-               } else if (typeof(dupeObj[objInd]) == 'boolean') {
-                   ((dupeObj[objInd] == true) ? retObj[objInd] = true : retObj[objInd] = false);
-               }
-               else if (typeof(dupeObj[objInd]) == 'function') {
-                   retObj[objInd] = dupeObj[objInd];
-                }
-             }
-           }
-       }
-       return retObj;
    }
    
 });

@@ -24,21 +24,21 @@ lang.extend(inputEx.PasswordField, inputEx.StringField,
    
 	/**
 	 * Add the password regexp, strengthIndicator, capsLockWarning
+	 * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
 	 */
-	setOptions: function() {
+	setOptions: function(options) {
+	   inputEx.PasswordField.superclass.setOptions.call(this, options);
 	   
-      this.options.className = this.options.className || "inputEx-Field inputEx-PasswordField";
-      
-	   inputEx.PasswordField.superclass.setOptions.call(this);
+   	this.options.className = options.className ? options.className : "inputEx-Field inputEx-PasswordField";
 	   
 	   // Add the password regexp
 	   this.options.regexp = inputEx.regexps.password;
 	  
 		// display a strength indicator
-		this.options.strengthIndicator = YAHOO.lang.isUndefined(this.options.strengthIndicator) ? false : this.options.strengthIndicator;
+		this.options.strengthIndicator = YAHOO.lang.isUndefined(options.strengthIndicator) ? false : options.strengthIndicator;
 		
 		// capsLockWarning
-		this.options.capsLockWarning = YAHOO.lang.isUndefined(this.options.capsLockWarning) ? false : this.options.capsLockWarning;
+		this.options.capsLockWarning = YAHOO.lang.isUndefined(options.capsLockWarning) ? false : options.capsLockWarning;
 		
 	},
 	

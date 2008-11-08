@@ -8,8 +8,9 @@
  * @constructor
  * @param {Object} options Added options:
  * <ul>
- *   <li>formatDom</li>
- *   <li>formatValue</li>
+ *   <li>visu</li>
+ *   <li>editorField</li>
+ *   <li>animColors</li>
  * </ul>
  */
 inputEx.InPlaceEdit = function(options) {
@@ -21,13 +22,18 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
  * @scope inputEx.InPlaceEdit.prototype   
  */   
 {
-
-   setOptions: function() {
-      inputEx.InPlaceEdit.superclass.setOptions.call(this);
+   /**
+    * Set the default values of the options
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
+    */
+   setOptions: function(options) {
+      inputEx.InPlaceEdit.superclass.setOptions.call(this, options);
       
-      if (!YAHOO.lang.isObject(this.options.animColors)) {
-         this.options.animColors =  {from: '#ffff99' , to: '#ffffff'};
-      }
+      this.options.animColors = options.animColors || {from: '#ffff99' , to: '#ffffff'};
+      /*this.options.formatDom = options.formatDom;
+      this.options.formatValue = options.formatValue;*/
+      this.options.visu = options.visu;
+      this.options.editorField = options.editorField;
    },
 
    /**

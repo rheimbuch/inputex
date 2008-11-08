@@ -1,6 +1,6 @@
  _                   _   _____      
 (_)_ __  _ __  _   _| |_| ____|_  __
-| | '_ \| '_ \| | | | __|  _| \ \/ /		version 0.2.0
+| | '_ \| '_ \| | | | __|  _| \ \/ /		version 0.2.1a
 | | | | | |_) | |_| | |_| |___ >  < 		Distributed under the MIT License (see license.txt)
 |_|_| |_| .__/ \____|\__|_____/_/\_\
         |_|                         
@@ -8,6 +8,28 @@
 
 Release Notes:
 ==============
+
+
+version 0.2.1:
+--------------
+
+not released yet
+
+	- API changes:
+		* setValue takes a second argument (sendUpdatedEvt) to prevent firing the updatedEvt if false
+		* setOptions takes the options object as argument so we don't have to make a copy of the object.
+			this method should be mandatory in surclassing ?
+
+	- Field enhancements:
+		* Datatable: added options and CSS
+		* TypeField has been changed. Many bugfixes + cleaner way to defined fields parameters
+
+	- Various: 
+		* Better examples (dialog, yuiloader, multiselect)
+		* inputExBuilder much better
+		* stylesheet for IE6 css fix (still not full support)
+		* field.destroy was buggy
+
 
 version 0.2.0:
 --------------

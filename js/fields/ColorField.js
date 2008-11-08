@@ -23,10 +23,17 @@ lang.extend(inputEx.ColorField, inputEx.Field,
    
 	/**
 	 * Adds the 'inputEx-ColorField' default className
+	 * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
 	 */
-   setOptions: function() {
-	   this.options.className = this.options.className || 'inputEx-Field inputEx-ColorField inputEx-PickerField';
-   	inputEx.ColorField.superclass.setOptions.call(this);
+   setOptions: function(options) {
+   	inputEx.ColorField.superclass.setOptions.call(this, options);
+   	
+   	// Overwrite options
+   	this.options.className = options.className ? options.className : 'inputEx-Field inputEx-ColorField inputEx-PickerField';
+   	
+   	// Added options
+   	this.options.auto = options.auto;
+   	this.options.colors = options.colors;
    },
    
 	/**

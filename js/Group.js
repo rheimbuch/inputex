@@ -11,6 +11,7 @@
  *   <li>fields: Array of input fields declared like { label: 'Enter the value:' , type: 'text' or fieldClass: inputEx.Field, optional: true/false, inputParams: {inputparams object} }</li>
  *   <li>legend: The legend for the fieldset (default is an empty string)</li>
  *   <li>collapsible: Boolean to make the group collapsible (default is false)</li>
+ *   <li>flatten:</li>
  * </ul>
  */
 inputEx.Group = function(options) {
@@ -30,17 +31,26 @@ lang.extend(inputEx.Group, inputEx.Field,
    
    /**
     * Adds some options: legend, collapsible, fields...
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
     */
-   setOptions: function() {
+   setOptions: function(options) {
    
-      this.options.legend = this.options.legend || '';
+   	this.options = {};
+   	
+   	this.options.fields = options.fields;
+   	
+   	this.options.id = options.id;
+   	
+   	this.options.flatten = options.flatten;
+   
+      this.options.legend = options.legend || '';
    
       // leave this for compatibility reasons
-      this.inputConfigs = this.options.fields;
+      this.inputConfigs = options.fields;
    
-      this.options.collapsible = lang.isUndefined(this.options.collapsible) ? false : this.options.collapsible;
+      this.options.collapsible = lang.isUndefined(options.collapsible) ? false : options.collapsible;
       
-      this.options.disabled = lang.isUndefined(this.options.disabled) ? false : this.options.disabled;
+      this.options.disabled = lang.isUndefined(options.disabled) ? false : options.disabled;
       
       // Array containing the list of the field instances
       this.inputs = [];
@@ -220,7 +230,7 @@ lang.extend(inputEx.Group, inputEx.Field,
 	   for (var i = 0 ; i < this.inputs.length ; i++) {
 	      var v = this.inputs[i].getValue();
 	      if(this.inputs[i].options.name) {
-	         if(this.inputs[i]._flatten && lang.isObject(v) ) {
+	         if(this.inputs[i].options.flatten && lang.isObject(v) ) {
 	            lang.augmentObject( o, v);
 	         }
 	         else {

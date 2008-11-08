@@ -23,11 +23,12 @@ YAHOO.lang.extend(inputEx.Textarea, inputEx.StringField,
 
    /**
     * Set the specific options (rows and cols)
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
     */
-   setOptions: function() {
-      inputEx.Textarea.superclass.setOptions.call(this);
-      this.options.rows = this.options.rows || 6;
-      this.options.cols = this.options.cols || 23;
+   setOptions: function(options) {
+      inputEx.Textarea.superclass.setOptions.call(this, options);
+      this.options.rows = options.rows || 6;
+      this.options.cols = options.cols || 23;
    },
    
    /**

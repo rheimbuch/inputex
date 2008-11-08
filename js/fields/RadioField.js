@@ -5,6 +5,7 @@
  * @class Create a radio button. Here are the added options :
  * <ul>
  *    <li>choices: list of choices (array of string)</li>
+ *    <li>values: list of returned values (array )</li>
  *    <li>allowAny: add an option with a string field</li>
  * </ul>
  * @extends inputEx.Field
@@ -23,17 +24,18 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	   
 	/**
 	 * Adds the Radio button specific options
+	 * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
 	 */
-	setOptions: function() {
-	   
-	   this.options.className = this.options.className || 'inputEx-Field inputEx-RadioField';
-	   
-	   inputEx.RadioField.superclass.setOptions.call(this);
-	   
-	   this.options.allowAny = lang.isUndefined(this.options.allowAny) ? false : this.options.allowAny;
+	setOptions: function(options) {
+	   inputEx.RadioField.superclass.setOptions.call(this, options);
+
+      this.options.className = options.className ? options.className : 'inputEx-Field inputEx-RadioField';
+
+	   this.options.allowAny = lang.isUndefined(options.allowAny) ? false : options.allowAny;
       
+      this.options.choices = options.choices;
       // values == choices if not provided
-	   this.options.values = lang.isArray(this.options.values) ? this.options.values : this.options.choices;
+	   this.options.values = lang.isArray(options.values) ? options.values : options.choices;
 	},
 	   
 	/**

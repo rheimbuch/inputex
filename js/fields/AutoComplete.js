@@ -25,10 +25,18 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
 
    /**
     * Adds autocomplete options
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
     */
-   setOptions: function() {
-      this.options.className = this.options.className || 'inputEx-Field inputEx-AutoComplete';
-      inputEx.AutoComplete.superclass.setOptions.call(this);
+   setOptions: function(options) {
+      inputEx.AutoComplete.superclass.setOptions.call(this, options);
+      
+      // Overwrite options
+      this.options.className = options.className ? options.className : 'inputEx-Field inputEx-AutoComplete';
+      
+      // Added options
+      this.options.datasource = options.datasource;
+      this.options.autoComp = options.autoComp;
+      this.options.returnValue = options.returnValue;
    },
    
    /**

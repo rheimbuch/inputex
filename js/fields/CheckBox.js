@@ -23,14 +23,17 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 	   
 	/**
 	 * Adds the CheckBox specific options
+	 * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
 	 */
-	setOptions: function() {
+	setOptions: function(options) {
+	   inputEx.CheckBox.superclass.setOptions.call(this, options);
 	   
-      this.options.className = this.options.className || 'inputEx-Field inputEx-CheckBox';
+	   // Overwrite options:
+	   this.options.className = options.className ? options.className : 'inputEx-Field inputEx-CheckBox';
 	   
-	   inputEx.CheckBox.superclass.setOptions.call(this);
-	   
-	   this.sentValues = this.options.sentValues || [true, false];
+	   // Added options
+	   this.sentValues = options.sentValues || [true, false];
+	   this.options.sentValues = this.sentValues; // for compatibility
 	   this.checkedValue = this.sentValues[0];
 	   this.uncheckedValue = this.sentValues[1];
 	},

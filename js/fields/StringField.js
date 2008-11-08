@@ -26,6 +26,22 @@ lang.extend(inputEx.StringField, inputEx.Field,
  */   
 {
    /**
+    * Set the default values of the options
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
+    */
+	setOptions: function(options) {
+	   inputEx.StringField.superclass.setOptions.call(this, options);
+	   
+	   this.options.regexp = options.regexp;
+	   this.options.size = options.size;
+	   this.options.maxLength = options.maxLength;
+	   this.options.minLength = options.minLength;
+	   this.options.typeInvite = options.typeInvite;
+	   this.options.readonly = options.readonly;
+   },
+   
+   
+   /**
     * Render an 'INPUT' DOM node
     */
    renderComponent: function() {

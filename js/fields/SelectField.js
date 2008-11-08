@@ -21,6 +21,17 @@ lang.extend(inputEx.SelectField, inputEx.Field,
  * @scope inputEx.SelectField.prototype   
  */   
 {
+   /**
+    * Set the default values of the options
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
+    */
+	setOptions: function(options) {
+	   inputEx.SelectField.superclass.setOptions.call(this,options);
+	   
+	   this.options.multiple = lang.isUndefined(options.multiple) ? false : options.multiple;
+	   this.options.selectValues = options.selectValues;
+	   this.options.selectOptions = options.selectOptions;
+   },
    
    /**
     * Build a select tag with options

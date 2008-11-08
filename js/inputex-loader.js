@@ -8,9 +8,7 @@
 YAHOO.addInputExModules = function(yuiLoader, inputExPath) {
 	var pathToInputEx = inputExPath || '../';
 	var modules = [
-	   /**
-	    * inputEx base
-	    */
+	   // inputEx base
 		{
 			name: 'inputex-css',
 			type: 'css',
@@ -45,9 +43,7 @@ YAHOO.addInputExModules = function(yuiLoader, inputExPath) {
  	  	   varName: 'inputEx.JsonSchema',
  			requires: ['inputex']
  		},
-		/**
-		 * Widgets
-		 */
+		// Widgets
 		{
  			name: 'inputex-ddlist',
  			type: 'js',
@@ -70,9 +66,7 @@ YAHOO.addInputExModules = function(yuiLoader, inputExPath) {
  			requires: ['inputex', 'dragdrop', 'container']
  		},
  		
-		/**
-		 * MetaFields
-		 */
+		// MetaFields
 		{
 			name: 'inputex-group',
 			type: 'js',
@@ -116,9 +110,7 @@ YAHOO.addInputExModules = function(yuiLoader, inputExPath) {
 			requires: ['inputex-field', 'animation']
 		},
 		
-		/**
-		 * Fields
-		 */
+		// Fields
 		{
 			name: 'inputex-stringfield',
 			type: 'js',
@@ -295,9 +287,7 @@ YAHOO.addInputExModules = function(yuiLoader, inputExPath) {
 			requires: ['inputex-stringfield']
 		},
  		
- 		/**
- 		 * Ext fields
- 		 */
+ 		// Ext fields
  		{
   			name: 'inputex-birthdatefield',
   			type: 'js',
@@ -313,9 +303,7 @@ YAHOO.addInputExModules = function(yuiLoader, inputExPath) {
   			requires: ['inputex-stringfield']
   		},
   		
-  		/**
-  		 * Locals
-  		 */
+  		// Locals
   		{
   		   name: 'inputex-lang-fr',
   			type: 'js',

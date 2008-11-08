@@ -26,20 +26,22 @@ YAHOO.lang.extend(inputEx.DSSelectField, inputEx.SelectField,
 {
    /**
     * Setup the additional options for selectfield
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
     */
-	setOptions: function() {
-	   inputEx.DSSelectField.superclass.setOptions.call(this);
+	setOptions: function(options) {
+	   inputEx.DSSelectField.superclass.setOptions.call(this, options);
 	   
-	   this.options.valueKey = this.options.valueKey || "value";
-	   this.options.labelKey = this.options.labelKey || "label";
+	   this.options.valueKey = options.valueKey || "value";
+	   this.options.labelKey = options.labelKey || "label";
 	   
 	   // Create a datasource from selectValues/selectOptions backward compatibility
+	   this.options.datasource = options.datasource;
 	   if(!this.options.datasource) {
          var items = [];
-         for(var i = 0 ; i < this.options.selectValues.length ; i++) {
+         for(var i = 0 ; i < options.selectValues.length ; i++) {
             items.push({
-               value: this.options.selectValues[i],
-               label: (this.options.selectOptions) ? this.options.selectOptions[i] : this.options.selectValues[i]
+               value: options.selectValues[i],
+               label: (options.selectOptions) ? options.selectOptions[i] : options.selectValues[i]
             });
          }
          this.options.datasource = new YAHOO.util.DataSource(items);

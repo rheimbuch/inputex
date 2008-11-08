@@ -19,7 +19,7 @@
 			
 			<h3>
 				<a href="./index.html">inputEx Documentation</a> &gt; Field.js
-				<span class="subtitle">0.2.0</span>
+				<span class="subtitle">0.2.1a</span>
 			</h3>
 		
 		</div>
@@ -48,13 +48,10 @@
  */
 inputEx.Field = function(options) {
 	
-	/**
-	 * Configuration object to set the options for this class and the parent classes. See constructor details for options added by this class.
-	 */
-	this.options = options || {};
+   if(!options) {var options = {}; }
 	
 	// Set the default values of the options
-	this.setOptions();
+	this.setOptions(options);
 	
 	// Call the render of the dom
 	this.render();
@@ -71,19 +68,19 @@ inputEx.Field = function(options) {
 	
 	// Set the initial value
 	if(!lang.isUndefined(this.options.value)) {
-		this.setValue(this.options.value);
+		this.setValue(this.options.value, false);
 	}
 	
 	// set default styling
 	this.setClassFromState();
 	
 	// append it immediatly to the parent DOM element
-	if(this.options.parentEl) {
-	   if( lang.isString(this.options.parentEl) ) {
-	     Dom.get(this.options.parentEl).appendChild(this.getEl());  
+	if(options.parentEl) {
+	   if( lang.isString(options.parentEl) ) {
+	     Dom.get(options.parentEl).appendChild(this.getEl());  
 	   }
 	   else {
-	      this.options.parentEl.appendChild(this.getEl());
+	      options.parentEl.appendChild(this.getEl());
       }
 	}
 };
@@ -93,24 +90,32 @@ inputEx.Field.prototype = {
   
    /**
     * Set the default values of the options
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
     */
-	setOptions: function() {
+	setOptions: function(options) {
+
+   	/**
+   	 * Configuration object to set the options for this class and the parent classes. See constructor details for options added by this class.
+   	 */
+   	this.options = {};
+   	
+   	// Basic options
+   	this.options.name = options.name;
+   	this.options.value = options.value;
+   	this.options.id = options.id || Dom.generateId();
+   	this.options.label = options.label;
+   	this.options.description = options.description;
    
       // Define default messages
-	   this.options.messages = this.options.messages || {};
-	   this.options.messages.required = this.options.messages.required || inputEx.messages.required;
-	   this.options.messages.invalid = this.options.messages.invalid || inputEx.messages.invalid;
-	   this.options.messages.valid = this.options.messages.valid || inputEx.messages.valid;
+	   this.options.messages = {};
+	   this.options.messages.required = (options.messages && options.messages.required) ? options.messages.required : inputEx.messages.required;
+	   this.options.messages.invalid = (options.messages && options.messages.invalid) ? options.messages.invalid : inputEx.messages.invalid;
+	   //this.options.messages.valid = (options.messages && options.messages.valid) ? options.messages.valid : inputEx.messages.valid;
 	
 	   // Other options
-	   this.options.className = this.options.className || 'inputEx-Field';
-	   this.options.required = this.options.required ? true : false;
-	   this.options.showMsg = lang.isUndefined(this.options.showMsg) ? false : this.options.showMsg;
-	
-	   // The following options are used later:
-	   // + this.options.name
-	   // + this.options.value
-	   // + this.options.id
+	   this.options.className = options.className ? options.className : 'inputEx-Field';
+	   this.options.required = lang.isUndefined(options.required) ? false : options.required;
+	   this.options.showMsg = lang.isUndefined(options.showMsg) ? false : options.showMsg;
 	},
 
    /**
@@ -155,13 +160,11 @@ inputEx.Field.prototype = {
 	 * Escape the stack using a setTimeout
 	 */
 	fireUpdatedEvt: function() {
-      //if(this.validate()) {
-         // Uses setTimeout to escape the stack (that originiated in an event)
-         var that = this;
-         setTimeout(function() {
-      	   that.updatedEvt.fire(that.getValue(), that);
-         },50);
-      //}
+      // Uses setTimeout to escape the stack (that originiated in an event)
+      var that = this;
+      setTimeout(function() {
+         that.updatedEvt.fire(that.getValue(), that);
+      },50);
 	},
 
    /**
@@ -197,14 +200,18 @@ inputEx.Field.prototype = {
    /**
     * Function to set the value
     * @param {Any} value The new value
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-	setValue: function(value) {
+	setValue: function(value, sendUpdatedEvt) {
 	   // to be inherited
 	   
 	   // set corresponding style
 	   this.setClassFromState();
-	   // fire update event
-      this.fireUpdatedEvt();
+	   
+	   if(sendUpdatedEvt !== false) {
+	      // fire update event
+         this.fireUpdatedEvt();
+      }
 	},
 
    /**
@@ -238,7 +245,7 @@ inputEx.Field.prototype = {
          return this.options.messages.invalid;
       }
       else {
-         return '';//this.options.messages.valid;
+         return '';
       }
 	},
 
@@ -322,9 +329,12 @@ inputEx.Field.prototype = {
    destroy: function() {
       var el = this.getEl();
       
+      // Unsubscribe all listeners on the updatedEvt
+      this.updatedEvt.unsubscribeAll();
+      
       // Remove from DOM
       if(Dom.inDocument(el)) {
-         el.parentEl.removeChild(el);
+         el.parentNode.removeChild(el);
       }
       
       // recursively purge element
@@ -360,9 +370,10 @@ inputEx.Field.prototype = {
    
    /**
     * Clear the field by setting the field value to this.options.value
+    * @param {boolean} [sendUpdatedEvt] (optional) Wether this clear should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
-   clear: function() {
-      this.setValue(this.options.value || '');
+   clear: function(sendUpdatedEvt) {
+      this.setValue(lang.isUndefined(this.options.value) ? '' : this.options.value, sendUpdatedEvt);
    },
    
    /**
@@ -835,7 +846,7 @@ inputEx.Field.prototype = {
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Sat, 01 Nov 2008 15:17:07 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Sat, 08 Nov 2008 16:49:24 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

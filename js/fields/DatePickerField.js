@@ -7,6 +7,9 @@
  * @extends inputEx.DateField
  * @constructor
  * @param {Object} options No added option for this field (same as DateField)
+ * <ul>
+ *   <li>calendar: yui calendar configuration object</li>
+ * </ul>
  */
 inputEx.DatePickerField = function(options) {
    inputEx.DatePickerField.superclass.constructor.call(this,options);
@@ -19,13 +22,17 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
 {
    /**
     * Set the default date picker CSS classes
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
     */
-   setOptions: function() {
-      this.options.className = this.options.className || 'inputEx-Field inputEx-DateField inputEx-PickerField inputEx-DatePickerField';
-      inputEx.DatePickerField.superclass.setOptions.call(this);
+   setOptions: function(options) {
+      inputEx.DatePickerField.superclass.setOptions.call(this, options);
       
-      this.options.calendar = this.options.calendar || inputEx.messages.defautCalendarOpts;
+      // Overwrite options
+      this.options.className = options.className ? options.className : 'inputEx-Field inputEx-DateField inputEx-PickerField inputEx-DatePickerField';
       this.options.readonly = true;
+      
+      // Added options
+      this.options.calendar = options.calendar || inputEx.messages.defautCalendarOpts;
    },
    
    /**

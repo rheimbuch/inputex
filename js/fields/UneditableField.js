@@ -6,8 +6,7 @@
  * @class Create a uneditable field where you can stick the html you want
  * Added Options:
  * <ul>
- *    <li>formatValue: String function(value)</li>
- *    <li>formatDom: DOMEl function(value)</li>
+ *    <li>visu: inputEx visu type</li>
  * </ul>
  * @extends inputEx.Field
  * @constructor
@@ -21,6 +20,15 @@ YAHOO.lang.extend(inputEx.UneditableField, inputEx.Field,
  * @scope inputEx.UneditableField.prototype   
  */
 {
+   
+   /**
+    * Set the default values of the options
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
+    */
+	setOptions: function(options) {
+      inputEx.UneditableField.superclass.setOptions.call(this,options);
+      this.options.visu = options.visu;
+   },
    
    /**
     * Store the value and update the visu

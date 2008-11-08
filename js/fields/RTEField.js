@@ -20,6 +20,17 @@ lang.extend(inputEx.RTEField, inputEx.Field,
  * @scope inputEx.RTEField.prototype   
  */  
 {   
+   /**
+    * Set the default values of the options
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
+    */
+  	setOptions: function(options) {
+  	   inputEx.RTEField.superclass.setOptions.call(this, options);
+  	   
+  	   this.options.opts = options.opts || {};
+  	   this.options.type = options.type;
+   },
+   
 	/**
 	 * Render the field using the YUI Editor widget
 	 */	
@@ -31,10 +42,6 @@ lang.extend(inputEx.RTEField, inputEx.Field,
 	   inputEx.RTEfieldsNumber += 1;
 	   this.fieldContainer.appendChild(this.el);
 	
-	   //If not set, set it to empty
-	   if (!this.options.opts) {
-	        this.options.opts = {};
-	   }
 	   //This is the default config
 	   var _def = {
 	       height: '300px',

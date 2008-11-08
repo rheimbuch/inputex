@@ -204,4 +204,11 @@
 	}, scope, true);
 </textarea></form>
 
+<p>This event is fired when you use a setValue on the field. If you want to disable this behaviour, pass "false" as second argument to the setValue and the event won't be fired.</p>
+
+
+<form><textarea name="code" class="JScript">
+	// This setValue won't fire the updatedEvt
+	myField.setValue("My Value", false);
+</textarea></form>
 

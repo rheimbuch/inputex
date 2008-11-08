@@ -53,9 +53,9 @@ YAHOO.inputEx = function(fieldOptions) {
    var inputInstance = new fieldClass(fieldOptions.inputParams);
 
    // Add the flatten attribute if present in the params
-   if(fieldOptions.flatten) {
+   /*if(fieldOptions.flatten) {
       inputInstance._flatten = true;
-   }
+   }*/
 	  
    return inputInstance;
 };
@@ -283,38 +283,6 @@ lang.augmentObject(inputEx,
          }
       }
       return n;
-   },
-   
-   deepObjCopy:  function (dupeObj) {
-       var retObj = {};
-       if (typeof(dupeObj) == 'object') {
-           if (typeof(dupeObj.length) != 'undefined') {
-               retObj = [];
-           }
-           for (var objInd in dupeObj) {
-             if(dupeObj.hasOwnProperty(objInd)) {
-               if (typeof(dupeObj[objInd]) == 'object') {
-                   // DOM NODE
-                   if( typeof(dupeObj[objInd].nodeType) == "number"){
-                       retObj[objInd] = dupeObj[objInd];
-                   } 
-                   else {
-                      retObj[objInd] = inputEx.deepObjCopy(dupeObj[objInd]);
-                   }
-               } else if (typeof(dupeObj[objInd]) == 'string') {
-                   retObj[objInd] = dupeObj[objInd];
-               } else if (typeof(dupeObj[objInd]) == 'number') {
-                   retObj[objInd] = dupeObj[objInd];
-               } else if (typeof(dupeObj[objInd]) == 'boolean') {
-                   ((dupeObj[objInd] == true) ? retObj[objInd] = true : retObj[objInd] = false);
-               }
-               else if (typeof(dupeObj[objInd]) == 'function') {
-                   retObj[objInd] = dupeObj[objInd];
-                }
-             }
-           }
-       }
-       return retObj;
    }
    
 });
@@ -567,13 +535,10 @@ inputEx.JsonSchema = {
  */
 inputEx.Field = function(options) {
 	
-	/**
-	 * Configuration object to set the options for this class and the parent classes. See constructor details for options added by this class.
-	 */
-	this.options = /*options || {};*/inputEx.deepObjCopy(options) || {};
+   if(!options) {var options = {}; }
 	
 	// Set the default values of the options
-	this.setOptions();
+	this.setOptions(options);
 	
 	// Call the render of the dom
 	this.render();
@@ -597,12 +562,12 @@ inputEx.Field = function(options) {
 	this.setClassFromState();
 	
 	// append it immediatly to the parent DOM element
-	if(this.options.parentEl) {
-	   if( lang.isString(this.options.parentEl) ) {
-	     Dom.get(this.options.parentEl).appendChild(this.getEl());  
+	if(options.parentEl) {
+	   if( lang.isString(options.parentEl) ) {
+	     Dom.get(options.parentEl).appendChild(this.getEl());  
 	   }
 	   else {
-	      this.options.parentEl.appendChild(this.getEl());
+	      options.parentEl.appendChild(this.getEl());
       }
 	}
 };
@@ -612,24 +577,32 @@ inputEx.Field.prototype = {
   
    /**
     * Set the default values of the options
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
     */
-	setOptions: function() {
+	setOptions: function(options) {
+
+   	/**
+   	 * Configuration object to set the options for this class and the parent classes. See constructor details for options added by this class.
+   	 */
+   	this.options = {};
+   	
+   	// Basic options
+   	this.options.name = options.name;
+   	this.options.value = options.value;
+   	this.options.id = options.id || Dom.generateId();
+   	this.options.label = options.label;
+   	this.options.description = options.description;
    
       // Define default messages
-	   this.options.messages = this.options.messages || {};
-	   this.options.messages.required = this.options.messages.required || inputEx.messages.required;
-	   this.options.messages.invalid = this.options.messages.invalid || inputEx.messages.invalid;
-	   this.options.messages.valid = this.options.messages.valid || inputEx.messages.valid;
+	   this.options.messages = {};
+	   this.options.messages.required = (options.messages && options.messages.required) ? options.messages.required : inputEx.messages.required;
+	   this.options.messages.invalid = (options.messages && options.messages.invalid) ? options.messages.invalid : inputEx.messages.invalid;
+	   //this.options.messages.valid = (options.messages && options.messages.valid) ? options.messages.valid : inputEx.messages.valid;
 	
 	   // Other options
-	   this.options.className = this.options.className || 'inputEx-Field';
-	   this.options.required = this.options.required ? true : false;
-	   this.options.showMsg = lang.isUndefined(this.options.showMsg) ? false : this.options.showMsg;
-	
-	   // The following options are used later:
-	   // + this.options.name
-	   // + this.options.value
-	   // + this.options.id
+	   this.options.className = options.className ? options.className : 'inputEx-Field';
+	   this.options.required = lang.isUndefined(options.required) ? false : options.required;
+	   this.options.showMsg = lang.isUndefined(options.showMsg) ? false : options.showMsg;
 	},
 
    /**
@@ -674,13 +647,11 @@ inputEx.Field.prototype = {
 	 * Escape the stack using a setTimeout
 	 */
 	fireUpdatedEvt: function() {
-      //if(this.validate()) {
-         // Uses setTimeout to escape the stack (that originiated in an event)
-         var that = this;
-         setTimeout(function() {
-      	   that.updatedEvt.fire(that.getValue(), that);
-         },50);
-      //}
+      // Uses setTimeout to escape the stack (that originiated in an event)
+      var that = this;
+      setTimeout(function() {
+         that.updatedEvt.fire(that.getValue(), that);
+      },50);
 	},
 
    /**
@@ -761,7 +732,7 @@ inputEx.Field.prototype = {
          return this.options.messages.invalid;
       }
       else {
-         return '';//this.options.messages.valid;
+         return '';
       }
 	},
 
@@ -889,7 +860,7 @@ inputEx.Field.prototype = {
     * @param {boolean} [sendUpdatedEvt] (optional) Wether this clear should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
    clear: function(sendUpdatedEvt) {
-      this.setValue(this.options.value || '', sendUpdatedEvt);
+      this.setValue(lang.isUndefined(this.options.value) ? '' : this.options.value, sendUpdatedEvt);
    },
    
    /**
@@ -914,6 +885,7 @@ inputEx.Field.prototype = {
  *   <li>fields: Array of input fields declared like { label: 'Enter the value:' , type: 'text' or fieldClass: inputEx.Field, optional: true/false, inputParams: {inputparams object} }</li>
  *   <li>legend: The legend for the fieldset (default is an empty string)</li>
  *   <li>collapsible: Boolean to make the group collapsible (default is false)</li>
+ *   <li>flatten:</li>
  * </ul>
  */
 inputEx.Group = function(options) {
@@ -933,17 +905,26 @@ lang.extend(inputEx.Group, inputEx.Field,
    
    /**
     * Adds some options: legend, collapsible, fields...
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
     */
-   setOptions: function() {
+   setOptions: function(options) {
    
-      this.options.legend = this.options.legend || '';
+   	this.options = {};
+   	
+   	this.options.fields = options.fields;
+   	
+   	this.options.id = options.id;
+   	
+   	this.options.flatten = options.flatten;
+   
+      this.options.legend = options.legend || '';
    
       // leave this for compatibility reasons
-      this.inputConfigs = this.options.fields;
+      this.inputConfigs = options.fields;
    
-      this.options.collapsible = lang.isUndefined(this.options.collapsible) ? false : this.options.collapsible;
+      this.options.collapsible = lang.isUndefined(options.collapsible) ? false : options.collapsible;
       
-      this.options.disabled = lang.isUndefined(this.options.disabled) ? false : this.options.disabled;
+      this.options.disabled = lang.isUndefined(options.disabled) ? false : options.disabled;
       
       // Array containing the list of the field instances
       this.inputs = [];
@@ -1123,7 +1104,7 @@ lang.extend(inputEx.Group, inputEx.Field,
 	   for (var i = 0 ; i < this.inputs.length ; i++) {
 	      var v = this.inputs[i].getValue();
 	      if(this.inputs[i].options.name) {
-	         if(this.inputs[i]._flatten && lang.isObject(v) ) {
+	         if(this.inputs[i].options.flatten && lang.isObject(v) ) {
 	            lang.augmentObject( o, v);
 	         }
 	         else {
@@ -1274,20 +1255,22 @@ lang.extend(inputEx.Form, inputEx.Group,
 
    /**
     * Adds buttons and set ajax default parameters
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
     */
-   setOptions: function() {
-      inputEx.Form.superclass.setOptions.call(this);
+   setOptions: function(options) {
+      inputEx.Form.superclass.setOptions.call(this, options);
    
       this.buttons = [];
       
-      this.options.buttons = this.options.buttons || [];
+      this.options.buttons = options.buttons || [];
    
-      if(this.options.ajax) {
-         this.options.ajax.method = this.options.ajax.method || 'POST';
-         this.options.ajax.uri = this.options.ajax.uri || 'default.php';
-         this.options.ajax.callback = this.options.ajax.callback || {};
-         this.options.ajax.callback.scope = this.options.ajax.callback.scope || this;
-         this.options.ajax.showMask = lang.isUndefined(this.options.ajax.showMask) ? false : this.options.ajax.showMask;
+      if(options.ajax) {
+         this.options.ajax = {};
+         this.options.ajax.method = options.ajax.method || 'POST';
+         this.options.ajax.uri = options.ajax.uri || 'default.php';
+         this.options.ajax.callback = options.ajax.callback || {};
+         this.options.ajax.callback.scope = options.ajax.callback.scope || this;
+         this.options.ajax.showMask = lang.isUndefined(options.ajax.showMask) ? false : options.ajax.showMask;
       }
    },
    
@@ -1511,9 +1494,19 @@ lang.extend( inputEx.CombineField, inputEx.Field,
  * @scope inputEx.CombineField.prototype   
  */   
 {
-   setOptions: function() {
-      this.options.className = this.options.className || 'inputEx-Field inputEx-CombineField';
-      inputEx.CombineField.superclass.setOptions.call(this);
+   /**
+    * Set the default values of the options
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
+    */
+   setOptions: function(options) {
+      inputEx.CombineField.superclass.setOptions.call(this, options);
+      
+      // Overwrite options
+      this.options.className = options.className ? options.className : 'inputEx-Field inputEx-CombineField';
+      
+      // Added options
+      this.options.separators = options.separators;
+      this.options.fields = options.fields;
    },
 	   
 	/**
@@ -1669,6 +1662,22 @@ lang.extend(inputEx.StringField, inputEx.Field,
  * @scope inputEx.StringField.prototype   
  */   
 {
+   /**
+    * Set the default values of the options
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
+    */
+	setOptions: function(options) {
+	   inputEx.StringField.superclass.setOptions.call(this, options);
+	   
+	   this.options.regexp = options.regexp;
+	   this.options.size = options.size;
+	   this.options.maxLength = options.maxLength;
+	   this.options.minLength = options.minLength;
+	   this.options.typeInvite = options.typeInvite;
+	   this.options.readonly = options.readonly;
+   },
+   
+   
    /**
     * Render an 'INPUT' DOM node
     */
@@ -1880,10 +1889,18 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
 
    /**
     * Adds autocomplete options
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
     */
-   setOptions: function() {
-      this.options.className = this.options.className || 'inputEx-Field inputEx-AutoComplete';
-      inputEx.AutoComplete.superclass.setOptions.call(this);
+   setOptions: function(options) {
+      inputEx.AutoComplete.superclass.setOptions.call(this, options);
+      
+      // Overwrite options
+      this.options.className = options.className ? options.className : 'inputEx-Field inputEx-AutoComplete';
+      
+      // Added options
+      this.options.datasource = options.datasource;
+      this.options.autoComp = options.autoComp;
+      this.options.returnValue = options.returnValue;
    },
    
    /**
@@ -2050,14 +2067,17 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 	   
 	/**
 	 * Adds the CheckBox specific options
+	 * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
 	 */
-	setOptions: function() {
+	setOptions: function(options) {
+	   inputEx.CheckBox.superclass.setOptions.call(this, options);
 	   
-      this.options.className = this.options.className || 'inputEx-Field inputEx-CheckBox';
+	   // Overwrite options:
+	   this.options.className = options.className ? options.className : 'inputEx-Field inputEx-CheckBox';
 	   
-	   inputEx.CheckBox.superclass.setOptions.call(this);
-	   
-	   this.sentValues = this.options.sentValues || [true, false];
+	   // Added options
+	   this.sentValues = options.sentValues || [true, false];
+	   this.options.sentValues = this.sentValues; // for compatibility
 	   this.checkedValue = this.sentValues[0];
 	   this.uncheckedValue = this.sentValues[1];
 	},
@@ -2175,10 +2195,17 @@ lang.extend(inputEx.ColorField, inputEx.Field,
    
 	/**
 	 * Adds the 'inputEx-ColorField' default className
+	 * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
 	 */
-   setOptions: function() {
-	   this.options.className = this.options.className || 'inputEx-Field inputEx-ColorField inputEx-PickerField';
-   	inputEx.ColorField.superclass.setOptions.call(this);
+   setOptions: function(options) {
+   	inputEx.ColorField.superclass.setOptions.call(this, options);
+   	
+   	// Overwrite options
+   	this.options.className = options.className ? options.className : 'inputEx-Field inputEx-ColorField inputEx-PickerField';
+   	
+   	// Added options
+   	this.options.auto = options.auto;
+   	this.options.colors = options.colors;
    },
    
 	/**
@@ -2421,10 +2448,6 @@ inputEx.registerType("color", inputEx.ColorField);
  * </ul>
  */
 inputEx.DateField = function(options) {
-   if(!options) { options = {}; }
-   if(!options.messages) { options.messages = {}; }
-	if(!options.dateFormat) {options.dateFormat = inputEx.messages.defaultDateFormat; }
-	options.messages.invalid = inputEx.messages.invalidDate;
 	inputEx.DateField.superclass.constructor.call(this,options);
 };
 	
@@ -2435,10 +2458,17 @@ lang.extend(inputEx.DateField, inputEx.StringField,
 {
 	/**
 	 * Adds the 'inputEx-DateField' default className
+	 * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
 	 */
-   setOptions: function() {
-	   this.options.className = this.options.className || 'inputEx-Field inputEx-DateField';
-   	inputEx.DateField.superclass.setOptions.call(this);
+   setOptions: function(options) {
+   	inputEx.DateField.superclass.setOptions.call(this, options);
+   	
+   	// Overwrite options
+   	this.options.className = options.className ? options.className : 'inputEx-Field inputEx-DateField';
+   	this.options.messages.invalid = inputEx.messages.invalidDate;
+   	
+   	// Added options
+   	this.options.dateFormat = options.dateFormat || inputEx.messages.defaultDateFormat;
    },
 	   
 	/**
@@ -2680,6 +2710,9 @@ inputEx.registerType("datesplit", inputEx.DateSplitField);
  * @extends inputEx.DateField
  * @constructor
  * @param {Object} options No added option for this field (same as DateField)
+ * <ul>
+ *   <li>calendar: yui calendar configuration object</li>
+ * </ul>
  */
 inputEx.DatePickerField = function(options) {
    inputEx.DatePickerField.superclass.constructor.call(this,options);
@@ -2692,13 +2725,17 @@ lang.extend(inputEx.DatePickerField, inputEx.DateField,
 {
    /**
     * Set the default date picker CSS classes
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
     */
-   setOptions: function() {
-      this.options.className = this.options.className || 'inputEx-Field inputEx-DateField inputEx-PickerField inputEx-DatePickerField';
-      inputEx.DatePickerField.superclass.setOptions.call(this);
+   setOptions: function(options) {
+      inputEx.DatePickerField.superclass.setOptions.call(this, options);
       
-      this.options.calendar = this.options.calendar || inputEx.messages.defautCalendarOpts;
+      // Overwrite options
+      this.options.className = options.className ? options.className : 'inputEx-Field inputEx-DateField inputEx-PickerField inputEx-DatePickerField';
       this.options.readonly = true;
+      
+      // Added options
+      this.options.calendar = options.calendar || inputEx.messages.defautCalendarOpts;
    },
    
    /**
@@ -2884,9 +2921,11 @@ YAHOO.lang.extend(inputEx.EmailField, inputEx.StringField,
    
    /**
     * Set the email regexp and invalid message
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
     */
-   setOptions: function() {
-      inputEx.EmailField.superclass.setOptions.call(this);
+   setOptions: function(options) {
+      inputEx.EmailField.superclass.setOptions.call(this, options);
+      // Overwrite options
       this.options.messages.invalid = inputEx.messages.invalidEmail;
       this.options.regexp = inputEx.regexps.email;
    },
@@ -2978,8 +3017,9 @@ inputEx.registerType("hidden", inputEx.HiddenField);
  * @constructor
  * @param {Object} options Added options:
  * <ul>
- *   <li>formatDom</li>
- *   <li>formatValue</li>
+ *   <li>visu</li>
+ *   <li>editorField</li>
+ *   <li>animColors</li>
  * </ul>
  */
 inputEx.InPlaceEdit = function(options) {
@@ -2991,13 +3031,18 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
  * @scope inputEx.InPlaceEdit.prototype   
  */   
 {
-
-   setOptions: function() {
-      inputEx.InPlaceEdit.superclass.setOptions.call(this);
+   /**
+    * Set the default values of the options
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
+    */
+   setOptions: function(options) {
+      inputEx.InPlaceEdit.superclass.setOptions.call(this, options);
       
-      if (!YAHOO.lang.isObject(this.options.animColors)) {
-         this.options.animColors =  {from: '#ffff99' , to: '#ffffff'};
-      }
+      this.options.animColors = options.animColors || {from: '#ffff99' , to: '#ffffff'};
+      /*this.options.formatDom = options.formatDom;
+      this.options.formatValue = options.formatValue;*/
+      this.options.visu = options.visu;
+      this.options.editorField = options.editorField;
    },
 
    /**
@@ -3315,13 +3360,16 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	   
 	/**
 	 * Set the ListField classname
+	 * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
 	 */
-	setOptions: function() {
-	   inputEx.ListField.superclass.setOptions.call(this);
-	   this.options.className='inputEx-Field inputEx-ListField';
-	   this.options.sortable = lang.isUndefined(this.options.sortable) ? false : this.options.sortable;
-	   this.options.elementType = this.options.elementType || {type: 'string'};
-	   this.options.useButtons = lang.isUndefined(this.options.useButtons) ? false : this.options.useButtons;
+	setOptions: function(options) {
+	   inputEx.ListField.superclass.setOptions.call(this, options);
+	   
+	   this.options.className = options.className ? options.className : 'inputEx-Field inputEx-ListField';
+	   
+	   this.options.sortable = lang.isUndefined(options.sortable) ? false : options.sortable;
+	   this.options.elementType = options.elementType || {type: 'string'};
+	   this.options.useButtons = lang.isUndefined(options.useButtons) ? false : options.useButtons;
 	},
 	   
 	/**
@@ -3738,21 +3786,21 @@ lang.extend(inputEx.PasswordField, inputEx.StringField,
    
 	/**
 	 * Add the password regexp, strengthIndicator, capsLockWarning
+	 * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
 	 */
-	setOptions: function() {
+	setOptions: function(options) {
+	   inputEx.PasswordField.superclass.setOptions.call(this, options);
 	   
-      this.options.className = this.options.className || "inputEx-Field inputEx-PasswordField";
-      
-	   inputEx.PasswordField.superclass.setOptions.call(this);
+   	this.options.className = options.className ? options.className : "inputEx-Field inputEx-PasswordField";
 	   
 	   // Add the password regexp
 	   this.options.regexp = inputEx.regexps.password;
 	  
 		// display a strength indicator
-		this.options.strengthIndicator = YAHOO.lang.isUndefined(this.options.strengthIndicator) ? false : this.options.strengthIndicator;
+		this.options.strengthIndicator = YAHOO.lang.isUndefined(options.strengthIndicator) ? false : options.strengthIndicator;
 		
 		// capsLockWarning
-		this.options.capsLockWarning = YAHOO.lang.isUndefined(this.options.capsLockWarning) ? false : this.options.capsLockWarning;
+		this.options.capsLockWarning = YAHOO.lang.isUndefined(options.capsLockWarning) ? false : options.capsLockWarning;
 		
 	},
 	
@@ -3970,6 +4018,7 @@ inputEx.registerType("password", inputEx.PasswordField);
  * @class Create a radio button. Here are the added options :
  * <ul>
  *    <li>choices: list of choices (array of string)</li>
+ *    <li>values: list of returned values (array )</li>
  *    <li>allowAny: add an option with a string field</li>
  * </ul>
  * @extends inputEx.Field
@@ -3988,17 +4037,18 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	   
 	/**
 	 * Adds the Radio button specific options
+	 * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
 	 */
-	setOptions: function() {
-	   
-	   this.options.className = this.options.className || 'inputEx-Field inputEx-RadioField';
-	   
-	   inputEx.RadioField.superclass.setOptions.call(this);
-	   
-	   this.options.allowAny = lang.isUndefined(this.options.allowAny) ? false : this.options.allowAny;
+	setOptions: function(options) {
+	   inputEx.RadioField.superclass.setOptions.call(this, options);
+
+      this.options.className = options.className ? options.className : 'inputEx-Field inputEx-RadioField';
+
+	   this.options.allowAny = lang.isUndefined(options.allowAny) ? false : options.allowAny;
       
+      this.options.choices = options.choices;
       // values == choices if not provided
-	   this.options.values = lang.isArray(this.options.values) ? this.options.values : this.options.choices;
+	   this.options.values = lang.isArray(options.values) ? options.values : options.choices;
 	},
 	   
 	/**
@@ -4172,6 +4222,17 @@ lang.extend(inputEx.RTEField, inputEx.Field,
  * @scope inputEx.RTEField.prototype   
  */  
 {   
+   /**
+    * Set the default values of the options
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
+    */
+  	setOptions: function(options) {
+  	   inputEx.RTEField.superclass.setOptions.call(this, options);
+  	   
+  	   this.options.opts = options.opts || {};
+  	   this.options.type = options.type;
+   },
+   
 	/**
 	 * Render the field using the YUI Editor widget
 	 */	
@@ -4183,10 +4244,6 @@ lang.extend(inputEx.RTEField, inputEx.Field,
 	   inputEx.RTEfieldsNumber += 1;
 	   this.fieldContainer.appendChild(this.el);
 	
-	   //If not set, set it to empty
-	   if (!this.options.opts) {
-	        this.options.opts = {};
-	   }
 	   //This is the default config
 	   var _def = {
 	       height: '300px',
@@ -4270,6 +4327,17 @@ lang.extend(inputEx.SelectField, inputEx.Field,
  * @scope inputEx.SelectField.prototype   
  */   
 {
+   /**
+    * Set the default values of the options
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
+    */
+	setOptions: function(options) {
+	   inputEx.SelectField.superclass.setOptions.call(this,options);
+	   
+	   this.options.multiple = lang.isUndefined(options.multiple) ? false : options.multiple;
+	   this.options.selectValues = options.selectValues;
+	   this.options.selectOptions = options.selectOptions;
+   },
    
    /**
     * Build a select tag with options
@@ -4371,11 +4439,12 @@ YAHOO.lang.extend(inputEx.Textarea, inputEx.StringField,
 
    /**
     * Set the specific options (rows and cols)
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
     */
-   setOptions: function() {
-      inputEx.Textarea.superclass.setOptions.call(this);
-      this.options.rows = this.options.rows || 6;
-      this.options.cols = this.options.cols || 23;
+   setOptions: function(options) {
+      inputEx.Textarea.superclass.setOptions.call(this, options);
+      this.options.rows = options.rows || 6;
+      this.options.cols = options.cols || 23;
    },
    
    /**
@@ -4573,8 +4642,7 @@ inputEx.registerType("datetime", inputEx.DateTimeField);
  * @class Create a uneditable field where you can stick the html you want
  * Added Options:
  * <ul>
- *    <li>formatValue: String function(value)</li>
- *    <li>formatDom: DOMEl function(value)</li>
+ *    <li>visu: inputEx visu type</li>
  * </ul>
  * @extends inputEx.Field
  * @constructor
@@ -4588,6 +4656,15 @@ YAHOO.lang.extend(inputEx.UneditableField, inputEx.Field,
  * @scope inputEx.UneditableField.prototype   
  */
 {
+   
+   /**
+    * Set the default values of the options
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
+    */
+	setOptions: function(options) {
+      inputEx.UneditableField.superclass.setOptions.call(this,options);
+      this.options.visu = options.visu;
+   },
    
    /**
     * Store the value and update the visu
@@ -4642,12 +4719,14 @@ lang.extend(inputEx.UrlField, inputEx.StringField,
 
    /**
     * Adds the invalid Url message
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
     */
-   setOptions: function() {
-      inputEx.UrlField.superclass.setOptions.call(this);
-      this.options.className = "inputEx-Field inputEx-UrlField";
+   setOptions: function(options) {
+      inputEx.UrlField.superclass.setOptions.call(this, options);
+      
+      this.options.className = options.className ? options.className : "inputEx-Field inputEx-UrlField";
       this.options.messages.invalid = inputEx.messages.invalidUrl;
-      this.options.favicon = lang.isUndefined(this.options.favicon) ? (("https:" == document.location.protocol) ? false : true) : this.options.favicon;
+      this.options.favicon = lang.isUndefined(options.favicon) ? (("https:" == document.location.protocol) ? false : true) : options.favicon;
       
       // validate with url regexp
       this.options.regexp = inputEx.regexps.url;
@@ -5092,10 +5171,18 @@ lang.extend(inputEx.AutoComplete, inputEx.StringField,
 
    /**
     * Adds autocomplete options
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
     */
-   setOptions: function() {
-      this.options.className = this.options.className || 'inputEx-Field inputEx-AutoComplete';
-      inputEx.AutoComplete.superclass.setOptions.call(this);
+   setOptions: function(options) {
+      inputEx.AutoComplete.superclass.setOptions.call(this, options);
+      
+      // Overwrite options
+      this.options.className = options.className ? options.className : 'inputEx-Field inputEx-AutoComplete';
+      
+      // Added options
+      this.options.datasource = options.datasource;
+      this.options.autoComp = options.autoComp;
+      this.options.returnValue = options.returnValue;
    },
    
    /**
@@ -5349,8 +5436,7 @@ inputEx.registerType("multiautocomplete", inputEx.MultiAutoComplete);
  * @class Create a uneditable field where you can stick the html you want
  * Added Options:
  * <ul>
- *    <li>formatValue: String function(value)</li>
- *    <li>formatDom: DOMEl function(value)</li>
+ *    <li>visu: inputEx visu type</li>
  * </ul>
  * @extends inputEx.Field
  * @constructor
@@ -5364,6 +5450,15 @@ YAHOO.lang.extend(inputEx.UneditableField, inputEx.Field,
  * @scope inputEx.UneditableField.prototype   
  */
 {
+   
+   /**
+    * Set the default values of the options
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
+    */
+	setOptions: function(options) {
+      inputEx.UneditableField.superclass.setOptions.call(this,options);
+      this.options.visu = options.visu;
+   },
    
    /**
     * Store the value and update the visu
@@ -5413,15 +5508,17 @@ YAHOO.lang.extend(inputEx.SliderField, inputEx.Field,
 {
    /**
     * Set the classname to 'inputEx-SliderField'
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
     */
-   setOptions: function() {
-	   this.options.className = this.options.className || 'inputEx-SliderField';
-      inputEx.SliderField.superclass.setOptions.call(this);
+   setOptions: function(options) {
+      inputEx.SliderField.superclass.setOptions.call(this, options);
       
-      this.options.minValue = lang.isUndefined(this.options.minValue) ? 0 : this.options.minValue;
-      this.options.maxValue = lang.isUndefined(this.options.maxValue) ? 100 : this.options.maxValue;
+      this.options.className = options.className ? options.className : 'inputEx-SliderField';
+   	   
+      this.options.minValue = lang.isUndefined(options.minValue) ? 0 : options.minValue;
+      this.options.maxValue = lang.isUndefined(options.maxValue) ? 100 : options.maxValue;
       
-      this.options.displayValue = lang.isUndefined(this.options.displayValue) ? true : this.options.displayValue;
+      this.options.displayValue = lang.isUndefined(options.displayValue) ? true : options.displayValue;
    },
       
    /**

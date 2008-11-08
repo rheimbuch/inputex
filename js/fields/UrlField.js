@@ -23,12 +23,14 @@ lang.extend(inputEx.UrlField, inputEx.StringField,
 
    /**
     * Adds the invalid Url message
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
     */
-   setOptions: function() {
-      inputEx.UrlField.superclass.setOptions.call(this);
-      this.options.className = "inputEx-Field inputEx-UrlField";
+   setOptions: function(options) {
+      inputEx.UrlField.superclass.setOptions.call(this, options);
+      
+      this.options.className = options.className ? options.className : "inputEx-Field inputEx-UrlField";
       this.options.messages.invalid = inputEx.messages.invalidUrl;
-      this.options.favicon = lang.isUndefined(this.options.favicon) ? (("https:" == document.location.protocol) ? false : true) : this.options.favicon;
+      this.options.favicon = lang.isUndefined(options.favicon) ? (("https:" == document.location.protocol) ? false : true) : options.favicon;
       
       // validate with url regexp
       this.options.regexp = inputEx.regexps.url;

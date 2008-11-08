@@ -30,13 +30,16 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	   
 	/**
 	 * Set the ListField classname
+	 * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
 	 */
-	setOptions: function() {
-	   inputEx.ListField.superclass.setOptions.call(this);
-	   this.options.className='inputEx-Field inputEx-ListField';
-	   this.options.sortable = lang.isUndefined(this.options.sortable) ? false : this.options.sortable;
-	   this.options.elementType = this.options.elementType || {type: 'string'};
-	   this.options.useButtons = lang.isUndefined(this.options.useButtons) ? false : this.options.useButtons;
+	setOptions: function(options) {
+	   inputEx.ListField.superclass.setOptions.call(this, options);
+	   
+	   this.options.className = options.className ? options.className : 'inputEx-Field inputEx-ListField';
+	   
+	   this.options.sortable = lang.isUndefined(options.sortable) ? false : options.sortable;
+	   this.options.elementType = options.elementType || {type: 'string'};
+	   this.options.useButtons = lang.isUndefined(options.useButtons) ? false : options.useButtons;
 	},
 	   
 	/**

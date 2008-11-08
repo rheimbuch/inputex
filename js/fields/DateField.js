@@ -12,10 +12,6 @@
  * </ul>
  */
 inputEx.DateField = function(options) {
-   if(!options) { options = {}; }
-   if(!options.messages) { options.messages = {}; }
-	if(!options.dateFormat) {options.dateFormat = inputEx.messages.defaultDateFormat; }
-	options.messages.invalid = inputEx.messages.invalidDate;
 	inputEx.DateField.superclass.constructor.call(this,options);
 };
 	
@@ -26,10 +22,17 @@ lang.extend(inputEx.DateField, inputEx.StringField,
 {
 	/**
 	 * Adds the 'inputEx-DateField' default className
+	 * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
 	 */
-   setOptions: function() {
-	   this.options.className = this.options.className || 'inputEx-Field inputEx-DateField';
-   	inputEx.DateField.superclass.setOptions.call(this);
+   setOptions: function(options) {
+   	inputEx.DateField.superclass.setOptions.call(this, options);
+   	
+   	// Overwrite options
+   	this.options.className = options.className ? options.className : 'inputEx-Field inputEx-DateField';
+   	this.options.messages.invalid = inputEx.messages.invalidDate;
+   	
+   	// Added options
+   	this.options.dateFormat = options.dateFormat || inputEx.messages.defaultDateFormat;
    },
 	   
 	/**

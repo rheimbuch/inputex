@@ -15,13 +15,10 @@
  */
 inputEx.Field = function(options) {
 	
-	/**
-	 * Configuration object to set the options for this class and the parent classes. See constructor details for options added by this class.
-	 */
-	this.options = /*options || {};*/inputEx.deepObjCopy(options) || {};
+   if(!options) {var options = {}; }
 	
 	// Set the default values of the options
-	this.setOptions();
+	this.setOptions(options);
 	
 	// Call the render of the dom
 	this.render();
@@ -45,12 +42,12 @@ inputEx.Field = function(options) {
 	this.setClassFromState();
 	
 	// append it immediatly to the parent DOM element
-	if(this.options.parentEl) {
-	   if( lang.isString(this.options.parentEl) ) {
-	     Dom.get(this.options.parentEl).appendChild(this.getEl());  
+	if(options.parentEl) {
+	   if( lang.isString(options.parentEl) ) {
+	     Dom.get(options.parentEl).appendChild(this.getEl());  
 	   }
 	   else {
-	      this.options.parentEl.appendChild(this.getEl());
+	      options.parentEl.appendChild(this.getEl());
       }
 	}
 };
@@ -60,24 +57,32 @@ inputEx.Field.prototype = {
   
    /**
     * Set the default values of the options
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
     */
-	setOptions: function() {
+	setOptions: function(options) {
+
+   	/**
+   	 * Configuration object to set the options for this class and the parent classes. See constructor details for options added by this class.
+   	 */
+   	this.options = {};
+   	
+   	// Basic options
+   	this.options.name = options.name;
+   	this.options.value = options.value;
+   	this.options.id = options.id || Dom.generateId();
+   	this.options.label = options.label;
+   	this.options.description = options.description;
    
       // Define default messages
-	   this.options.messages = this.options.messages || {};
-	   this.options.messages.required = this.options.messages.required || inputEx.messages.required;
-	   this.options.messages.invalid = this.options.messages.invalid || inputEx.messages.invalid;
-	   this.options.messages.valid = this.options.messages.valid || inputEx.messages.valid;
+	   this.options.messages = {};
+	   this.options.messages.required = (options.messages && options.messages.required) ? options.messages.required : inputEx.messages.required;
+	   this.options.messages.invalid = (options.messages && options.messages.invalid) ? options.messages.invalid : inputEx.messages.invalid;
+	   //this.options.messages.valid = (options.messages && options.messages.valid) ? options.messages.valid : inputEx.messages.valid;
 	
 	   // Other options
-	   this.options.className = this.options.className || 'inputEx-Field';
-	   this.options.required = this.options.required ? true : false;
-	   this.options.showMsg = lang.isUndefined(this.options.showMsg) ? false : this.options.showMsg;
-	
-	   // The following options are used later:
-	   // + this.options.name
-	   // + this.options.value
-	   // + this.options.id
+	   this.options.className = options.className ? options.className : 'inputEx-Field';
+	   this.options.required = lang.isUndefined(options.required) ? false : options.required;
+	   this.options.showMsg = lang.isUndefined(options.showMsg) ? false : options.showMsg;
 	},
 
    /**
@@ -122,13 +127,11 @@ inputEx.Field.prototype = {
 	 * Escape the stack using a setTimeout
 	 */
 	fireUpdatedEvt: function() {
-      //if(this.validate()) {
-         // Uses setTimeout to escape the stack (that originiated in an event)
-         var that = this;
-         setTimeout(function() {
-      	   that.updatedEvt.fire(that.getValue(), that);
-         },50);
-      //}
+      // Uses setTimeout to escape the stack (that originiated in an event)
+      var that = this;
+      setTimeout(function() {
+         that.updatedEvt.fire(that.getValue(), that);
+      },50);
 	},
 
    /**
@@ -209,7 +212,7 @@ inputEx.Field.prototype = {
          return this.options.messages.invalid;
       }
       else {
-         return '';//this.options.messages.valid;
+         return '';
       }
 	},
 
@@ -337,7 +340,7 @@ inputEx.Field.prototype = {
     * @param {boolean} [sendUpdatedEvt] (optional) Wether this clear should fire the updatedEvt or not (default is true, pass false to NOT send the event)
     */
    clear: function(sendUpdatedEvt) {
-      this.setValue(this.options.value || '', sendUpdatedEvt);
+      this.setValue(lang.isUndefined(this.options.value) ? '' : this.options.value, sendUpdatedEvt);
    },
    
    /**

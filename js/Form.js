@@ -24,20 +24,22 @@ lang.extend(inputEx.Form, inputEx.Group,
 
    /**
     * Adds buttons and set ajax default parameters
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
     */
-   setOptions: function() {
-      inputEx.Form.superclass.setOptions.call(this);
+   setOptions: function(options) {
+      inputEx.Form.superclass.setOptions.call(this, options);
    
       this.buttons = [];
       
-      this.options.buttons = this.options.buttons || [];
+      this.options.buttons = options.buttons || [];
    
-      if(this.options.ajax) {
-         this.options.ajax.method = this.options.ajax.method || 'POST';
-         this.options.ajax.uri = this.options.ajax.uri || 'default.php';
-         this.options.ajax.callback = this.options.ajax.callback || {};
-         this.options.ajax.callback.scope = this.options.ajax.callback.scope || this;
-         this.options.ajax.showMask = lang.isUndefined(this.options.ajax.showMask) ? false : this.options.ajax.showMask;
+      if(options.ajax) {
+         this.options.ajax = {};
+         this.options.ajax.method = options.ajax.method || 'POST';
+         this.options.ajax.uri = options.ajax.uri || 'default.php';
+         this.options.ajax.callback = options.ajax.callback || {};
+         this.options.ajax.callback.scope = options.ajax.callback.scope || this;
+         this.options.ajax.showMask = lang.isUndefined(options.ajax.showMask) ? false : options.ajax.showMask;
       }
    },
    

@@ -18,15 +18,17 @@ YAHOO.lang.extend(inputEx.SliderField, inputEx.Field,
 {
    /**
     * Set the classname to 'inputEx-SliderField'
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
     */
-   setOptions: function() {
-	   this.options.className = this.options.className || 'inputEx-SliderField';
-      inputEx.SliderField.superclass.setOptions.call(this);
+   setOptions: function(options) {
+      inputEx.SliderField.superclass.setOptions.call(this, options);
       
-      this.options.minValue = lang.isUndefined(this.options.minValue) ? 0 : this.options.minValue;
-      this.options.maxValue = lang.isUndefined(this.options.maxValue) ? 100 : this.options.maxValue;
+      this.options.className = options.className ? options.className : 'inputEx-SliderField';
+   	   
+      this.options.minValue = lang.isUndefined(options.minValue) ? 0 : options.minValue;
+      this.options.maxValue = lang.isUndefined(options.maxValue) ? 100 : options.maxValue;
       
-      this.options.displayValue = lang.isUndefined(this.options.displayValue) ? true : this.options.displayValue;
+      this.options.displayValue = lang.isUndefined(options.displayValue) ? true : options.displayValue;
    },
       
    /**

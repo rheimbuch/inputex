@@ -21,9 +21,19 @@ lang.extend( inputEx.CombineField, inputEx.Field,
  * @scope inputEx.CombineField.prototype   
  */   
 {
-   setOptions: function() {
-      this.options.className = this.options.className || 'inputEx-Field inputEx-CombineField';
-      inputEx.CombineField.superclass.setOptions.call(this);
+   /**
+    * Set the default values of the options
+    * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
+    */
+   setOptions: function(options) {
+      inputEx.CombineField.superclass.setOptions.call(this, options);
+      
+      // Overwrite options
+      this.options.className = options.className ? options.className : 'inputEx-Field inputEx-CombineField';
+      
+      // Added options
+      this.options.separators = options.separators;
+      this.options.fields = options.fields;
    },
 	   
 	/**
