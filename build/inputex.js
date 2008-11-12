@@ -917,6 +917,8 @@ lang.extend(inputEx.Group, inputEx.Field,
    	
    	this.options.name = options.name;
    	
+   	this.options.value = options.value;
+   	
    	this.options.flatten = options.flatten;
    
       this.options.legend = options.legend || '';
@@ -2080,6 +2082,8 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 	   // Overwrite options:
 	   this.options.className = options.className ? options.className : 'inputEx-Field inputEx-CheckBox';
 	   
+	   this.options.rightLabel = options.rightLabel || '';
+	   
 	   // Added options
 	   this.sentValues = options.sentValues || [true, false];
 	   this.options.sentValues = this.sentValues; // for compatibility
@@ -2097,7 +2101,7 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 	   this.el = inputEx.cn('input', { id: checkBoxId, type: 'checkbox', checked:(this.options.checked === false) ? false : true });
 	   this.fieldContainer.appendChild(this.el);
 	
-	   this.rightLabelEl = inputEx.cn('label', {"for": checkBoxId, className: 'inputEx-CheckBox-rightLabel'}, null, this.options.rightLabel || '');
+	   this.rightLabelEl = inputEx.cn('label', {"for": checkBoxId, className: 'inputEx-CheckBox-rightLabel'}, null, this.options.rightLabel);
 	   this.fieldContainer.appendChild(this.rightLabelEl);
 	
 	   // Keep state of checkbox in a hidden field (format : this.checkedValue or this.uncheckedValue)
