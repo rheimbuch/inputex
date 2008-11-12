@@ -41,6 +41,8 @@ lang.extend(inputEx.Group, inputEx.Field,
    	
    	this.options.id = options.id;
    	
+   	this.options.name = options.name;
+   	
    	this.options.flatten = options.flatten;
    
       this.options.legend = options.legend || '';

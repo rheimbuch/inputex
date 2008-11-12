@@ -337,6 +337,23 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	YAHOO.util.Event.addListener(button5, "click", function() {
 		alert( YAHOO.lang.JSON.stringify(field5.getValue()) );
 	});
+	var setValueButton = inputEx.cn('button', null, null, "SetValue");
+	YAHOO.util.Event.addListener(setValueButton, 'click', function() {
+		field5.setValue({
+			title: 'Mme',
+			firstname: 'Eric',
+			lastname: 'Abouaf', 
+			happy: false,
+			email: 'something@email.com',
+			website: 'http://javascript.neyric.com/inputex',
+			phone:{
+				home:"911",
+			   fax:"911"
+			}
+		});
+	});
+	var el = YAHOO.util.Dom.get('container5');
+	el.appendChild(setValueButton);
 	
 	
 	// Example 6

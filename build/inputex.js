@@ -915,6 +915,8 @@ lang.extend(inputEx.Group, inputEx.Field,
    	
    	this.options.id = options.id;
    	
+   	this.options.name = options.name;
+   	
    	this.options.flatten = options.flatten;
    
       this.options.legend = options.legend || '';
@@ -1263,7 +1265,10 @@ lang.extend(inputEx.Form, inputEx.Group,
       this.buttons = [];
       
       this.options.buttons = options.buttons || [];
-   
+      
+      this.options.action = options.action;
+   	this.options.method = options.method;
+   	
       if(options.ajax) {
          this.options.ajax = {};
          this.options.ajax.method = options.ajax.method || 'POST';
