@@ -85,6 +85,7 @@ margin: 10px;
 				<div id='groupContainer'></div>
 				
 					<p class="tdTitle">3. Get the code</p>
+					<button id='generateButton'>Generate a page for this Form</button>
 					<textarea id='codeGenerator' rows=30></textarea>
 			</td>
 		</tr>
@@ -137,7 +138,7 @@ margin: 10px;
 
 
 <script>
-YAHOO.util.Event.addListener(window, 'load', function() {
+YAHOO.util.Event.onDOMReady(function() {
 	
 	YAHOO.inputEx.spacerUrl = "../images/space.gif";
 	
@@ -192,6 +193,94 @@ YAHOO.util.Event.addListener(window, 'load', function() {
    // Update the preview event
    g.updatedEvt.subscribe(rebuildPreview);
 
+	
+	 // Generate Page:
+	YAHOO.util.Event.addListener('generateButton', 'click', function() {
+
+		var html = [
+			"<html>",
+			"<head>",
+			"  <title>inputEx Builder: generate inputEx Forms</title>",
+			"  <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />\n",
+			"  <!-- YUI CSS -->",
+			"  <link rel='stylesheet' type='text/css' href='../lib/yui/reset-fonts/reset-fonts.css'>",
+			"  <link rel='stylesheet' type='text/css' href='../lib/yui/assets/skins/sam/skin.css'>\n",
+			"  <!-- InputEx CSS -->",
+			"  <link type='text/css' rel='stylesheet' href='../css/inputEx.css' />\n",
+			"  <style>",
+			"#formContainer {",
+			"background-color:#EEEEFF;",
+			"border:1px solid #9999FF;",
+			"margin:50px;",
+			"padding:10px;",
+			"}",
+			"  </style>",
+			"</head>\n",
+			"<body class='yui-skin-sam'>",
+			"	 <div id='formContainer'> </div>",
+			"",
+			"<!-- YUI Library -->",
+			"<scr"+"ipt type='text/javascript' src='../lib/yui/utilities/utilities.js'></scr"+"ipt>",
+			"<scr"+"ipt type='text/javascript' src='../lib/yui/container/container-min.js'></scr"+"ipt>",
+			"<scr"+"ipt type='text/javascript' src='../lib/yui/button/button-min.js'></scr"+"ipt>",
+			"<scr"+"ipt type='text/javascript' src='../lib/yui/calendar/calendar-min.js'></scr"+"ipt>",
+			"",
+			"<!-- InputEx -->",
+			"<scr"+"ipt src='../js/inputex.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/Visus.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/Field.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/fields/StringField.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/fields/RadioField.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/fields/CombineField.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/Group.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/Form.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/fields/CheckBox.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/fields/ColorField.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/fields/EmailField.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/fields/HiddenField.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/fields/PasswordField.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/fields/Textarea.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/fields/UrlField.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/fields/IntegerField.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/fields/ListField.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/fields/SelectField.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/fields/RTEField.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/fields/UneditableField.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/fields/PairField.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/fields/InPlaceEdit.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/fields/SliderField.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/fields/TypeField.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/fields/TimeField.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/fields/DateField.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/fields/DatePickerField.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/fields/DateTimeField.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/ext/UpperCaseField/UpperCaseField.js'  type='text/javascript'></scr"+"ipt>",
+			"<scr"+"ipt src='../js/ext/IPv4Field/IPv4Field.js'  type='text/javascript'></scr"+"ipt>",
+			
+			"<scr"+"ipt>",
+			"var formDef = "+g.getValue().toPrettyJSONString(true)+";",
+			"formDef.parentEl = 'formContainer';",
+			"YAHOO.util.Event.onDOMReady(function(){ new inputEx.Group(formDef); });",
+			
+			"</scr"+"ipt>",
+			
+			"</body>",
+			"</html>"
+		];
+
+	   // Center popup
+	   var Posx = screen.width /2;
+	   var Posy = screen.height /2;
+	   Posx -= (this.windowWidth/2);
+	   Posy -= (this.windowHeight/2);
+
+	   var formPage = window.open("",'InputExForm','left='+Posx+',top='+Posy+
+																									 ',width=850,height=600,toolbar=no,scrollbars,resizable=yes');
+
+	   formPage.document.write(html.join("\n"));
+	   formPage.document.close();
+	});
+	
 });
 
 </script>

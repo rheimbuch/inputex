@@ -26,7 +26,7 @@ not released yet
 
 	- Various: 
 		* Better examples (dialog, yuiloader, multiselect)
-		* inputExBuilder much better
+		* inputExBuilder much better (now with page generation !)
 		* stylesheet for IE6 css fix (still not full support)
 		* field.destroy was buggy
 
