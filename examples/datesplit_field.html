@@ -66,7 +66,7 @@
 YAHOO.util.Event.addListener(window, 'load', function() {
 
 	// Example 1
-	var f = new YAHOO.inputEx.DateSplitField({label: 'Birthday', parentEl: 'container1', showMsg: true});
+	var f = new YAHOO.inputEx.DateSplitField({label: 'Birthday', parentEl: 'container1', showMsg: true, required:true});
 	
 	f.updatedEvt.subscribe(function(e, params) {
 		var val = params[0];
@@ -90,6 +90,12 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	div.appendChild(button3);
 	YAHOO.util.Event.addListener(button3, "click" ,function() { 
 		alert(f.getValue());
+	});
+	
+	var button4 = YAHOO.inputEx.cn('button', null, null, "Clear");
+	div.appendChild(button4);
+	YAHOO.util.Event.addListener(button4, "click" ,function() { 
+		f.clear();
 	});
 	
 });

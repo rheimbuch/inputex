@@ -149,6 +149,11 @@ lang.extend( inputEx.CombineField, inputEx.Field,
 	   for(var i = 0 ; i < this.inputs.length ; i++) {
 	      this.inputs[i].clear(false);
 	   }
+	   
+	   // must reset field style explicitly
+	   //  -> case different from Field.prototype.clear (which calls setValue, which calls setClassFromState)
+	   this.setClassFromState();
+	   
 	   if(sendUpdatedEvt !== false) {
 	      // fire update event
          this.fireUpdatedEvt();
