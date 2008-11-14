@@ -107,7 +107,13 @@ lang.extend(inputEx.TypeField, inputEx.Field,
     * Toggle the property panel
     */
    onTogglePropertiesPanel: function() {
-      this.propertyPanel.style.display = (this.propertyPanel.style.display == 'none') ? '' : 'none';
+      if (this.propertyPanel.style.display == 'none') {
+         this.propertyPanel.style.display = '';
+         Dom.addClass(this.button, "opened");
+      } else {
+         this.propertyPanel.style.display = 'none';
+         Dom.removeClass(this.button, "opened");
+      }
    },
    
    /**

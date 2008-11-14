@@ -513,6 +513,10 @@ div.inputEx-TypeField-EditButton {
    position: relative;
 }
 
+div.inputEx-TypeField-EditButton.opened {
+   background-image: url(../images/pencil_delete.png);
+}
+
 div.inputEx-TypeField-FieldValueWrapper {
    float: left;
    margin-left: 4px;
@@ -528,3 +532,4 @@ div.inputEx-TypeField-PropertiesPanel {
    z-index:1;
    width: 380px;
 }
+
