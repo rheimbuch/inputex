@@ -36,7 +36,7 @@
 	<div class='codeContainer'>
 		<form>
 		<textarea name="code" class="JScript">
-			new YAHOO.inputEx.BirthdateField({parentEl: 'container1', showMsg: true});
+			new YAHOO.inputEx.BirthdateField({parentEl: 'container1', showMsg: true, required:true});
 		</textarea>
 		</form>
 	</div>
@@ -64,7 +64,7 @@
 YAHOO.util.Event.addListener(window, 'load', function() {
 
 	// Example 1
-	var f = new YAHOO.inputEx.BirthdateField({label: 'Birthday', parentEl: 'container1', showMsg: true});
+	var f = new YAHOO.inputEx.BirthdateField({label: 'Birthday', parentEl: 'container1', showMsg: true, required:true});
 	
 	f.updatedEvt.subscribe(function(e, params) {
 		var val = params[0];
@@ -89,6 +89,13 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	YAHOO.util.Event.addListener(button3, "click" ,function() { 
 		alert(f.getValue());
 	});
+	
+	var button4 = YAHOO.inputEx.cn('button', null, null, "Clear");
+	div.appendChild(button4);
+	YAHOO.util.Event.addListener(button4, "click" ,function() { 
+		f.clear();
+	});
+	
 	
 });
 

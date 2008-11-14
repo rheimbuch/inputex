@@ -533,3 +533,11 @@ div.inputEx-TypeField-PropertiesPanel {
    width: 380px;
 }
 
+/**
+* inputEx.MenuField
+*/
+
+div.inputEx-MenuField div.inputEx-Result {background-color:#FFFFFF; border:1px solid #CCCCCC; padding:2px 25px 2px 5px; cursor:pointer}
+div.inputEx-MenuField div.inputEx-RightArrow {background-image:url(../images/menu-right-arrow.png);background-position:right center;background-repeat:no-repeat;}
+div.inputEx-MenuField div.inputEx-DownArrow {background-image:url(../images/menu-down-arrow.png);background-position:right center;background-repeat:no-repeat;}
+

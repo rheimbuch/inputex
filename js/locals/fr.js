@@ -40,6 +40,7 @@
    msgs.stringTooShort = ["Ce champ doit contenir au moins "," caract&egrave;res (lettres ou chiffres)"];
    msgs.stringTooLong = ["Ce champ doit contenir au plus "," caract&egrave;res (lettres ou chiffres)"];
    msgs.ajaxWait = "Envoi en cours...";
+   msgs.menuInvite = "Cliquez ici pour choisir";
    
    // Datatable
    msgs.saveText = "Sauver";
