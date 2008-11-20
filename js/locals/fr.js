@@ -12,6 +12,7 @@
    msgs.selectColor = "S&eacute;lectionnez une couleur :";
    msgs.invalidPassword = ["Le mot de passe doit contenir au moins "," caract&egrave;res (lettres ou chiffres)"];
    msgs.invalidPasswordConfirmation = "Les mots de passe entrés ne sont pas identiques !";
+   msgs.passwordStrength = "Solidité du mot de passe";
    msgs.capslockWarning = "Attention: touche majuscule activée";
    msgs.invalidDate = "Date non valide; ex: 25/01/2007";
    msgs.defaultDateFormat = "d/m/Y";

@@ -1629,6 +1629,11 @@ lang.extend( inputEx.CombineField, inputEx.Field,
 	   for(var i = 0 ; i < this.inputs.length ; i++) {
 	      this.inputs[i].clear(false);
 	   }
+	   
+	   // must reset field style explicitly
+	   //  -> case different from Field.prototype.clear (which calls setValue, which calls setClassFromState)
+	   this.setClassFromState();
+	   
 	   if(sendUpdatedEvt !== false) {
 	      // fire update event
          this.fireUpdatedEvt();
@@ -3845,7 +3850,7 @@ lang.extend(inputEx.PasswordField, inputEx.StringField,
 	   
 	   // Password strength indicator
 		if(this.options.strengthIndicator) {
-		   this.strengthEl = inputEx.cn('div', {className: 'inputEx-Password-StrengthIndicator'}, null, "Password Strength");
+		   this.strengthEl = inputEx.cn('div', {className: 'inputEx-Password-StrengthIndicator'}, null, inputEx.messages.passwordStrength);
 		   this.strengthBlocks = [];
 		   for(var i = 0 ; i < 4 ; i++) {
 		      this.strengthBlocks[i] = inputEx.cn('div', {className: 'inputEx-Password-StrengthIndicatorBlock'});
@@ -4014,7 +4019,8 @@ inputEx.PasswordField.getPasswordStrength = function(pw) {
 inputEx.messages.invalidPassword = ["The password schould contain at least "," numbers or caracters"];
 inputEx.messages.invalidPasswordConfirmation = "Passwords are different !";
 inputEx.messages.capslockWarning = "Warning: CapsLock is on";
-	
+inputEx.messages.passwordStrength = "Password Strength";
+
 /**
  * Register this class as "password" type
  */
