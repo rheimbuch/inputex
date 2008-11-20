@@ -1790,7 +1790,8 @@ lang.extend(inputEx.StringField, inputEx.Field,
     * Set the focus to this field
     */
    focus: function() {
-      if(!!this.el && lang.isFunction(this.el.focus) ) {
+      // Can't use lang.isFunction because IE >= 6 would say focus is not a function, even if it is !!
+      if(!!this.el && !lang.isUndefined(this.el.focus) ) {
          this.el.focus();
       }
    },
