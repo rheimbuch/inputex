@@ -171,15 +171,18 @@ lang.extend(inputEx.Group, inputEx.Field,
     * @returns {Boolean} true if all fields validate and required fields are not empty
     */
    validate: function() {
+      var response = true;
+      
       // Validate all the sub fields
       for (var i = 0 ; i < this.inputs.length ; i++) {
    	   var input = this.inputs[i];
+   	   input.setClassFromState(); // update field classes (mark invalid fields...)
    	   var state = input.getState();
    	   if( state == inputEx.stateRequired || state == inputEx.stateInvalid ) {
-   		   return false;
+   		   response = false; // but keep looping on fields to set classes
    	   }
       }
-      return true;
+      return response;
    },
    
    /**

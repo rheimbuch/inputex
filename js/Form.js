@@ -52,7 +52,10 @@ lang.extend(inputEx.Form, inputEx.Group,
    render: function() {
       // Create the div wrapper for this group
   	   this.divEl = inputEx.cn('div', {className: 'inputEx-Group'});
-  	   
+	   if(this.options.id) {
+   	   this.divEl.id = this.options.id;
+   	}
+   	  	   
   	   // Create the FORM element
       this.form = inputEx.cn('form', {method: this.options.method || 'POST', action: this.options.action || '', className: this.options.className || 'inputEx-Form'});
       this.divEl.appendChild(this.form);

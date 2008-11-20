@@ -41,17 +41,17 @@ div.inputEx-message {
  * VALID, INVALID, EMPTY states (and focused)
  */
 
-div.inputEx-invalid > div.inputEx-message, div.inputEx-required > div.inputEx-message {
+div.inputEx-invalid > div.inputEx-message {
    color:#C00E0C;
    font-weight:bold;
 }
 
-div.inputEx-invalid > div.inputEx-label, div.inputEx-required > div.inputEx-label {
+div.inputEx-invalid > div.inputEx-label {
    color:#C00E0C;
    font-weight:bold;
 }
 
-div.inputEx-invalid > div.inputEx-label label, div.inputEx-required > div.inputEx-label label {
+div.inputEx-invalid > div.inputEx-label label {
    background:transparent url(../images/error_bang.gif) no-repeat scroll 0 1px;
    padding-left:20px;
 }

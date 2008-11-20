@@ -18,6 +18,10 @@
  */
 inputEx.StringField = function(options) {
    inputEx.StringField.superclass.constructor.call(this, options);
+   
+	  if(this.options.typeInvite) {
+	     this.updateTypeInvite();
+	  }
 };
 
 lang.extend(inputEx.StringField, inputEx.Field, 
@@ -105,9 +109,10 @@ lang.extend(inputEx.StringField, inputEx.Field,
    validate: function() { 
       var val = this.getValue();
       
-      // no validation on non-required empty field
+      // empty field
       if (val == '') {
-         return true;
+         // validate only if not required
+         return !this.options.required;
       }
       
       // Check regex matching and minLength (both used in password field...)
@@ -179,14 +184,35 @@ lang.extend(inputEx.StringField, inputEx.Field,
 
 	   // display/mask typeInvite
 	   if(this.options.typeInvite) {
-	      if (!Dom.hasClass(this.divEl, "inputEx-focused")) {
-	         if(this.previousState == inputEx.stateEmpty || this.previousState == inputEx.stateRequired) {
-   	         Dom.addClass(this.divEl, "inputEx-typeInvite");
-   	         this.el.value = this.options.typeInvite;
-            } else { // important for setValue to work with typeInvite
-               Dom.removeClass(this.divEl, "inputEx-typeInvite");
-            }
-	      }
+	      this.updateTypeInvite();
+      }
+	},
+	
+	updateTypeInvite: function() {
+	   
+	   // field not focused
+      if (!Dom.hasClass(this.divEl, "inputEx-focused")) {
+         
+         // show type invite if field is empty
+         if(this.isEmpty()) {
+	         Dom.addClass(this.divEl, "inputEx-typeInvite");
+	         this.el.value = this.options.typeInvite;
+	      
+	      // important for setValue to work with typeInvite
+         } else { 
+            Dom.removeClass(this.divEl, "inputEx-typeInvite");
+         }
+         
+      // field focused : remove type invite
+      } else {
+	      if(Dom.hasClass(this.divEl,"inputEx-typeInvite")) {
+	         // remove text
+	         this.el.value = "";
+	         
+	         // remove the "empty" state and class
+	         this.previousState = null;
+	         Dom.removeClass(this.divEl,"inputEx-typeInvite");
+         }
       }
 	},
 	
@@ -195,14 +221,9 @@ lang.extend(inputEx.StringField, inputEx.Field,
 	 */
 	onFocus: function(e) {
 	   inputEx.StringField.superclass.onFocus.call(this,e);
+	   
 	   if(this.options.typeInvite) {
-	      if(Dom.hasClass(this.divEl,"inputEx-typeInvite")) {
-	         this.el.value = "";
-	         
-	         // Remove the "empty" state and class
-	         this.previousState = null;
-	         Dom.removeClass(this.divEl,"inputEx-typeInvite");
-         }
+         this.updateTypeInvite();
       }
 	},
 	
@@ -211,8 +232,14 @@ lang.extend(inputEx.StringField, inputEx.Field,
 	},
    
    onKeyUp: function(e) {
-      // Call setClassFromState escaping the stack (after the event has been fully treated, because the value has to be updated)
-	   lang.later(0, this, this.setClassFromState);
+      // override me
+      // 
+      //   example : 
+      //
+      //   lang.later(0, this, this.setClassFromState);
+      //
+      //     -> Set style immediatly when typing in the field
+      //     -> Call setClassFromState escaping the stack (after the event has been fully treated, because the value has to be updated)
    }
 
 });

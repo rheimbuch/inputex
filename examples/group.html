@@ -354,6 +354,11 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	});
 	var el = YAHOO.util.Dom.get('container5');
 	el.appendChild(setValueButton);
+	var validButton = YAHOO.inputEx.cn('button', null, null, 'Validate');
+	YAHOO.util.Dom.get('container5').appendChild(validButton);
+	YAHOO.util.Event.addListener(validButton, "click", function() {
+		alert( field5.validate() );
+	});
 	
 	
 	// Example 6

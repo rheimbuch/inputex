@@ -554,12 +554,10 @@ inputEx.Field = function(options) {
 	this.initEvents();
 	
 	// Set the initial value
+	//   -> no initial value = no style (setClassFromState called by setValue)
 	if(!lang.isUndefined(this.options.value)) {
 		this.setValue(this.options.value, false);
 	}
-	
-	// set default styling
-	this.setClassFromState();
 	
 	// append it immediatly to the parent DOM element
 	if(options.parentEl) {
@@ -614,6 +612,9 @@ inputEx.Field.prototype = {
 	   this.divEl = inputEx.cn('div', {className: 'inputEx-fieldWrapper'});
 	   if(this.options.id) {
 	      this.divEl.id = this.options.id;
+	   }
+	   if(this.options.required) {
+	      Dom.addClass(this.divEl, "inputEx-required");
 	   }
 	   
 	   // Label element
@@ -706,12 +707,19 @@ inputEx.Field.prototype = {
     */
 	setClassFromState: function() {
 	
+	   // remove previous class
 	   if( this.previousState ) {
-		   Dom.removeClass(this.divEl, 'inputEx-'+this.previousState );
+	      // remove invalid className for both required and invalid fields
+	      var className = 'inputEx-'+((this.previousState == inputEx.stateRequired) ? inputEx.stateInvalid : this.previousState)
+		   Dom.removeClass(this.divEl, className);
 	   }
+	   
+	   // add new class
 	   var state = this.getState();
-	   if( !(state == "empty" && Dom.hasClass(this.divEl, 'inputEx-focused') ) ) {
-	      Dom.addClass(this.divEl, 'inputEx-'+state );
+	   if( !(state == inputEx.stateEmpty && Dom.hasClass(this.divEl, 'inputEx-focused') ) ) {
+	      // add invalid className for both required and invalid fields
+	      var className = 'inputEx-'+((state == inputEx.stateRequired) ? inputEx.stateInvalid : state)
+	      Dom.addClass(this.divEl, className );
       }
 	
 	   if(this.options.showMsg) {
@@ -782,7 +790,6 @@ inputEx.Field.prototype = {
     * @param {Event} e The original 'change' event
     */
 	onChange: function(e) {
-	   this.setClassFromState();
       this.fireUpdatedEvt();
 	},
 
@@ -1045,15 +1052,18 @@ lang.extend(inputEx.Group, inputEx.Field,
     * @returns {Boolean} true if all fields validate and required fields are not empty
     */
    validate: function() {
+      var response = true;
+      
       // Validate all the sub fields
       for (var i = 0 ; i < this.inputs.length ; i++) {
    	   var input = this.inputs[i];
+   	   input.setClassFromState(); // update field classes (mark invalid fields...)
    	   var state = input.getState();
    	   if( state == inputEx.stateRequired || state == inputEx.stateInvalid ) {
-   		   return false;
+   		   response = false; // but keep looping on fields to set classes
    	   }
       }
-      return true;
+      return response;
    },
    
    /**
@@ -1287,7 +1297,10 @@ lang.extend(inputEx.Form, inputEx.Group,
    render: function() {
       // Create the div wrapper for this group
   	   this.divEl = inputEx.cn('div', {className: 'inputEx-Group'});
-  	   
+	   if(this.options.id) {
+   	   this.divEl.id = this.options.id;
+   	}
+   	  	   
   	   // Create the FORM element
       this.form = inputEx.cn('form', {method: this.options.method || 'POST', action: this.options.action || '', className: this.options.className || 'inputEx-Form'});
       this.divEl.appendChild(this.form);
@@ -1667,6 +1680,10 @@ inputEx.registerType("combine", inputEx.CombineField);
  */
 inputEx.StringField = function(options) {
    inputEx.StringField.superclass.constructor.call(this, options);
+   
+	  if(this.options.typeInvite) {
+	     this.updateTypeInvite();
+	  }
 };
 
 lang.extend(inputEx.StringField, inputEx.Field, 
@@ -1754,9 +1771,10 @@ lang.extend(inputEx.StringField, inputEx.Field,
    validate: function() { 
       var val = this.getValue();
       
-      // no validation on non-required empty field
+      // empty field
       if (val == '') {
-         return true;
+         // validate only if not required
+         return !this.options.required;
       }
       
       // Check regex matching and minLength (both used in password field...)
@@ -1828,14 +1846,35 @@ lang.extend(inputEx.StringField, inputEx.Field,
 
 	   // display/mask typeInvite
 	   if(this.options.typeInvite) {
-	      if (!Dom.hasClass(this.divEl, "inputEx-focused")) {
-	         if(this.previousState == inputEx.stateEmpty || this.previousState == inputEx.stateRequired) {
-   	         Dom.addClass(this.divEl, "inputEx-typeInvite");
-   	         this.el.value = this.options.typeInvite;
-            } else { // important for setValue to work with typeInvite
-               Dom.removeClass(this.divEl, "inputEx-typeInvite");
-            }
-	      }
+	      this.updateTypeInvite();
+      }
+	},
+	
+	updateTypeInvite: function() {
+	   
+	   // field not focused
+      if (!Dom.hasClass(this.divEl, "inputEx-focused")) {
+         
+         // show type invite if field is empty
+         if(this.isEmpty()) {
+	         Dom.addClass(this.divEl, "inputEx-typeInvite");
+	         this.el.value = this.options.typeInvite;
+	      
+	      // important for setValue to work with typeInvite
+         } else { 
+            Dom.removeClass(this.divEl, "inputEx-typeInvite");
+         }
+         
+      // field focused : remove type invite
+      } else {
+	      if(Dom.hasClass(this.divEl,"inputEx-typeInvite")) {
+	         // remove text
+	         this.el.value = "";
+	         
+	         // remove the "empty" state and class
+	         this.previousState = null;
+	         Dom.removeClass(this.divEl,"inputEx-typeInvite");
+         }
       }
 	},
 	
@@ -1844,14 +1883,9 @@ lang.extend(inputEx.StringField, inputEx.Field,
 	 */
 	onFocus: function(e) {
 	   inputEx.StringField.superclass.onFocus.call(this,e);
+	   
 	   if(this.options.typeInvite) {
-	      if(Dom.hasClass(this.divEl,"inputEx-typeInvite")) {
-	         this.el.value = "";
-	         
-	         // Remove the "empty" state and class
-	         this.previousState = null;
-	         Dom.removeClass(this.divEl,"inputEx-typeInvite");
-         }
+         this.updateTypeInvite();
       }
 	},
 	
@@ -1860,8 +1894,14 @@ lang.extend(inputEx.StringField, inputEx.Field,
 	},
    
    onKeyUp: function(e) {
-      // Call setClassFromState escaping the stack (after the event has been fully treated, because the value has to be updated)
-	   lang.later(0, this, this.setClassFromState);
+      // override me
+      // 
+      //   example : 
+      //
+      //   lang.later(0, this, this.setClassFromState);
+      //
+      //     -> Set style immediatly when typing in the field
+      //     -> Call setClassFromState escaping the stack (after the event has been fully treated, because the value has to be updated)
    }
 
 });

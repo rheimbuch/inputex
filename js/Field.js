@@ -34,12 +34,10 @@ inputEx.Field = function(options) {
 	this.initEvents();
 	
 	// Set the initial value
+	//   -> no initial value = no style (setClassFromState called by setValue)
 	if(!lang.isUndefined(this.options.value)) {
 		this.setValue(this.options.value, false);
 	}
-	
-	// set default styling
-	this.setClassFromState();
 	
 	// append it immediatly to the parent DOM element
 	if(options.parentEl) {
@@ -94,6 +92,9 @@ inputEx.Field.prototype = {
 	   this.divEl = inputEx.cn('div', {className: 'inputEx-fieldWrapper'});
 	   if(this.options.id) {
 	      this.divEl.id = this.options.id;
+	   }
+	   if(this.options.required) {
+	      Dom.addClass(this.divEl, "inputEx-required");
 	   }
 	   
 	   // Label element
@@ -186,12 +187,19 @@ inputEx.Field.prototype = {
     */
 	setClassFromState: function() {
 	
+	   // remove previous class
 	   if( this.previousState ) {
-		   Dom.removeClass(this.divEl, 'inputEx-'+this.previousState );
+	      // remove invalid className for both required and invalid fields
+	      var className = 'inputEx-'+((this.previousState == inputEx.stateRequired) ? inputEx.stateInvalid : this.previousState)
+		   Dom.removeClass(this.divEl, className);
 	   }
+	   
+	   // add new class
 	   var state = this.getState();
-	   if( !(state == "empty" && Dom.hasClass(this.divEl, 'inputEx-focused') ) ) {
-	      Dom.addClass(this.divEl, 'inputEx-'+state );
+	   if( !(state == inputEx.stateEmpty && Dom.hasClass(this.divEl, 'inputEx-focused') ) ) {
+	      // add invalid className for both required and invalid fields
+	      var className = 'inputEx-'+((state == inputEx.stateRequired) ? inputEx.stateInvalid : state)
+	      Dom.addClass(this.divEl, className );
       }
 	
 	   if(this.options.showMsg) {
@@ -262,7 +270,6 @@ inputEx.Field.prototype = {
     * @param {Event} e The original 'change' event
     */
 	onChange: function(e) {
-	   this.setClassFromState();
       this.fireUpdatedEvt();
 	},
 
