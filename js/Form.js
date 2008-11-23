@@ -68,14 +68,14 @@ lang.extend(inputEx.Form, inputEx.Group,
 
         if (YAHOO.lang.isArray(this.options.fields)) {
             // check if there will be more than one fieldset
-            var groupCount = 0, prevType;
+            var groupCount = 0, isPrevFieldAGroup = false;
             for (var i = 0,f; f = this.options.fields[i]; i++) {
-                if (!prevType || f.type == 'group'){
+                if (i==0 || isPrevFieldAGroup){
                     groupCount++;
-                }else if (prevType == 'group' && f.type != 'group'){ // standalone field after a group 
+                }else if (isPrevFieldAGroup && f.type != 'group'){ // standalone field after a group
                     groupCount++;
                 }
-                prevType = f.type;
+                isPrevFieldAGroup = (f.type=='group')
             }
 
             if (groupCount>1){ // create a LI for every group
