@@ -46,34 +46,76 @@ lang.extend(inputEx.Form, inputEx.Group,
       }
    },
    
-   /**
-    * Render the group
-    */
-   render: function() {
-      // Create the div wrapper for this group
-  	   this.divEl = inputEx.cn('div', {className: 'inputEx-Group'});
-	   if(this.options.id) {
-   	   this.divEl.id = this.options.id;
-   	}
-   	  	   
-  	   // Create the FORM element
-      this.form = inputEx.cn('form', {method: this.options.method || 'POST', action: this.options.action || '', className: this.options.className || 'inputEx-Form'});
-      this.divEl.appendChild(this.form);
+    /**
+     * Render the group
+     */
+    render: function() {
+        // Create the div wrapper for this group
+        this.divEl = inputEx.cn('div', {className: 'inputEx-Group'});
+        if (this.options.id) {
+            this.divEl.id = this.options.id;
+        }
 
-	   // Set the autocomplete attribute to off to disable firefox autocompletion
-	   this.form.setAttribute('autocomplete','off');
-   	
-      // Set the name of the form
-      if(this.options.formName) { this.form.name = this.options.formName; }
-  	   
-  	   this.renderFields(this.form);
+        // Create the FORM element
+        this.form = inputEx.cn('form', {method: this.options.method || 'POST', action: this.options.action || '', className: this.options.className || 'inputEx-Form'});
+        this.divEl.appendChild(this.form);
 
-      this.renderButtons();
-      
-      if(this.options.disabled) {
-  	      this.disable();
-  	   }	  
-   },
+        // Set the autocomplete attribute to off to disable firefox autocompletion
+        this.form.setAttribute('autocomplete', 'off');
+
+        // Set the name of the form
+        if (this.options.formName) { this.form.name = this.options.formName; }
+
+        if (YAHOO.lang.isArray(this.options.fields)) {
+            // check if there will be more than one fieldset
+            var groupCount = 0, prevType;
+            for (var i = 0,f; f = this.options.fields[i]; i++) {
+                if (!prevType || f.type == 'group'){
+                    groupCount++;
+                }else if (prevType == 'group' && f.type != 'group'){ // standalone field after a group 
+                    groupCount++;
+                }
+                prevType = f.type;
+            }
+
+            if (groupCount>1){ // create a LI for every group
+                var ul = inputEx.cn('ul');
+                var fieldset = []
+                for (var i = 0,f; f = this.options.fields[i]; i++) {
+
+                    if (f.type == 'group'){ fieldset = f.fields; }else{ fieldset.push(f); }
+
+                    /**
+                     * perform renderFields in the following conditions:
+                     * 1. when it's the last field
+                     * 2. when it's a group
+                     * 3. when the next field is a group
+                     */
+                    if (i==this.options.fields.length-1 || f.type=='group' || this.options.fields[i+1].type=='group'){
+                        var li = inputEx.cn('li');
+                        var groupCfg = (f.type=='group')?f:{fields:fieldset}
+                        groupCfg.parentEl = li
+                        new YAHOO.inputEx.Group(groupCfg); //TODO: consider to store the references to the group in the form
+                        fieldset = [];
+                        ul.appendChild(li);
+                    }
+                }
+
+                this.form.appendChild(ul);
+
+            }else{
+                this.renderFields(this.form);
+            }
+        } else { // a form with a single field
+            this.renderFields(this.form);
+        }
+
+        this.renderButtons();
+
+        if (this.options.disabled) {
+            this.disable();
+        }
+    },
    
    /**
     * Render the buttons 
@@ -159,7 +201,7 @@ lang.extend(inputEx.Form, inputEx.Group,
       if (YAHOO.env.ua.ie) { Dom.setStyle(this.divEl, "zoom", 1); }
       
       // Render mask over the divEl
-      this.formMask = inputEx.cn('div', {className: 'inputEx-Form-Mask'}, 
+      this.formMask = inputEx.cn('div', {className: 'inputEx-Form-Mask'},
          {
             display: 'none', 
             // Use offsetWidth instead of Dom.getStyle(this.divEl,"width") because 

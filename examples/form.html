@@ -58,15 +58,40 @@ div#container2 { width:400px }
 
 </div>
 
-
 <!-- Example 2 -->
+<div class='exampleDiv'>
+	<p class="title">Multi-group Form</p>
+	<p>Use the following code to create a basic inputEx Form.</p>
+	<div class='demoContainer' id='container2'></div>
+	<div class='codeContainer'>
+    <textarea name="code" class="JScript">
+   new YAHOO.inputEx.Form( {
+        fields: [
+            {type:'group',legend:'group 1',fields:[
+                {type: 'select', inputParams: {label: 'Title', name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
+                {inputParams: {label: 'Firstname', name: 'firstname', required: true, value:'Jacques' } },
+                {inputParams: {label: 'Lastname', name: 'lastname', value:'Dupont' } }
+            ]},
+            { type:'group',legend:'group 2',fields:[
+                {type:'email', inputParams: {label: 'Email', name: 'email'}},
+                {type:'url', inputParams: {label: 'Website',name:'website'}}
+            ]}
+        ],
+        buttons: [{type: 'submit', value: 'Change'}],
+        parentEl: 'container2'
+    });
+	</textarea>
+    </div>
+</div>
+
+<!-- Example 3 -->
 <div class='exampleDiv'>
 
 	<p class="title">Send with ajax</p>
 	
 	<p>How to send the form data using Ajax</p>
 
-	<div class='demoContainer' id='container2'></div>
+	<div class='demoContainer' id='container3'></div>
 
 	<div class='codeContainer'>
 				<textarea name="code" class="JScript">
@@ -130,16 +155,34 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 		buttons: [{type: 'submit', value: 'Change'}], 	
 		parentEl: 'container1' 
 	});
-	
-	// Example 2
-	new YAHOO.inputEx.Form( { 
+
+    // Example 2
+    new YAHOO.inputEx.Form( {
+        fields: [
+            {type:'group',legend:'group 1',fields:[
+                {type: 'select', inputParams: {label: 'Title', name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
+                {inputParams: {label: 'Firstname', name: 'firstname', required: true, value:'Jacques' } },
+                {inputParams: {label: 'Lastname', name: 'lastname', value:'Dupont' } }
+            ]},
+            { type:'group',legend:'group 2',fields:[
+                {type:'email', inputParams: {label: 'Email', name: 'email'}},
+                {type:'url', inputParams: {label: 'Website',name:'website'}}
+            ]}
+        ],
+        buttons: [{type: 'submit', value: 'Change'}],
+        parentEl: 'container2'
+    });
+
+
+	// Example 3
+	new YAHOO.inputEx.Form( {
 		fields: [ 
 			{ type: 'select', inputParams: {label: 'Title', name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
 			{ inputParams: {label: 'Firstname', name: 'firstname', required: true, value:'Jacques' } }, 
 			{ inputParams: {label: 'Lastname', name: 'lastname', value:'Dupont' } }
 		], 
 		buttons: [{type: 'submit', value: 'Change'}], 	
-		parentEl: 'container2',
+		parentEl: 'container3',
 		ajax: {
 			method: 'POST',
 			url: 'default.php',
