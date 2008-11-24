@@ -245,7 +245,7 @@ lang.extend(inputEx.StringField, inputEx.Field,
 });
 
 
-inputEx.messages.stringTooShort = ["This field should contain at least "," numbers or caracters"];
+inputEx.messages.stringTooShort = ["This field should contain at least "," numbers or characters"];
 
 /**
  * Register this class as "string" type

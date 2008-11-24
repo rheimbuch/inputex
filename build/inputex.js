@@ -1907,7 +1907,7 @@ lang.extend(inputEx.StringField, inputEx.Field,
 });
 
 
-inputEx.messages.stringTooShort = ["This field should contain at least "," numbers or caracters"];
+inputEx.messages.stringTooShort = ["This field should contain at least "," numbers or characters"];
 
 /**
  * Register this class as "string" type
@@ -4057,7 +4057,7 @@ inputEx.PasswordField.getPasswordStrength = function(pw) {
 
 	
 // Specific message for the password field
-inputEx.messages.invalidPassword = ["The password schould contain at least "," numbers or caracters"];
+inputEx.messages.invalidPassword = ["The password schould contain at least "," numbers or characters"];
 inputEx.messages.invalidPasswordConfirmation = "Passwords are different !";
 inputEx.messages.capslockWarning = "Warning: CapsLock is on";
 inputEx.messages.passwordStrength = "Password Strength";
@@ -4559,7 +4559,7 @@ YAHOO.lang.extend(inputEx.Textarea, inputEx.StringField,
 
 });
 
-inputEx.messages.stringTooLong = ["This field should contain at most "," numbers or caracters"];
+inputEx.messages.stringTooLong = ["This field should contain at most "," numbers or characters"];
 
 /**
  * Register this class as "text" type

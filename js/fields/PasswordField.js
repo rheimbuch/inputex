@@ -240,7 +240,7 @@ inputEx.PasswordField.getPasswordStrength = function(pw) {
 
 	
 // Specific message for the password field
-inputEx.messages.invalidPassword = ["The password schould contain at least "," numbers or caracters"];
+inputEx.messages.invalidPassword = ["The password schould contain at least "," numbers or characters"];
 inputEx.messages.invalidPasswordConfirmation = "Passwords are different !";
 inputEx.messages.capslockWarning = "Warning: CapsLock is on";
 inputEx.messages.passwordStrength = "Password Strength";

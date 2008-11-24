@@ -87,7 +87,7 @@ YAHOO.lang.extend(inputEx.Textarea, inputEx.StringField,
 
 });
 
-inputEx.messages.stringTooLong = ["This field should contain at most "," numbers or caracters"];
+inputEx.messages.stringTooLong = ["This field should contain at most "," numbers or characters"];
 
 /**
  * Register this class as "text" type
