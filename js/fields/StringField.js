@@ -78,10 +78,10 @@ lang.extend(inputEx.StringField, inputEx.Field,
 	   Event.addListener(this.el, "change", this.onChange, this, true);
 
        if (YAHOO.env.ua.ie){ // refer to inputEx-95
-        var field = this.el;
+            var field = this.el;
             new YAHOO.util.KeyListener(this.el, {keys:[13]}, {fn:function(){
                 field.blur();
-                field.focus()
+                field.focus();
             }}).enable()
        }
 
