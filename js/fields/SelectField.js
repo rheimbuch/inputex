@@ -38,7 +38,7 @@ lang.extend(inputEx.SelectField, inputEx.Field,
     */
    renderComponent: function() {
 
-      this.el = inputEx.cn('select', {name: this.options.name || ''});
+      this.el = inputEx.cn('select', {id: this.divEl.id?this.divEl.id+'-field':YAHOO.util.Dom.generateId(), name: this.options.name || ''});
       
       if (this.options.multiple) {this.el.multiple = true; this.el.size = this.options.selectValues.length;}
       

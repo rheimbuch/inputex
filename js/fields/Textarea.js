@@ -41,7 +41,7 @@ YAHOO.lang.extend(inputEx.Textarea, inputEx.StringField,
       
       // Attributes of the input field
       var attributes = {};
-      attributes.id = YAHOO.util.Dom.generateId();
+      attributes.id = this.divEl.id?this.divEl.id+'-field':YAHOO.util.Dom.generateId();
       attributes.rows = this.options.rows;
       attributes.cols = this.options.cols;
       if(this.options.name) attributes.name = this.options.name;

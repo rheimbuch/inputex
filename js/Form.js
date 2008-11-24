@@ -50,14 +50,14 @@ lang.extend(inputEx.Form, inputEx.Group,
      * Render the group
      */
     render: function() {
+        var formId = this.options.id? this.options.id:YAHOO.util.Dom.generateId();
+
         // Create the div wrapper for this group
         this.divEl = inputEx.cn('div', {className: 'inputEx-Group'});
-        if (this.options.id) {
-            this.divEl.id = this.options.id;
-        }
+        this.divEl.id = formId+'-div';
 
         // Create the FORM element
-        this.form = inputEx.cn('form', {method: this.options.method || 'POST', action: this.options.action || '', className: this.options.className || 'inputEx-Form'});
+        this.form = inputEx.cn('form', {id: formId, method: this.options.method || 'POST', action: this.options.action || '', className: this.options.className || 'inputEx-Form'});
         this.divEl.appendChild(this.form);
 
         // Set the autocomplete attribute to off to disable firefox autocompletion
@@ -79,7 +79,8 @@ lang.extend(inputEx.Form, inputEx.Group,
             }
 
             if (groupCount>1){ // create a LI for every group
-                var ul = inputEx.cn('ul');
+                var groupIndex = 0;
+                var ul = inputEx.cn('ul',{id:formId+'-list'});
                 var fieldset = []
                 for (var i = 0,f; f = this.options.fields[i]; i++) {
 
@@ -92,12 +93,15 @@ lang.extend(inputEx.Form, inputEx.Group,
                      * 3. when the next field is a group
                      */
                     if (i==this.options.fields.length-1 || f.type=='group' || this.options.fields[i+1].type=='group'){
-                        var li = inputEx.cn('li');
+                        var groupId = formId+'-group'+groupIndex;
+                        var li = inputEx.cn('li',{id:groupId+'-li'});
                         var groupCfg = (f.type=='group')?f:{fields:fieldset}
                         groupCfg.parentEl = li
+                        groupCfg.id = groupId
                         new YAHOO.inputEx.Group(groupCfg); //TODO: consider to store the references to the group in the form
                         fieldset = [];
                         ul.appendChild(li);
+                        groupIndex++;
                     }
                 }
 

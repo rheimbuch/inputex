@@ -49,7 +49,7 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	
 	      var div = inputEx.cn('div', {className: 'inputEx-RadioField-choice'});
 	
-	      var radioId = Dom.generateId();
+	      var radioId = this.divEl.id?this.divEl.id+'-field':YAHOO.util.Dom.generateId();
 	      
 	      var radio = null;
 	      // Do you still ask why javascript developpers don't like IE ?

@@ -89,7 +89,7 @@ lang.extend(inputEx.Group, inputEx.Field,
    renderFields: function(parentEl, inputFields) {
       var fields = (!lang.isUndefined(inputFields)) ? inputFields : this.options.fields;
 
-      this.fieldset = inputEx.cn('fieldset');
+      this.fieldset = inputEx.cn('fieldset',{id:this.divEl.id?this.divEl.id+'-fieldset':YAHOO.util.Dom.generateId()});
       this.legend = inputEx.cn('legend', {className: 'inputEx-Group-legend'});
    
       // Option Collapsible

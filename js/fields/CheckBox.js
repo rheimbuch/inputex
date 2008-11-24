@@ -45,7 +45,7 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 	 */
 	renderComponent: function() {
 	
-   	var checkBoxId = Dom.generateId();
+   	var checkBoxId = this.divEl.id?this.divEl.id+'-field':YAHOO.util.Dom.generateId();
    	
 	   this.el = inputEx.cn('input', { id: checkBoxId, type: 'checkbox', checked:(this.options.checked === false) ? false : true });
 	   this.fieldContainer.appendChild(this.el);
