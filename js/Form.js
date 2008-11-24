@@ -108,11 +108,12 @@ lang.extend(inputEx.Form, inputEx.Group,
                 this.form.appendChild(ul);
 
             }else{
-                if (this.options.fields.length==1){
-                    this.renderFields(this.form,this.options.fields[0].fields); //if the single element is a group
-                }else{
-                    this.renderFields(this.form,this.options.fields);
-                }
+                var groupId = formId+'-group0';
+                var groupCfg = this.options.fields.length==1?this.options.fields[0]:this.options; //if fiels is a single group or fields without group
+                groupCfg.parentEl = this.form
+                groupCfg.id = groupId
+
+                new YAHOO.inputEx.Group(groupCfg);
             }
         } else { // a form with a single field
             this.renderFields(this.form);
