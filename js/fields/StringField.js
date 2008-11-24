@@ -18,16 +18,16 @@
  */
 inputEx.StringField = function(options) {
    inputEx.StringField.superclass.constructor.call(this, options);
-   
+
 	  if(this.options.typeInvite) {
 	     this.updateTypeInvite();
 	  }
 };
 
-lang.extend(inputEx.StringField, inputEx.Field, 
+lang.extend(inputEx.StringField, inputEx.Field,
 /**
- * @scope inputEx.StringField.prototype   
- */   
+ * @scope inputEx.StringField.prototype
+ */
 {
    /**
     * Set the default values of the options
@@ -35,7 +35,7 @@ lang.extend(inputEx.StringField, inputEx.Field,
     */
 	setOptions: function(options) {
 	   inputEx.StringField.superclass.setOptions.call(this, options);
-	   
+
 	   this.options.regexp = options.regexp;
 	   this.options.size = options.size;
 	   this.options.maxLength = options.maxLength;
@@ -43,16 +43,16 @@ lang.extend(inputEx.StringField, inputEx.Field,
 	   this.options.typeInvite = options.typeInvite;
 	   this.options.readonly = options.readonly;
    },
-   
-   
+
+
    /**
     * Render an 'INPUT' DOM node
     */
    renderComponent: function() {
-      
+
       // This element wraps the input node in a float: none div
       this.wrapEl = inputEx.cn('div', {className: 'inputEx-StringField-wrapper'});
-      
+
       // Attributes of the input field
       var attributes = {};
       attributes.type = 'text';
@@ -60,25 +60,34 @@ lang.extend(inputEx.StringField, inputEx.Field,
       if(this.options.size) attributes.size = this.options.size;
       if(this.options.name) attributes.name = this.options.name;
       if(this.options.readonly) attributes.readonly = 'readonly';
-      
+
       if(this.options.maxLength) attributes.maxLength = this.options.maxLength;
-   
+
       // Create the node
       this.el = inputEx.cn('input', attributes);
-	
+
       // Append it to the main element
       this.wrapEl.appendChild(this.el);
       this.fieldContainer.appendChild(this.wrapEl);
    },
-	
+
    /**
     * Register the change, focus and blur events
     */
-   initEvents: function() {	
+   initEvents: function() {
 	   Event.addListener(this.el, "change", this.onChange, this, true);
+
+       if (YAHOO.env.ua.ie){ // refer to inputEx-95
+        var field = this.el;
+            new YAHOO.util.KeyListener(this.el, {keys:[13]}, {fn:function(){
+                field.blur();
+                field.focus()
+            }}).enable()
+       }
+
 	   Event.addFocusListener(this.el, this.onFocus, this, true);
-	   Event.addBlurListener(this.el, this.onBlur, this, true);	  
-	   
+	   Event.addBlurListener(this.el, this.onBlur, this, true);
+
 	   Event.addListener(this.el, "keypress", this.onKeyPress, this, true);
 	   Event.addListener(this.el, "keyup", this.onKeyUp, this, true);
    },
@@ -90,7 +99,7 @@ lang.extend(inputEx.StringField, inputEx.Field,
    getValue: function() {
 	   return (this.options.typeInvite && this.el.value == this.options.typeInvite) ? '' : this.el.value;
    },
-	
+
    /**
     * Function to set the value
     * @param {String} value The new value
@@ -98,26 +107,26 @@ lang.extend(inputEx.StringField, inputEx.Field,
     */
    setValue: function(value, sendUpdatedEvt) {
       this.el.value = value;
-      
+
       // call parent class method to set style and fire updatedEvt
       inputEx.StringField.superclass.setValue.call(this, value, sendUpdatedEvt);
-   },	
-	
+   },
+
    /**
     * Uses the optional regexp to validate the field value
     */
-   validate: function() { 
+   validate: function() {
       var val = this.getValue();
-      
+
       // empty field
       if (val == '') {
          // validate only if not required
          return !this.options.required;
       }
-      
+
       // Check regex matching and minLength (both used in password field...)
       var result = true;
-      
+
       // if we are using a regular expression
       if( this.options.regexp ) {
 	      result = result && val.match(this.options.regexp);
@@ -127,7 +136,7 @@ lang.extend(inputEx.StringField, inputEx.Field,
       }
       return result;
    },
-	
+
    /**
     * Disable the field
     */
@@ -151,31 +160,31 @@ lang.extend(inputEx.StringField, inputEx.Field,
          this.el.focus();
       }
    },
-   
+
    /**
-    * Return (stateEmpty|stateRequired) 
+    * Return (stateEmpty|stateRequired)
     */
-   getState: function() { 
+   getState: function() {
       var val = this.getValue();
-      
+
 	   // if the field is empty :
 	   if( val === '') {
 	      return this.options.required ? inputEx.stateRequired : inputEx.stateEmpty;
 	   }
-      
+
 	   return this.validate() ? inputEx.stateValid : inputEx.stateInvalid;
 	},
-	
+
 	/**
     * Add the minLength string message handling
     */
 	getStateString: function(state) {
-	   if(state == inputEx.stateInvalid && this.options.minLength && this.el.value.length < this.options.minLength) {  
+	   if(state == inputEx.stateInvalid && this.options.minLength && this.el.value.length < this.options.minLength) {
 	      return inputEx.messages.stringTooShort[0]+this.options.minLength+inputEx.messages.stringTooShort[1];
       }
 	   return inputEx.StringField.superclass.getStateString.call(this, state);
 	},
-   
+
    /**
     * Display the type invite after setting the class
     */
@@ -187,54 +196,54 @@ lang.extend(inputEx.StringField, inputEx.Field,
 	      this.updateTypeInvite();
       }
 	},
-	
+
 	updateTypeInvite: function() {
-	   
+
 	   // field not focused
       if (!Dom.hasClass(this.divEl, "inputEx-focused")) {
-         
+
          // show type invite if field is empty
          if(this.isEmpty()) {
 	         Dom.addClass(this.divEl, "inputEx-typeInvite");
 	         this.el.value = this.options.typeInvite;
-	      
+
 	      // important for setValue to work with typeInvite
-         } else { 
+         } else {
             Dom.removeClass(this.divEl, "inputEx-typeInvite");
          }
-         
+
       // field focused : remove type invite
       } else {
 	      if(Dom.hasClass(this.divEl,"inputEx-typeInvite")) {
 	         // remove text
 	         this.el.value = "";
-	         
+
 	         // remove the "empty" state and class
 	         this.previousState = null;
 	         Dom.removeClass(this.divEl,"inputEx-typeInvite");
          }
       }
 	},
-	
+
 	/**
 	 * Clear the typeInvite when the field gains focus
 	 */
 	onFocus: function(e) {
 	   inputEx.StringField.superclass.onFocus.call(this,e);
-	   
+
 	   if(this.options.typeInvite) {
          this.updateTypeInvite();
       }
 	},
-	
+
 	onKeyPress: function(e) {
 	   // override me
 	},
-   
+
    onKeyUp: function(e) {
       // override me
-      // 
-      //   example : 
+      //
+      //   example :
       //
       //   lang.later(0, this, this.setClassFromState);
       //
