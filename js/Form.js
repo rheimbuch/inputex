@@ -68,8 +68,9 @@ lang.extend(inputEx.Form, inputEx.Group,
 
         if (YAHOO.lang.isArray(this.options.fields)) {
             // check if there will be more than one fieldset
-            var groupCount = 0, isPrevFieldAGroup = false;
+            var groupCount = 0, isPrevFieldAGroup = false, hasGroup=false;
             for (var i = 0,f; f = this.options.fields[i]; i++) {
+                if (f.type=='group') hasGroup=true;
                 if (i==0 || isPrevFieldAGroup){
                     groupCount++;
                 }else if (isPrevFieldAGroup && f.type != 'group'){ // standalone field after a group
@@ -78,7 +79,7 @@ lang.extend(inputEx.Form, inputEx.Group,
                 isPrevFieldAGroup = (f.type=='group')
             }
 
-            if (groupCount>1){ // create a LI for every group
+            if (groupCount>1||hasGroup){ // create a LI for every group
                 var groupIndex = 0;
                 var ul = inputEx.cn('ul',{id:formId+'-list'});
                 var fieldset = []
@@ -95,9 +96,18 @@ lang.extend(inputEx.Form, inputEx.Group,
                     if (i==this.options.fields.length-1 || f.type=='group' || this.options.fields[i+1].type=='group'){
                         var groupId = formId+'-group'+groupIndex;
                         var li = inputEx.cn('li',{id:groupId+'-li'});
+
+
+                        //TODO: refactor the form and group rendering logic
                         var groupCfg = (f.type=='group')?f:{fields:fieldset}
                         groupCfg.parentEl = li
                         groupCfg.id = groupId
+
+                        //for simple form, create the header as H3, or other form, such as tabView, create it differently
+                        var groupHeader = inputEx.cn('h3')
+                        groupHeader.innerHTML = groupCfg.header
+                        li.appendChild(groupHeader);
+
                         new YAHOO.inputEx.Group(groupCfg); //TODO: consider to store the references to the group in the form
                         fieldset = [];
                         ul.appendChild(li);
