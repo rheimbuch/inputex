@@ -104,9 +104,11 @@ lang.extend(inputEx.Form, inputEx.Group,
                         groupCfg.id = groupId
 
                         //for simple form, create the header as H3, or other form, such as tabView, create it differently
-                        var groupHeader = inputEx.cn('h3')
-                        groupHeader.innerHTML = groupCfg.header
-                        li.appendChild(groupHeader);
+                        if (groupCfg.header){
+                            var groupHeader = inputEx.cn('h3')
+                            groupHeader.innerHTML = groupCfg.header
+                            li.appendChild(groupHeader);
+                        }
 
                         new YAHOO.inputEx.Group(groupCfg); //TODO: consider to store the references to the group in the form
                         fieldset = [];
