@@ -219,14 +219,26 @@ lang.augmentObject(inputEx,
     * @param {String} [innerHTML] The html string to append into the created element
     * @return {HTMLElement} The created node
     */
-   cn: function(tag, domAttributes, styleAttributes, innerHTML){
-      var el=document.createElement(tag);
-      this.sn(el,domAttributes,styleAttributes);
-      if(innerHTML){
-         el.innerHTML = innerHTML;
-      }
-      return el;
-   },
+   cn: function(tag, domAttributes, styleAttributes, innerHTML) {
+        if (tag == 'input' && YAHOO.env.ua.ie) { //only limit to input tag that has no tag body
+            var strDom = '<' + tag;
+            if (domAttributes!=='undefined'){
+                for (var k in domAttributes){
+                    strDom += ' ' + k + '="' + domAttributes[k] + '"'
+                }
+            }
+            strDom += '/' + '>'
+            return document.createElement(strDom);
+
+        } else {
+            var el = document.createElement(tag);
+            this.sn(el, domAttributes, styleAttributes);
+            if (innerHTML) {
+                el.innerHTML = innerHTML;
+            }
+            return el;
+        }
+    },
    
    
    /**

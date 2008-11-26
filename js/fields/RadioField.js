@@ -51,14 +51,8 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	
 	      var radioId = this.divEl.id?this.divEl.id+'-field':YAHOO.util.Dom.generateId();
 	      
-	      var radio = null;
-	      // Do you still ask why javascript developpers don't like IE ?
-	      if(YAHOO.env.ua.ie) {
-	         radio = document.createElement("<input id='"+radioId+"' type='radio' name='"+this.options.name+"' value='"+this.options.values[i]+"' />");
-	      }
-	      else {
-	         radio = inputEx.cn('input', { id: radioId,type: 'radio', name: this.options.name, value: this.options.values[i] });
-         }
+	      var radio = inputEx.cn('input', { id: radioId,type: 'radio', name: this.options.name, value: this.options.values[i] });
+           
          div.appendChild(radio);
          var label = inputEx.cn('label', {"for": radioId, className: 'inputEx-RadioField-rightLabel'}, null, ""+this.options.choices[i]);
       	div.appendChild(label);
