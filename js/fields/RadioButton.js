@@ -21,7 +21,7 @@
          * @scope inputEx.RadioButton.prototype
          */
     {
-
+      
 
     });
 
