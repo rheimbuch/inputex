@@ -99,14 +99,12 @@ inputEx.Field.prototype = {
 	   
 	   // Label element
 	   if(this.options.label) {
-	      this.labelDiv = inputEx.cn('div', {id: this.divEl.id+'-label', className: 'inputEx-label', 'for': this.divEl.id+'-field'});
-	      this.labelEl = inputEx.cn('label');
+	      this.labelEl = inputEx.cn('label',{id: this.divEl.id+'-label', className: 'inputEx-label', 'for': this.divEl.id+'-field'});
 	      this.labelEl.appendChild( document.createTextNode(this.options.label) );
-	      this.labelDiv.appendChild(this.labelEl);
-	      this.divEl.appendChild(this.labelDiv);
+	      this.divEl.appendChild(this.labelEl);
       }
       
-      this.fieldContainer = inputEx.cn('div', {className: this.options.className});
+      this.fieldContainer = inputEx.cn('div', {className: this.options.className}); // for wrapping the field and description
 	
       // Render the component directly
       this.renderComponent();
@@ -323,7 +321,10 @@ inputEx.Field.prototype = {
       if(!this.fieldContainer) { return; }
       if(!this.msgEl) {
          this.msgEl = inputEx.cn('div', {className: 'inputEx-message'});
-         this.divEl.insertBefore(this.msgEl, this.fieldContainer.nextSibling);
+          try{
+         var divElements = this.divEl.getElementsByTagName('div')
+         this.divEl.insertBefore(this.msgEl, divElements[(divElements.length-1>=0)?divElements.length-1:0]); //insertBefore the clear:both div
+          }catch(e){alert(e)}
       }
       this.msgEl.innerHTML = msg;
    },

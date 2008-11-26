@@ -268,7 +268,7 @@ lang.extend(inputEx.Form, inputEx.Group,
             function() {return true;},
             "select",
             this.divEl,
-            function(el) {method.call(that,el,"inputEx-hidden");}
+                 function(el) {method.call(that,el,"inputEx-hidden");}
          );
       }
    },

@@ -7,14 +7,14 @@ div.inputEx-fieldWrapper {
    margin-bottom:0.2em;
 }
 
-div.inputEx-label {
+label.inputEx-label {
    float: left;
    color: #505050;
    text-align: right;
    padding: 0.2em 0.5em 0 0;
 }
 
-div.inputEx-Group div.inputEx-label {
+div.inputEx-Group label.inputEx-label {
    width: 130px;
 }
 
@@ -46,12 +46,12 @@ div.inputEx-invalid > div.inputEx-message {
    font-weight:bold;
 }
 
-div.inputEx-invalid > div.inputEx-label {
+div.inputEx-invalid > label.inputEx-label {
    color:#C00E0C;
    font-weight:bold;
 }
 
-div.inputEx-invalid > div.inputEx-label label {
+div.inputEx-invalid > label.inputEx-label label {
    background:transparent url(../images/error_bang.gif) no-repeat scroll 0 1px;
    padding-left:20px;
 }
@@ -61,14 +61,14 @@ div.inputEx-valid > div.inputEx-message {
    font-weight: normal;
 }
 
-div.inputEx-valid > div.inputEx-label {
+div.inputEx-valid > label.inputEx-label {
    color:#505050;
    font-weight:normal;
 }
 
 /* Properties set by an invalid higher hierarchy field are disabled for valid or empty subfields */
-div.inputEx-valid > div.inputEx-label label,
-div.inputEx-empty > div.inputEx-label label {
+div.inputEx-valid > label.inputEx-label label,
+div.inputEx-empty > label.inputEx-label label {
    background: none;
    padding-left: inherit;
    font-weight:normal;
@@ -85,14 +85,6 @@ div.inputEx-empty div.inputEx-valid div.inputEx-Field input, div.inputEx-empty d
 
 inputEx-focused div.inputEx-Field input, inputEx-focused div.inputEx-Field textarea {
    color: black;
-}
-
-
-/**
- * inputEx.StringField
- */
-div.inputEx-StringField-wrapper {
-   float: none;
 }
 
 /**
