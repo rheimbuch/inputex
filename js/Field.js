@@ -99,9 +99,11 @@ inputEx.Field.prototype = {
 	   
 	   // Label element
 	   if(this.options.label) {
-	      this.labelEl = inputEx.cn('label',{id: this.divEl.id+'-label', className: 'inputEx-label', 'for': this.divEl.id+'-field'});
+	      this.labelDiv = inputEx.cn('div', {id: this.divEl.id+'-label', className: 'inputEx-label', 'for': this.divEl.id+'-field'});
+	      this.labelEl = inputEx.cn('label');
 	      this.labelEl.appendChild( document.createTextNode(this.options.label) );
-	      this.divEl.appendChild(this.labelEl);
+	      this.labelDiv.appendChild(this.labelEl);
+	      this.divEl.appendChild(this.labelDiv);
       }
       
       this.fieldContainer = inputEx.cn('div', {className: this.options.className}); // for wrapping the field and description
