@@ -7,6 +7,8 @@
  *
  * It assumes the followng:
  * ./inputEg.js - base path
+ *
+ * TODO: the inputEg could actually be made as a inputEx Form. do it after the YUI3 upgrade
  */
 
 
@@ -52,34 +54,89 @@
      *  - parentEl: the top level DOM element for the example
      */
     YUI.add("inputEg", function(Y) {
-        var inputEg = function(cfg) {
+        var inputEg = function(el, cfg) {
             inputEg.superclass.constructor.apply(this, arguments);
+
+            //the first arg is element or element ID
+
+            //this.set('el', Y.Lang.isString(el) ? Y.get(el) : el );
             //this.publishEvent("inputEg:handshaked");
             //Y.Event.addListener(window, 'beforeunload', Y.bind(this.handleBeforeUnload, this));
         };
         inputEg.NAME = "inputEg";
         inputEg.ATTRS = {
+            el:{
+                set:function(el) {
+                    var node = (Y.Lang.isString(el) ? Y.get('#' + el) : el);
+                    if (Y.Lang.isNull(node)) {
+                        Y.log("can't find an existing node, append a new one at the end. el: " + el, 'warn', 'inputEg');
+                        node = Y.Node.create('<div id="' + el + '"/>');
+                        Y.get('body').appendChild(node);
+                    }
+                    return node;
+                }
+            },
+            hd:{value:null}, //name as 'hd' following YUI Panel
+            desc:{value:null},
+            js:{value:null}
         }
         //Y.augment(inputEg, Y.Event.Target);
 
         Y.extend(inputEg, Y.Base, {
+
             initializer : function(cfg) {
+                var args = cfg.details;
+                //if no 'hd/desc' in cfg, set to any value in existed DOM
+                if (Y.Lang.isUndefined(args[0].hd) && !Y.Lang.isNull(this.get('el').query('.hd'))) {
+                    this.set('hd', this.get('el').query('.hd').get('innerHTML'))
+                }
+                if (Y.Lang.isUndefined(args[0].desc) && !Y.Lang.isNull(this.get('el').query('.desc'))) {
+                    this.set('desc', this.get('el').query('.desc').get('innerHTML'))
+                }
+                if (Y.Lang.isUndefined(args[0].script) && !Y.Lang.isNull(this.get('el').query('.js'))) {
+                    this.set('js', this.get('el').query('.js').get('innerHTML'))
+                }
+
+
                 dp.SyntaxHighlighter.ClipboardSwf = 'http://inputex.googlecode.com/svn/trunk/examples/js/syntaxhighlighter-1.5.2/clipboard.swf'
+                Y.log('initializer() - done - hd: ' + this.get('hd') + ', desc: ' + this.get('desc'), 'debug', 'inputEg');
             },
 
             renderDOM:function() { //follow YUI to call it 'DOM' instead of 'Dom'
+                var staticNodes = ['hd','desc','demo']
+                for (var i = 0,sNode; sNode = staticNodes[i]; i++) {
+                    var n = this.get('el').query('.' + sNode)
+                    if (Y.Lang.isNull(n)) {
+                        n = Y.Node.create('<div class="' + sNode + '"></div>');
+                        if (!Y.Lang.isUndefined(this.get(sNode))) { n.set('innerHTML', this.get(sNode)) }
+                        this.get('el').appendChild(n);
+                    }
+                }
 
+                var dynamicNodes = ['js','dom']
+                var nodeClassMappings = {'dom':'html','js':'js'} //TODO: move to global 
+                for (var i = 0,dNode; dNode = dynamicNodes[i]; i++) {
+                    var n = this.get('el').query('.' + dNode)
+                    if (!Y.Lang.isNull(n)) { this.get('el').removeChild(n)}
+                    Y.log('codeNode: ' + dNode + ', class: ' + nodeClassMappings[dNode])
+                    this.get('el').appendChild(Y.Node.create('<pre name="code" class="' + nodeClassMappings[dNode] + '"></pre>'))
+                }
+                //Y.log('processing node: ' + dNode + ', n: ' + n)
             },
-            renderComponent:function() {
-
+            renderComponents:function() {
+                //this.get('el').query('.js').set('innerHTML', this.get('js'))
             },
 
-
-
-            highlightAll:function() {
-                Y.log('highlightAll', 'trace', 'inputEg');
-
-                dp.SyntaxHighlighter.HighlightAll('code');
+            render:function() {
+                try {
+                    Y.log('render() - begin', 'debug', 'inputEg')
+                    this.renderDOM();
+                    this.renderComponents();
+                    Y.log('dp.SyntaxHighlighter.HighlightAll()', 'debug', 'inputEg');
+                    dp.SyntaxHighlighter.HighlightAll('code');
+                } catch(e) {
+                    Y.log(e, 'error', 'inputEg');
+                }
             }
         });
         Y.inputEg = inputEg;

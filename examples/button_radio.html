@@ -41,7 +41,6 @@
 
 </div>
 
-
 <!-- YUI Library -->
 <script type="text/javascript" src="../lib/yui/yahoo/yahoo-min.js"></script>
 <script type="text/javascript" src="../lib/yui/dom/dom-min.js"></script>
@@ -71,14 +70,20 @@
 
 </script>
 
-<div id="eg1"></div>
+<div id="example1">
+    <div class="hd">Example 1</div>
+    <div class="desc">Example 1 is the first example</div>
+</div>
 
 <script type="text/javascript">
 
-    YUI().use('base', 'inputEg',function(Y) {
+    YUI().use('base', 'inputEg', function(Y) {
         try {
             Y.log('running ccode block')
-            new Y.inputEg().highlightAll();
+            new Y.inputEg({el:'example1',js:'alert("hello world");'}).render();
+
+            //var t = function() { alert('test')}
+            //alert(t.toString())
         } catch(e) {
             Y.log(e)
         }
