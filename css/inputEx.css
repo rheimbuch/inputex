@@ -7,14 +7,14 @@ div.inputEx-fieldWrapper {
    margin-bottom:0.2em;
 }
 
-label.inputEx-label {
+div.inputEx-label {
    float: left;
    color: #505050;
    text-align: right;
    padding: 0.2em 0.5em 0 0;
 }
 
-div.inputEx-Group label.inputEx-label {
+div.inputEx-Group div.inputEx-label {
    width: 130px;
 }
 
@@ -46,12 +46,12 @@ div.inputEx-invalid > div.inputEx-message {
    font-weight:bold;
 }
 
-div.inputEx-invalid > label.inputEx-label {
+div.inputEx-invalid > div.inputEx-label {
    color:#C00E0C;
    font-weight:bold;
 }
 
-div.inputEx-invalid > label.inputEx-label label {
+div.inputEx-invalid > div.inputEx-label label {
    background:transparent url(../images/error_bang.gif) no-repeat scroll 0 1px;
    padding-left:20px;
 }
@@ -61,14 +61,14 @@ div.inputEx-valid > div.inputEx-message {
    font-weight: normal;
 }
 
-div.inputEx-valid > label.inputEx-label {
+div.inputEx-valid > div.inputEx-label {
    color:#505050;
    font-weight:normal;
 }
 
 /* Properties set by an invalid higher hierarchy field are disabled for valid or empty subfields */
-div.inputEx-valid > label.inputEx-label label,
-div.inputEx-empty > label.inputEx-label label {
+div.inputEx-valid > div.inputEx-label label,
+div.inputEx-empty > div.inputEx-label label {
    background: none;
    padding-left: inherit;
    font-weight:normal;
@@ -85,6 +85,14 @@ div.inputEx-empty div.inputEx-valid div.inputEx-Field input, div.inputEx-empty d
 
 inputEx-focused div.inputEx-Field input, inputEx-focused div.inputEx-Field textarea {
    color: black;
+}
+
+
+/**
+ * inputEx.StringField
+ */
+div.inputEx-StringField-wrapper {
+   float: none;
 }
 
 /**
@@ -135,7 +143,7 @@ div.inputEx-Group fieldset.inputEx-Collapsed div.inputEx-fieldWrapper {
 /**
  * inputEx.Form
  */
- 
+
 label.inputExForm-checkbox-rightLabel {
    margin-left: 4px;
 }
@@ -265,7 +273,7 @@ a.inputEx-InPlaceEdit-CancelLink {
 .yui-skin-sam div.inputEx-AutoComplete .yui-ac-content {
    width: auto;
 }
-div.inputEx-AutoComplete div.yui-ac-container { 
+div.inputEx-AutoComplete div.yui-ac-container {
    margin-bottom:2em;
    width:25em;
 }
@@ -273,12 +281,12 @@ div.inputEx-AutoComplete div.yui-ac-container {
 /**
  * DateField
  */
- 
+
 div.inputEx-DateField {
    background: transparent url(../images/calendar.gif) no-repeat scroll left center;
    padding-left: 20px;
 }
- 
+
 div.inputEx-DateField input {
    width: 75px;
 }
@@ -349,7 +357,7 @@ div.inputEx-ColorField div.yui-overlay div.bd {
 /**
  * SliderField
  */
-div.inputEx-SliderField {  
+div.inputEx-SliderField {
 }
 
 div.inputEx-SliderField div.inputEx-SliderField-bg {
@@ -379,18 +387,18 @@ div.inputEx-SliderField div.inputEx-SliderField-value {
 /**
  * Password Field
  */
- 
+
 div.inputEx-PasswordField input {
    float: left;
 }
- 
+
 div.inputEx-PasswordField div.capsLockWarning {
    float: left;
    margin:3px 4px;
    color: #505050;
    font-size: 85%;
 }
- 
+
 div.inputEx-Password-StrengthIndicator {
     float: left;
     color: #505050;
@@ -415,11 +423,11 @@ div.inputEx-CheckBox input {
    float: left;
    margin: 2px 0 4px 0;
 }
- 
+
 label.inputEx-CheckBox-rightLabel {
    margin: 3px;
 }
- 
+
 /**
  * CombineField
  */
