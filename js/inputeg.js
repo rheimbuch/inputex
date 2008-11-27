@@ -134,7 +134,8 @@
                     var n = this.get('el').query('.' + dNode)
                     if (!Y.Lang.isNull(n)) { this.get('el').removeChild(n)}
                     Y.log('codeNode: ' + dNode + ', class: ' + nodeClassMappings[dNode])
-                    this.get('el').appendChild(Y.Node.create('<pre id="' + this.get('el').get('id') + '-' + dNode + '" name="' + this.get('el').get('id') + '-code' + '" class="' + nodeClassMappings[dNode] + '"></pre>'))
+                    //this.get('el').appendChild(Y.Node.create('<pre id="' + this.get('el').get('id') + '-' + dNode + '" name="' + this.get('el').get('id') + '-code' + '" class="' + nodeClassMappings[dNode] + '"></pre>'))
+                    this.get('el').appendChild(Y.Node.create('<pre id="' + this.get('el').get('id') + '-' + dNode + '" name="code" class="' + nodeClassMappings[dNode] + '"></pre>'))
                 }
 
                 this._state.dom = true;
@@ -199,8 +200,8 @@
                     this.renderDOM();
                     this.renderComponents();
 
-                    Y.log('dp.SyntaxHighlighter.HighlightAll() - ' + this.get('el').get('id') + '-code', 'debug', 'inputEg');
-                    dp.SyntaxHighlighter.HighlightAll(this.get('el').get('id') + '-code');
+                    //Y.log('dp.SyntaxHighlighter.HighlightAll() - ' + this.get('el').get('id') + '-code', 'debug', 'inputEg');
+                    //dp.SyntaxHighlighter.HighlightAll(this.get('el').get('id') + '-code');
 
                     /* if (!inputEg.isHighlightEnabled) {
                      Y.on("event:ready", function() {
