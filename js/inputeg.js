@@ -134,7 +134,7 @@
                     var n = this.get('el').query('.' + dNode)
                     if (!Y.Lang.isNull(n)) { this.get('el').removeChild(n)}
                     Y.log('codeNode: ' + dNode + ', class: ' + nodeClassMappings[dNode])
-                    this.get('el').appendChild(Y.Node.create('<pre id="' + this.get('el').get('id') + '-' + dNode + '" name="code" class="' + nodeClassMappings[dNode] + '"></pre>'))
+                    this.get('el').appendChild(Y.Node.create('<pre id="' + this.get('el').get('id') + '-' + dNode + '" name="' + this.get('el').get('id') + '-code' + '" class="' + nodeClassMappings[dNode] + '"></pre>'))
                 }
 
                 this._state.dom = true;
@@ -195,16 +195,21 @@
             render:function() {
                 try {
                     Y.log('render() - begin - inputEg.isHighlightEnabled: ' + inputEg.isHighlightEnabled, 'debug', 'inputEg')
+
                     this.renderDOM();
                     this.renderComponents();
-                   /* if (!inputEg.isHighlightEnabled) {
-                        Y.on("event:ready", function() {
-                            Y.log('dp.SyntaxHighlighter.HighlightAll()', 'debug', 'inputEg');
-                            dp.SyntaxHighlighter.HighlightAll('code');
-                        });
-                        Y.log('inputEg.isHighlightEnabled set to true', 'debug', 'inputEg');
-                        inputEg.isHighlightEnabled = true;
-                    }*/
+
+                    Y.log('dp.SyntaxHighlighter.HighlightAll() - ' + this.get('el').get('id') + '-code', 'debug', 'inputEg');
+                    dp.SyntaxHighlighter.HighlightAll(this.get('el').get('id') + '-code');
+
+                    /* if (!inputEg.isHighlightEnabled) {
+                     Y.on("event:ready", function() {
+                     Y.log('dp.SyntaxHighlighter.HighlightAll()', 'debug', 'inputEg');
+                     dp.SyntaxHighlighter.HighlightAll('code');
+                     });
+                     Y.log('inputEg.isHighlightEnabled set to true', 'debug', 'inputEg');
+                     inputEg.isHighlightEnabled = true;
+                     }*/
 
 
                     Y.log('render() - done', 'debug', 'inputEg')
