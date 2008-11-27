@@ -1,6 +1,9 @@
 p.demoTitle {
+    background-image:url(http://javascript.neyric.com/inputex/doc/images/logo-inputex.jpg);
+    height: 160px;
+    color: white;
     font-size: 16pt;
-    margin: 20px;
+    margin: 0px 20px;
 }
 
 div.exampleDiv {
