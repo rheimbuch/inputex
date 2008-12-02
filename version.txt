@@ -29,6 +29,7 @@ not released yet
 		* inputExBuilder much better (now with page generation !)
 		* stylesheet for IE6 css fix (still not full support)
 		* field.destroy was buggy
+		* italian localization
 
 
 version 0.2.0:
