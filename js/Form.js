@@ -113,9 +113,13 @@ lang.extend(inputEx.Form, inputEx.Group,
     * @param {Event} e The original onSubmit event
     */
    onSubmit: function(e) {
+      
+      // do nothing if does not validate
 	   if ( !this.validate() ) {
-		   Event.stopEvent(e);
+		   Event.stopEvent(e); // no submit
+		   return; // no ajax submit
 	   }
+	   
 	   if(this.options.ajax) {
 		   Event.stopEvent(e);
 	      this.asyncRequest();
