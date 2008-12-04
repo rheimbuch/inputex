@@ -22,7 +22,7 @@
 <link rel="stylesheet" type="text/css" href="css/dpSyntaxHighlighter.css">
 <style>
 div.inputEx-Form-Mask div { background-color:#DDDDFF; }
-div#container2 { width:400px }
+div#container3 { width:400px }
 </style>
  </head>
 
@@ -61,25 +61,25 @@ div#container2 { width:400px }
 <!-- Example 2 -->
 <div class='exampleDiv'>
 	<p class="title">Multi-group Form</p>
-	<p>Use the following code to create a basic inputEx Form.</p>
+	<p>Use the following code to create a Form with multiple Groups (fieldsets).</p>
 	<div class='demoContainer' id='container2'></div>
 	<div class='codeContainer'>
     <textarea name="code" class="JScript">
-   new YAHOO.inputEx.Form( {
-        fields: [
-            {type:'group',legend:'group 1',fields:[
-                {type: 'select', inputParams: {label: 'Title', name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
-                {inputParams: {label: 'Firstname', name: 'firstname', required: true, value:'Jacques' } },
-                {inputParams: {label: 'Lastname', name: 'lastname', value:'Dupont' } }
-            ]},
-            { type:'group',legend:'group 2',fields:[
-                {type:'email', inputParams: {label: 'Email', name: 'email'}},
-                {type:'url', inputParams: {label: 'Website',name:'website'}}
-            ]}
-        ],
-        buttons: [{type: 'submit', value: 'Change'}],
-        parentEl: 'container2'
-    });
+	   new YAHOO.inputEx.Form( {
+	        fields: [
+	            {type:'group',inputParams:{legend:'group 1',name:'group1',fields:[
+	                {type: 'select', inputParams: {label: 'Title', name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
+	                {inputParams: {label: 'Firstname', name: 'firstname', required: true, value:'Jacques' } },
+	                {inputParams: {label: 'Lastname', name: 'lastname', value:'Dupont' } }
+	            ]}},
+	            { type:'group',inputParams:{legend:'group 2',name:'group2',fields:[
+	                {type:'email', inputParams: {label: 'Email', name: 'email'}},
+	                {type:'url', inputParams: {label: 'Website',name:'website'}}
+	            ]}}
+	        ],
+	        buttons: [{type: 'submit', value: 'Change'}],
+	        parentEl: 'container2'
+	    });
 	</textarea>
     </div>
 </div>
@@ -157,17 +157,17 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	});
 
     // Example 2
-    new YAHOO.inputEx.Form( {
+   new YAHOO.inputEx.Form( {
         fields: [
-            {type:'group',legend:'group 1',fields:[
+            {type:'group',inputParams:{legend:'group 1',name:'group1',fields:[
                 {type: 'select', inputParams: {label: 'Title', name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
                 {inputParams: {label: 'Firstname', name: 'firstname', required: true, value:'Jacques' } },
                 {inputParams: {label: 'Lastname', name: 'lastname', value:'Dupont' } }
-            ]},
-            { type:'group',legend:'group 2',fields:[
+            ]}},
+            { type:'group',inputParams:{legend:'group 2',name:'group2',fields:[
                 {type:'email', inputParams: {label: 'Email', name: 'email'}},
                 {type:'url', inputParams: {label: 'Website',name:'website'}}
-            ]}
+            ]}}
         ],
         buttons: [{type: 'submit', value: 'Change'}],
         parentEl: 'container2'

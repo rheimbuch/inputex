@@ -51,8 +51,7 @@ lang.extend(inputEx.Group, inputEx.Field,
    
       // leave this for compatibility reasons
       this.inputConfigs = options.fields;
-
-      //TODO: <MF> should it be renamed to 'collapsed'? 
+   
       this.options.collapsible = lang.isUndefined(options.collapsible) ? false : options.collapsible;
       
       this.options.disabled = lang.isUndefined(options.disabled) ? false : options.disabled;
@@ -86,13 +85,13 @@ lang.extend(inputEx.Group, inputEx.Field,
     * Render all the fields.
     * We use the parentEl so that inputEx.Form can append them to the FORM tag
     */
-   renderFields: function(parentEl, inputFields) {
-      var fields = (!lang.isUndefined(inputFields)) ? inputFields : this.options.fields;
-
-      this.fieldset = inputEx.cn('fieldset',{id:this.divEl.id?this.divEl.id+'-fieldset':YAHOO.util.Dom.generateId()});
+   renderFields: function(parentEl) {
+      
+      this.fieldset = inputEx.cn('fieldset');
       this.legend = inputEx.cn('legend', {className: 'inputEx-Group-legend'});
    
       // Option Collapsible
+      //TODO: <MF> should it be renamed to 'collapsed'?
       if(this.options.collapsible) {
          var collapseImg = inputEx.cn('div', {className: 'inputEx-Group-collapseImg'}, null, ' ');
          this.legend.appendChild(collapseImg);
@@ -108,8 +107,8 @@ lang.extend(inputEx.Group, inputEx.Field,
       }
   	   
       // Iterate this.createInput on input fields
-      for (var i = 0 ; i < fields.length ; i++) {
-         var input = fields[i];
+      for (var i = 0 ; i < this.options.fields.length ; i++) {
+         var input = this.options.fields[i];
         
          // Render the field
          var field = this.renderField(input);
