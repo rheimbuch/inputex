@@ -36,9 +36,13 @@ lang.extend(inputEx.RTEField, inputEx.Field,
 	 */	
 	renderComponent: function() {
 	   if(!inputEx.RTEfieldsNumber) { inputEx.RTEfieldsNumber = 0; }
+	   
 	   var id = "inputEx-RTEField-"+inputEx.RTEfieldsNumber;
-	      
-	   this.el = inputEx.cn('textarea', {id: id});
+	   var attributes = {id:id};
+      if(this.options.name) attributes.name = this.options.name;
+      
+	   this.el = inputEx.cn('textarea', attributes);
+	   
 	   inputEx.RTEfieldsNumber += 1;
 	   this.fieldContainer.appendChild(this.el);
 	
@@ -75,7 +79,16 @@ lang.extend(inputEx.RTEField, inputEx.Field,
 	 */
 	setValue: function(value, sendUpdatedEvt) {
 	   if(this.editor) {
-	      this.editor.setEditorHTML(value);
+	      var iframeId = this.el.id+"_editor";
+	      
+	      // if editor iframe not rendered
+	      if (!YAHOO.util.Dom.get(iframeId)) {
+	         // put value in textarea : will be processed by this.editor._setInitialContent (clean html, etc...)
+	         this.el.value = value;
+	         
+	      } else {
+	         this.editor.setEditorHTML(value);
+         }
       }
 	   
    	if(sendUpdatedEvt !== false) {

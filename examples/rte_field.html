@@ -34,10 +34,10 @@
 	<div class='demoContainer' id='container1'></div>
 
 	<div class='codeContainer'>
-				<textarea name="code" class="JScript">
-			new YAHOO.inputEx.RTEField({parentEl: 'container1', name: 'rteField'});
+		<textarea name="code" class="JScript">
+			new YAHOO.inputEx.RTEField({parentEl: 'container1', name: 'rteField',value:"I'm the <i>default</i> value.<br />I've been set through the <b>value</b> option."});
 		</textarea>
-			</div>
+	</div>
 
 </div>
 
@@ -84,7 +84,8 @@
 
 	<div class='codeContainer'>
 				<textarea name="code" class="JScript">
-			new YAHOO.inputEx.RTEField({parentEl: 'container3', name: 'rteField3', type: 'simple'});
+					var field3 = new YAHOO.inputEx.RTEField({parentEl: 'container3', name: 'rteField3', type: 'simple'});
+					field3.setValue("<i>Value set just after init...</i>");
 		</textarea>
 			</div>
 
@@ -115,11 +116,12 @@
 YAHOO.util.Event.addListener(window, 'load', function() {
 
 	// Example 1
-	new YAHOO.inputEx.RTEField({parentEl: 'container1', name: 'rteField'});
+	new YAHOO.inputEx.RTEField({parentEl: 'container1', name: 'rteField',value:"I'm the <i>default</i> value.<br />I've been set through the <b>value</b> option."});
 	
 	// Example 2
 	var div = YAHOO.util.Dom.get('container2');
 	var htmlField = new YAHOO.inputEx.RTEField({parentEl: div, name: 'test2'});
+	
 	var button1 = YAHOO.inputEx.cn('button', null, null, "SetValue");
 	div.appendChild(button1);
 	YAHOO.util.Event.addListener(button1, "click" ,function() { 
@@ -133,7 +135,8 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 });
 
 	// Example 3
-	new YAHOO.inputEx.RTEField({parentEl: 'container3', name: 'rteField3', type: 'simple'});
+	var field3 = new YAHOO.inputEx.RTEField({parentEl: 'container3', name: 'rteField3', type: 'simple'});
+	field3.setValue("<i>Value set just after init...</i>");
 
 </script>
 
