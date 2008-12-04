@@ -17,11 +17,11 @@
 inputEx.widget.Dialog = function(options) {
 
    // options
-   this._inputExOptions = options || {};
-   this._inputExOptions.id = this._inputExOptions.id || Dom.generateId();
-   this._inputExOptions.parentEl = this._inputExOptions.parentEl || document.body;
-   this._inputExOptions.title = this._inputExOptions.title || 'Please fill in the form';
-   this._inputExOptions.panelConfig = this._inputExOptions.panelConfig || {
+   this._inputExOptions = {};
+   this._inputExOptions.id = options.id || Dom.generateId();
+   this._inputExOptions.parentEl = options.parentEl || document.body;
+   this._inputExOptions.title = options.title || 'Please fill in the form';
+   this._inputExOptions.panelConfig = options.panelConfig || {
 		constraintoviewport: true, 
 		underlay:"shadow", 
 		close:true, 
@@ -29,7 +29,7 @@ inputEx.widget.Dialog = function(options) {
 		visible:false, 
 		draggable:true
 	};
-	// + options.inputExDef
+	this._inputExOptions.inputExDef = options.inputExDef;
 
    inputEx.widget.Dialog.superclass.constructor.call(this, this._inputExOptions.id, this._inputExOptions.panelConfig);
    
