@@ -353,6 +353,13 @@ if(inputEx.NumberField) {
    inputEx.NumberField.groupOptions = inputEx.NumberField.superclass.constructor.groupOptions.concat([]);
 }
  
+if(inputEx.VectorField) {
+   inputEx.VectorField.groupOptions = inputEx.Field.groupOptions.concat([
+      { type: 'integer', inputParams: { label: 'Dimension', name:'dimension', value: 2}},
+      { type: 'integer', inputParams: { label: 'Size', name:'size', value: 3}},
+      { type: 'list', inputParams: {name: 'separators', label: 'Separators', required: true } }
+   ]);
+}
 
 inputEx.TypeField.groupOptions = inputEx.TypeField.superclass.constructor.groupOptions.concat([]);
 
