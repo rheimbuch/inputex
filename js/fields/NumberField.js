@@ -39,7 +39,9 @@ YAHOO.lang.extend(inputEx.NumberField, inputEx.StringField,
       if (v == "") return true;
       
       if(isNaN(v)) return false;
-	   return !!this.el.value.match(/^(\+?((([0-9]+(\.)?)|([0-9]*\.[0-9]+))([eE][+-]?[0-9]+)?))$/);
+	   
+	   // We have to check the number with a regexp, otherwise "0.03a" is parsed to a valid number 0.03
+	   return !!this.el.value.match(/^([\+\-]?((([0-9]+(\.)?)|([0-9]*\.[0-9]+))([eE][+-]?[0-9]+)?))$/);
    }
 
 });
