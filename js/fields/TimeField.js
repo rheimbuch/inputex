@@ -4,7 +4,7 @@
 
 /**
  * @class A field limited to number inputs (floating)
- * @extends inputEx.Field
+ * @extends inputEx.CombineField
  * @constructor
  * @param {Object} options inputEx.Field options object
  */
@@ -24,7 +24,7 @@ inputEx.TimeField = function(options) {
    options.separators = options.separators || [false,":",":",false];
    inputEx.TimeField.superclass.constructor.call(this,options);
 };
-YAHOO.lang.extend(inputEx.TimeField, inputEx.CombineField, 
+lang.extend(inputEx.TimeField, inputEx.CombineField, 
 /**
  * @scope inputEx.TimeField.prototype   
  */

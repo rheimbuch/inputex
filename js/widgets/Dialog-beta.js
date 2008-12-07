@@ -83,7 +83,7 @@ YAHOO.lang.extend(inputEx.widget.Dialog, YAHOO.widget.Panel,
     */
    setValue: function(value, sendUpdatedEvt) {
       this.getForm().setValue(value, sendUpdatedEvt);
-   },
+   }
    
 });
    

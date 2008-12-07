@@ -4,7 +4,7 @@
 
 /**
  * @class A field limited to number inputs (floating)
- * @extends inputEx.Field
+ * @extends inputEx.CombineField
  * @constructor
  * @param {Object} options Added options
  * <ul>
