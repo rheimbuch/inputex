@@ -52,13 +52,6 @@ YAHOO.addInputExModules = function(yuiLoader, inputExPath) {
  			requires: ['inputex', 'dragdrop']
  		},
  		{
- 			name: 'inputex-ddlist',
- 			type: 'js',
- 	  	   fullpath: pathToInputEx+'js/widgets/ddlist.js',
- 	  	   varName: 'inputEx.widget.DDList',
- 			requires: ['inputex', 'dragdrop']
- 		},
- 		{
  			name: 'inputex-dialog',
  			type: 'js',
  	  	   fullpath: pathToInputEx+'js/widgets/Dialog-beta.js',
@@ -310,7 +303,14 @@ YAHOO.addInputExModules = function(yuiLoader, inputExPath) {
   	  	   fullpath: pathToInputEx+'js/locals/fr.js',
   	  	   varName: 'inputEx.lang_fr',
   			requires: ['inputex']
-  		}
+  		},
+  		{
+        	name: 'inputex-lang-it',
+        	type: 'js',
+        	fullpath: pathToInputEx+'js/locals/it.js',
+        	varName: 'inputEx.lang_it',
+         requires: ['inputex']
+      }
 	];
 	for(var i = 0 ; i < modules.length ; i++) {
 		yuiLoader.addModule(modules[i]);
