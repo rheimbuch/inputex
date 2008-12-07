@@ -26,6 +26,7 @@ not released yet
 
    - Added Fields
    	* MenuField : new field to perform a selection in a multi-level selector (menu style)
+		* VectorField : returns an array of number
 
 	- Field enhancements:
 		* Datatable: added options and CSS
