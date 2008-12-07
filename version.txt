@@ -27,6 +27,8 @@ not released yet
    - Added Fields
    	* MenuField : new field to perform a selection in a multi-level selector (menu style)
 		* VectorField : returns an array of number
+		* FileField-beta : for file upload using standard form post upload
+		* MapField from David Janes
 
 	- Field enhancements:
 		* Datatable: added options and CSS
