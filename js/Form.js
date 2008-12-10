@@ -44,6 +44,10 @@ lang.extend(inputEx.Form, inputEx.Group,
          this.options.ajax.callback.scope = options.ajax.callback.scope || this;
          this.options.ajax.showMask = lang.isUndefined(options.ajax.showMask) ? false : options.ajax.showMask;
       }
+      
+      if (lang.isFunction(options.onSubmit)) {
+         this.options.onSubmit = options.onSubmit;
+      }
    },
 
 
