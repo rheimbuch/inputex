@@ -55,7 +55,9 @@
 
 YAHOO.util.Event.addListener(window, "load", function() {
 	
-	var myJsonSchema = {
+	var schemaIdentifierMap = {
+		
+	 "Person": {
 		"id": "Person",
 		"description":"A person",
 	 	"type":"object",
@@ -64,10 +66,8 @@ YAHOO.util.Event.addListener(window, "load", function() {
 				"type":"string"
 			},
 	    "born" : {
-				"type":"string", //allow for a numeric year, or a full date
-	      //"minimum":1900, //min/max for when a numberic value is used
-	      //"maximum":2010,
-	      "format":"date",// format when a string value is used
+				"type":"string",
+	      "format":"date",
 	      "optional":true
 			},
 	    "gender" : {
@@ -92,10 +92,11 @@ YAHOO.util.Event.addListener(window, "load", function() {
 	      }
 	    }
 	  }
+	 }
 	};
 	
 	var builder = new YAHOO.inputEx.JsonSchema.Builder({
-		'schemaIdentifierMap': {Person: myJsonSchema},
+		'schemaIdentifierMap': schemaIdentifierMap,
 	  'defaultOptions':{
 	     'showMsg':true
 	  }

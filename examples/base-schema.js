@@ -7,8 +7,8 @@
 
 /* a list of schemas */
 
-var base_schema = [
-    {
+var base_schema_map = {
+    "address": {
 	    id:'address',
 	    type:'object',
 	    properties:{
@@ -40,7 +40,7 @@ var base_schema = [
     		}
    	    }
     },
-    {
+    "information-source": {
 	    id:'information-source',
 	    type:'object',
 	    properties:{
@@ -81,7 +81,7 @@ var base_schema = [
     		}
     	}
     },
-	{
+	'community': {
 		'id':'community',
 		'type':'object',
 		'properties':{
@@ -126,12 +126,4 @@ var base_schema = [
 			}
 		}
     }
-];
-
-var base_schema_map = {};
-(function() {
-	for(var i=0, l=base_schema.length; i < l; i++) {
-		base_schema_map[base_schema[i].id] = base_schema[i];
-	}
-})();
-
+};
