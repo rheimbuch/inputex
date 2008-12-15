@@ -48,8 +48,10 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	   for(var i = 0 ; i < this.options.choices.length ; i++) {
 	
 	      var div = inputEx.cn('div', {className: 'inputEx-RadioField-choice'});
-	
-	      var radioId = this.divEl.id?this.divEl.id+'-field':YAHOO.util.Dom.generateId();
+	      
+	      // radioId MUST be different for each option,
+	      // so add "-opt"+i (where i = option's position) to generated id
+	      var radioId = this.divEl.id ? this.divEl.id+'-field-opt'+i : YAHOO.util.Dom.generateId();
 	      
 	      var radio = inputEx.cn('input', { id: radioId,type: 'radio', name: this.options.name, value: this.options.values[i] });
            
@@ -102,6 +104,9 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	      this.anyField.updatedEvt.subscribe(function(e) {
 	         inputEx.RadioField.superclass.onChange.call(this,e);
 	      }, this, true);
+	      
+	      // Update radio field style after editing anyField content !
+	      Event.addBlurListener(this.anyField.el, this.onBlur, this, true);
 	   }
 	},
 	   
