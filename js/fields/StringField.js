@@ -155,25 +155,11 @@ lang.extend(inputEx.StringField, inputEx.Field,
     * Set the focus to this field
     */
    focus: function() {
-      // Can't use lang.isFunction because IE >= 6 would say focus is not a function, even if it is !!
+      // Can't use lang.isFunction because IE >= 6 would say focus is not a function (IE says it's an object) !!
       if(!!this.el && !lang.isUndefined(this.el.focus) ) {
          this.el.focus();
       }
    },
-
-   /**
-    * Return (stateEmpty|stateRequired)
-    */
-   getState: function() {
-      var val = this.getValue();
-
-	   // if the field is empty :
-	   if( val === '') {
-	      return this.options.required ? inputEx.stateRequired : inputEx.stateEmpty;
-	   }
-
-	   return this.validate() ? inputEx.stateValid : inputEx.stateInvalid;
-	},
 
 	/**
     * Add the minLength string message handling
