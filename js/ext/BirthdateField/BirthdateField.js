@@ -38,8 +38,8 @@ lang.extend(inputEx.BirthdateField, inputEx.CombineField, {
       
       var values = [];
       
-      // !value catches "" (empty field), and invalid dates
-      if(!value || !lang.isFunction(value.getTime) || !lang.isNumber(value.getTime()) ) {
+      // !value catches "" (empty field), other tests invalid dates (Invalid Date, or NaN)
+      if(!value || !(value instanceof Date) || !lang.isNumber(value.getTime()) ) {
          values[this.monthIndex] = -1;
          values[this.yearIndex] = "";
          values[this.dayIndex] = "";
@@ -58,20 +58,29 @@ lang.extend(inputEx.BirthdateField, inputEx.CombineField, {
       
       // if selected month index is -1, new Date(..) would create a valid date with month == December !!!)
       if (values[this.monthIndex] == -1) {
-         return new Date(NaN,NaN,NaN); // "Invalid Date" 
+         return new Date(NaN,NaN,NaN); // -> Invalid Date (Firefox) or NaN (IE) (both instanceof Date ...)
       }
       
       return new Date(parseInt(values[this.yearIndex],10), values[this.monthIndex], parseInt(values[this.dayIndex],10) );
    },
    
    validate: function() {
-      var values = inputEx.BirthdateField.superclass.getValue.call(this);
       var val = this.getValue();
+            
+      // empty field
+      if (val === '') {
+         // validate only if not required
+         return !this.options.required;
+      }
       
-      // val == "" -> true
-      // val == any date -> true
-      // val == "Invalid Date" -> false
-      return (val != "Invalid Date");
+      // val is :
+      //  -> a Date, when valid
+      //  -> an Invalid Date (== "Invalid Date"), when invalid on FF
+      //  -> NaN, when invalid on IE
+      //
+      // These 3 cases would pass the "val instanceof Date" test, 
+      // but last 2 cases return NaN on val.getDate(), so "isFinite" test fails.
+      return (val instanceof Date && lang.isNumber(val.getTime()));
    },
    
 	isEmpty: function() {

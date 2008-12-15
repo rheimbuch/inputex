@@ -51,6 +51,10 @@ lang.extend( inputEx.CombineField, inputEx.Field,
 	   
 	   for(var i = 0 ; i < this.options.fields.length ; i++) {
 	      
+	      if (this.options.required) {
+            this.options.fields[i].required = true;
+         }
+         
 	      var field = this.renderField(this.options.fields[i]);
 	      // remove the line breaker (<div style='clear: both;'>)
 	      field.divEl.removeChild(field.divEl.childNodes[field.divEl.childNodes.length-1]);
@@ -75,14 +79,22 @@ lang.extend( inputEx.CombineField, inputEx.Field,
     * @param {Object} fieldOptions The field properties as required bu inputEx.buildField
     */
    renderField: function(fieldOptions) {
-
+      
+      // Subfields should inherit required property
+      if (this.options.required) {
+         if (!fieldOptions.inputParams) {fieldOptions.inputParams = {};}
+         fieldOptions.inputParams.required = true;
+      }
+      
       // Instanciate the field
-      var fieldInstance = inputEx.buildField(fieldOptions);      
+      var fieldInstance = inputEx(fieldOptions);
       
 	   this.inputs.push(fieldInstance);
       
 	   // Subscribe to the field "updated" event to send the group "updated" event
       fieldInstance.updatedEvt.subscribe(this.onChange, this, true);
+      // Subscribe sub-field "blur" event to trigger class setting at combineField level !
+      YAHOO.util.Event.addBlurListener(fieldInstance.getEl(),this.onBlur, this, true);
    	  
       return fieldInstance;
    },
@@ -158,7 +170,17 @@ lang.extend( inputEx.CombineField, inputEx.Field,
 	      // fire update event
          this.fireUpdatedEvt();
       }
-	}
+	},
+   
+   /**
+    * Useful for getState to return correct state (required, empty, etc...)
+    */
+   isEmpty: function() {
+      for(var i = 0 ; i < this.inputs.length ; i++) {
+	      if (!this.inputs[i].isEmpty()) return false;
+	   }
+	   return true;
+   }
 	
 });
 	

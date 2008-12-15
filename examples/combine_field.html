@@ -12,6 +12,10 @@
 <!-- InputEx CSS -->
 <link type='text/css' rel='stylesheet' href='../css/inputEx.css' />
 
+<!--[if IE 6]>
+<link type='text/css' rel='stylesheet' href='../css/inputEx-IE6.css' />
+<![endif]-->
+
 <!-- Demo CSS -->
 <link rel="stylesheet" type="text/css" href="css/demo.css"/>
 <link rel="stylesheet" type="text/css" href="css/dpSyntaxHighlighter.css">
@@ -42,7 +46,8 @@
 					{ inputParams: {name: 'firstname', typeInvite: 'firstname'} },
 					{ inputParams: {name: 'lastname', typeInvite: 'lastname'} }
 				],
-				separators: [false,"&nbsp;&nbsp;&nbsp;",false]
+				separators: [false,"&nbsp;&nbsp;&nbsp;",false],
+				required:true
 			});
 		</textarea>
 			</div>
@@ -63,11 +68,12 @@
 				<textarea name="code" class="JScript">
 			new YAHOO.inputEx.CombineField({
 				parentEl: 'container2', 
+				label:'Select Datetime :',
 				fields: [
 					{type: 'date', inputParams: {name: 'date', typeInvite: 'mm/dd/YYYY'} },
 					{type: 'time', inputParams: {name: 'time'} }
 				],
-				separators: [false," : ",false]
+				separators: [false,"&nbsp;",false]
 			});
 		</textarea>
 			</div>
@@ -104,7 +110,8 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 			{ inputParams: {name: 'firstname', typeInvite: 'firstname'} },
 			{ inputParams: {name: 'lastname', typeInvite: 'lastname'} }
 		],
-		separators: [false,"&nbsp;&nbsp;&nbsp;",false]
+		separators: [false,"&nbsp;&nbsp;&nbsp;",false],
+		required:true
 	});
 
    var el = YAHOO.util.Dom.get('container1');
@@ -129,11 +136,12 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	// Example 2
 	new YAHOO.inputEx.CombineField({
 		parentEl: 'container2', 
+		label:'Select Datetime :',
 		fields: [
 			{type: 'date', inputParams: {name: 'date', typeInvite: 'mm/dd/YYYY'} },
 			{type: 'time', inputParams: {name: 'time'} }
 		],
-		separators: [false," : ",false]
+		separators: [false,"&nbsp;",false]
 	});
 	
 });
