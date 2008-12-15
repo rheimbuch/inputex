@@ -8,6 +8,7 @@
  * @constructor
  * @param {Object} options Added options:
  * <ul>
+ *    <li>negative: boolean indicating if we accept boolean numbers</li>
  * </ul>
  */
 inputEx.IntegerField = function(options) {
@@ -18,6 +19,16 @@ YAHOO.lang.extend(inputEx.IntegerField, inputEx.StringField,
  * @scope inputEx.IntegerField.prototype   
  */
 {
+   /**
+    * Adds the negative option
+    * @method setOptions
+    * @param {Object} options
+    */
+   setOptions: function(options) {
+      inputEx.IntegerField.superclass.setOptions.call(this, options);
+      
+      this.options.negative = lang.isUndefined(options.negative) ? false : options.negative;
+   },
    
    /**
     * Get the value
@@ -34,6 +45,7 @@ YAHOO.lang.extend(inputEx.IntegerField, inputEx.StringField,
    
    /**
     * Validate  if is a number
+    * @method validate
     */
    validate: function() {
       var v = this.getValue();
@@ -42,7 +54,7 @@ YAHOO.lang.extend(inputEx.IntegerField, inputEx.StringField,
       if (v == "") return true;
       
       if(isNaN(v)) return false;
-      return !!this.el.value.match(/^[0-9]*$/);
+      return !!this.el.value.match(new RegExp(this.options.negative ? "^[+-]?[0-9]*$" : "^\\+?[0-9]*$") );
    }
    
 });

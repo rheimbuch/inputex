@@ -171,6 +171,9 @@ lang.extend(inputEx.TypeField, inputEx.Field,
       // Set the parameters value
       this.group.setValue(value.inputParams, false);
       
+      // Rebuild the fieldValue
+      this.updateFieldValue();
+      
 	   if(sendUpdatedEvt !== false) {
 	      // fire update event
          this.fireUpdatedEvt();
@@ -345,7 +348,8 @@ if(inputEx.ListField) {
 
 if(inputEx.IntegerField) {
    inputEx.IntegerField.groupOptions = inputEx.IntegerField.superclass.constructor.groupOptions.concat([
-      { type: 'integer', inputParams: {label: 'Radix', name: 'radix'}}
+      //{ type: 'integer', inputParams: {label: 'Radix', name: 'radix', value: 10}},
+      {type: 'boolean', inputParams: {label: 'Accept negative', name: 'negative', value: false} }
    ]);
 }
 

@@ -198,17 +198,45 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	myDataTable.itemRemovedEvt.subscribe(function(e, args) {
 		var record = args[0];
 		var data = record.getData();
-		//console.log("itemRemovedEvt", data);
+		console.log("itemRemovedEvt", data);
+		
+		
+		myDataSource.sendRequest(null, {
+			success: function(o,data) {
+				console.log("success",data.results);
+			}
+		});
 	});
 	myDataTable.itemAddedEvt.subscribe(function(e, args) {
 		var record = args[0];
 		var data = record.getData();
-		//console.log("itemAddedEvt", data);
+		console.log("itemAddedEvt", data);
+		
+		console.log(myDataTable.datatable);
+		try {
+		var rs = myDataTable.datatable.getRecordSet();
+		console.log(rs);
+		} catch(ex) {
+			console.log(ex);
+		}
+		
+		myDataSource.sendRequest(null, {
+			success: function(o,data) {
+				console.log("success",data.results);
+			}
+		});
 	});
 	myDataTable.itemModifiedEvt.subscribe(function(e, args) {
 		var record = args[0];
 		var data = record.getData();
-		//console.log("itemModifiedEvt", data);
+		console.log("itemModifiedEvt", data);
+		
+		
+		myDataSource.sendRequest(null, {
+			success: function(o,data) {
+				console.log("success",data.results);
+			}
+		});
 	});
 	
 	// Example 2
