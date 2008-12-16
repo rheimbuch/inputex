@@ -134,7 +134,8 @@ inputEx.widget.DataTable.prototype = {
       // Hiding subform
       this.hideSubform();
       
-      Dom.setStyle(this.subForm.divEl, "position", "absolute");
+      // Add class to style the popup
+      Dom.addClass(this.subForm.divEl, "inputEx-DataTable-formWrapper");
       
       this.options.parentEl.appendChild(inputEx.cn('div', null, {"clear":"both"}));
    },

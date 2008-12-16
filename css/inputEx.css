@@ -488,7 +488,8 @@ div.inputEx-RadioField-choice {
 div.inputEx-DataTable-formContainer {
 	float: left;
 }
-div.inputEx-DataTable-formContainer div.inputEx-Group {
+div.inputEx-DataTable-formContainer div.inputEx-DataTable-formWrapper {
+   position:absolute;
 	width: 300px;
 	background-color: white;
 	-moz-border-radius-bottomright: 10px;
