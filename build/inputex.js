@@ -399,13 +399,18 @@ inputEx.renderVisu = function(visuOptions,data, parentEl) {
 };
 
 })();(function() {
-   var inputEx = YAHOO.inputEx;
+   var inputEx = YAHOO.inputEx, lang = YAHOO.lang;
+ 
 /**
+ * Namespace containing utility functions for conversion between inputEx JSON format and JSON Schema
  * WARNING: the json-schema methods are EXPERIMENTAL.
+ *          The inputEx.JsonSchema.schemaToInputEx method has been REMOVED (brutally yes...)
  *
- * Conversion between inputEx json format and JSON Schema
+ * 
  * based on "Json Schema Proposal Second Draft":
  * http://groups.google.com/group/json-schema/web/json-schema-proposal---second-draft
+ *
+ *
  *
  * The proposal is still under discussion and the implementation is very minimalist.
  *
@@ -419,100 +424,251 @@ inputEx.renderVisu = function(visuOptions,data, parentEl) {
  *    - no tuple typing for arrays
  *    - no "Union type definition"
  *
+ * @class JsonSchema
+ * @static
+ * @namespace inputEx
  */
 inputEx.JsonSchema = {
    
    /**
-    * Convert a json schema to a inputEx group object config
-    *
-    * @param {Object} jsonSchema The evaled JSON schema
-    * @param {String} groupName optional, used for the "object" json schema type
+    * Convert the inputEx JSON fields to a JSON schema
     */
-   schemaToInputEx: function(p, propertyName) {
-      
-      var fieldDef = {inputParams: { label: propertyName, name: propertyName} };
-      if(p.type) {
-         
-         var type = p.type;
-         
-         // If type is a "Union type definition", we'll use the first type for the field
-         // "array" <=>  [] <=> ["any"]
-         if(YAHOO.lang.isArray(type)) {
-            if(type.length == 0 || (type.length == 1 && type[0] == "any") ) {
-               type = "array";
-            }
-            else {
-               type = type[0];
-            }
-         }
-         else if(YAHOO.lang.isObject(type) ) {
-            // What do we do ??
-            //console.log("type is an object !!");
-         }
-         
-         fieldDef.type = type;
-      
-         if(type == "array" ) {
-            fieldDef.type = "list";
-         }
-         else if(type == "object" ) {
-            fieldDef.type = "group";
-            //fieldDef.inputParams = this.schemaToInputEx(p, propertyName);
-            //fieldDef.inputParams = this._parseSchemaProperty(p, propertyName);
-            var groupDef = { fields: [] };
+   inputExToSchema: function(inputExJson) {
+      // TODO :P
+   }
 
-            if(propertyName) groupDef.name = propertyName;
+};
 
-            for(var key in p.properties) {
-               if(p.properties.hasOwnProperty(key)) {
-                  groupDef.fields.push( this.schemaToInputEx(p.properties[key], key) );
-               }
-            }
 
-            fieldDef.inputParams = groupDef;
-            
-         }
-         else if(type == "string" && (!!p.options) ) {
-            fieldDef.type = "select";
-            fieldDef.inputParams.selectOptions = [];
-            fieldDef.inputParams.selectValues = [];
-            for(var i = 0 ; i < p.options.length ; i++) {
-               var o = p.options[i];
-               fieldDef.inputParams.selectOptions.push(o.label);
-               fieldDef.inputParams.selectValues.push(o.value);
-            }
-         }
-         else if(type == "string") {
-            if( p.format ) {
-               if(p.format == "html") {
-                  fieldDef.type = "html";
-               }
-               else if(p.format == "date") {
-                  fieldDef.type = "date";
-                  fieldDef.inputParams.tooltipIcon = true;
-               }
-            }
-         }
-      }
-      else if(p["$ref"]){
-         throw new Error("$ref not implemented yet...");
-      }
-      
-      return fieldDef;
-   },
+/**
+ * 
+ * @class Builder
+ * @namespace inputEx.JsonSchema
+ */
+inputEx.JsonSchema.Builder = function(options) {
+	
+	var options = options || {};
+	this.options  = options; 
+	
+	/**
+	 * specify how other schema properties are mapped to inputParam properties
+	 */
+	this.schemaToParamMap = options.schemaToParamMap || {
+		'title':'label',
+		'description':'description',
+		'_inputex':null	// null value means copy child key/value pairs into inputParams directly
+	};
+	
+	/**
+	 * @property referenceResolver
+	 */
+	this.referenceResolver = options.referenceResolver || null;
+	
+	/**
+	 * options to be applied to inputParams unless already specified
+	 * @property defaultOptions
+	 */
+	this.defaultOptions = options.defaultOptions || {};	
+	
+	/**
+	 * key is reference, value is schema
+	 * @property schemaIdentifierMap
+	 */
+	this.schemaIdentifierMap = options.schemaIdentifierMap || {};
+};
+
+inputEx.JsonSchema.Builder.prototype = {
    
-   
+   /** 
+ 	 * return a schema based on the reference value
+ 	 * default is to look up in map
+ 	 * @method defaultReferenceResolver
+    */
+	defaultReferenceResolver:function(reference) {
+		return this.schemaIdentifierMap[reference] || null;
+	},
+	
+	/**
+	 * Convert a JSON schema to inputEx JSON
+	 * @method schemaToInputEx
+	 * @param {JSONSchema} p
+	 */
+	schemaToInputEx:function(p, propertyName) {
+	
+	   var fieldDef = {inputParams: { label: propertyName, name: propertyName} };
+	   var schemaMap = this.schemaToParamMap;
+    	var referencedSchema = p["$ref"]; 
+	    
+	    if(referencedSchema){
+	    	var new_schema = null;
+	    	if(this.referenceResolver) {
+		       new_schema = this.referenceResolver(referencedSchema);
+		    }
+	    	if(new_schema === null) {
+	    		new_schema = this.defaultReferenceResolver(referencedSchema);
+	    	}
+	    	if(new_schema === null) {
+	    		throw "Schema for property :"+propertyName+" $references "+referencedSchema+', not found';
+	    	}
+	    	// copy options into new schema, for example we can overide presentation
+	    	// of a defined schema depending on where it is used
+	    	new_schema = lang.merge(new_schema);	// copy new_schema
+	    	
+	    	for(var pk in p) {
+	    		if(p.hasOwnProperty(pk) && lang.isUndefined(new_schema[pk]) && pk != '$ref') {
+	    			new_schema[pk] = p[pk];
+	    		}
+	    	}
+	    	p = new_schema;
+	    }
+
+	    if(!p.optional) {
+	    	fieldDef.inputParams.required = true;
+	    }
+
+	    for(var key in schemaMap) {
+	        if(schemaMap.hasOwnProperty(key)) {
+	      	  var paramName = schemaMap[key]; 
+	      	  var v = p[key];
+	      	  if(!lang.isUndefined(v)) {
+	      		  if(paramName === null) {
+	      			  // copy / merge values from v directly into inputParams
+	      			  if(lang.isObject(v)) {
+	      				  // v must be an object, copy key/value pairs into inputParams
+	      				  for(var vkey in v) {
+	      					  if(v.hasOwnProperty(vkey)) {
+	      						  fieldDef.inputParams[vkey] = v[vkey];
+	      					  }
+	      				  }
+	      			  }
+	      		  } else {
+	      			  fieldDef.inputParams[paramName] = v;
+	      		  }
+	      	  }
+	        }
+	    }
+	    if(p.type) {	       
+	       var type = p.type;
+	       
+	       // If type is a "Union type definition", we'll use the first type for the field
+	       // "array" <=>  [] <=> ["any"]
+	       if(lang.isArray(type)) {
+	          if(type.length === 0 || (type.length == 1 && type[0] == "any") ) {
+	             type = "array";
+	          }
+	          else {
+	             type = type[0];
+	          }
+	       }
+	       else if(lang.isObject(type) ) {
+	          // What do we do ??
+	          //console.log("type is an object !!");
+	       }
+	       
+	       fieldDef.type = type;
+	    
+	       if(type == "array" ) {
+	          fieldDef.type = "list";
+	          if(lang.isObject(p.items) && !lang.isArray(p.items)) {
+	        	  // when items is an object, it's a schema that describes each item in the list
+	        	  fieldDef.inputParams.elementType = this.schemaToInputEx(p.items, propertyName);
+	          }
+	       }
+	       else if(type == "object" ) {
+	          fieldDef.type = "group";
+	          if(p.title && lang.isUndefined(fieldDef.inputParams.legend)) {
+	        	  fieldDef.inputParams.legend = p.title; 
+	          }
+	          //fieldDef.inputParams = this.schemaToInputEx(p, propertyName);
+	          //fieldDef.inputParams = this._parseSchemaProperty(p, propertyName);
+	          var fields = [];
+	          if(propertyName) {
+	        	  fieldDef.inputParams.name = propertyName;
+	          }
+	
+	          for(var key in p.properties) {
+	             if(p.properties.hasOwnProperty(key)) {
+	                fields.push( this.schemaToInputEx(p.properties[key], key) );
+	             }
+	          }
+	
+	          fieldDef.inputParams.fields = fields;
+	          
+	       }
+	       else if(type == "string" && (!!p.options) ) {
+	          fieldDef.type = "select";
+	          fieldDef.inputParams.selectOptions = [];
+	          fieldDef.inputParams.selectValues = [];
+	          for(var i = 0 ; i < p.options.length ; i++) {
+	             var o = p.options[i];
+	             fieldDef.inputParams.selectOptions.push(o.label);
+	             fieldDef.inputParams.selectValues.push(o.value);
+	          }
+	       }
+	       else if(type == "string") {
+	    	  if(!lang.isUndefined(p.pattern) && lang.isUndefined(fieldDef.inputParams.regexp)) {
+	    		  if(lang.isString(p.pattern)) {
+	    			  fieldDef.inputParams.regexp = new RegExp(p.pattern);
+	    		  } else {
+	    			  fieldDef.inputParams.regexp = p.pattern;
+	    		  }
+	    	  }
+	    	  if(!lang.isUndefined(p.maxLength) && lang.isUndefined(fieldDef.inputParams.maxLength)) {
+	    		  fieldDef.inputParams.maxLength = p.maxLength; 
+	    	  }
+
+	    	  if(!lang.isUndefined(p.minLength) && lang.isUndefined(fieldDef.inputParams.minLength)) {
+	    		  fieldDef.inputParams.minLength = p.minLength; 
+	    	  }
+
+	    	  if(!lang.isUndefined(p.readonly) && lang.isUndefined(fieldDef.inputParams.readonly)) {
+	    		  fieldDef.inputParams.readonly = p.readonly; 
+	    	  }
+
+           // According to http://groups.google.com/group/json-schema/web/json-schema-possible-formats
+	          if( p.format ) {
+	             if(p.format == "html") {
+	                fieldDef.type = "html";
+	             } else if(p.format == "date") {
+	                fieldDef.type = "date";
+	                fieldDef.inputParams.tooltipIcon = true;
+	             } else if(p.format == 'url') {
+	            	 fieldDef.type = 'url';
+	             } else if(p.format == 'email') {
+	            	 fieldDef.type = 'email';
+	             } else if(p.format == 'text') {
+	            	 fieldDef.type = 'text';
+	             } else if(p.format == 'time') {
+	                fieldDef.type = 'time';
+	             } else if(p.format == 'ip-address') {
+    	             fieldDef.type = 'IPv4';
+    	          } else if(p.format == 'color') {
+    	             fieldDef.type = 'color';
+    	          }
+	          }
+	       }
+	    }
+	    
+	    // Add the defaultOptions
+	    for(var kk in this.defaultOptions) {
+	        if(this.defaultOptions.hasOwnProperty(kk) && lang.isUndefined(fieldDef.inputParams[kk])) {
+	        	fieldDef.inputParams[kk] = this.defaultOptions[kk]; 
+	        }	    	
+	    }
+	    return fieldDef;
+	},
+
    /**
     * Create an inputEx Json form definition from a json schema instance object
     * Respect the "Self-Defined Schema Convention"
+    * @method formFromInstance
     */
    formFromInstance: function(instanceObject) {
-      
       if(!instanceObject || !instanceObject["$schema"]) {
          throw new Error("Invalid json schema instance object. Object must have a '$schema' property.");
       }
       
-      var formDef = YAHOO.inputEx.JsonSchema.schemaToInputEx(instanceObject["$schema"]);
+      var formDef = this.schemaToInputEx(instanceObject["$schema"]);
       
       // Set the default value of each property to the instance value
       for(var i = 0 ; i < formDef.fields.length ; i++) {
@@ -521,13 +677,11 @@ inputEx.JsonSchema = {
       }
       
       return formDef;
-   },
-   
-   inputExToSchema: function(inputExJson) {
-      
    }
-
+   
 };
+
+
 
 
 })();(function() {
@@ -1305,6 +1459,10 @@ lang.extend(inputEx.Form, inputEx.Group,
          this.options.ajax.callback.scope = options.ajax.callback.scope || this;
          this.options.ajax.showMask = lang.isUndefined(options.ajax.showMask) ? false : options.ajax.showMask;
       }
+      
+      if (lang.isFunction(options.onSubmit)) {
+         this.options.onSubmit = options.onSubmit;
+      }
    },
 
 
@@ -1566,6 +1724,10 @@ lang.extend( inputEx.CombineField, inputEx.Field,
 	   
 	   for(var i = 0 ; i < this.options.fields.length ; i++) {
 	      
+	      if (this.options.required) {
+            this.options.fields[i].required = true;
+         }
+         
 	      var field = this.renderField(this.options.fields[i]);
 	      // remove the line breaker (<div style='clear: both;'>)
 	      field.divEl.removeChild(field.divEl.childNodes[field.divEl.childNodes.length-1]);
@@ -1590,14 +1752,22 @@ lang.extend( inputEx.CombineField, inputEx.Field,
     * @param {Object} fieldOptions The field properties as required bu inputEx.buildField
     */
    renderField: function(fieldOptions) {
-
+      
+      // Subfields should inherit required property
+      if (this.options.required) {
+         if (!fieldOptions.inputParams) {fieldOptions.inputParams = {};}
+         fieldOptions.inputParams.required = true;
+      }
+      
       // Instanciate the field
-      var fieldInstance = inputEx.buildField(fieldOptions);      
+      var fieldInstance = inputEx(fieldOptions);
       
 	   this.inputs.push(fieldInstance);
       
 	   // Subscribe to the field "updated" event to send the group "updated" event
       fieldInstance.updatedEvt.subscribe(this.onChange, this, true);
+      // Subscribe sub-field "blur" event to trigger class setting at combineField level !
+      YAHOO.util.Event.addBlurListener(fieldInstance.getEl(),this.onBlur, this, true);
    	  
       return fieldInstance;
    },
@@ -1673,7 +1843,17 @@ lang.extend( inputEx.CombineField, inputEx.Field,
 	      // fire update event
          this.fireUpdatedEvt();
       }
-	}
+	},
+   
+   /**
+    * Useful for getState to return correct state (required, empty, etc...)
+    */
+   isEmpty: function() {
+      for(var i = 0 ; i < this.inputs.length ; i++) {
+	      if (!this.inputs[i].isEmpty()) return false;
+	   }
+	   return true;
+   }
 	
 });
 	
@@ -1839,25 +2019,11 @@ lang.extend(inputEx.StringField, inputEx.Field,
     * Set the focus to this field
     */
    focus: function() {
-      // Can't use lang.isFunction because IE >= 6 would say focus is not a function, even if it is !!
+      // Can't use lang.isFunction because IE >= 6 would say focus is not a function (IE says it's an object) !!
       if(!!this.el && !lang.isUndefined(this.el.focus) ) {
          this.el.focus();
       }
    },
-
-   /**
-    * Return (stateEmpty|stateRequired)
-    */
-   getState: function() {
-      var val = this.getValue();
-
-	   // if the field is empty :
-	   if( val === '') {
-	      return this.options.required ? inputEx.stateRequired : inputEx.stateEmpty;
-	   }
-
-	   return this.validate() ? inputEx.stateValid : inputEx.stateInvalid;
-	},
 
 	/**
     * Add the minLength string message handling
@@ -2298,6 +2464,13 @@ lang.extend(inputEx.ColorField, inputEx.Field,
    	// Added options
    	this.options.palette = options.palette;
    	this.options.colors = options.colors;
+   	
+   	if (options.ratio) { this.options.ratio = options.ratio;}
+   	if (options.cellPerLine) { this.options.cellPerLine = options.cellPerLine;}
+   	if (options.overlayPadding) { this.options.overlayPadding = options.overlayPadding;}
+   	if (options.cellHeight) { this.options.cellHeight = options.cellHeight;}
+   	if (options.cellWidth) { this.options.cellWidth = options.cellWidth;}
+   	if (options.cellMargin) { this.options.cellMargin = options.cellMargin;}
    },
    
 	/**
@@ -2485,9 +2658,9 @@ inputEx.ColorField.palettes = [
    ["#DEDFDE","#FFFF6B","#EFCB7B","#FFBE94","#FFB6B5","#A5E3FF","#A5CBFF","#99ABEF","#EFB2E7","#FF9AAD","#94E7C6","#A5FFD6","#CEFFA5","#E7EF9C","#FFE38C"],
    ["#000000","#993300","#333300","#003300","#003366","#000080","#333399","#333333","#800000","#FF6600","#808000","#008000","#008080","#0000FF","#666699","#808080","#FF0000","#FF9900","#99CC00","#339966","#33CCCC","#3366FF","#800080","#969696","#FF00FF","#FFCC00","#FFFF00","#00FF00","#00FFFF","#00CCFF","#993366","#C0C0C0","#FF99CC","#FFCC99","#FFFF99","#CCFFCC","#CCFFFF","#99CCFF","#CC99FF","#F0F0F0"],
    ["#FFFFCC","#FFFF99","#CCFFCC","#CCFF66","#99FFCC","#CCFFFF","#66CCCC","#CCCCFF","#99CCFF","#9999FF","#6666CC","#9966CC","#CC99FF","#FFCCFF","#FF99FF","#CC66CC","#FFCCCC","#FF99CC","#FFCCCC","#CC6699","#FF9999","#FF9966","#FFCC99","#FFFFCC","#FFCC66","#FFFF99","#CCCC66"],
-   ["#CCCCCC","#31A8FA","#8EC1E5","#58D7CF","#89E2BB","#A7F7F8","#F6B77C","#FE993F","#FE6440","#F56572","#FA9AA3","#F7B1CA","#E584AF","#D1C3EF","#AB77B8","#C69FE7","#90D28A","#C2F175","#EDEA9A","#F3DF70","#F8D1AE","#F98064","#F54F5E","#EC9099","#F0B5BA","#EDA0BB","#D375AC","#BC8DBE","#8C77B8"],
+   ["#D0D0D0","#31A8FA","#8EC1E5","#58D7CF","#89E2BB","#A7F7F8","#F6B77C","#FE993F","#FE6440","#F56572","#FA9AA3","#F7B1CA","#E584AF","#D1C3EF","#AB77B8","#C69FE7","#90D28A","#C2F175","#EDEA9A","#F3DF70","#F8D1AE","#F98064","#F54F5E","#EC9099","#F0B5BA","#EDA0BB","#D375AC","#BC8DBE","#8C77B8"],
    // idem in pastel tone (colors above with opacity 0.6 on white background)
-   ["#DEDFDE","#84CBFC","#BCDAF0","#9BE7E3","#B9EED7","#CBFBFB","#FAD4B1","#FFC28C","#FFA28D","#F9A3AB","#FCC3C8","#FBD1E0","#F0B6CF","#E4DBF6","#CDAED5","#DDC6F1","#BDE4B9","#DBF7AD","#F5F3C3","#F8ECAA","#FBE4CF","#FCB3A2","#F9969F","#F4BDC2","#F6D3D6","#F5C6D7","#E5ADCE","#D7BBD8","#BAAED5"]
+   ["#EEEEEE","#84CBFC","#BCDAF0","#9BE7E3","#B9EED7","#CBFBFB","#FAD4B1","#FFC28C","#FFA28D","#F9A3AB","#FCC3C8","#FBD1E0","#F0B6CF","#E4DBF6","#CDAED5","#DDC6F1","#BDE4B9","#DBF7AD","#F5F3C3","#F8ECAA","#FBE4CF","#FCB3A2","#F9969F","#F4BDC2","#F6D3D6","#F5C6D7","#E5ADCE","#D7BBD8","#BAAED5"]
 ];	
 
 //  -> ensure color has hexadecimal format like "#FF8E00"
@@ -3380,6 +3553,7 @@ inputEx.registerType("inplaceedit", inputEx.InPlaceEdit);
  * @constructor
  * @param {Object} options Added options:
  * <ul>
+ *    <li>negative: boolean indicating if we accept boolean numbers</li>
  * </ul>
  */
 inputEx.IntegerField = function(options) {
@@ -3390,6 +3564,16 @@ YAHOO.lang.extend(inputEx.IntegerField, inputEx.StringField,
  * @scope inputEx.IntegerField.prototype   
  */
 {
+   /**
+    * Adds the negative option
+    * @method setOptions
+    * @param {Object} options
+    */
+   setOptions: function(options) {
+      inputEx.IntegerField.superclass.setOptions.call(this, options);
+      
+      this.options.negative = lang.isUndefined(options.negative) ? false : options.negative;
+   },
    
    /**
     * Get the value
@@ -3406,6 +3590,7 @@ YAHOO.lang.extend(inputEx.IntegerField, inputEx.StringField,
    
    /**
     * Validate  if is a number
+    * @method validate
     */
    validate: function() {
       var v = this.getValue();
@@ -3414,7 +3599,7 @@ YAHOO.lang.extend(inputEx.IntegerField, inputEx.StringField,
       if (v == "") return true;
       
       if(isNaN(v)) return false;
-      return !!this.el.value.match(/^[0-9]*$/);
+      return !!this.el.value.match(new RegExp(this.options.negative ? "^[+-]?[0-9]*$" : "^\\+?[0-9]*$") );
    }
    
 });
@@ -3819,7 +4004,9 @@ YAHOO.lang.extend(inputEx.NumberField, inputEx.StringField,
       if (v == "") return true;
       
       if(isNaN(v)) return false;
-	   return !!this.el.value.match(/^(\+?((([0-9]+(\.)?)|([0-9]*\.[0-9]+))([eE][+-]?[0-9]+)?))$/);
+	   
+	   // We have to check the number with a regexp, otherwise "0.03a" is parsed to a valid number 0.03
+	   return !!this.el.value.match(/^([\+\-]?((([0-9]+(\.)?)|([0-9]*\.[0-9]+))([eE][+-]?[0-9]+)?))$/);
    }
 
 });
@@ -4141,7 +4328,14 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 
       this.options.className = options.className ? options.className : 'inputEx-Field inputEx-RadioField';
 
-	   this.options.allowAny = lang.isUndefined(options.allowAny) ? false : options.allowAny;
+	   if (lang.isUndefined(options.allowAny)) {
+        this.options.allowAny = false;
+      } else {
+        this.options.allowAny = {};
+        if (lang.isArray(options.allowAny.separators)) { this.options.allowAny.separators = options.allowAny.separators;};
+        this.options.allowAny.validator = (lang.isFunction(options.allowAny.validator)) ? options.allowAny.validator : function(val) {return true;};
+        this.options.allowAny.value = (!lang.isUndefined(options.allowAny.value)) ? options.allowAny.value : "";
+      }
       
       this.options.choices = options.choices;
       // values == choices if not provided
@@ -4158,8 +4352,10 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	   for(var i = 0 ; i < this.options.choices.length ; i++) {
 	
 	      var div = inputEx.cn('div', {className: 'inputEx-RadioField-choice'});
-	
-	      var radioId = this.divEl.id?this.divEl.id+'-field':YAHOO.util.Dom.generateId();
+	      
+	      // radioId MUST be different for each option,
+	      // so add "-opt"+i (where i = option's position) to generated id
+	      var radioId = this.divEl.id ? this.divEl.id+'-field-opt'+i : YAHOO.util.Dom.generateId();
 	      
 	      var radio = inputEx.cn('input', { id: radioId,type: 'radio', name: this.options.name, value: this.options.values[i] });
            
@@ -4175,20 +4371,36 @@ lang.extend(inputEx.RadioField, inputEx.Field,
      
      // Build a "any" radio combined with a StringField
      if(this.options.allowAny) {
+        var div = inputEx.cn('div', {className: 'inputEx-RadioField-choice'});
+        
         if(YAHOO.env.ua.ie) {
            this.radioAny = document.createElement("<input type='radio' name='"+this.options.name+"'>");
         }
         else {
            this.radioAny = inputEx.cn('input', { type: 'radio', name: this.options.name });
         }
-	     this.fieldContainer.appendChild(this.radioAny);
-	      
-        this.anyField = new inputEx.StringField({});
+	     div.appendChild(this.radioAny);
+	     
+        this.anyField = new inputEx.StringField({value:this.options.allowAny.value});
         Dom.setStyle(this.radioAny, "float","left");
-        Dom.setStyle(this.anyField.divEl, "float","left");
+        Dom.setStyle(this.anyField.getEl(), "float","left");
         this.anyField.disable();
-     	  this.fieldContainer.appendChild(this.anyField.getEl());
+        
+        if (this.options.allowAny.separators) {
+     	     var sep = inputEx.cn("div",null,{margin:"3px"},this.options.allowAny.separators[0] || '');
+     	     Dom.setStyle(sep, "float","left");
+     	     div.appendChild(sep);
+  	     }
+  	     
+     	  div.appendChild(this.anyField.getEl());
      	  
+        if (this.options.allowAny.separators) {
+     	     var sep = inputEx.cn("div",null,{margin:"3px"},this.options.allowAny.separators[1] || '');
+     	     Dom.setStyle(sep, "float","left");
+     	     div.appendChild(sep);
+  	     }
+  	     
+  	     this.fieldContainer.appendChild( div );
      	  this.optionEls.push(this.radioAny);
      }
      
@@ -4212,6 +4424,9 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	      this.anyField.updatedEvt.subscribe(function(e) {
 	         inputEx.RadioField.superclass.onChange.call(this,e);
 	      }, this, true);
+	      
+	      // Update radio field style after editing anyField content !
+	      Event.addBlurListener(this.anyField.el, this.onBlur, this, true);
 	   }
 	},
 	   
@@ -4282,6 +4497,22 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	   
       // call parent class method to set style and fire updatedEvt
       inputEx.StringField.superclass.setValue.call(this, value, sendUpdatedEvt);
+	},
+	
+	validate: function() {
+	   if (this.options.allowAny) {
+	      for(var i = 0 ; i < this.optionEls.length ; i++) {
+   	      if(this.optionEls[i].checked) {
+   	         // if "any" option checked
+   	         if(this.radioAny && this.radioAny == this.optionEls[i]) {
+   	            var val = this.anyField.getValue();
+         	      return this.options.allowAny.validator(val);
+   	         }
+   	      }
+   	   }
+	   }
+	   
+	   return true;
 	}
 	
 });   
@@ -4620,7 +4851,7 @@ inputEx.registerType("text", inputEx.Textarea);
 
 /**
  * @class A field limited to number inputs (floating)
- * @extends inputEx.Field
+ * @extends inputEx.CombineField
  * @constructor
  * @param {Object} options inputEx.Field options object
  */
@@ -4640,7 +4871,7 @@ inputEx.TimeField = function(options) {
    options.separators = options.separators || [false,":",":",false];
    inputEx.TimeField.superclass.constructor.call(this,options);
 };
-YAHOO.lang.extend(inputEx.TimeField, inputEx.CombineField, 
+lang.extend(inputEx.TimeField, inputEx.CombineField, 
 /**
  * @scope inputEx.TimeField.prototype   
  */
@@ -4676,7 +4907,7 @@ inputEx.registerType("time", inputEx.TimeField);
 
 /**
  * @class A field limited to number inputs (floating)
- * @extends inputEx.Field
+ * @extends inputEx.CombineField
  * @constructor
  * @param {Object} options Added options
  * <ul>

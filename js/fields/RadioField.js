@@ -31,7 +31,14 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 
       this.options.className = options.className ? options.className : 'inputEx-Field inputEx-RadioField';
 
-	   this.options.allowAny = lang.isUndefined(options.allowAny) ? false : options.allowAny;
+	   if (lang.isUndefined(options.allowAny)) {
+        this.options.allowAny = false;
+      } else {
+        this.options.allowAny = {};
+        if (lang.isArray(options.allowAny.separators)) { this.options.allowAny.separators = options.allowAny.separators;};
+        this.options.allowAny.validator = (lang.isFunction(options.allowAny.validator)) ? options.allowAny.validator : function(val) {return true;};
+        this.options.allowAny.value = (!lang.isUndefined(options.allowAny.value)) ? options.allowAny.value : "";
+      }
       
       this.options.choices = options.choices;
       // values == choices if not provided
@@ -67,20 +74,36 @@ lang.extend(inputEx.RadioField, inputEx.Field,
      
      // Build a "any" radio combined with a StringField
      if(this.options.allowAny) {
+        var div = inputEx.cn('div', {className: 'inputEx-RadioField-choice'});
+        
         if(YAHOO.env.ua.ie) {
            this.radioAny = document.createElement("<input type='radio' name='"+this.options.name+"'>");
         }
         else {
            this.radioAny = inputEx.cn('input', { type: 'radio', name: this.options.name });
         }
-	     this.fieldContainer.appendChild(this.radioAny);
-	      
-        this.anyField = new inputEx.StringField({});
+	     div.appendChild(this.radioAny);
+	     
+        this.anyField = new inputEx.StringField({value:this.options.allowAny.value});
         Dom.setStyle(this.radioAny, "float","left");
-        Dom.setStyle(this.anyField.divEl, "float","left");
+        Dom.setStyle(this.anyField.getEl(), "float","left");
         this.anyField.disable();
-     	  this.fieldContainer.appendChild(this.anyField.getEl());
+        
+        if (this.options.allowAny.separators) {
+     	     var sep = inputEx.cn("div",null,{margin:"3px"},this.options.allowAny.separators[0] || '');
+     	     Dom.setStyle(sep, "float","left");
+     	     div.appendChild(sep);
+  	     }
+  	     
+     	  div.appendChild(this.anyField.getEl());
      	  
+        if (this.options.allowAny.separators) {
+     	     var sep = inputEx.cn("div",null,{margin:"3px"},this.options.allowAny.separators[1] || '');
+     	     Dom.setStyle(sep, "float","left");
+     	     div.appendChild(sep);
+  	     }
+  	     
+  	     this.fieldContainer.appendChild( div );
      	  this.optionEls.push(this.radioAny);
      }
      
@@ -177,6 +200,22 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	   
       // call parent class method to set style and fire updatedEvt
       inputEx.StringField.superclass.setValue.call(this, value, sendUpdatedEvt);
+	},
+	
+	validate: function() {
+	   if (this.options.allowAny) {
+	      for(var i = 0 ; i < this.optionEls.length ; i++) {
+   	      if(this.optionEls[i].checked) {
+   	         // if "any" option checked
+   	         if(this.radioAny && this.radioAny == this.optionEls[i]) {
+   	            var val = this.anyField.getValue();
+         	      return this.options.allowAny.validator(val);
+   	         }
+   	      }
+   	   }
+	   }
+	   
+	   return true;
 	}
 	
 });   

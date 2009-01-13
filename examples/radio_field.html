@@ -122,6 +122,53 @@
 
 </div>
 
+<!-- Example 5 -->
+<div class='exampleDiv'>
+
+	<p class="title">Advanced allowAny option</p>
+	
+	<p>The "allowAny" option adds a radio associated to a StringField to let the user enter any value.</p>
+
+	<style>
+	#container5 div.inputEx-StringField-wrapper input {width: 25px;}
+	#container5 div.inputEx-RadioField-choice {float: none;}
+	</style>
+
+	<div class='demoContainer' id='container5'></div>
+
+	<div class='codeContainer'>
+		<textarea name="code" class="JScript">
+			var field5 = new YAHOO.inputEx.RadioField({
+				label: 'Would you like to receive an email reminder ?',
+				name: 'example5',
+				choices: ['No'],
+				values: ['0'],
+				parentEl: 'container5',
+				allowAny: {
+					separators:['Yes, ',' hours before the event'],
+					value:'3', // default value for allowAny field, not for radioField
+					validator: function(val) {
+						var num = parseInt(val,10);
+						return (val === ""+num && num >= 1 && num <= 48); 
+					}
+				},
+				messages: {invalid:"Hours should be between 1 and 48."},
+				showMsg:true,
+				required:true
+			});
+			field5.updatedEvt.subscribe(function(e, params) {
+					YAHOO.util.Dom.get('container5').appendChild( YAHOO.inputEx.cn('div',null,null, "Updated with value: "+params[0]) );
+			});
+			
+			/* Style */
+			#container5 div.inputEx-StringField-wrapper input {width: 25px;}
+			#container5 div.inputEx-RadioField-choice {float: none;}
+			
+		</textarea>
+	</div>
+
+</div>
+
 
 <!-- YUI Library -->
 <script type="text/javascript" src="../lib/yui/yahoo/yahoo-min.js"></script> 
@@ -169,6 +216,28 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 	exampleDiv.appendChild(button2); 
 	YAHOO.util.Event.addListener(button2, 'click', function() { alert(field4.getValue()); });
 	
+	// Example 5
+	var field5 = new YAHOO.inputEx.RadioField({
+		label: 'Would you like to receive an email reminder ?',
+		name: 'example5',
+		choices: ['No'],
+		values: ['0'],
+		parentEl: 'container5',
+		allowAny: {
+			separators:['Yes, ',' hours before the event'],
+			value:'3', // default value for allowAny field, not for radioField
+			validator: function(val) {
+				var num = parseInt(val,10);
+				return (val === ""+num && num >= 1 && num <= 48); 
+			}
+		},
+		messages: {invalid:"Hours should be between 1 and 48."},
+		showMsg:true,
+		required:true
+	});
+	field5.updatedEvt.subscribe(function(e, params) {
+			YAHOO.util.Dom.get('container5').appendChild( YAHOO.inputEx.cn('div',null,null, "Updated with value: "+params[0]) );
+	});
 	
 	
 	} catch(ex) {console.log(ex);}
