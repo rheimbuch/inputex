@@ -49,7 +49,7 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
     */
    renderEditor: function() {
       
-      this.editorContainer = inputEx.cn('div', null, {display: 'none'});
+      this.editorContainer = inputEx.cn('div', {className: 'inputEx-InPlaceEdit-editor'}, {display: 'none'});
       
       // Render the editor field
       this.editorField = inputEx.buildField(this.options.editorField);
