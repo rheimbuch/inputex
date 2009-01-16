@@ -35,6 +35,7 @@ not released yet
 		* TypeField has been changed. Many bugfixes + cleaner way to defined fields parameters
 
 	- Various: 
+	   * Switching to GIT repository
 		* Better examples (dialog, yuiloader, multiselect)
 		* inputExBuilder much better (now with page generation !)
 		* stylesheet for IE6 css fix (still not full support)
