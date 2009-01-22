@@ -5,10 +5,10 @@
   <shortdesc xml:lang="en">Javascript framework to build forms and fields</shortdesc>
   <description xml:lang="en">Javascript framework to build forms and fields</description>
   <bug-database rdf:resource="http://code.google.com/p/inputex/issues/list" />
-  <download-page rdf:resource="http://code.google.com/p/inputex/downloads/list" />
+  <download-page rdf:resource="http://javascript.neyric.com/inputex" />
   <homepage rdf:resource="http://javascript.neyric.com/inputex" />
   <license rdf:resource="http://javascript.neyric.com/inputex/license.txt" />
-  <wiki rdf:resource="http://code.google.com/p/inputex/w/list" />
+  <wiki rdf:resource="http://wiki.github.com/neyric/inputex/home" />
   <maintainer>
     <foaf:Person>
       <foaf:name>Eric Abouaf</foaf:name>
@@ -23,6 +23,12 @@
     </SVNRepository>
   </repository>
 <release>
+	<Version>
+    <name>inputEx-0.2.1</name>
+    <created>01/22/2009</created>
+    <revision>0.2.1</revision>
+    <file-release rdf:resource="http://javascript.neyric.com/inputex/inputex-0.2.1.zip" />
+  </Version>
 	<Version>
     <name>inputEx-0.2.0</name>
     <created>11/01/2008</created>

@@ -1,6 +1,6 @@
  _                   _   _____      
 (_)_ __  _ __  _   _| |_| ____|_  __
-| | '_ \| '_ \| | | | __|  _| \ \/ /		version 0.2.1a
+| | '_ \| '_ \| | | | __|  _| \ \/ /		version 0.2.1
 | | | | | |_) | |_| | |_| |___ >  < 		Distributed under the MIT License (see license.txt)
 |_|_| |_| .__/ \____|\__|_____/_/\_\
         |_|                         
@@ -13,7 +13,7 @@ Release Notes:
 version 0.2.1:
 --------------
 
-not released yet
+released on January, 22nd 2009
 
 	- API changes:
 		* setValue takes a second argument (sendUpdatedEvt) to prevent firing the updatedEvt if false
@@ -24,8 +24,8 @@ not released yet
 		   'empty' state still in use
 		* ColorField : colors option must be provided in ["#FFCEA5",...] format instead of ["FFCEA5",...] (so palettes are also modified)
 
-   - Added Fields
-   	* MenuField : new field to perform a selection in a multi-level selector (menu style)
+	- Added Fields
+		* MenuField : new field to perform a selection in a multi-level selector (menu style)
 		* VectorField : returns an array of number
 		* FileField-beta : for file upload using standard form post upload
 		* MapField from David Janes
@@ -35,7 +35,7 @@ not released yet
 		* TypeField has been changed. Many bugfixes + cleaner way to defined fields parameters
 
 	- Various: 
-	   * Switching to GIT repository
+		* Switching to GIT repository
 		* Better examples (dialog, yuiloader, multiselect)
 		* inputExBuilder much better (now with page generation !)
 		* stylesheet for IE6 css fix (still not full support)
@@ -69,7 +69,7 @@ released on November 1st 2008
 		* Dialog (beta): create a panel from a inputEx type definition
 		
 	- Field enhancements:
-	   * Field: Added a "destroy" method, focus method to set the focus on inputs
+		* Field: Added a "destroy" method, focus method to set the focus on inputs
 		* StringField: added typeInvitation, maxLength, minLength, readonly attributes
 		* Group: flatten option on type JSON, getFieldByName method, collapsible option
 	 	* Form mask

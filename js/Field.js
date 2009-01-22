@@ -190,7 +190,7 @@ inputEx.Field.prototype = {
 	   // remove previous class
 	   if( this.previousState ) {
 	      // remove invalid className for both required and invalid fields
-	      var className = 'inputEx-'+((this.previousState == inputEx.stateRequired) ? inputEx.stateInvalid : this.previousState)
+	      var className = 'inputEx-'+((this.previousState == inputEx.stateRequired) ? inputEx.stateInvalid : this.previousState);
 		   Dom.removeClass(this.divEl, className);
 	   }
 	   
@@ -198,7 +198,7 @@ inputEx.Field.prototype = {
 	   var state = this.getState();
 	   if( !(state == inputEx.stateEmpty && Dom.hasClass(this.divEl, 'inputEx-focused') ) ) {
 	      // add invalid className for both required and invalid fields
-	      var className = 'inputEx-'+((state == inputEx.stateRequired) ? inputEx.stateInvalid : state)
+	      var className = 'inputEx-'+((state == inputEx.stateRequired) ? inputEx.stateInvalid : state);
 	      Dom.addClass(this.divEl, className );
       }
 	
@@ -324,9 +324,9 @@ inputEx.Field.prototype = {
       if(!this.msgEl) {
          this.msgEl = inputEx.cn('div', {className: 'inputEx-message'});
           try{
-         var divElements = this.divEl.getElementsByTagName('div')
-         this.divEl.insertBefore(this.msgEl, divElements[(divElements.length-1>=0)?divElements.length-1:0]); //insertBefore the clear:both div
-          }catch(e){alert(e)}
+             var divElements = this.divEl.getElementsByTagName('div');
+             this.divEl.insertBefore(this.msgEl, divElements[(divElements.length-1>=0)?divElements.length-1:0]); //insertBefore the clear:both div
+          }catch(e){alert(e);}
       }
       this.msgEl.innerHTML = msg;
    },

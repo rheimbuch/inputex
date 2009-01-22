@@ -71,7 +71,7 @@ lang.augmentObject(inputEx,
  */   
 {
    
-   VERSION: "0.2.0",
+   VERSION: "0.2.1",
    
    /**
     * Url to the spacer image. This url schould be changed according to your project directories
@@ -248,10 +248,10 @@ lang.augmentObject(inputEx,
             var strDom = '<' + tag;
             if (domAttributes!=='undefined'){
                 for (var k in domAttributes){
-                    strDom += ' ' + k + '="' + domAttributes[k] + '"'
+                    strDom += ' ' + k + '="' + domAttributes[k] + '"';
                 }
             }
-            strDom += '/' + '>'
+            strDom += '/' + '>';
             return document.createElement(strDom);
 
         } else {
@@ -876,7 +876,7 @@ inputEx.Field.prototype = {
 	   // remove previous class
 	   if( this.previousState ) {
 	      // remove invalid className for both required and invalid fields
-	      var className = 'inputEx-'+((this.previousState == inputEx.stateRequired) ? inputEx.stateInvalid : this.previousState)
+	      var className = 'inputEx-'+((this.previousState == inputEx.stateRequired) ? inputEx.stateInvalid : this.previousState);
 		   Dom.removeClass(this.divEl, className);
 	   }
 	   
@@ -884,7 +884,7 @@ inputEx.Field.prototype = {
 	   var state = this.getState();
 	   if( !(state == inputEx.stateEmpty && Dom.hasClass(this.divEl, 'inputEx-focused') ) ) {
 	      // add invalid className for both required and invalid fields
-	      var className = 'inputEx-'+((state == inputEx.stateRequired) ? inputEx.stateInvalid : state)
+	      var className = 'inputEx-'+((state == inputEx.stateRequired) ? inputEx.stateInvalid : state);
 	      Dom.addClass(this.divEl, className );
       }
 	
@@ -1010,9 +1010,9 @@ inputEx.Field.prototype = {
       if(!this.msgEl) {
          this.msgEl = inputEx.cn('div', {className: 'inputEx-message'});
           try{
-         var divElements = this.divEl.getElementsByTagName('div')
-         this.divEl.insertBefore(this.msgEl, divElements[(divElements.length-1>=0)?divElements.length-1:0]); //insertBefore the clear:both div
-          }catch(e){alert(e)}
+             var divElements = this.divEl.getElementsByTagName('div');
+             this.divEl.insertBefore(this.msgEl, divElements[(divElements.length-1>=0)?divElements.length-1:0]); //insertBefore the clear:both div
+          }catch(e){alert(e);}
       }
       this.msgEl.innerHTML = msg;
    },
@@ -1946,7 +1946,7 @@ lang.extend(inputEx.StringField, inputEx.Field,
             new YAHOO.util.KeyListener(this.el, {keys:[13]}, {fn:function(){
                 field.blur();
                 field.focus();
-            }}).enable()
+            }}).enable();
        }
 
 	   Event.addFocusListener(this.el, this.onFocus, this, true);
@@ -3327,7 +3327,7 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
     */
    renderEditor: function() {
       
-      this.editorContainer = inputEx.cn('div', null, {display: 'none'});
+      this.editorContainer = inputEx.cn('div', {className: 'inputEx-InPlaceEdit-editor'}, {display: 'none'});
       
       // Render the editor field
       this.editorField = inputEx.buildField(this.options.editorField);

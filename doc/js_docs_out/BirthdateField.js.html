@@ -19,7 +19,7 @@
 			
 			<h3>
 				<a href="./index.html">inputEx Documentation</a> &gt; BirthdateField.js
-				<span class="subtitle">0.2.1a</span>
+				<span class="subtitle">0.2.1</span>
 			</h3>
 		
 		</div>
@@ -71,8 +71,8 @@ lang.extend(inputEx.BirthdateField, inputEx.CombineField, {
       
       var values = [];
       
-      // !value catches "" (empty field), and invalid dates
-      if(!value || !lang.isFunction(value.getTime) || !lang.isNumber(value.getTime()) ) {
+      // !value catches "" (empty field), other tests invalid dates (Invalid Date, or NaN)
+      if(!value || !(value instanceof Date) || !lang.isNumber(value.getTime()) ) {
          values[this.monthIndex] = -1;
          values[this.yearIndex] = "";
          values[this.dayIndex] = "";
@@ -91,20 +91,29 @@ lang.extend(inputEx.BirthdateField, inputEx.CombineField, {
       
       // if selected month index is -1, new Date(..) would create a valid date with month == December !!!)
       if (values[this.monthIndex] == -1) {
-         return new Date(NaN,NaN,NaN); // "Invalid Date" 
+         return new Date(NaN,NaN,NaN); // -> Invalid Date (Firefox) or NaN (IE) (both instanceof Date ...)
       }
       
       return new Date(parseInt(values[this.yearIndex],10), values[this.monthIndex], parseInt(values[this.dayIndex],10) );
    },
    
    validate: function() {
-      var values = inputEx.BirthdateField.superclass.getValue.call(this);
       var val = this.getValue();
+            
+      // empty field
+      if (val === '') {
+         // validate only if not required
+         return !this.options.required;
+      }
       
-      // val == "" -> true
-      // val == any date -> true
-      // val == "Invalid Date" -> false
-      return (val != "Invalid Date");
+      // val is :
+      //  -> a Date, when valid
+      //  -> an Invalid Date (== "Invalid Date"), when invalid on FF
+      //  -> NaN, when invalid on IE
+      //
+      // These 3 cases would pass the "val instanceof Date" test, 
+      // but last 2 cases return NaN on val.getDate(), so "isFinite" test fails.
+      return (val instanceof Date && lang.isNumber(val.getTime()));
    },
    
 	isEmpty: function() {
@@ -243,6 +252,10 @@ inputEx.registerType("birthdate", inputEx.BirthdateField);
 							
 								
 								<li>
+									<a href="inputEx.FileField.html">inputEx.FileField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.Form.html">inputEx.Form</a></li>
 							
 								
@@ -279,7 +292,23 @@ inputEx.registerType("birthdate", inputEx.BirthdateField);
 							
 								
 								<li>
+									<a href="inputEx.JsonSchema.html">inputEx.JsonSchema</a></li>
+							
+								
+								<li>
+									<a href="inputEx.JsonSchema.Builder.html">inputEx.JsonSchema.Builder</a></li>
+							
+								
+								<li>
 									<a href="inputEx.ListField.html">inputEx.ListField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.MapField.html">inputEx.MapField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.MenuField.html">inputEx.MenuField</a></li>
 							
 								
 								<li>
@@ -300,6 +329,10 @@ inputEx.registerType("birthdate", inputEx.BirthdateField);
 								
 								<li>
 									<a href="inputEx.PasswordField.html">inputEx.PasswordField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.RadioButton.html">inputEx.RadioButton</a></li>
 							
 								
 								<li>
@@ -348,6 +381,10 @@ inputEx.registerType("birthdate", inputEx.BirthdateField);
 								
 								<li>
 									<a href="inputEx.UrlField.html">inputEx.UrlField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.VectorField.html">inputEx.VectorField</a></li>
 							
 								
 								<li>
@@ -447,6 +484,10 @@ inputEx.registerType("birthdate", inputEx.BirthdateField);
 							
 								
 								<li>
+								<a href="FileField-beta.js.html">FileField-beta.js</a></li>
+							
+								
+								<li>
 								<a href="Form.js.html">Form.js</a></li>
 							
 								
@@ -495,11 +536,23 @@ inputEx.registerType("birthdate", inputEx.BirthdateField);
 							
 								
 								<li>
+								<a href="it.js.html">it.js</a></li>
+							
+								
+								<li>
 								<a href="json-schema.js.html">json-schema.js</a></li>
 							
 								
 								<li>
 								<a href="ListField.js.html">ListField.js</a></li>
+							
+								
+								<li>
+								<a href="MapField.js.html">MapField.js</a></li>
+							
+								
+								<li>
+								<a href="MenuField.js.html">MenuField.js</a></li>
 							
 								
 								<li>
@@ -520,6 +573,10 @@ inputEx.registerType("birthdate", inputEx.BirthdateField);
 								
 								<li>
 								<a href="PasswordField.js.html">PasswordField.js</a></li>
+							
+								
+								<li>
+								<a href="RadioButton.js.html">RadioButton.js</a></li>
 							
 								
 								<li>
@@ -571,6 +628,10 @@ inputEx.registerType("birthdate", inputEx.BirthdateField);
 							
 								
 								<li>
+								<a href="VectorField.js.html">VectorField.js</a></li>
+							
+								
+								<li>
 								<a href="Visus.js.html">Visus.js</a></li>
 							
 						</ul>
@@ -584,7 +645,7 @@ inputEx.registerType("birthdate", inputEx.BirthdateField);
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Sat, 08 Nov 2008 16:49:23 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Thu, 22 Jan 2009 19:28:08 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

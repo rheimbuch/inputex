@@ -19,7 +19,7 @@
 			
 			<h3>
 				<a href="./index.html">inputEx Documentation</a> &gt; Field.js
-				<span class="subtitle">0.2.1a</span>
+				<span class="subtitle">0.2.1</span>
 			</h3>
 		
 		</div>
@@ -67,12 +67,10 @@ inputEx.Field = function(options) {
 	this.initEvents();
 	
 	// Set the initial value
+	//   -> no initial value = no style (setClassFromState called by setValue)
 	if(!lang.isUndefined(this.options.value)) {
 		this.setValue(this.options.value, false);
 	}
-	
-	// set default styling
-	this.setClassFromState();
 	
 	// append it immediatly to the parent DOM element
 	if(options.parentEl) {
@@ -128,24 +126,27 @@ inputEx.Field.prototype = {
 	   if(this.options.id) {
 	      this.divEl.id = this.options.id;
 	   }
+	   if(this.options.required) {
+	      Dom.addClass(this.divEl, "inputEx-required");
+	   }
 	   
 	   // Label element
 	   if(this.options.label) {
-	      this.labelDiv = inputEx.cn('div', {className: 'inputEx-label'});
+	      this.labelDiv = inputEx.cn('div', {id: this.divEl.id+'-label', className: 'inputEx-label', 'for': this.divEl.id+'-field'});
 	      this.labelEl = inputEx.cn('label');
 	      this.labelEl.appendChild( document.createTextNode(this.options.label) );
 	      this.labelDiv.appendChild(this.labelEl);
 	      this.divEl.appendChild(this.labelDiv);
       }
       
-      this.fieldContainer = inputEx.cn('div', {className: this.options.className});
+      this.fieldContainer = inputEx.cn('div', {className: this.options.className}); // for wrapping the field and description
 	
       // Render the component directly
       this.renderComponent();
       
       // Description
       if(this.options.description) {
-         this.fieldContainer.appendChild(inputEx.cn('div', {className: 'inputEx-description'}, null, this.options.description));
+         this.fieldContainer.appendChild(inputEx.cn('div', {id: this.divEl.id+'-desc', className: 'inputEx-description'}, null, this.options.description));
       }
       
    	this.divEl.appendChild(this.fieldContainer);
@@ -219,12 +220,19 @@ inputEx.Field.prototype = {
     */
 	setClassFromState: function() {
 	
+	   // remove previous class
 	   if( this.previousState ) {
-		   Dom.removeClass(this.divEl, 'inputEx-'+this.previousState );
+	      // remove invalid className for both required and invalid fields
+	      var className = 'inputEx-'+((this.previousState == inputEx.stateRequired) ? inputEx.stateInvalid : this.previousState);
+		   Dom.removeClass(this.divEl, className);
 	   }
+	   
+	   // add new class
 	   var state = this.getState();
-	   if( !(state == "empty" && Dom.hasClass(this.divEl, 'inputEx-focused') ) ) {
-	      Dom.addClass(this.divEl, 'inputEx-'+state );
+	   if( !(state == inputEx.stateEmpty && Dom.hasClass(this.divEl, 'inputEx-focused') ) ) {
+	      // add invalid className for both required and invalid fields
+	      var className = 'inputEx-'+((state == inputEx.stateRequired) ? inputEx.stateInvalid : state);
+	      Dom.addClass(this.divEl, className );
       }
 	
 	   if(this.options.showMsg) {
@@ -295,7 +303,6 @@ inputEx.Field.prototype = {
     * @param {Event} e The original 'change' event
     */
 	onChange: function(e) {
-	   this.setClassFromState();
       this.fireUpdatedEvt();
 	},
 
@@ -349,7 +356,10 @@ inputEx.Field.prototype = {
       if(!this.fieldContainer) { return; }
       if(!this.msgEl) {
          this.msgEl = inputEx.cn('div', {className: 'inputEx-message'});
-         this.divEl.insertBefore(this.msgEl, this.fieldContainer.nextSibling);
+          try{
+             var divElements = this.divEl.getElementsByTagName('div');
+             this.divEl.insertBefore(this.msgEl, divElements[(divElements.length-1>=0)?divElements.length-1:0]); //insertBefore the clear:both div
+          }catch(e){alert(e);}
       }
       this.msgEl.innerHTML = msg;
    },
@@ -505,6 +515,10 @@ inputEx.Field.prototype = {
 							
 								
 								<li>
+									<a href="inputEx.FileField.html">inputEx.FileField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.Form.html">inputEx.Form</a></li>
 							
 								
@@ -541,7 +555,23 @@ inputEx.Field.prototype = {
 							
 								
 								<li>
+									<a href="inputEx.JsonSchema.html">inputEx.JsonSchema</a></li>
+							
+								
+								<li>
+									<a href="inputEx.JsonSchema.Builder.html">inputEx.JsonSchema.Builder</a></li>
+							
+								
+								<li>
 									<a href="inputEx.ListField.html">inputEx.ListField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.MapField.html">inputEx.MapField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.MenuField.html">inputEx.MenuField</a></li>
 							
 								
 								<li>
@@ -562,6 +592,10 @@ inputEx.Field.prototype = {
 								
 								<li>
 									<a href="inputEx.PasswordField.html">inputEx.PasswordField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.RadioButton.html">inputEx.RadioButton</a></li>
 							
 								
 								<li>
@@ -610,6 +644,10 @@ inputEx.Field.prototype = {
 								
 								<li>
 									<a href="inputEx.UrlField.html">inputEx.UrlField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.VectorField.html">inputEx.VectorField</a></li>
 							
 								
 								<li>
@@ -709,6 +747,10 @@ inputEx.Field.prototype = {
 							
 								
 								<li>
+								<a href="FileField-beta.js.html">FileField-beta.js</a></li>
+							
+								
+								<li>
 								<a href="Form.js.html">Form.js</a></li>
 							
 								
@@ -757,11 +799,23 @@ inputEx.Field.prototype = {
 							
 								
 								<li>
+								<a href="it.js.html">it.js</a></li>
+							
+								
+								<li>
 								<a href="json-schema.js.html">json-schema.js</a></li>
 							
 								
 								<li>
 								<a href="ListField.js.html">ListField.js</a></li>
+							
+								
+								<li>
+								<a href="MapField.js.html">MapField.js</a></li>
+							
+								
+								<li>
+								<a href="MenuField.js.html">MenuField.js</a></li>
 							
 								
 								<li>
@@ -782,6 +836,10 @@ inputEx.Field.prototype = {
 								
 								<li>
 								<a href="PasswordField.js.html">PasswordField.js</a></li>
+							
+								
+								<li>
+								<a href="RadioButton.js.html">RadioButton.js</a></li>
 							
 								
 								<li>
@@ -833,6 +891,10 @@ inputEx.Field.prototype = {
 							
 								
 								<li>
+								<a href="VectorField.js.html">VectorField.js</a></li>
+							
+								
+								<li>
 								<a href="Visus.js.html">Visus.js</a></li>
 							
 						</ul>
@@ -846,7 +908,7 @@ inputEx.Field.prototype = {
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Sat, 08 Nov 2008 16:49:24 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Thu, 22 Jan 2009 19:28:08 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

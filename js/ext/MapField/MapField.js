@@ -55,6 +55,14 @@
  * @constructor
  * @param {Object} options Added options:
  * <ul>
+ *    <li>width</li>
+ *    <li>height</li>
+ *    <li>loading</li>
+ *    <li>lat</li>
+ *    <li>lon</li>
+ *    <li>uzoom</li>
+ *    <li>api: google, yahoo or virtualearth (default)</li>
+ *    <li>api_key</li>
  * </ul>
  */
 inputEx.MapField = function(options) {
@@ -143,6 +151,7 @@ lang.extend(inputEx.MapField, inputEx.Field,
 	},
 
 	/**
+	 * set the value: {lat: 45.23234, lon: 2.34456, uzoom: 6, nzoom: 6}
 	 */
 	setValue: function(value) {
 		var any = false;
@@ -171,6 +180,7 @@ lang.extend(inputEx.MapField, inputEx.Field,
 	},
 
 	/**
+	 * return the same structure as setValue
 	 */
 	getValue: function() {
 		if (!this.elLat) return {};

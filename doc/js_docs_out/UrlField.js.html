@@ -19,7 +19,7 @@
 			
 			<h3>
 				<a href="./index.html">inputEx Documentation</a> &gt; UrlField.js
-				<span class="subtitle">0.2.1a</span>
+				<span class="subtitle">0.2.1</span>
 			</h3>
 		
 		</div>
@@ -48,10 +48,10 @@ inputEx.UrlField = function(options) {
    inputEx.UrlField.superclass.constructor.call(this,options);
 };
 
-lang.extend(inputEx.UrlField, inputEx.StringField, 
+lang.extend(inputEx.UrlField, inputEx.StringField,
 /**
- * @scope inputEx.UrlField.prototype   
- */   
+ * @scope inputEx.UrlField.prototype
+ */
 {
 
    /**
@@ -60,56 +60,56 @@ lang.extend(inputEx.UrlField, inputEx.StringField,
     */
    setOptions: function(options) {
       inputEx.UrlField.superclass.setOptions.call(this, options);
-      
+
       this.options.className = options.className ? options.className : "inputEx-Field inputEx-UrlField";
       this.options.messages.invalid = inputEx.messages.invalidUrl;
       this.options.favicon = lang.isUndefined(options.favicon) ? (("https:" == document.location.protocol) ? false : true) : options.favicon;
-      
+
       // validate with url regexp
       this.options.regexp = inputEx.regexps.url;
    },
-   
+
    /**
     * Adds a img tag before the field to display the favicon
     */
    render: function() {
       inputEx.UrlField.superclass.render.call(this);
-      this.el.size = 27;
-      
+      this.el.size = 50;
+
       if(!this.options.favicon) {
          YAHOO.util.Dom.addClass(this.el, 'nofavicon');
       }
 
       // Create the favicon image tag
       if(this.options.favicon) {
-         this.favicon = inputEx.cn('img', {src: inputEx.spacerUrl});         
+         this.favicon = inputEx.cn('img', {src: inputEx.spacerUrl});
          this.fieldContainer.insertBefore(this.favicon,this.fieldContainer.childNodes[0]);
-         
+
          // focus field when clicking on favicon
          YAHOO.util.Event.addListener(this.favicon,"click",function(){this.focus();},this,true);
       }
    },
-   
+
    setClassFromState: function() {
       inputEx.UrlField.superclass.setClassFromState.call(this);
-      
+
       if(this.options.favicon) {
          // try to update with url only if valid url (else pass null to display inputEx.spacerUrl)
          this.updateFavicon((this.previousState == inputEx.stateValid) ? this.getValue() : null);
       }
    },
-   
+
 
    updateFavicon: function(url) {
-      var newSrc = url ? (url+"/favicon.ico") : inputEx.spacerUrl;
+      var newSrc = url ? url.match(/https?:\/\/[^\/]*/)+'/favicon.ico' : inputEx.spacerUrl;
       if(newSrc != this.favicon.src) {
-      
+
          // Hide the favicon
          inputEx.sn(this.favicon, null, {visibility: 'hidden'});
-   
+
          // Change the src
          this.favicon.src = newSrc;
-   
+
          // Set the timer to launch displayFavicon in 1s
          if(this.timer) { clearTimeout(this.timer); }
          var that = this;
@@ -255,6 +255,10 @@ inputEx.registerType("url", inputEx.UrlField);
 							
 								
 								<li>
+									<a href="inputEx.FileField.html">inputEx.FileField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.Form.html">inputEx.Form</a></li>
 							
 								
@@ -291,7 +295,23 @@ inputEx.registerType("url", inputEx.UrlField);
 							
 								
 								<li>
+									<a href="inputEx.JsonSchema.html">inputEx.JsonSchema</a></li>
+							
+								
+								<li>
+									<a href="inputEx.JsonSchema.Builder.html">inputEx.JsonSchema.Builder</a></li>
+							
+								
+								<li>
 									<a href="inputEx.ListField.html">inputEx.ListField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.MapField.html">inputEx.MapField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.MenuField.html">inputEx.MenuField</a></li>
 							
 								
 								<li>
@@ -312,6 +332,10 @@ inputEx.registerType("url", inputEx.UrlField);
 								
 								<li>
 									<a href="inputEx.PasswordField.html">inputEx.PasswordField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.RadioButton.html">inputEx.RadioButton</a></li>
 							
 								
 								<li>
@@ -360,6 +384,10 @@ inputEx.registerType("url", inputEx.UrlField);
 								
 								<li>
 									<a href="inputEx.UrlField.html">inputEx.UrlField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.VectorField.html">inputEx.VectorField</a></li>
 							
 								
 								<li>
@@ -459,6 +487,10 @@ inputEx.registerType("url", inputEx.UrlField);
 							
 								
 								<li>
+								<a href="FileField-beta.js.html">FileField-beta.js</a></li>
+							
+								
+								<li>
 								<a href="Form.js.html">Form.js</a></li>
 							
 								
@@ -507,11 +539,23 @@ inputEx.registerType("url", inputEx.UrlField);
 							
 								
 								<li>
+								<a href="it.js.html">it.js</a></li>
+							
+								
+								<li>
 								<a href="json-schema.js.html">json-schema.js</a></li>
 							
 								
 								<li>
 								<a href="ListField.js.html">ListField.js</a></li>
+							
+								
+								<li>
+								<a href="MapField.js.html">MapField.js</a></li>
+							
+								
+								<li>
+								<a href="MenuField.js.html">MenuField.js</a></li>
 							
 								
 								<li>
@@ -532,6 +576,10 @@ inputEx.registerType("url", inputEx.UrlField);
 								
 								<li>
 								<a href="PasswordField.js.html">PasswordField.js</a></li>
+							
+								
+								<li>
+								<a href="RadioButton.js.html">RadioButton.js</a></li>
 							
 								
 								<li>
@@ -583,6 +631,10 @@ inputEx.registerType("url", inputEx.UrlField);
 							
 								
 								<li>
+								<a href="VectorField.js.html">VectorField.js</a></li>
+							
+								
+								<li>
 								<a href="Visus.js.html">Visus.js</a></li>
 							
 						</ul>
@@ -596,7 +648,7 @@ inputEx.registerType("url", inputEx.UrlField);
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Sat, 08 Nov 2008 16:49:24 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Thu, 22 Jan 2009 19:28:09 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>

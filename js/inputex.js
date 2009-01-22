@@ -47,7 +47,7 @@ lang.augmentObject(inputEx,
  */   
 {
    
-   VERSION: "0.2.0",
+   VERSION: "0.2.1",
    
    /**
     * Url to the spacer image. This url schould be changed according to your project directories
@@ -224,10 +224,10 @@ lang.augmentObject(inputEx,
             var strDom = '<' + tag;
             if (domAttributes!=='undefined'){
                 for (var k in domAttributes){
-                    strDom += ' ' + k + '="' + domAttributes[k] + '"'
+                    strDom += ' ' + k + '="' + domAttributes[k] + '"';
                 }
             }
-            strDom += '/' + '>'
+            strDom += '/' + '>';
             return document.createElement(strDom);
 
         } else {

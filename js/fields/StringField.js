@@ -82,7 +82,7 @@ lang.extend(inputEx.StringField, inputEx.Field,
             new YAHOO.util.KeyListener(this.el, {keys:[13]}, {fn:function(){
                 field.blur();
                 field.focus();
-            }}).enable()
+            }}).enable();
        }
 
 	   Event.addFocusListener(this.el, this.onFocus, this, true);

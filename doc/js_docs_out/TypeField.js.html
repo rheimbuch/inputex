@@ -19,7 +19,7 @@
 			
 			<h3>
 				<a href="./index.html">inputEx Documentation</a> &gt; TypeField.js
-				<span class="subtitle">0.2.1a</span>
+				<span class="subtitle">0.2.1</span>
 			</h3>
 		
 		</div>
@@ -140,7 +140,13 @@ lang.extend(inputEx.TypeField, inputEx.Field,
     * Toggle the property panel
     */
    onTogglePropertiesPanel: function() {
-      this.propertyPanel.style.display = (this.propertyPanel.style.display == 'none') ? '' : 'none';
+      if (this.propertyPanel.style.display == 'none') {
+         this.propertyPanel.style.display = '';
+         Dom.addClass(this.button, "opened");
+      } else {
+         this.propertyPanel.style.display = 'none';
+         Dom.removeClass(this.button, "opened");
+      }
    },
    
    /**
@@ -197,6 +203,9 @@ lang.extend(inputEx.TypeField, inputEx.Field,
       
       // Set the parameters value
       this.group.setValue(value.inputParams, false);
+      
+      // Rebuild the fieldValue
+      this.updateFieldValue();
       
 	   if(sendUpdatedEvt !== false) {
 	      // fire update event
@@ -372,7 +381,8 @@ if(inputEx.ListField) {
 
 if(inputEx.IntegerField) {
    inputEx.IntegerField.groupOptions = inputEx.IntegerField.superclass.constructor.groupOptions.concat([
-      { type: 'integer', inputParams: {label: 'Radix', name: 'radix'}}
+      //{ type: 'integer', inputParams: {label: 'Radix', name: 'radix', value: 10}},
+      {type: 'boolean', inputParams: {label: 'Accept negative', name: 'negative', value: false} }
    ]);
 }
 
@@ -380,6 +390,13 @@ if(inputEx.NumberField) {
    inputEx.NumberField.groupOptions = inputEx.NumberField.superclass.constructor.groupOptions.concat([]);
 }
  
+if(inputEx.VectorField) {
+   inputEx.VectorField.groupOptions = inputEx.Field.groupOptions.concat([
+      { type: 'integer', inputParams: { label: 'Dimension', name:'dimension', value: 2}},
+      { type: 'integer', inputParams: { label: 'Size', name:'size', value: 3}},
+      { type: 'list', inputParams: {name: 'separators', label: 'Separators', required: true } }
+   ]);
+}
 
 inputEx.TypeField.groupOptions = inputEx.TypeField.superclass.constructor.groupOptions.concat([]);
 
@@ -538,6 +555,10 @@ if(inputEx.InPlaceEdit) {
 							
 								
 								<li>
+									<a href="inputEx.FileField.html">inputEx.FileField</a></li>
+							
+								
+								<li>
 									<a href="inputEx.Form.html">inputEx.Form</a></li>
 							
 								
@@ -574,7 +595,23 @@ if(inputEx.InPlaceEdit) {
 							
 								
 								<li>
+									<a href="inputEx.JsonSchema.html">inputEx.JsonSchema</a></li>
+							
+								
+								<li>
+									<a href="inputEx.JsonSchema.Builder.html">inputEx.JsonSchema.Builder</a></li>
+							
+								
+								<li>
 									<a href="inputEx.ListField.html">inputEx.ListField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.MapField.html">inputEx.MapField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.MenuField.html">inputEx.MenuField</a></li>
 							
 								
 								<li>
@@ -595,6 +632,10 @@ if(inputEx.InPlaceEdit) {
 								
 								<li>
 									<a href="inputEx.PasswordField.html">inputEx.PasswordField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.RadioButton.html">inputEx.RadioButton</a></li>
 							
 								
 								<li>
@@ -643,6 +684,10 @@ if(inputEx.InPlaceEdit) {
 								
 								<li>
 									<a href="inputEx.UrlField.html">inputEx.UrlField</a></li>
+							
+								
+								<li>
+									<a href="inputEx.VectorField.html">inputEx.VectorField</a></li>
 							
 								
 								<li>
@@ -742,6 +787,10 @@ if(inputEx.InPlaceEdit) {
 							
 								
 								<li>
+								<a href="FileField-beta.js.html">FileField-beta.js</a></li>
+							
+								
+								<li>
 								<a href="Form.js.html">Form.js</a></li>
 							
 								
@@ -790,11 +839,23 @@ if(inputEx.InPlaceEdit) {
 							
 								
 								<li>
+								<a href="it.js.html">it.js</a></li>
+							
+								
+								<li>
 								<a href="json-schema.js.html">json-schema.js</a></li>
 							
 								
 								<li>
 								<a href="ListField.js.html">ListField.js</a></li>
+							
+								
+								<li>
+								<a href="MapField.js.html">MapField.js</a></li>
+							
+								
+								<li>
+								<a href="MenuField.js.html">MenuField.js</a></li>
 							
 								
 								<li>
@@ -815,6 +876,10 @@ if(inputEx.InPlaceEdit) {
 								
 								<li>
 								<a href="PasswordField.js.html">PasswordField.js</a></li>
+							
+								
+								<li>
+								<a href="RadioButton.js.html">RadioButton.js</a></li>
 							
 								
 								<li>
@@ -866,6 +931,10 @@ if(inputEx.InPlaceEdit) {
 							
 								
 								<li>
+								<a href="VectorField.js.html">VectorField.js</a></li>
+							
+								
+								<li>
 								<a href="Visus.js.html">Visus.js</a></li>
 							
 						</ul>
@@ -879,7 +948,7 @@ if(inputEx.InPlaceEdit) {
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2008 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Sat, 08 Nov 2008 16:49:24 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Thu, 22 Jan 2009 19:28:09 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>
