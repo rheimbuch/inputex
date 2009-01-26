@@ -103,7 +103,8 @@ lang.extend(inputEx.RTEField, inputEx.Field,
 	 */
 	getValue: function() {
 	   try {
-	      return this.editor.getEditorHTML();
+	      this.editor.saveHTML();
+         return this.el.value;
 	   }
 	   catch(ex) {}
 	}
