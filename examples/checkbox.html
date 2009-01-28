@@ -132,6 +132,25 @@
 
 
 
+<!-- Example 6 -->
+<div class='exampleDiv'>
+
+	<p class="title">Disabling checkboxes</p>
+	
+	<p>How to enable/disable a checkbox :</p>
+
+	<div class='demoContainer' id='container6'></div>
+
+	<div class='codeContainer'>
+		<textarea name="code" class="JScript" cols="60" rows="1">
+					var dc = new YAHOO.inputEx.CheckBox({label: 'Disable', parentEl: 'container6'});
+					dc.disable();
+		</textarea>
+			</div>
+
+</div>
+
+
 <!-- YUI Library -->
 <script type="text/javascript" src="../lib/yui/yahoo/yahoo-min.js"></script> 
 <script type="text/javascript" src="../lib/yui/dom/dom-min.js"></script> 
@@ -190,6 +209,21 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 		logDiv.innerHTML += "Updated at "+(new Date())+" with value: "+val+"<br />";
 	});
 	
+	
+	// Example 6
+	var el = YAHOO.util.Dom.get('container6');
+	var dc = new YAHOO.inputEx.CheckBox({label: 'Disable', parentEl: el});
+	dc.disable();
+	var enableBtn = inputEx.cn('button', null, null, "Enable");
+	var disableBtn = inputEx.cn('button', null, null, "Disable");
+	el.appendChild(enableBtn);
+	el.appendChild(disableBtn);
+	YAHOO.util.Event.addListener(enableBtn, "click" ,function() {
+		dc.enable();
+	});
+	YAHOO.util.Event.addListener(disableBtn, "click" ,function() {
+		dc.disable();
+	});
 	
 });
 

@@ -119,7 +119,21 @@ lang.extend(inputEx.CheckBox, inputEx.Field,
 		
 		// Call Field.setValue to set class and fire updated event
 		inputEx.CheckBox.superclass.setValue.call(this,value, sendUpdatedEvt);
-	}
+	},
+	
+	/**
+    * Disable the field
+    */
+   disable: function() {
+      this.el.disabled = true;
+   },
+
+   /**
+    * Enable the field
+    */
+   enable: function() {
+      this.el.disabled = false;
+   }
 	
 });   
 	
