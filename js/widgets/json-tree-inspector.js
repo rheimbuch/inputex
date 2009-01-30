@@ -2,7 +2,12 @@
 
    var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Dom = YAHOO.util.Dom, Event = YAHOO.util.Event;
 
-
+/**
+ * @class Create a treeview to inspect a javascript object
+ * @constructor
+ * @param {String|HTMLElement} parentEl where to append the tree
+ * @param {Object} object the object to inspect
+ */
 inputEx.widget.JsonTreeInspector = function(parentEl, object) {
 
    this.hash = {}; // Hash to contain the li/value
@@ -14,6 +19,9 @@ inputEx.widget.JsonTreeInspector = function(parentEl, object) {
 
 inputEx.widget.JsonTreeInspector.prototype = {
    
+   /**
+    * Build the sub-branch for obj
+    */
    buildBranch: function(obj,parentEl) {
       
       var ul = inputEx.cn('ul', {className: 'inputEx-JsonTreeInspector'});
@@ -57,7 +65,7 @@ inputEx.widget.JsonTreeInspector.prototype = {
    
    
    /**
-    * Click on a node
+    * When the user click on a node
     */
    onItemClick: function(e, params) {
       Event.stopEvent(e);

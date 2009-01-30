@@ -1,6 +1,6 @@
  _                   _   _____      
 (_)_ __  _ __  _   _| |_| ____|_  __
-| | '_ \| '_ \| | | | __|  _| \ \/ /		version 0.2.2
+| | '_ \| '_ \| | | | __|  _| \ \/ /		version 0.2.2a
 | | | | | |_) | |_| | |_| |___ >  < 		Distributed under the MIT License (see license.txt)
 |_|_| |_| .__/ \____|\__|_____/_/\_\
         |_|                         
@@ -26,6 +26,7 @@ not released yet
 	- Various
 		* some fixes on inputex-loader
 		* updates on json-schema
+		* fixing first json-schema example
 
 
 version 0.2.1:

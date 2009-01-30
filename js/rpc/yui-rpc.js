@@ -1,7 +1,8 @@
 /**
  * Provide SMD support 
  * http://groups.google.com/group/json-schema/web/service-mapping-description-proposal
- * Eric Abouaf
+ * Not implemented: REST envelope, TCP/IP transport 
+ *
  * @namespace YAHOO.rpc
  */
 YAHOO.namespace("rpc");
@@ -16,7 +17,7 @@ YAHOO.namespace("rpc");
  * @class YAHOO.rpc.Service
  * @constructor
  */
-rpc.Service = function(smd, callback) {
+YAHOO.rpc.Service = function(smd, callback) {
 
    if( lang.isString(smd) ) {
       this.fetch(smd, callback);
@@ -32,7 +33,7 @@ rpc.Service = function(smd, callback) {
 };
 
 
-rpc.Service.prototype = {
+YAHOO.rpc.Service.prototype = {
    
    /**
     * Generate the function from a service definition
@@ -155,10 +156,13 @@ rpc.Service.prototype = {
 
 
 
-rpc.Service._requestId = 1;
+YAHOO.rpc.Service._requestId = 1;
 
 
-rpc.Transport = {
+/**
+ * @namespace YAHOO.rpc.Transport
+ */
+YAHOO.rpc.Transport = {
    
    "POST": function(r) {
       return util.Connect.asyncRequest('POST', r.target, r.callback, r.data );
@@ -187,11 +191,8 @@ rpc.Transport = {
 /**
  * @namespace YAHOO.rpc.Envelope
  */
-rpc.Envelope = {
+YAHOO.rpc.Envelope = {
    
-   /**
-    * URL envelope
-    */
    "URL":  {
          serialize: function(smd, method, data) {
             var eURI = encodeURIComponent;
@@ -217,9 +218,6 @@ rpc.Envelope = {
          }
    },
    
-   /**
-    * PATH Envelope
-    */
    "PATH": {
         serialize: function(smd, method, data) {
      			var target = method.target || smd.target, i;
@@ -243,10 +241,7 @@ rpc.Envelope = {
            return results;
         }
     },
-   
-   /**
-    * JSON Envelope
-    */
+    
    "JSON": {
        serialize: function(smd, method, data) {
           return {
@@ -258,10 +253,6 @@ rpc.Envelope = {
        }
     },
    
-   
-   /**
-    * JSON RPC 1.0
-    */
    "JSON-RPC-1.0":  {
        serialize: function(smd, method, data) {
           return {
@@ -277,9 +268,6 @@ rpc.Envelope = {
        }
     },
    
-   /**
-    * JSON RPC 2.0
-    */
    "JSON-RPC-2.0": {
       serialize: function(smd, method, data) {
          return {

@@ -1,6 +1,10 @@
 /**
  * Build a form to run a service !
  * built for yui-rpc
+ * @namespace inputEx
+ * @method generateServiceForm
+ * @param {function} method
+ * @param {Object} formOpts
  */
 inputEx.generateServiceForm = function(method, formOpts) {
    
