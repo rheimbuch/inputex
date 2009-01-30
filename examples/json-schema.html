@@ -101,7 +101,7 @@ YAHOO.util.Event.addListener(window, "load", function() {
 	     'showMsg':true
 	  }
   });
-	var m = builder.schemaToInputEx(myJsonSchema);
+	var m = builder.schemaToInputEx(schemaIdentifierMap["Person"]);
 	m.inputParams.parentEl = 'formContainer';
 	var f = YAHOO.inputEx.buildField(m);
 	
