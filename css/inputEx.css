@@ -535,10 +535,34 @@ div.inputEx-TypeField-PropertiesPanel {
 }
 
 /**
-* inputEx.MenuField
-*/
+ * inputEx.MenuField
+ */
 
 div.inputEx-MenuField div.inputEx-Result {background-color:#FFFFFF; border:1px solid #CCCCCC; padding:2px 25px 2px 5px; cursor:pointer}
 div.inputEx-MenuField div.inputEx-RightArrow {background-image:url(../images/menu-right-arrow.png);background-position:right center;background-repeat:no-repeat;}
 div.inputEx-MenuField div.inputEx-DownArrow {background-image:url(../images/menu-down-arrow.png);background-position:right center;background-repeat:no-repeat;}
+
+
+/**
+ * inputEx-JsonTreeInspector
+ */
+ul.inputEx-JsonTreeInspector li {
+   padding-left: 20px;
+}
+ 
+ul.inputEx-JsonTreeInspector li.collapsed {
+   background:transparent url(../images/plus.gif) no-repeat scroll 0 0;
+   cursor: pointer;
+}
+
+ul.inputEx-JsonTreeInspector li.expanded {
+   background:transparent url(../images/minus.gif) no-repeat scroll 0 0;
+   cursor: pointer;
+}
+
+ul.inputEx-JsonTreeInspector li span {
+   padding-left: 20px;
+   color: green;
+}
+
 

@@ -43,6 +43,21 @@ YAHOO.addInputExModules = function(yuiLoader, inputExPath) {
  	  	   varName: 'inputEx.JsonSchema',
  			requires: ['inputex']
  		},
+ 		// RPC
+ 		{
+ 			name: 'yui-rpc',
+ 			type: 'js',
+ 	  	   fullpath: pathToInputEx+'js/rpc/yui-rpc.js',
+ 	  	   varName: 'YAHOO.rpc',
+ 			requires: ['yahoo','connection']
+ 		},
+ 		{
+ 			name: 'inputex-rpc',
+ 			type: 'js',
+ 	  	   fullpath: pathToInputEx+'js/rpc/inputex-rpc.js',
+ 	  	   varName: 'YAHOO.rpc',
+ 			requires: ['yui-rpc','inputex-jsonschema']
+ 		},
 		// Widgets
 		{
  			name: 'inputex-ddlist',
@@ -295,7 +310,20 @@ YAHOO.addInputExModules = function(yuiLoader, inputExPath) {
   	  	   varName: 'inputEx.IPv4Field',
   			requires: ['inputex-stringfield']
   		},
-  		
+  		{
+  			name: 'inputex-vectorfield',
+  			type: 'js',
+  	  	   fullpath: pathToInputEx+'js/ext/VectorField/VectorField.js',
+  	  	   varName: 'inputEx.VectorField',
+  			requires: ['inputex-combinefield']
+  		},
+  		{
+  			name: 'inputex-mapfield',
+  			type: 'js',
+  	  	   fullpath: pathToInputEx+'js/ext/MapField/MapField.js',
+  	  	   varName: 'inputEx.MapField',
+  			requires: ['inputex-field']
+  		},
   		// Locals
   		{
   		   name: 'inputex-lang-fr',

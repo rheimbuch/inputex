@@ -3,21 +3,16 @@
  
 /**
  * Namespace containing utility functions for conversion between inputEx JSON format and JSON Schema
- * WARNING: the json-schema methods are EXPERIMENTAL.
- *          The inputEx.JsonSchema.schemaToInputEx method has been REMOVED (brutally yes...)
  *
- * 
- * based on "Json Schema Proposal Second Draft":
- * http://groups.google.com/group/json-schema/web/json-schema-proposal---second-draft
- *
- *
- *
+ * based on "Json Schema Proposal Working Draft":
+ * http://groups.google.com/group/json-schema/web/json-schema-proposal-working-draft
  * The proposal is still under discussion and the implementation is very minimalist.
  *
  *
  * TODO:
  *    - we should provide a lot of json schema examples and instances that should/should not validate
  *    - use the $ref (async calls => provide callbacks to methods)
+ *    - Inheritance
  *
  * Limitations:
  *    - ??? Please do not trust inputEx: the getValue may return a value which do NOT validate the schema (provide an example ?)
@@ -166,6 +161,11 @@ inputEx.JsonSchema.Builder.prototype = {
 	       }
 	       
 	       fieldDef.type = type;
+	       
+	       // default value
+	       if( !lang.isUndefined(p["default"]) ) {
+	          fieldDef.inputParams.value = p["default"];
+	       }
 	    
 	       if(type == "array" ) {
 	          fieldDef.type = "list";
@@ -195,15 +195,21 @@ inputEx.JsonSchema.Builder.prototype = {
 	          fieldDef.inputParams.fields = fields;
 	          
 	       }
-	       else if(type == "string" && (!!p.options) ) {
+	       else if(type == "string" && p["enum"] ) {
 	          fieldDef.type = "select";
-	          fieldDef.inputParams.selectOptions = [];
-	          fieldDef.inputParams.selectValues = [];
-	          for(var i = 0 ; i < p.options.length ; i++) {
-	             var o = p.options[i];
-	             fieldDef.inputParams.selectOptions.push(o.label);
-	             fieldDef.inputParams.selectValues.push(o.value);
-	          }
+	          
+	          if(p.options) {
+  	             fieldDef.inputParams.selectOptions = [];
+     	          fieldDef.inputParams.selectValues = [];
+	             for(var i = 0 ; i < p.options.length ; i++) {
+	                var o = p.options[i];
+	                fieldDef.inputParams.selectOptions[i] = o.label;
+	                fieldDef.inputParams.selectValues[i] = o.value;
+	             }
+             }
+             else {
+    	          fieldDef.inputParams.selectValues = p["enum"];
+             }
 	       }
 	       else if(type == "string") {
 	    	  if(!lang.isUndefined(p.pattern) && lang.isUndefined(fieldDef.inputParams.regexp)) {

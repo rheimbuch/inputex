@@ -38,7 +38,7 @@ var base_schema_map = {
     			'pattern':/(^\d{5}-\d{4}$)|(^\d{5}$)/,
     			'title':'Zip'
     		}
-   	    }
+   	}
     },
     "information-source": {
 	    id:'information-source',

@@ -1,6 +1,6 @@
  _                   _   _____      
 (_)_ __  _ __  _   _| |_| ____|_  __
-| | '_ \| '_ \| | | | __|  _| \ \/ /		version 0.2.1
+| | '_ \| '_ \| | | | __|  _| \ \/ /		version 0.2.2
 | | | | | |_) | |_| | |_| |___ >  < 		Distributed under the MIT License (see license.txt)
 |_|_| |_| .__/ \____|\__|_____/_/\_\
         |_|                         
@@ -8,6 +8,24 @@
 
 Release Notes:
 ==============
+
+version 0.2.2:
+--------------
+
+not released yet
+
+	- RPC:
+		* YAHOO.rpc (in rpc/yui-rpc.js) that follows the Service Mapping Description
+		  http://groups.google.com/group/json-schema/web/service-mapping-description-proposal
+		
+		* inputex-rpc : automatically
+
+ 	- Widgets:
+		* Added JsonTreeInspector widget
+
+	- Various
+		* some fixes on inputex-loader
+		* updates on json-schema
 
 
 version 0.2.1:
