@@ -53,7 +53,7 @@ YAHOO.rpc.Service.prototype = {
 		   var envelope = rpc.Envelope[method.envelope || self._smd.envelope];
 		   var callback = {
    	      success: function(o) {
-               var results = envelope.deserialize(o.responseText);
+               var results = envelope.deserialize(o);
       	      opts.success.call(opts.scope || self,results);
    	      },
    	      failure: function(o) {
@@ -74,10 +74,18 @@ YAHOO.rpc.Service.prototype = {
    	   }
    	   lang.augmentObject(params, data, true);
    	   
+   	   var url = method.target || self._smd.target;
+   	   if(!url.match(/^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$/i)) {
+   	      url = self._smd.target+url;
+   	   }
+   	   
          var r = {
-            target: method.target || self._smd.target,
+            target: url,
             callback: callback,
             data: params,
+            origData: data,
+            opts: opts,
+            callbackParamName: method.callbackParamName || self._smd.callbackParamName,
             transport: method.transport || self._smd.transport
          };
    	   var serialized = envelope.serialize(self._smd, method, params);
@@ -136,6 +144,8 @@ YAHOO.rpc.Service.prototype = {
                this.process(callback);
             }
             catch(ex) {
+               if(lang.isObject(console) && lang.isFunction(console.log))
+                  console.log(ex);
                if( lang.isFunction(callback.failure) ) {
                   callback.failure.call(callback.scope || this, {error: ex});
                }
@@ -176,9 +186,17 @@ YAHOO.rpc.Transport = {
       // TODO
    },
    
+   jsonp_id: 0,
    "JSONP": function(r) {
-		//r.callbackParamName = r.callbackParamName || "callback";
-      return util.Get.script( r.target + ((r.target.indexOf("?") == -1) ? '?' : '&') + r.data );
+		r.callbackParamName = r.callbackParamName || "callback";
+		var fctName = encodeURIComponent("YAHOO.rpc.Transport.JSONP.jsonpCallback"+YAHOO.rpc.Transport.jsonp_id);
+		YAHOO.rpc.Transport["JSONP"]["jsonpCallback"+YAHOO.rpc.Transport.jsonp_id] = function(results) {
+      	if(lang.isObject(r.callback) && lang.isFunction(r.callback.success)) {
+      	   r.callback.success.call(r.callback.scope || this, results);
+      	}
+		};
+   	YAHOO.rpc.Transport.jsonp_id+=1;
+      return util.Get.script( r.target + ((r.target.indexOf("?") == -1) ? '?' : '&') + r.data + "&"+r.callbackParamName+"="+fctName);
    },
    
    "TCP/IP": function(r) {

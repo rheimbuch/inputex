@@ -9,16 +9,16 @@
 	"additionalParameters": true,
 	"parameters": [
 		{ "name": "appid", "optional": false, "default": "dojotoolkit" },
-		{ "name": "output", "optional": false, "default": "json" },
-		{ "name": "callback", "optional": false, "default": "yahooSearchCallback" }
+		{ "name": "output", "optional": false, "default": "json" }
 	],
+   "callbackParamName": "callback",
 
 	"services": {
 												
 			"questionSearch": {
 			"target": "http://answers.yahooapis.com/AnswersService/V1/questionSearch",
 			"parameters": [
-				{ "name": "query", "type": "string", "optional": false, "default": "" },
+				{ "name": "query", "type": "string", "optional": false, "_inputex": {"description":"Example: 'moon'"} },
 				{ "name": "search_in", "type": "string", "optional": true, "default": "all", "enum":["all", "question", "best_answer"] },
 				{ "name": "category_id", "type": "integer", "optional": true, "default": null },
 				{ "name": "category_name", "type": "string", "optional": true, "default": null },

@@ -20,6 +20,13 @@ inputEx.widget.JsonTreeInspector = function(parentEl, object) {
 inputEx.widget.JsonTreeInspector.prototype = {
    
    /**
+    * TODO: Expand branches with a maximum depth
+    *
+   expand: function() {
+      
+   },*/
+   
+   /**
     * Build the sub-branch for obj
     */
    buildBranch: function(obj,parentEl) {

@@ -19,6 +19,8 @@ not released yet
 		  http://groups.google.com/group/json-schema/web/service-mapping-description-proposal
 		
 		* inputex-rpc : automatically
+		
+		* SMD-tester
 
  	- Widgets:
 		* Added JsonTreeInspector widget

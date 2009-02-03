@@ -6,7 +6,7 @@
  * @param {function} method
  * @param {Object} formOpts
  */
-inputEx.generateServiceForm = function(method, formOpts) {
+inputEx.generateServiceForm = function(method, formOpts, callback) {
    
    // convert the method parameters into a json-schema :
    var schemaIdentifierMap = {};
@@ -39,11 +39,7 @@ inputEx.generateServiceForm = function(method, formOpts) {
       options.inputParams.buttons = [
          {type: 'submit', value: method.name, onClick: function(e) {
             YAHOO.util.Event.stopEvent(e);
-            method(form.getValue(), {
-               success: function(results) {
-                  console.log(results);
-               }
-            });
+            method(form.getValue(), callback);
          }}
       ];
    }

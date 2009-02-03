@@ -58,7 +58,6 @@ p {
 <script type="text/javascript" src="../../js/json-schema.js"></script> 
 <script type="text/javascript" src="../../js/rpc/yui-rpc.js"></script>
 <script type="text/javascript" src="../../js/rpc/inputex-rpc.js"></script> 
-
 <script type="text/javascript" src="../../js/widgets/json-tree-inspector.js"></script>
 
 <script>
@@ -69,24 +68,21 @@ YAHOO.util.Event.onDOMReady(function() {
 	 * generate a form from the service.questionSearch method
 	 */
 	var onServiceReady = function() {
-		inputEx.generateServiceForm(service.questionSearch, { parentEl: 'formContainer' });
+		inputEx.generateServiceForm(service.questionSearch, { parentEl: 'formContainer' },{
+				success: function(results) {
+					var treeContainer = YAHOO.util.Dom.get('treeContainer');
+					treeContainer.innerHTML = "";
+					new YAHOO.inputEx.widget.JsonTreeInspector(treeContainer, results);
+				}
+			});
 	}
 
 	/**
 	 * automatically creates service method from the smd description
 	 */
-	var service = new YAHOO.rpc.Service("smd/yahoo.smd",{ success: onServiceReady });
+	var service = new YAHOO.rpc.Service("smd/yahoo.smd",{ success: onServiceReady }	);
 
 });
-
-/**
- * callback for the JSONP call. Display the results in a tree inspector
- */
-yahooSearchCallback = function(results) {
-	var treeContainer = YAHOO.util.Dom.get('treeContainer');
-	treeContainer.innerHTML = "";
-	new YAHOO.inputEx.widget.JsonTreeInspector(treeContainer, results);	
-};
 
 </script>
 
