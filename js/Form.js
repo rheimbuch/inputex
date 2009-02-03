@@ -177,7 +177,7 @@ lang.extend(inputEx.Form, inputEx.Group,
             width: this.divEl.offsetWidth+"px",
             height: this.divEl.offsetHeight+"px"
          },
-         "<div/><center><br /><img src='../images/spinner.gif'/><br /><span>"+inputEx.messages.ajaxWait+"</span></center>");
+         "<div class='inputEx-Form-Mask-bg'/><center><br/><div class='inputEx-Form-Mask-spinner'></div><br /><span>"+inputEx.messages.ajaxWait+"</span></div>");
       this.divEl.appendChild(this.formMask);
       this.maskRendered = true;
    },

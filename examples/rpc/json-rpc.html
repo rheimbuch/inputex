@@ -16,7 +16,7 @@ YAHOO.util.Event.onDOMReady(function() {
 	
 	var service = new YAHOO.rpc.Service("smd/mathservice.smd",{
 			success: function() {
-				this.add({x: 3, y: 4}, {
+				this.add({a: 3, b: 4}, {
 					success: function(result) {
 						console.log(result);
 					}

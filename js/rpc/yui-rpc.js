@@ -75,7 +75,7 @@ YAHOO.rpc.Service.prototype = {
    	   lang.augmentObject(params, data, true);
    	   
    	   var url = method.target || self._smd.target;
-   	   if(!url.match(/^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$/i)) {
+   	   if(!url.match(/^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$/i) && url != self._smd.target) {
    	      url = self._smd.target+url;
    	   }
    	   
@@ -95,6 +95,7 @@ YAHOO.rpc.Service.prototype = {
 		};
 		
 		func.name = serviceName;
+		func.description = method.description;
 		func._parameters = method.parameters;
 		
 		return func;
@@ -282,7 +283,7 @@ YAHOO.rpc.Envelope = {
           };   
        },
        deserialize: function(results) {
-          return lang.JSON.parse(results);
+          return lang.JSON.parse(results.responseText);
        }
     },
    
@@ -298,7 +299,7 @@ YAHOO.rpc.Envelope = {
          };   
       },
       deserialize: function(results) {
-         return lang.JSON.parse(results);
+         return lang.JSON.parse(results.responseText);
       }
    }
    

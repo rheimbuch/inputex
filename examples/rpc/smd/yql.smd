@@ -18,7 +18,7 @@
 		"yql": {
 		   "target": "http://query.yahooapis.com/v1/public/yql",
 			"parameters": [
-			   { "name": "q", "type":"string", "format": "text", "default":"select title,abstract,url from search.web where query='json' limit 10", "_inputex": { "label": "YQL query", "rows": 5, "cols": 40} }
+			   { "name": "q", "type":"string", "format": "text", "default":"select * from search.web where query='json' limit 10", "_inputex": { "label": "YQL query", "rows": 5, "cols": 40} }
 			]
 		}
 		

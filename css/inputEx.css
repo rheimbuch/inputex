@@ -160,7 +160,7 @@ div.inputEx-Form-Mask {
    width:180px;
 }
 
-div.inputEx-Form-Mask div {
+div.inputEx-Form-Mask div.inputEx-Form-Mask-bg {
    background-color:#FFFFFF;
    height:100%;
    left:0pt;
@@ -169,11 +169,16 @@ div.inputEx-Form-Mask div {
    top:0pt;
    width:100%;
 }
-div.inputEx-Form-Mask img {
+div.inputEx-Form-Mask div.inputEx-Form-Mask-spinner {
+   width: 36px;
+   height: 36px;
+   background-image: url(../images/spinner.gif);
 }
 div.inputEx-Form-Mask span {
    color:#666666;
 }
+
+
 
 
 /**

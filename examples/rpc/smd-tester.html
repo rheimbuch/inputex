@@ -25,6 +25,9 @@ p {
 	margin: 10px;
 	font-weight: bold;
 }
+#formContainer {
+	width: 60%;
+}
 </style>
 </head>
 
@@ -34,7 +37,11 @@ p {
 		
 		<div id='smdSource'></div>
 		
+		<p id='smdDescription'></p>
+		
 		<div id='serviceMethod'></div>
+		
+		<p id='methodDescription'></p>
 		
 		<div id='formContainer'>
 		</div>
@@ -58,6 +65,7 @@ p {
 <script type="text/javascript" src="../../js/fields/StringField.js"></script>
 <script type="text/javascript" src="../../js/fields/SelectField.js"></script>
 <script type="text/javascript" src="../../js/fields/IntegerField.js"></script>
+<script type="text/javascript" src="../../js/fields/NumberField.js"></script>
 <script type="text/javascript" src="../../js/fields/Textarea.js"></script>
 <script type="text/javascript" src="../../js/fields/UrlField.js"></script>
 <script type="text/javascript" src="../../js/json-schema.js"></script> 
@@ -85,6 +93,7 @@ inputEx.SMDTester = {
 											 'smd/html-whitelist.smd',
 											 'smd/yql.smd',
 											 'smd/jsonptunnel.smd',
+											 'smd/mathservice.smd',
 											 'smd/flickr.smd',
 											 'smd/yahoopipes.smd',
 											 'smd/delicious.smd',
@@ -103,6 +112,7 @@ inputEx.SMDTester = {
 		
 	},
 	
+	// When the user select a SMD in the select
 	loadSMD: function(smdFile) {
 		
 		YAHOO.util.Dom.get('serviceMethod').innerHTML = "";
@@ -111,7 +121,14 @@ inputEx.SMDTester = {
 		this.service = new YAHOO.rpc.Service(smdFile,{ success: this.onServiceLoaded,	scope: this});
 	},
 	
+	// When the SMD has been loaded
 	onServiceLoaded: function() {
+		
+		// Set SMD Description :
+		YAHOO.util.Dom.get('smdDescription').innerHTML = 
+					(YAHOO.lang.isString(this.service._smd.description)) ? this.service._smd.description : "";
+		
+		// Method Select
 		var selectStr = 'select a method';
 		var genMethods = [selectStr];
 		for(var key in this.service) {
@@ -119,22 +136,37 @@ inputEx.SMDTester = {
 				genMethods.push(key);
 			}
 		}	
-		inputEx({
-			type: 'select',
-			inputParams: {
-				parentEl: 'serviceMethod',
-				selectValues: genMethods,
-				label: 'Method',
-				description: "Select the method"
-			}
-		}).updatedEvt.subscribe(function(e, params) {
+		var select = inputEx({
+				type: 'select',
+				inputParams: {
+					parentEl: 'serviceMethod',
+					selectValues: genMethods,
+					label: 'Method',
+					description: "Select the method"
+				}
+		});
+		
+		select.updatedEvt.subscribe(function(e, params) {
 			var methodName = params[0];
 			if(methodName != selectStr) this.onServiceMethod(methodName);
 		}, this, true);
 		
+		if(genMethods.length == 2) {
+			select.setValue(genMethods[1]);
+		}
+		
 	},
 	
+	// When a method has been selected :
 	onServiceMethod: function(methodName) {
+		
+		// Set Method Description :
+		YAHOO.util.Dom.get('methodDescription').innerHTML = 
+					(YAHOO.lang.isString(this.service[methodName].description)) ? this.service[methodName].description : "";
+		
+		
+		
+		// generate the form for the given method
 		YAHOO.util.Dom.get('formContainer').innerHTML = "";
 		inputEx.generateServiceForm(this.service[methodName], { parentEl: 'formContainer' }, {
 			success: function(results) {
