@@ -3,33 +3,27 @@
 	"id": "http://delicious.com/help/feeds", 
 	"description": "Delicious feeds",
 		
-	"target": "http://feeds.delicious.com/v2/json/",
+	"target": "http://feeds.delicious.com/v2/",
 	"transport": "JSONP",
 	"envelope": "URL",
 	"callbackParamName": "callback",
-	
-	"additionalParameters": true,
-	"parameters": [
-		{ "name": "format", "optional": false, "default": "json" }
-	],
 
 	"services": {
 	   
 		"hotlist": {
-		   "target": "",
+		   "target": "json/",
 			"parameters": []
 		},
 		
 		"recent": {
-		   "target": "recent",
+		   "target": "json/recent",
 			"parameters": []
 		},
 		
 		"UserBookmarks": {
-		   "target": "http://feeds.delicious.com/v2/json/{username}",
-		   "parseTargetParam": true,
+		   	"envelope": "PATH",
 			"parameters": [
-			   {"name": "username", "type":"string", "default":"neyric"}
+			   {"name": "json", "type":"string", "default":"neyric"}
 			]
 		}
 		

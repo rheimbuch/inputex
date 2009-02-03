@@ -55,7 +55,12 @@ inputEx.widget.JsonTreeInspector.prototype = {
                   spanContent = '"'+value+'"';
                }
                else {
-                  spanContent = value.toString();
+                  if(value === null) {
+                     spanContent = "null";
+                  }
+                  else {
+                     spanContent = value.toString();
+                  }
                }
                li.appendChild( inputEx.cn('span', null, null, spanContent ) );
             }
