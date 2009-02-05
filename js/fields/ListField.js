@@ -11,6 +11,7 @@
  *   <li>sortable: Add arrows to sort the items if true (default false)</li>
  *   <li>elementType: an element type definition (default is {type: 'string'})</li>
  *   <li>useButtons: use buttons instead of links (default false)</li>
+ *   <li>unique: require values to be unique (default false)</li>
  * </ul>
  */
 inputEx.ListField = function(options) {
@@ -40,6 +41,7 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	   this.options.sortable = lang.isUndefined(options.sortable) ? false : options.sortable;
 	   this.options.elementType = options.elementType || {type: 'string'};
 	   this.options.useButtons = lang.isUndefined(options.useButtons) ? false : options.useButtons;
+	   this.options.unique = lang.isUndefined(options.unique) ? false : options.unique;
 	},
 	   
 	/**
@@ -73,6 +75,35 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	initEvents: function() {
 	   Event.addListener(this.addButton, 'click', this.onAddButton, this, true);
 	},
+	
+	/**
+    * Validate each field
+    * @returns {Boolean} true if all fields validate, required fields are not empty and unique constraint (if specified) is not violated
+    */
+   validate: function() {
+      var response = true;
+      var uniques = {};
+
+      // Validate all the sub fields
+      for (var i = 0 ; i < this.subFields.length && response; i++) {
+         var input = this.subFields[i];
+         input.setClassFromState(); // update field classes (mark invalid fields...)
+         var state = input.getState();
+         if( state == inputEx.stateRequired || state == inputEx.stateInvalid ) {
+            response = false; // but keep looping on fields to set classes
+         }
+         if(this.options.unique) {
+            var hash = lang.dump(input.getValue());
+            //logDebug('listfied index ',i, 'hash', hash);
+            if(uniques[hash]) {
+               response = false;    // not unique
+            } else {
+               uniques[hash] = true;
+            }
+          }
+      }
+      return response;
+   },
 	   
 	/**
 	 * Set the value of all the subfields

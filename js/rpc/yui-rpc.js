@@ -138,6 +138,11 @@ YAHOO.rpc.Service.prototype = {
     * @param {String} Absolute or relative url
     */
    fetch: function(url, callback) {
+      
+      /**
+       * TODO: if url is not in the same domain, we should use jsonp !
+       */
+      
       util.Connect.asyncRequest('GET', url, { 
          success: function(o) {
             try {
