@@ -47,7 +47,7 @@ YAHOO.addInputExModules = function(yuiLoader, inputExPath) {
  		{
  			name: 'yui-rpc',
  			type: 'js',
- 	  	   fullpath: pathToInputEx+'js/rpc/yui-rpc.js',
+ 	  	   fullpath: pathToInputEx+'lib/yui-rpc.js',
  	  	   varName: 'YAHOO.rpc',
  			requires: ['yahoo','connection']
  		},

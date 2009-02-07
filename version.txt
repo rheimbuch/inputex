@@ -15,10 +15,10 @@ version 0.2.2:
 not released yet
 
 	- RPC:
-		* YAHOO.rpc (in rpc/yui-rpc.js) that follows the Service Mapping Description
+		* YAHOO.rpc (in lib/yui-rpc.js) that follows the Service Mapping Description
 		  http://groups.google.com/group/json-schema/web/service-mapping-description-proposal
 		
-		* inputex-rpc : automatically
+		* inputex-rpc : automatically build forms to call methods defined in a SMD
 		
 		* SMD-tester
 
