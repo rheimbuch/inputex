@@ -31,6 +31,7 @@ lang.extend(inputEx.UrlField, inputEx.StringField,
       this.options.className = options.className ? options.className : "inputEx-Field inputEx-UrlField";
       this.options.messages.invalid = inputEx.messages.invalidUrl;
       this.options.favicon = lang.isUndefined(options.favicon) ? (("https:" == document.location.protocol) ? false : true) : options.favicon;
+      this.options.size = options.size || 50;
 
       // validate with url regexp
       this.options.regexp = inputEx.regexps.url;
@@ -41,7 +42,7 @@ lang.extend(inputEx.UrlField, inputEx.StringField,
     */
    render: function() {
       inputEx.UrlField.superclass.render.call(this);
-      this.el.size = 50;
+      this.el.size = this.options.size;
 
       if(!this.options.favicon) {
          YAHOO.util.Dom.addClass(this.el, 'nofavicon');
