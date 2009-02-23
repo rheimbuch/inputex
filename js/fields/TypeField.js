@@ -174,6 +174,11 @@ lang.extend(inputEx.TypeField, inputEx.Field,
       // Rebuild the fieldValue
       this.updateFieldValue();
       
+      // Set field value
+      if(lang.isObject(value.inputParams) && typeof value.inputParams.value != "undefined") {
+         this.fieldValue.setValue(value.inputParams.value);
+      }
+      
 	   if(sendUpdatedEvt !== false) {
 	      // fire update event
          this.fireUpdatedEvt();
