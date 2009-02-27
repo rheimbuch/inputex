@@ -31,6 +31,8 @@ not released yet
 		* Added JsonTreeInspector widget
 
 	- Various
+	   * new page for examples
+	   * moving tickets to Lighthouse
 	   * moving to github
 		* some fixes on inputex-loader
 		* updates on json-schema
