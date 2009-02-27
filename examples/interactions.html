@@ -34,9 +34,72 @@
 	<div class='demoContainer' id='container1'></div>
 
 	<div class='codeContainer'>
-				<textarea name="code" class="JScript">
+		<textarea name="code" class="JScript">
+			new inputEx.Group({ 
+			   parentEl: 'container1',
+
+			   fields: [
+			       {
+						   type: 'boolean', // inputex type
+						   inputParams: {
+							    name: 'toggler',
+						      value: true,
+									rightLabel: 'Check this box to toggle the enabled field'
+						   },
+						   interactions: [
+						       {
+						          valueTrigger: true, // this action will run when this field value is set to true
+						          actions: [
+						             {
+						                name: 'group1', // name of the field on which the action should run
+						                action: 'disable' // name of the method to run on the field instance !
+						             },
+						             {
+						                name: 'group2', 
+						                action: 'enable'
+						             }
+						          ]
+						       },
+						       {
+						          valueTrigger: false, // when set to false:
+						          actions: [
+						             {
+						                name: 'group1', 
+						                action: 'enable'
+						             },
+						             {
+						                name: 'group2', 
+						                action: 'disable'
+						             }
+						          ]
+						       }
+						   ]
+						},
+			       {
+						   type: 'group',
+						   inputParams: {
+						       name: 'group1',
+						       fields: [ 
+											{ type: 'select', inputParams: {label: 'Title',name: 'title', selectValues: ['Mr','Mrs','Mme'] } },
+											{ inputParams: {label: 'Firstname',name: 'firstname', required: true, value:'Jacques' } }, 
+											{ inputParams: {label: 'Lastname',name: 'lastname', value:'Dupont' } }, 
+											{ type:'email', inputParams: {label: 'Email',name: 'email'}}
+									]
+								}
+						 },
+			       {
+						   type: 'group',
+						   inputParams: {
+								   name: 'group2',
+						       fields: [
+										 {type: 'url', inputParams: {label: "Website",  name: 'myUrl' } }
+									 ]
+						   }
+						 }
+			   ]
+			});
 		</textarea>
-			</div>
+	</div>
 
 </div>
 
@@ -53,9 +116,49 @@
 	<div class='demoContainer' id='container2'></div>
 
 	<div class='codeContainer'>
-				<textarea name="code" class="JScript">
+		<textarea name="code" class="JScript">
+			new inputEx.Group({ 
+			   parentEl: 'container2',
+
+			   fields: [
+			       {
+								type: 'select', 
+								inputParams:{ label: 'Select your country', selectValues: ["France", "USA"]},
+								interactions: [
+									{
+										valueTrigger: "France",
+										actions: [
+											{
+												name: "franceCitiesSelect",
+												action: "show"
+											},
+											{
+												name: "USACitiesSelect",
+												action: "hide"
+											},
+										]
+									},
+									{
+										valueTrigger: "USA",
+										actions: [
+											{
+												name: "franceCitiesSelect",
+												action: "hide"
+											},
+											{
+												name: "USACitiesSelect",
+												action: "show"
+											},
+										]
+									}
+								]
+						 },
+					   {type: 'select', inputParams: {label: 'Select your city', name: 'franceCitiesSelect', selectValues: ["Paris", "Lyon", "Marseille"]} },
+					   {type: 'select', inputParams: {label: 'Select your city', name: 'USACitiesSelect', selectValues: ["NewYork", "Chicago", "LA","San Francisco"]} }
+			   ]
+			});
 		</textarea>
-			</div>
+	</div>
 
 </div>
 
