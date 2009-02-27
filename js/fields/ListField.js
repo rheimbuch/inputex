@@ -12,6 +12,8 @@
  *   <li>elementType: an element type definition (default is {type: 'string'})</li>
  *   <li>useButtons: use buttons instead of links (default false)</li>
  *   <li>unique: require values to be unique (default false)</li>
+ *   <li>listAddLabel: if useButtons is false, text to add an item</li>
+ *   <li>listRemoveLabel: if useButtons is false, text to remove an item</li>
  * </ul>
  */
 inputEx.ListField = function(options) {
@@ -42,6 +44,9 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	   this.options.elementType = options.elementType || {type: 'string'};
 	   this.options.useButtons = lang.isUndefined(options.useButtons) ? false : options.useButtons;
 	   this.options.unique = lang.isUndefined(options.unique) ? false : options.unique;
+	   
+	   this.options.listAddLabel = options.listAddLabel || inputEx.messages.listAddLink;
+	   this.options.listRemoveLabel = options.listRemoveLabel || inputEx.messages.listRemoveLink;
 	},
 	   
 	/**
@@ -64,7 +69,7 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	   
 	   // Add link
 	   if(!this.options.useButtons) {
-	      this.addButton = inputEx.cn('a', {className: 'inputEx-List-link'}, null, inputEx.messages.listAddLink);
+	      this.addButton = inputEx.cn('a', {className: 'inputEx-List-link'}, null, this.options.listAddLabel);
 	      this.fieldContainer.appendChild(this.addButton);
       }
 	},
@@ -227,7 +232,7 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	   
 	   // Delete link
 	   if(!this.options.useButtons) {
-	      var delButton = inputEx.cn('a', {className: 'inputEx-List-link'}, null, inputEx.messages.listRemoveLink);
+	      var delButton = inputEx.cn('a', {className: 'inputEx-List-link'}, null, this.options.listRemoveLabel);
 	      Event.addListener( delButton, 'click', this.onDelete, this, true);
 	      newDiv.appendChild( delButton );
       }

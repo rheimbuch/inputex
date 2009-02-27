@@ -11,6 +11,7 @@
  *   <li>fields: Array of input fields declared like { label: 'Enter the value:' , type: 'text' or fieldClass: inputEx.Field, optional: true/false, inputParams: {inputparams object} }</li>
  *   <li>legend: The legend for the fieldset (default is an empty string)</li>
  *   <li>collapsible: Boolean to make the group collapsible (default is false)</li>
+ *   <li>collapsed: If collapsible only, will be collapsed at creation (default is false)</li>
  *   <li>flatten:</li>
  * </ul>
  */
@@ -37,6 +38,8 @@ lang.extend(inputEx.Group, inputEx.Field,
    
    	this.options = {};
    	
+   	this.options.className = options.className || 'inputEx-Group';
+   	
    	this.options.fields = options.fields;
    	
    	this.options.id = options.id;
@@ -53,6 +56,7 @@ lang.extend(inputEx.Group, inputEx.Field,
       this.inputConfigs = options.fields;
    
       this.options.collapsible = lang.isUndefined(options.collapsible) ? false : options.collapsible;
+      this.options.collapsed = lang.isUndefined(options.collapsed) ? false : options.collapsed;
       
       this.options.disabled = lang.isUndefined(options.disabled) ? false : options.disabled;
       
@@ -69,7 +73,7 @@ lang.extend(inputEx.Group, inputEx.Field,
    render: function() {
    
       // Create the div wrapper for this group
-	   this.divEl = inputEx.cn('div', {className: 'inputEx-Group'});
+	   this.divEl = inputEx.cn('div', {className: this.options.className});
 	   if(this.options.id) {
    	   this.divEl.id = this.options.id;
    	}
@@ -113,6 +117,11 @@ lang.extend(inputEx.Group, inputEx.Field,
          // Render the field
          var field = this.renderField(input);
          this.fieldset.appendChild(field.getEl() );
+  	   }
+  	
+  	   // Collapsed at creation ?
+  	   if(this.options.collapsed) {
+  	      this.toggleCollapse();
   	   }
   	
   	   // Append the fieldset

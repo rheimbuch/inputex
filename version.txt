@@ -22,6 +22,11 @@ not released yet
 		
 		* SMD-tester
 
+	- Field enhancements:
+		* added "collapsed" option for Group/Form
+		* added "className" option for Group/Form
+		* added listAddLabel/listRemoveLabel options for List
+
  	- Widgets:
 		* Added JsonTreeInspector widget
 

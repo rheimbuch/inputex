@@ -56,7 +56,7 @@ lang.extend(inputEx.Form, inputEx.Group,
     */
    render: function() {
       // Create the div wrapper for this group
-  	   this.divEl = inputEx.cn('div', {className: 'inputEx-Group'});
+  	   this.divEl = inputEx.cn('div', {className: this.options.className});
 	   if(this.options.id) {
    	   this.divEl.id = this.options.id;
    	}

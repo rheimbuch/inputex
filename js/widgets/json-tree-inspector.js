@@ -38,7 +38,7 @@ inputEx.widget.JsonTreeInspector.prototype = {
             var value = obj[key];
             
             var id = Dom.generateId();
-            var li = inputEx.cn('li', {id: id}, null, key);
+            var li = inputEx.cn('li', {id: id}, null, key+':');
             this.hash[id] = {value: value, expanded: false};
             
             
@@ -62,7 +62,7 @@ inputEx.widget.JsonTreeInspector.prototype = {
                      spanContent = value.toString();
                   }
                }
-               li.appendChild( inputEx.cn('span', null, null, spanContent ) );
+               li.appendChild( inputEx.cn('span', {className: 'type-'+(value === null ? "null" : (typeof value))}, null, spanContent ) );
             }
             
             

@@ -570,4 +570,12 @@ ul.inputEx-JsonTreeInspector li span {
    color: green;
 }
 
+ul.inputEx-JsonTreeInspector li span.type-number,
+ul.inputEx-JsonTreeInspector li span.type-boolean {
+   color: blue;
+}
+
+ul.inputEx-JsonTreeInspector li span.type-null {
+   color: red;
+}
 
