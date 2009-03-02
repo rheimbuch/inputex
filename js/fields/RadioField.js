@@ -30,7 +30,7 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	   inputEx.RadioField.superclass.setOptions.call(this, options);
 
       this.options.className = options.className ? options.className : 'inputEx-Field inputEx-RadioField';
-	   if (lang.isUndefined(options.allowAny) ) {
+	   if (lang.isUndefined(options.allowAny) || options.allowAny === false ) {
         this.options.allowAny = false;
       } else {
         this.options.allowAny = {};

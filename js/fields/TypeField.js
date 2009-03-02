@@ -275,7 +275,7 @@ inputEx.StringField.groupOptions = inputEx.StringField.superclass.constructor.gr
 
 if(inputEx.CheckBox) {
    inputEx.CheckBox.groupOptions = inputEx.CheckBox.superclass.constructor.groupOptions.concat([ 
-      {type: 'string', inputParams: {label: 'Label', name: 'rightLabel'} } 
+      {type: 'string', inputParams: {label: 'Right Label', name: 'rightLabel'} } 
    ]);
 }
 
@@ -322,7 +322,7 @@ if(inputEx.PasswordField) {
 if(inputEx.RadioField) {
    inputEx.RadioField.groupOptions = inputEx.RadioField.superclass.constructor.groupOptions.concat([
       {type: 'list', inputParams: {label: 'Options', name: 'choices', elementType: {type: 'string'} } },
-      {type: 'boolean', inputParams: {label: 'Allow custom value', name: 'allowAny'} }
+      {type: 'boolean', inputParams: {label: 'Allow custom value', name: 'allowAny'}, value: false  }
    ]);
 }
 
