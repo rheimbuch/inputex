@@ -26,7 +26,8 @@ not released yet
 		* added "collapsed" option for Group/Form
 		* added "className" option for Group/Form
 		* added listAddLabel/listRemoveLabel options for List
-
+      * added addOption/removeOption methods on SelectField
+      
  	- Widgets:
 		* Added JsonTreeInspector widget
 

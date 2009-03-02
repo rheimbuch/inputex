@@ -29,6 +29,8 @@ YAHOO.lang.extend(inputEx.DSSelectField, inputEx.SelectField,
     * @param {Object} options Options object (inputEx inputParams) as passed to the constructor
     */
 	setOptions: function(options) {
+	   // set this.options.selectValues and this.options.selectOptions
+	   if (!YAHOO.lang.isArray(options.selectValues)) { options.selectValues = []; }
 	   inputEx.DSSelectField.superclass.setOptions.call(this, options);
 	   
 	   this.options.valueKey = options.valueKey || "value";
@@ -38,10 +40,10 @@ YAHOO.lang.extend(inputEx.DSSelectField, inputEx.SelectField,
 	   this.options.datasource = options.datasource;
 	   if(!this.options.datasource) {
          var items = [];
-         for(var i = 0 ; i < options.selectValues.length ; i++) {
+         for(var i = 0 ; i < this.options.selectValues.length ; i++) {
             items.push({
-               value: options.selectValues[i],
-               label: (options.selectOptions) ? options.selectOptions[i] : options.selectValues[i]
+               value: this.options.selectValues[i],
+               label: this.options.selectOptions[i]
             });
          }
          this.options.datasource = new YAHOO.util.DataSource(items);
@@ -72,7 +74,9 @@ YAHOO.lang.extend(inputEx.DSSelectField, inputEx.SelectField,
     * Send the datasource request
     */
    sendDataRequest: function(oRequest) {
-      this.options.datasource.sendRequest(oRequest, {success: this.onDatasourceSuccess, failure: this.onDatasourceFailure, scope: this});
+      if (!!this.options.datasource) {
+         this.options.datasource.sendRequest(oRequest, {success: this.onDatasourceSuccess, failure: this.onDatasourceFailure, scope: this});
+      }
    },
    
    /**
@@ -81,9 +85,11 @@ YAHOO.lang.extend(inputEx.DSSelectField, inputEx.SelectField,
    populateSelect: function(items) {
       this.el.innerHTML = "";
       this.optionEls = [];
+      this.options.selectValues = [];
+      this.options.selectOptions = [];
+
       for( var i = 0 ; i < items.length ; i++) {
-         this.optionEls[i] = inputEx.cn('option', {value: items[i][this.options.valueKey]}, null, items[i][this.options.labelKey]);
-         this.el.appendChild(this.optionEls[i]);
+         this.addOption({ value:items[i][this.options.valueKey], option:items[i][this.options.labelKey] });
       }
    },
    
