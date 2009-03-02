@@ -77,8 +77,13 @@ lang.extend(inputEx.TypeField, inputEx.Field,
     */
    rebuildGroupOptions: function() {
       try {
+         
+         // Save the previous value:
+         var previousVal = null;
+         
          // Close a previously created group
          if(this.group) {
+            previousVal = this.group.getValue();
             this.group.close();
             this.group.destroy();
             this.groupOptionsWrapper.innerHTML = "";
@@ -91,6 +96,14 @@ lang.extend(inputEx.TypeField, inputEx.Field,
          var groupParams = {fields: classO.groupOptions, parentEl: this.groupOptionsWrapper};
          this.group = new inputEx.Group(groupParams);
          
+         // Set the previous name/label
+         if(previousVal) {
+            this.group.setValue({
+               name: previousVal.name,
+               label: previousVal.label
+            });
+         }
+         
          // Register the updated event
          this.group.updatedEvt.subscribe(this.onChangeGroupOptions, this, true);
             
@@ -98,7 +111,9 @@ lang.extend(inputEx.TypeField, inputEx.Field,
          this.updateFieldValue();
          
       } catch(ex) {
-         console.log("Error while rebuilding the groupOptions", ex);
+         if(YAHOO.lang.isObject(window["console"]) && YAHOO.lang.isFunction(window["console"]["log"]) ) {
+            console.log("inputEx.TypeField.rebuildGroupOptions: ", ex);
+         }
       }
          
    },
@@ -374,8 +389,10 @@ inputEx.TypeField.groupOptions = inputEx.TypeField.superclass.constructor.groupO
 
 
 inputEx.Group.groupOptions = [
+   { type: "string", inputParams:{label: "Name", name: "name", value: ''} },
    { type: 'string', inputParams: { label: 'Legend', name:'legend'}},
    { type: 'boolean', inputParams: {label: 'Collapsible', name:'collapsible', value: false}},
+   { type: 'boolean', inputParams: {label: 'Collapsed', name:'collapsed', value: false}},
    { type: 'list', inputParams:{ label: 'Fields', name: 'fields', elementType: {type: 'type' } } }
 ];
 
