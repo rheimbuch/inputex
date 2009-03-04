@@ -44,6 +44,9 @@
  *   <li>sortable: Add arrows to sort the items if true (default false)</li>
  *   <li>elementType: an element type definition (default is {type: 'string'})</li>
  *   <li>useButtons: use buttons instead of links (default false)</li>
+ *   <li>unique: require values to be unique (default false)</li>
+ *   <li>listAddLabel: if useButtons is false, text to add an item</li>
+ *   <li>listRemoveLabel: if useButtons is false, text to remove an item</li>
  * </ul>
  */
 inputEx.ListField = function(options) {
@@ -73,6 +76,10 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	   this.options.sortable = lang.isUndefined(options.sortable) ? false : options.sortable;
 	   this.options.elementType = options.elementType || {type: 'string'};
 	   this.options.useButtons = lang.isUndefined(options.useButtons) ? false : options.useButtons;
+	   this.options.unique = lang.isUndefined(options.unique) ? false : options.unique;
+	   
+	   this.options.listAddLabel = options.listAddLabel || inputEx.messages.listAddLink;
+	   this.options.listRemoveLabel = options.listRemoveLabel || inputEx.messages.listRemoveLink;
 	},
 	   
 	/**
@@ -95,7 +102,7 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	   
 	   // Add link
 	   if(!this.options.useButtons) {
-	      this.addButton = inputEx.cn('a', {className: 'inputEx-List-link'}, null, inputEx.messages.listAddLink);
+	      this.addButton = inputEx.cn('a', {className: 'inputEx-List-link'}, null, this.options.listAddLabel);
 	      this.fieldContainer.appendChild(this.addButton);
       }
 	},
@@ -106,6 +113,35 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	initEvents: function() {
 	   Event.addListener(this.addButton, 'click', this.onAddButton, this, true);
 	},
+	
+	/**
+    * Validate each field
+    * @returns {Boolean} true if all fields validate, required fields are not empty and unique constraint (if specified) is not violated
+    */
+   validate: function() {
+      var response = true;
+      var uniques = {};
+
+      // Validate all the sub fields
+      for (var i = 0 ; i < this.subFields.length && response; i++) {
+         var input = this.subFields[i];
+         input.setClassFromState(); // update field classes (mark invalid fields...)
+         var state = input.getState();
+         if( state == inputEx.stateRequired || state == inputEx.stateInvalid ) {
+            response = false; // but keep looping on fields to set classes
+         }
+         if(this.options.unique) {
+            var hash = lang.dump(input.getValue());
+            //logDebug('listfied index ',i, 'hash', hash);
+            if(uniques[hash]) {
+               response = false;    // not unique
+            } else {
+               uniques[hash] = true;
+            }
+          }
+      }
+      return response;
+   },
 	   
 	/**
 	 * Set the value of all the subfields
@@ -205,7 +241,7 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	   // Instanciate the new subField
 	   var opts = lang.merge({}, this.options.elementType);
 	   if(!opts.inputParams) opts.inputParams = {};
-	   if(!YAHOO.lang.isUndefined(value)) opts.inputParams.value = value;
+	   if(!lang.isUndefined(value)) opts.inputParams.value = value;
 	   
 	   var el = inputEx.buildField(opts);
 	   
@@ -229,7 +265,7 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	   
 	   // Delete link
 	   if(!this.options.useButtons) {
-	      var delButton = inputEx.cn('a', {className: 'inputEx-List-link'}, null, inputEx.messages.listRemoveLink);
+	      var delButton = inputEx.cn('a', {className: 'inputEx-List-link'}, null, this.options.listRemoveLabel);
 	      Event.addListener( delButton, 'click', this.onDelete, this, true);
 	      newDiv.appendChild( delButton );
       }
@@ -513,6 +549,10 @@ inputEx.messages.listRemoveLink = "remove";
 							
 								
 								<li>
+									<a href="inputEx.formForMethod.html">inputEx.formForMethod</a></li>
+							
+								
+								<li>
 									<a href="inputEx.FrenchDate.html">inputEx.FrenchDate</a></li>
 							
 								
@@ -670,18 +710,6 @@ inputEx.messages.listRemoveLink = "remove";
 								
 								<li>
 									<a href="inputEx.widget.JsonTreeInspector.html">inputEx.widget.JsonTreeInspector</a></li>
-							
-								
-								<li>
-									<a href="YAHOO.rpc.Envelope.html">YAHOO.rpc.Envelope</a></li>
-							
-								
-								<li>
-									<a href="YAHOO.rpc.Service.html">YAHOO.rpc.Service</a></li>
-							
-								
-								<li>
-									<a href="YAHOO.rpc.Transport.html">YAHOO.rpc.Transport</a></li>
 							
 								
 						</ul>
@@ -915,10 +943,6 @@ inputEx.messages.listRemoveLink = "remove";
 								<li>
 								<a href="Visus.js.html">Visus.js</a></li>
 							
-								
-								<li>
-								<a href="yui-rpc.js.html">yui-rpc.js</a></li>
-							
 						</ul>
 					</div>
 					
@@ -930,7 +954,7 @@ inputEx.messages.listRemoveLink = "remove";
 		<div id="ft">
 			<hr/>
 			Copyright (c) 2007-2009 <a href='http://javascript.neyric.com' target='_new'>Eric Abouaf</a>. All rights reserved.<br />
-			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Fri, 30 Jan 2009 16:05:58 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
+			Generated by <a href="http://jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.0 on Wed, 04 Mar 2009 15:39:09 GMT using <a href="http://code.google.com/p/neyricjslibs-template/" target="_blank">neyricjslibs-template</a>.
 		</div>
 		
 	</div>
