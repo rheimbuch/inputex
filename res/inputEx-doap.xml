@@ -24,22 +24,26 @@
   </repository>
 <release>
 	<Version>
+    <name>inputEx-0.2.2</name>
+    <created>03/06/2009</created>
+    <revision>0.2.2</revision>
+    <file-release rdf:resource="http://cloud.github.com/downloads/neyric/inputex/inputex-0.2.2.zip" />
+  </Version>
+	<Version>
     <name>inputEx-0.2.1</name>
     <created>01/22/2009</created>
     <revision>0.2.1</revision>
-    <file-release rdf:resource="http://javascript.neyric.com/inputex/inputex-0.2.1.zip" />
+    <file-release rdf:resource="http://cloud.github.com/downloads/neyric/inputex/inputex-0.2.1.zip" />
   </Version>
 	<Version>
     <name>inputEx-0.2.0</name>
     <created>11/01/2008</created>
     <revision>0.2.0</revision>
-    <file-release rdf:resource="http://inputex.googlecode.com/files/inputex-0.2.0.zip" />
   </Version>
     <Version>
       <name>inputEx-0.1.0</name>
       <created>05/07/2008</created>
       <revision>0.1.0</revision>
-      <file-release rdf:resource="http://inputex.googlecode.com/files/inputex-0.1.0.zip" />
     </Version>
   </release>
 </Project>

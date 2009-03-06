@@ -12,7 +12,7 @@ Release Notes:
 version 0.2.2:
 --------------
 
-not released yet
+released on March, 6th 2009
 
 	- RPC:
 		* uses yui-rpc (http://github.com/neyric/yui-rpc/) that implements the Service Mapping Description
