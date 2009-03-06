@@ -403,21 +403,16 @@ inputEx.renderVisu = function(visuOptions,data, parentEl) {
  
 /**
  * Namespace containing utility functions for conversion between inputEx JSON format and JSON Schema
- * WARNING: the json-schema methods are EXPERIMENTAL.
- *          The inputEx.JsonSchema.schemaToInputEx method has been REMOVED (brutally yes...)
  *
- * 
- * based on "Json Schema Proposal Second Draft":
- * http://groups.google.com/group/json-schema/web/json-schema-proposal---second-draft
- *
- *
- *
+ * based on "Json Schema Proposal Working Draft":
+ * http://groups.google.com/group/json-schema/web/json-schema-proposal-working-draft
  * The proposal is still under discussion and the implementation is very minimalist.
  *
  *
  * TODO:
  *    - we should provide a lot of json schema examples and instances that should/should not validate
  *    - use the $ref (async calls => provide callbacks to methods)
+ *    - Inheritance
  *
  * Limitations:
  *    - ??? Please do not trust inputEx: the getValue may return a value which do NOT validate the schema (provide an example ?)
@@ -566,6 +561,11 @@ inputEx.JsonSchema.Builder.prototype = {
 	       }
 	       
 	       fieldDef.type = type;
+	       
+	       // default value
+	       if( !lang.isUndefined(p["default"]) ) {
+	          fieldDef.inputParams.value = p["default"];
+	       }
 	    
 	       if(type == "array" ) {
 	          fieldDef.type = "list";
@@ -595,15 +595,21 @@ inputEx.JsonSchema.Builder.prototype = {
 	          fieldDef.inputParams.fields = fields;
 	          
 	       }
-	       else if(type == "string" && (!!p.options) ) {
+	       else if(type == "string" && p["enum"] ) {
 	          fieldDef.type = "select";
-	          fieldDef.inputParams.selectOptions = [];
-	          fieldDef.inputParams.selectValues = [];
-	          for(var i = 0 ; i < p.options.length ; i++) {
-	             var o = p.options[i];
-	             fieldDef.inputParams.selectOptions.push(o.label);
-	             fieldDef.inputParams.selectValues.push(o.value);
-	          }
+	          
+	          if(p.options) {
+  	             fieldDef.inputParams.selectOptions = [];
+     	          fieldDef.inputParams.selectValues = [];
+	             for(var i = 0 ; i < p.options.length ; i++) {
+	                var o = p.options[i];
+	                fieldDef.inputParams.selectOptions[i] = o.label;
+	                fieldDef.inputParams.selectValues[i] = o.value;
+	             }
+             }
+             else {
+    	          fieldDef.inputParams.selectValues = p["enum"];
+             }
 	       }
 	       else if(type == "string") {
 	    	  if(!lang.isUndefined(p.pattern) && lang.isUndefined(fieldDef.inputParams.regexp)) {
@@ -1061,6 +1067,7 @@ inputEx.Field.prototype = {
  *   <li>fields: Array of input fields declared like { label: 'Enter the value:' , type: 'text' or fieldClass: inputEx.Field, optional: true/false, inputParams: {inputparams object} }</li>
  *   <li>legend: The legend for the fieldset (default is an empty string)</li>
  *   <li>collapsible: Boolean to make the group collapsible (default is false)</li>
+ *   <li>collapsed: If collapsible only, will be collapsed at creation (default is false)</li>
  *   <li>flatten:</li>
  * </ul>
  */
@@ -1087,6 +1094,8 @@ lang.extend(inputEx.Group, inputEx.Field,
    
    	this.options = {};
    	
+   	this.options.className = options.className || 'inputEx-Group';
+   	
    	this.options.fields = options.fields;
    	
    	this.options.id = options.id;
@@ -1103,6 +1112,7 @@ lang.extend(inputEx.Group, inputEx.Field,
       this.inputConfigs = options.fields;
    
       this.options.collapsible = lang.isUndefined(options.collapsible) ? false : options.collapsible;
+      this.options.collapsed = lang.isUndefined(options.collapsed) ? false : options.collapsed;
       
       this.options.disabled = lang.isUndefined(options.disabled) ? false : options.disabled;
       
@@ -1119,7 +1129,7 @@ lang.extend(inputEx.Group, inputEx.Field,
    render: function() {
    
       // Create the div wrapper for this group
-	   this.divEl = inputEx.cn('div', {className: 'inputEx-Group'});
+	   this.divEl = inputEx.cn('div', {className: this.options.className});
 	   if(this.options.id) {
    	   this.divEl.id = this.options.id;
    	}
@@ -1163,6 +1173,11 @@ lang.extend(inputEx.Group, inputEx.Field,
          // Render the field
          var field = this.renderField(input);
          this.fieldset.appendChild(field.getEl() );
+  	   }
+  	
+  	   // Collapsed at creation ?
+  	   if(this.options.collapsed) {
+  	      this.toggleCollapse();
   	   }
   	
   	   // Append the fieldset
@@ -1471,7 +1486,7 @@ lang.extend(inputEx.Form, inputEx.Group,
     */
    render: function() {
       // Create the div wrapper for this group
-  	   this.divEl = inputEx.cn('div', {className: 'inputEx-Group'});
+  	   this.divEl = inputEx.cn('div', {className: this.options.className});
 	   if(this.options.id) {
    	   this.divEl.id = this.options.id;
    	}
@@ -1592,7 +1607,7 @@ lang.extend(inputEx.Form, inputEx.Group,
             width: this.divEl.offsetWidth+"px",
             height: this.divEl.offsetHeight+"px"
          },
-         "<div/><center><br /><img src='../images/spinner.gif'/><br /><span>"+inputEx.messages.ajaxWait+"</span></center>");
+         "<div class='inputEx-Form-Mask-bg'/><center><br/><div class='inputEx-Form-Mask-spinner'></div><br /><span>"+inputEx.messages.ajaxWait+"</span></div>");
       this.divEl.appendChild(this.formMask);
       this.maskRendered = true;
    },
@@ -3636,6 +3651,9 @@ inputEx.registerType("integer", inputEx.IntegerField);
  *   <li>sortable: Add arrows to sort the items if true (default false)</li>
  *   <li>elementType: an element type definition (default is {type: 'string'})</li>
  *   <li>useButtons: use buttons instead of links (default false)</li>
+ *   <li>unique: require values to be unique (default false)</li>
+ *   <li>listAddLabel: if useButtons is false, text to add an item</li>
+ *   <li>listRemoveLabel: if useButtons is false, text to remove an item</li>
  * </ul>
  */
 inputEx.ListField = function(options) {
@@ -3665,6 +3683,10 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	   this.options.sortable = lang.isUndefined(options.sortable) ? false : options.sortable;
 	   this.options.elementType = options.elementType || {type: 'string'};
 	   this.options.useButtons = lang.isUndefined(options.useButtons) ? false : options.useButtons;
+	   this.options.unique = lang.isUndefined(options.unique) ? false : options.unique;
+	   
+	   this.options.listAddLabel = options.listAddLabel || inputEx.messages.listAddLink;
+	   this.options.listRemoveLabel = options.listRemoveLabel || inputEx.messages.listRemoveLink;
 	},
 	   
 	/**
@@ -3687,7 +3709,7 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	   
 	   // Add link
 	   if(!this.options.useButtons) {
-	      this.addButton = inputEx.cn('a', {className: 'inputEx-List-link'}, null, inputEx.messages.listAddLink);
+	      this.addButton = inputEx.cn('a', {className: 'inputEx-List-link'}, null, this.options.listAddLabel);
 	      this.fieldContainer.appendChild(this.addButton);
       }
 	},
@@ -3698,6 +3720,35 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	initEvents: function() {
 	   Event.addListener(this.addButton, 'click', this.onAddButton, this, true);
 	},
+	
+	/**
+    * Validate each field
+    * @returns {Boolean} true if all fields validate, required fields are not empty and unique constraint (if specified) is not violated
+    */
+   validate: function() {
+      var response = true;
+      var uniques = {};
+
+      // Validate all the sub fields
+      for (var i = 0 ; i < this.subFields.length && response; i++) {
+         var input = this.subFields[i];
+         input.setClassFromState(); // update field classes (mark invalid fields...)
+         var state = input.getState();
+         if( state == inputEx.stateRequired || state == inputEx.stateInvalid ) {
+            response = false; // but keep looping on fields to set classes
+         }
+         if(this.options.unique) {
+            var hash = lang.dump(input.getValue());
+            //logDebug('listfied index ',i, 'hash', hash);
+            if(uniques[hash]) {
+               response = false;    // not unique
+            } else {
+               uniques[hash] = true;
+            }
+          }
+      }
+      return response;
+   },
 	   
 	/**
 	 * Set the value of all the subfields
@@ -3797,7 +3848,7 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	   // Instanciate the new subField
 	   var opts = lang.merge({}, this.options.elementType);
 	   if(!opts.inputParams) opts.inputParams = {};
-	   if(!YAHOO.lang.isUndefined(value)) opts.inputParams.value = value;
+	   if(!lang.isUndefined(value)) opts.inputParams.value = value;
 	   
 	   var el = inputEx.buildField(opts);
 	   
@@ -3821,7 +3872,7 @@ lang.extend(inputEx.ListField,inputEx.Field,
 	   
 	   // Delete link
 	   if(!this.options.useButtons) {
-	      var delButton = inputEx.cn('a', {className: 'inputEx-List-link'}, null, inputEx.messages.listRemoveLink);
+	      var delButton = inputEx.cn('a', {className: 'inputEx-List-link'}, null, this.options.listRemoveLabel);
 	      Event.addListener( delButton, 'click', this.onDelete, this, true);
 	      newDiv.appendChild( delButton );
       }
@@ -4341,8 +4392,7 @@ lang.extend(inputEx.RadioField, inputEx.Field,
 	   inputEx.RadioField.superclass.setOptions.call(this, options);
 
       this.options.className = options.className ? options.className : 'inputEx-Field inputEx-RadioField';
-
-	   if (lang.isUndefined(options.allowAny)) {
+	   if (lang.isUndefined(options.allowAny) || options.allowAny === false ) {
         this.options.allowAny = false;
       } else {
         this.options.allowAny = {};
@@ -4674,7 +4724,7 @@ inputEx.SelectField = function(options) {
  };
 lang.extend(inputEx.SelectField, inputEx.Field, 
 /**
- * @scope inputEx.SelectField.prototype   
+ * @scope inputEx.SelectField.prototype
  */   
 {
    /**
@@ -4685,8 +4735,17 @@ lang.extend(inputEx.SelectField, inputEx.Field,
 	   inputEx.SelectField.superclass.setOptions.call(this,options);
 	   
 	   this.options.multiple = lang.isUndefined(options.multiple) ? false : options.multiple;
-	   this.options.selectValues = options.selectValues;
-	   this.options.selectOptions = options.selectOptions;
+	   this.options.selectValues = [];
+	   this.options.selectOptions = [];
+	   
+	   for (var i=0, length=options.selectValues.length; i<length; i++) {
+	      
+	      this.options.selectValues.push(options.selectValues[i]);
+	      // ""+  hack to convert into text (values may be 0 for example)
+	      this.options.selectOptions.push(""+((options.selectOptions && !lang.isUndefined(options.selectOptions[i])) ? options.selectOptions[i] : options.selectValues[i]));
+	      
+      }
+      
    },
    
    /**
@@ -4698,11 +4757,15 @@ lang.extend(inputEx.SelectField, inputEx.Field,
       
       if (this.options.multiple) {this.el.multiple = true; this.el.size = this.options.selectValues.length;}
       
-      this.optionEls = [];
+      this.optionEls = {};
+      
+      var optionEl;
       for( var i = 0 ; i < this.options.selectValues.length ; i++) {
-         // ""+  hack to convert into text (values may be 0 for example)
-         this.optionEls[i] = inputEx.cn('option', {value: this.options.selectValues[i]}, null, ""+((this.options.selectOptions && !lang.isUndefined(this.options.selectOptions[i])) ? this.options.selectOptions[i] : this.options.selectValues[i]));
-         this.el.appendChild(this.optionEls[i]);
+         
+         optionEl = inputEx.cn('option', {value: this.options.selectValues[i]}, null, this.options.selectOptions[i]);
+         
+         this.optionEls[this.options.selectOptions[i]] = optionEl;
+         this.el.appendChild(optionEl);
       }
       this.fieldContainer.appendChild(this.el);
    },  
@@ -4755,6 +4818,110 @@ lang.extend(inputEx.SelectField, inputEx.Field,
     */
    enable: function() {
       this.el.disabled = false;
+   },
+   
+   /**
+    * Add an option in the selector
+    * @param {Object} item
+    */
+   addOption: function(config) {
+
+      var value = config.value;
+      var option = ""+(!lang.isUndefined(config.option) ? config.option : config.value);
+      var nbOptions = this.options.selectOptions.length;
+      
+      // position of new option (default last)
+      var position = nbOptions;
+      
+      if (lang.isNumber(config.position) && config.position >= 0 && config.position <= position) {
+         position = parseInt(config.position,10);
+         
+      } else if (lang.isString(config.before)) {
+         
+            for (var i = 0 ; i < nbOptions ; i++) {
+               if (this.options.selectOptions[i] === config.before) {
+                  position = i;
+                  break;
+               }
+            }
+            
+      } else if (lang.isString(config.after)) {
+
+            for (var i = 0 ; i < nbOptions ; i++) {
+               if (this.options.selectOptions[i] === config.after) {
+                  position = i+1;
+                  break;
+               }
+            }
+      }
+      
+      // update values and options lists
+      this.options.selectValues = this.options.selectValues.slice(0,position).concat([value]).concat(this.options.selectValues.slice(position,nbOptions));
+      this.options.selectOptions = this.options.selectOptions.slice(0,position).concat([option]).concat(this.options.selectOptions.slice(position,nbOptions));
+
+      // new option in select
+      var newOption = inputEx.cn('option', {value: value}, null, option);
+      this.optionEls[option] = newOption;
+      
+      if (position<nbOptions) {
+         YAHOO.util.Dom.insertBefore(newOption,this.el.childNodes[position]);
+      } else {
+         this.el.appendChild(newOption);
+      }
+
+      // select new option
+      if (!!config.selected) {
+         // setTimeout for IE6 (let time to create dom option)
+         var that = this;
+         setTimeout(function() {that.setValue(value);},0);
+      }
+   },
+
+   removeOption: function(config) {
+
+      var position;
+      var nbOptions = this.options.selectOptions.length;
+      var selectedIndex = this.el.selectedIndex;
+      
+      if (lang.isNumber(config.position) && config.position >= 0 && config.position <= nbOptions) {
+         
+         position = parseInt(config.position,10);
+         
+      } else if (lang.isString(config.option)) {
+         
+            for (var i = 0 ; i < nbOptions ; i++) {
+               if (this.options.selectOptions[i] === config.option) {
+                  position = i;
+                  break;
+               }
+            }
+            
+      } else if (lang.isString(config.value)) {
+
+            for (var i = 0 ; i < nbOptions ; i++) {
+               if (this.options.selectValues[i] === config.value) {
+                  position = i;
+                  break;
+               }
+            }
+      }
+      
+      if (!lang.isNumber(position)) {
+         throw new Error("SelectField : invalid or missing position, option or value in removeOption");
+      }
+
+      // remove from selectValues / selectOptions array
+      this.options.selectValues.splice(position,1);
+      var removedOption = this.options.selectOptions.splice(position,1);
+
+      // remove from selector
+      this.el.removeChild(this.optionEls[removedOption]);
+      delete this.optionEls[removedOption];
+      
+      // clear if previous selected value doesn't exist anymore
+      if (selectedIndex == position) {
+         this.clear();
+      }
    }
    
 });
@@ -5077,6 +5244,7 @@ lang.extend(inputEx.UrlField, inputEx.StringField,
       this.options.className = options.className ? options.className : "inputEx-Field inputEx-UrlField";
       this.options.messages.invalid = inputEx.messages.invalidUrl;
       this.options.favicon = lang.isUndefined(options.favicon) ? (("https:" == document.location.protocol) ? false : true) : options.favicon;
+      this.options.size = options.size || 50;
 
       // validate with url regexp
       this.options.regexp = inputEx.regexps.url;
@@ -5087,7 +5255,7 @@ lang.extend(inputEx.UrlField, inputEx.StringField,
     */
    render: function() {
       inputEx.UrlField.superclass.render.call(this);
-      this.el.size = 50;
+      this.el.size = this.options.size;
 
       if(!this.options.favicon) {
          YAHOO.util.Dom.addClass(this.el, 'nofavicon');
