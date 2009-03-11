@@ -95,7 +95,6 @@ lang.extend(inputEx.Group, inputEx.Field,
       this.legend = inputEx.cn('legend', {className: 'inputEx-Group-legend'});
    
       // Option Collapsible
-      //TODO: <MF> should it be renamed to 'collapsed'?
       if(this.options.collapsible) {
          var collapseImg = inputEx.cn('div', {className: 'inputEx-Group-collapseImg'}, null, ' ');
          this.legend.appendChild(collapseImg);

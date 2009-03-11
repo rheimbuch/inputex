@@ -56,11 +56,18 @@ lang.extend( inputEx.CombineField, inputEx.Field,
          }
          
 	      var field = this.renderField(this.options.fields[i]);
-	      // remove the line breaker (<div style='clear: both;'>)
-	      field.divEl.removeChild(field.divEl.childNodes[field.divEl.childNodes.length-1]);
+	      var fieldEl = field.getEl();
+	      
+	      var t = this.options.fields[i].type;
+	      if(t != "group" && t != "form") {
+	         // remove the line breaker (<div style='clear: both;'>)
+	         field.divEl.removeChild(fieldEl.childNodes[fieldEl.childNodes.length-1]);
+         }
       	// make the field float left
-      	YAHOO.util.Dom.setStyle(field.getEl(), 'float', 'left');
-      	this.fieldContainer.appendChild(field.getEl());
+      	Dom.setStyle(fieldEl, 'float', 'left');
+   	   
+      	
+      	this.fieldContainer.appendChild(fieldEl);
       	
       	this.appendSeparator(i+1);
 	   }

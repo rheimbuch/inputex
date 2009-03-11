@@ -43,6 +43,10 @@
    msgs.ajaxWait = "Envoi en cours...";
    msgs.menuInvite = "Cliquez ici pour choisir";
    
+   // List
+   msgs.listAddLink = "Ajouter";
+   msgs.listRemoveLink = "Supprimer";
+   
    // Datatable
    msgs.saveText = "Sauver";
    msgs.cancelText = "Annuler";
