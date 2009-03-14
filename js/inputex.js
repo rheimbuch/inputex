@@ -47,7 +47,7 @@ lang.augmentObject(inputEx,
  */   
 {
    
-   VERSION: "0.2.1",
+   VERSION: "0.2.3a",
    
    /**
     * Url to the spacer image. This url schould be changed according to your project directories

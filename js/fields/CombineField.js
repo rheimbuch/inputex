@@ -48,17 +48,20 @@ lang.extend( inputEx.CombineField, inputEx.Field,
 	   if(!this.options.fields) {
 	      return;
 	   }
+	   var i, n=this.options.fields.length, f;
 	   
-	   for(var i = 0 ; i < this.options.fields.length ; i++) {
+	   for(i = 0 ; i < n ; i++) {
+	      
+	      f = this.options.fields[i];
 	      
 	      if (this.options.required) {
-            this.options.fields[i].required = true;
+            f.required = true;
          }
          
-	      var field = this.renderField(this.options.fields[i]);
+	      var field = this.renderField(f);
 	      var fieldEl = field.getEl();
 	      
-	      var t = this.options.fields[i].type;
+	      var t = f.type;
 	      if(t != "group" && t != "form") {
 	         // remove the line breaker (<div style='clear: both;'>)
 	         field.divEl.removeChild(fieldEl.childNodes[fieldEl.childNodes.length-1]);
@@ -113,7 +116,8 @@ lang.extend( inputEx.CombineField, inputEx.Field,
     */
    validate: function() {
       // Validate all the sub fields
-      for (var i = 0 ; i < this.inputs.length ; i++) {
+      var i, n=this.inputs.length;
+      for (i = 0 ; i < n; i++) {
    	   var input = this.inputs[i];
    	   var state = input.getState();
    	   if( state == inputEx.stateRequired || state == inputEx.stateInvalid ) {
@@ -129,7 +133,8 @@ lang.extend( inputEx.CombineField, inputEx.Field,
 	 * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
 	 */
 	setValue: function(values, sendUpdatedEvt) {
-	   for(var i = 0 ; i < this.inputs.length ; i++) {
+      var i, n=this.inputs.length;
+	   for(i = 0 ; i < n ; i++) {
 	      this.inputs[i].setValue(values[i], false);
 	   }
 	   
@@ -142,8 +147,8 @@ lang.extend( inputEx.CombineField, inputEx.Field,
 	 * @return {Array} An array of values [value1, value2, ...]
 	 */   
 	getValue: function() {
-	   var values = [];
-	   for(var i = 0 ; i < this.inputs.length ; i++) {
+	   var values = [], i, n=this.inputs.length;
+	   for(i = 0 ; i < n; i++) {
 	      values.push(this.inputs[i].getValue());
 	   }
 	   return values;
@@ -153,9 +158,11 @@ lang.extend( inputEx.CombineField, inputEx.Field,
 	 * Call setClassFromState on all children
 	 */
 	setClassFromState: function() {
+      var i, n=this.inputs.length;
+      
 	   inputEx.CombineField.superclass.setClassFromState.call(this);
 	   
-	   for(var i = 0 ; i < this.inputs.length ; i++) {
+	   for(i = 0 ; i < n ; i++) {
 	      this.inputs[i].setClassFromState();
 	   }
 	},
@@ -165,7 +172,8 @@ lang.extend( inputEx.CombineField, inputEx.Field,
 	 * @param {boolean} [sendUpdatedEvt] (optional) Wether this clear should fire the updatedEvt or not (default is true, pass false to NOT send the event)
 	 */
 	clear: function(sendUpdatedEvt) {
-	   for(var i = 0 ; i < this.inputs.length ; i++) {
+      var i, n=this.inputs.length;
+	   for(i = 0 ; i < n ; i++) {
 	      this.inputs[i].clear(false);
 	   }
 	   
@@ -183,7 +191,8 @@ lang.extend( inputEx.CombineField, inputEx.Field,
     * Useful for getState to return correct state (required, empty, etc...)
     */
    isEmpty: function() {
-      for(var i = 0 ; i < this.inputs.length ; i++) {
+      var i, n=this.inputs.length;
+      for(i = 0 ; i < n ; i++) {
 	      if (!this.inputs[i].isEmpty()) return false;
 	   }
 	   return true;
