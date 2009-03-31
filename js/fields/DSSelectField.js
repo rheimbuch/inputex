@@ -106,34 +106,6 @@ YAHOO.lang.extend(inputEx.DSSelectField, inputEx.SelectField,
    onDatasourceFailure: function(oRequest, oParsedResponse, oPayload) {
       // TODO
       this.el.innerHTML = "<option>error</option>";
-   },
-   
-   
-   /**
-    * Set the value
-    * @param {String} value The value to set
-    * @param {boolean} [sendUpdatedEvt] (optional) Wether this setValue should fire the updatedEvt or not (default is true, pass false to NOT send the event)
-    */
-   setValue: function(value, sendUpdatedEvt) {
-      var index = 0;
-      var option;
-      for(var i = 0 ; i < this.options.datasource.liveData.length ; i++) {
-         if(value === this.options.datasource.liveData[i][this.options.valueKey]) {
-            option = this.el.childNodes[i];
-		      option.selected = "selected";
-         }
-      }
-      
-		// Call Field.setValue to set class and fire updated event
-		inputEx.DSSelectField.superclass.setValue.call(this,value, sendUpdatedEvt);
-   },
-   
-   /**
-    * Return the value
-    * @return {Any} the selected value from the selectValues array
-    */
-   getValue: function() {
-      return this.options.datasource.liveData[this.el.selectedIndex][this.options.valueKey];
    }
    
 });

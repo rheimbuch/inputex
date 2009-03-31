@@ -29,7 +29,7 @@
 
 	<p class="title">Using a DataSource</p>
 	
-	<p>How to populate the selectField using a Datasource :</p>
+	<p>How to populate the selectField using a <a href="http://developer.yahoo.com/yui/datasource/" target="_new">YUI datasource</a> (from local data, XHR, JSONP, function, ...):</p>
 
 	<div class='demoContainer' id='container1'></div>
 
@@ -45,6 +45,56 @@
 
 </div>
 
+
+
+<!-- Example 2 -->
+<div class='exampleDiv'>
+
+	<p class="title">Updated event</p>
+	
+	<p>How to listen to the updated event :</p>
+
+	<div class='demoContainer' id='container2'></div>
+
+	<div class='codeContainer'>
+				<textarea name="code" class="JScript">
+			var el = YAHOO.util.Dom.get('container2');
+			var field = new YAHOO.inputEx.SelectField({name: 'country', selectValues: ['United States of America','France'], parentEl: el});
+			var logDiv = YAHOO.inputEx.cn('div', null, null, "Log :<br />");
+			el.appendChild(logDiv);
+			field.updatedEvt.subscribe(function(e,params) {
+				var value = params[0];
+				logDiv.innerHTML += "Updated at "+(new Date())+" with value "+value+"<br />";
+			});
+		</textarea>
+			</div>
+
+</div>
+
+
+
+<!-- Example 3 -->
+<div class='exampleDiv'>
+
+	<p class="title">Set Value</p>
+	
+	<p>How to set the value :</p>
+
+	<div class='demoContainer' id='container3'></div>
+
+	<div class='codeContainer'>
+				<textarea name="code" class="JScript">
+				var el = YAHOO.util.Dom.get('container3');
+				var field3 = new YAHOO.inputEx.DSSelectField({name: 'country', datasource: myDataSource, valueKey: "id", labelKey: "title", parentEl: el});
+
+				var setValueButton = YAHOO.inputEx.cn('button', null, null, "setValue to po-1482");
+				el.appendChild(setValueButton);
+				YAHOO.util.Event.addListener(setValueButton, 'click', function(e,params) {
+					field3.setValue("po-0297");
+		</textarea>
+			</div>
+
+</div>
 
 
 <!-- YUI Library -->
@@ -70,6 +120,30 @@ YAHOO.util.Event.addListener(window, 'load', function() {
 
 	new YAHOO.inputEx.DSSelectField({name: 'country', datasource: myDataSource, valueKey: "id", labelKey: "title", parentEl: 'container1'});
 
+
+	
+	// Example 2
+	var el = YAHOO.util.Dom.get('container2');
+	var field2 = new YAHOO.inputEx.DSSelectField({name: 'country', datasource: myDataSource, valueKey: "id", labelKey: "title", parentEl: el});
+
+	var logDiv = YAHOO.inputEx.cn('div', null, null, "Log :<br />");
+	el.appendChild(logDiv);
+	field2.updatedEvt.subscribe(function(e,params) {
+		var value = params[0];
+		logDiv.innerHTML += "Updated at "+(new Date())+" with value "+value+"<br />";
+	});
+	
+	
+	// Example 3
+	var el = YAHOO.util.Dom.get('container3');
+	var field3 = new YAHOO.inputEx.DSSelectField({name: 'country', datasource: myDataSource, valueKey: "id", labelKey: "title", parentEl: el});
+
+	var setValueButton = YAHOO.inputEx.cn('button', null, null, "setValue to po-1482");
+	el.appendChild(setValueButton);
+	YAHOO.util.Event.addListener(setValueButton, 'click', function(e,params) {
+		field3.setValue("po-1482");
+	});
+	
 	
 });
 

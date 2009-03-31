@@ -17,10 +17,15 @@ not released yet
 	- Added Fields
 		* Lens (beta)
 
-	- Various
+	- Bug fixes
 		* fixing examples (YUI element is not beta anymore)
 		* fix on CombineField to contain Group or Form fields
+		* fix on Datatable widget (broken since switch to YUI 2.7.0)
+		* fix on DSSelectField (broken since switch to YUI 2.7.0)
+		
+	- Various
 		* freebase SMD example
+		* InPlaceEdit ok button is now a skinnable link
 
 version 0.2.2:
 --------------
