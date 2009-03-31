@@ -1,6 +1,6 @@
 (function() {
 
-   var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Event = YAHOO.util.Event, Dom = YAHOO.util.Dom;
+   var inputEx = YAHOO.inputEx, lang = YAHOO.lang, Event = YAHOO.util.Event, Dom = YAHOO.util.Dom, CSS_PREFIX = 'inputEx-InPlaceEdit-';
 
 /**
  * @class Meta field providing in place editing (the editor appears when you click on the formatted value). 
@@ -30,8 +30,6 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
       inputEx.InPlaceEdit.superclass.setOptions.call(this, options);
       
       this.options.animColors = options.animColors || {from: '#ffff99' , to: '#ffffff'};
-      /*this.options.formatDom = options.formatDom;
-      this.options.formatValue = options.formatValue;*/
       this.options.visu = options.visu;
       this.options.editorField = options.editorField;
    },
@@ -49,24 +47,24 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
     */
    renderEditor: function() {
       
-      this.editorContainer = inputEx.cn('div', {className: 'inputEx-InPlaceEdit-editor'}, {display: 'none'});
+      this.editorContainer = inputEx.cn('div', {className: CSS_PREFIX+'editor'}, {display: 'none'});
       
       // Render the editor field
       this.editorField = inputEx.buildField(this.options.editorField);
-   
-      this.editorContainer.appendChild( this.editorField.getEl() );
-      Dom.setStyle(this.editorField.getEl(), 'float', 'left');
+      var editorFieldEl = this.editorField.getEl();
       
-      this.okButton = inputEx.cn('input', {type: 'button', value: inputEx.messages.okEditor, className: 'inputEx-InPlaceEdit-OkButton'});
-      Dom.setStyle(this.okButton, 'float', 'left');
+      this.editorContainer.appendChild( editorFieldEl );
+      Dom.addClass( editorFieldEl , CSS_PREFIX+'editorDiv');
+      
+      this.okButton = inputEx.cn('a', {className: CSS_PREFIX+'OkButton'}, null, inputEx.messages.okEditor);
+      this.okButton.href = ""; // IE required (here, not in the cn fct)
       this.editorContainer.appendChild(this.okButton);
       
-      this.cancelLink = inputEx.cn('a', {className: 'inputEx-InPlaceEdit-CancelLink'}, null, inputEx.messages.cancelEditor);
+      this.cancelLink = inputEx.cn('a', {className: CSS_PREFIX+'CancelLink'}, null, inputEx.messages.cancelEditor);
       this.cancelLink.href = ""; // IE required (here, not in the cn fct)
-      Dom.setStyle(this.cancelLink, 'float', 'left');
       this.editorContainer.appendChild(this.cancelLink);
       
-      // Line breaker
+      // Line breaker ()
       this.editorContainer.appendChild( inputEx.cn('div',null, {clear: 'both'}) );
       
       //this.divEl.appendChild(this.editorContainer);
@@ -147,7 +145,7 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
    onKeyUp: function(e) {
       // Enter
       if( e.keyCode == 13) {
-         this.onOkEditor();
+         this.onOkEditor(e);
       }
       // Escape
       if( e.keyCode == 27) {
@@ -162,14 +160,16 @@ lang.extend(inputEx.InPlaceEdit, inputEx.Field,
    onKeyDown: function(e) {
       // Tab
       if(e.keyCode == 9) {
-         this.onOkEditor();
+         this.onOkEditor(e);
       }
    },
    
    /**
     * Validate the editor (ok button, enter key or tabulation key)
     */
-   onOkEditor: function() {
+   onOkEditor: function(e) {
+      Event.stopEvent(e);
+      
       var newValue = this.editorField.getValue();
       this.setValue(newValue);
       
