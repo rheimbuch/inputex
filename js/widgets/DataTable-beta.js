@@ -235,6 +235,16 @@ inputEx.widget.DataTable.prototype = {
       var newvalues = this.subForm.getValue();       
       this.datatable.updateRow( this.selectedRecord , newvalues ); 
       
+      // Get reference to last updated record ( record._nCount is maximum, since record updated last !)
+      //  (this.selectedRecord no longer points to updated record !!!)
+      var records = this.datatable.getRecordSet().getRecords();
+      
+      for (var i=records.length-1; i>-1; i--) {
+         if (records[i].getCount() > this.selectedRecord.getCount()) {
+            this.selectedRecord = records[i];
+         }
+      }
+      
       // Hide the subForm
       this.hideSubform();
       
