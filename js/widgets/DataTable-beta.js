@@ -21,6 +21,7 @@
 inputEx.widget.DataTable = function(options) {
    
    // Options
+   // TODO: in setOptions method
    this.options = options || {};
    this.options.id = this.options.id ||  Dom.generateId();
    this.options.parentEl = lang.isString(options.parentEl) ? Dom.get(options.parentEl) : options.parentEl;

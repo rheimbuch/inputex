@@ -16,6 +16,9 @@ not released yet
 
 	- Added Fields
 		* Lens (beta)
+	
+	- Added Widget 
+		* FastTable for fast editing
 
 	- Bug fixes
 		* fixing examples (YUI element is not beta anymore)

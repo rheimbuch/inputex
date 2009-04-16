@@ -589,3 +589,54 @@ ul.inputEx-JsonTreeInspector li span.type-null {
    color: red;
 }
 
+
+/**
+ * inputEx-FastTable
+ */
+.inputEx-FastTable-table {
+	border:1px solid #7F7F7F;
+	border-collapse:separate;
+	border-spacing:0;
+	font-family:arial;
+	font-size:inherit;
+	margin:0;
+	padding:0;
+}
+
+.inputEx-FastTable-Header {
+	border-color:-moz-use-text-color #CBCBCB -moz-use-text-color -moz-use-text-color;
+	border-style:none solid none none;
+	border-width:medium 1px medium medium;
+	background: #D8D8DA url(../lib/yui/datatable/assets/skins/sam/../../../../assets/skins/sam/sprite.png) repeat-x scroll 0 0;
+
+	padding:4px 10px;
+
+	color:#000000;
+	font-weight:normal;
+	text-decoration:none;
+	vertical-align:bottom;
+}
+
+.inputEx-FastTable-field, .inputEx-FastTable-action{
+	padding: 4px 10px;
+}
+
+.inputEx-FastTable-field .inputEx-invalid {
+	border: 1px solid red;
+}
+
+.inputEx-FastTable-even {
+	background-color:#FFFFFF;
+}
+
+.inputEx-FastTable-odd {
+	background-color:#EDF5FF;
+}
+
+.inputEx-FastTable-dirty-cell {
+	background:transparent url(../images/dirty.gif) no-repeat scroll 0 0;
+}
+
+.inputEx-FastTable-field input {
+	border: 0;
+}
