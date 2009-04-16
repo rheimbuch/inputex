@@ -13,9 +13,9 @@
 
 	inputEx.MapFieldZoom = {
 		google : {
-			to_universal : function(native) {
-				native = parseInt(native);
-				return	Math.min(-1, -native);
+			to_universal : function(orig) {
+				orig = parseInt(orig);
+				return	Math.min(-1, -orig);
 			},
 
 			to_native : function(universal) {
@@ -25,9 +25,9 @@
 		},
 
 		virtual_earth : {
-			to_universal : function(native) {
-				native = parseInt(native);
-				return	Math.min(-1, -native);
+			to_universal : function(orig) {
+				orig = parseInt(orig);
+				return	Math.min(-1, -orig);
 			},
 
 			to_native : function(universal) {
@@ -37,9 +37,9 @@
 		},
 
 		yahoo : {
-			to_universal : function(native) {
-				native = parseInt(native);
-				return	Math.min(-1, native - 18);
+			to_universal : function(orig) {
+				orig = parseInt(orig);
+				return	Math.min(-1, orig - 18);
 			},
 
 			to_native : function(universal) {
@@ -189,7 +189,7 @@ lang.extend(inputEx.MapField, inputEx.Field,
 			lon : parseFloat(this.elLon.value),
 			uzoom : parseInt(this.elUZoom.value),
 			nzoom : parseInt(this.elNZoom.value)
-		}
+		};
 	},
 
 	/**
@@ -283,7 +283,8 @@ lang.extend(inputEx.MapField, inputEx.Field,
 
 			this.y_map.drawZoomAndCenter(
 				new YGeoPoint(superwrapper.elLat.value, superwrapper.elLon.value), 
-				inputEx.MapFieldZoom.yahoo.to_native(superwrapper.elUZoom.value))
+				inputEx.MapFieldZoom.yahoo.to_native(superwrapper.elUZoom.value)
+			);
 		},
 
 		onposition : function() {
@@ -296,9 +297,9 @@ lang.extend(inputEx.MapField, inputEx.Field,
 				this._mapField.elNZoom.value = z;
 				this._mapField.elUZoom.value = inputEx.MapFieldZoom.yahoo.to_universal(z);
 			} catch (x) {
-				alert(x);
+				//alert(x);
 			}
-		},
+		}
 	},
 
 	google : {
@@ -334,7 +335,7 @@ lang.extend(inputEx.MapField, inputEx.Field,
 						superwrapper.wait_create();
 					}
 				});
-			}
+			};
 
 			if (window.google) {
 				inputEx[preloader]();
@@ -354,7 +355,7 @@ lang.extend(inputEx.MapField, inputEx.Field,
 			this.g_map._mapField = superwrapper;
 
 			this.g_geocoder = new GClientGeocoder();
-			this.g_geocoder.setBaseCountryCode("ca")
+			this.g_geocoder.setBaseCountryCode("ca");
 
 			GEvent.addListener(this.g_map, "load", this.onposition);
 			GEvent.addListener(this.g_map, "moveend", this.onposition);
@@ -379,9 +380,9 @@ lang.extend(inputEx.MapField, inputEx.Field,
 				this._mapField.elNZoom.value = z;
 				this._mapField.elUZoom.value = inputEx.MapFieldZoom.google.to_universal(z);
 			} catch (x) {
-				alert(x);
+				//alert(x);
 			}
-		},
+		}
 	},
 
 	virtualearth : {
@@ -403,7 +404,7 @@ lang.extend(inputEx.MapField, inputEx.Field,
 			var preloader = 'MapVEPreloader_' + inputEx.MapFieldsNumber;
 			inputEx[preloader] = function() {
 				superwrapper.wait_create();
-			}
+			};
 
 			/*
 			 *	Fixes the 'p_elSource.attachEvent is not a function' error
@@ -464,7 +465,7 @@ lang.extend(inputEx.MapField, inputEx.Field,
 			} catch (x) {
 				alert("MapField.virtualearth.onposition:" + x);
 			}
-		},
+		}
 	},
 
 	end : 0
