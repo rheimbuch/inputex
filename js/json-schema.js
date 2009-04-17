@@ -29,7 +29,124 @@ inputEx.JsonSchema = {
     * Convert the inputEx JSON fields to a JSON schema
     */
    inputExToSchema: function(inputExJson) {
-      // TODO :P
+      
+      var t = inputExJson.type || "string",
+          ip = inputExJson.inputParams || {};
+      
+      if(t == "group") {
+         var ret = {
+            type:'object',
+            title: ip.legend,
+            properties:{
+            }
+         };
+         
+         for(var i = 0 ; i < ip.fields.length ; i++) {
+            var field = ip.fields[i];
+            var fieldName = field.inputParams.name;
+            ret.properties[fieldName] = inputEx.JsonSchema.inputExToSchema(field);
+         }
+         
+         return ret;
+      }
+      else if(t == "number") {
+         return {
+    			'type':'number',
+    			'optional': typeof ip.required == "undefined" ? true : !ip.required,
+    			'title': ip.label
+    		};
+      }
+      else if(t == "string") {
+         return {
+    			'type':'string',
+    			'optional': typeof ip.required == "undefined" ? true : !ip.required,
+    			'title': ip.label
+    		};
+      }
+      else if(t == "text") {
+         return {
+ 			   'type':'string',
+			   'format':'text',
+    			'optional': typeof ip.required == "undefined" ? true : !ip.required,
+    			'title': ip.label,
+				'_inputex':{
+					'rows':5,
+					'cols':50
+				}
+    		};
+      }
+      else if(t == "html") {
+         return {
+ 			   'type':'string',
+			   'format':'html',
+    			'optional': typeof ip.required == "undefined" ? true : !ip.required,
+    			'title': ip.label,
+				'_inputex':{
+					
+				}
+    		};
+      }
+      else if(t == "list") {
+         return {
+ 			   'type':'array',
+    			'title': ip.label,
+    			'items': inputEx.JsonSchema.inputExToSchema(ip.elementType),
+				'_inputex':{
+				}
+    		};
+      }
+      else if(t == "email") {
+         return {
+    			'type':'string',
+    			'optional': typeof ip.required == "undefined" ? true : !ip.required,
+    			'title': ip.label,
+    			'format':'email'
+    		};
+      }
+      else if(t == "url") {
+         return {
+    			'type':'string',
+    			'optional': typeof ip.required == "undefined" ? true : !ip.required,
+    			'title': ip.label,
+    			'format':'url'
+    		};
+      }
+      else if(t == "time") {
+         return {
+    			'type':'string',
+    			'optional': typeof ip.required == "undefined" ? true : !ip.required,
+    			'title': ip.label,
+    			'format':'time'
+    		};
+      }
+      else if(t == "IPv4") {
+         return {
+    			'type':'string',
+    			'optional': typeof ip.required == "undefined" ? true : !ip.required,
+    			'title': ip.label,
+    			'format':'ip-address'
+    		};
+      }
+      else if(t == "color") {
+         return {
+    			'type':'string',
+    			'optional': typeof ip.required == "undefined" ? true : !ip.required,
+    			'title': ip.label,
+    			'format':'color'
+    		};
+      }
+      else if(t == "date") {
+         return {
+    			'type':'string',
+    			'optional': typeof ip.required == "undefined" ? true : !ip.required,
+    			'title': ip.label,
+    			'format':'date'
+    		};
+      }
+      else {
+         throw new Error("inputEx type '"+t+"' not handled in inputExToSchema.");
+      }
+      
    }
 
 };
@@ -94,7 +211,7 @@ inputEx.JsonSchema.Builder.prototype = {
 	   var schemaMap = this.schemaToParamMap;
     	var referencedSchema = p["$ref"]; 
 	    
-	    if(referencedSchema){
+	   if(referencedSchema){
 	    	var new_schema = null;
 	    	if(this.referenceResolver) {
 		       new_schema = this.referenceResolver(referencedSchema);
@@ -103,7 +220,7 @@ inputEx.JsonSchema.Builder.prototype = {
 	    		new_schema = this.defaultReferenceResolver(referencedSchema);
 	    	}
 	    	if(new_schema === null) {
-	    		throw "Schema for property :"+propertyName+" $references "+referencedSchema+', not found';
+	    		throw new Error('Schema for property : "'+propertyName+'" $references "'+referencedSchema+'", not found');
 	    	}
 	    	// copy options into new schema, for example we can overide presentation
 	    	// of a defined schema depending on where it is used
@@ -115,11 +232,11 @@ inputEx.JsonSchema.Builder.prototype = {
 	    		}
 	    	}
 	    	p = new_schema;
-	    }
+	   }
 
-	    if(!p.optional) {
-	    	fieldDef.inputParams.required = true;
-	    }
+	   if(!p.optional) {
+	      fieldDef.inputParams.required = true;
+	   }
 
 	    for(var key in schemaMap) {
 	        if(schemaMap.hasOwnProperty(key)) {

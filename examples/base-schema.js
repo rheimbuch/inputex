@@ -114,13 +114,13 @@ var base_schema_map = {
 				}
 			},
 		    "information_sources": {
-			    "title":"Information Sources",
+			   "title":"Information Sources",
 				"type":"array",
 			    "items":{
 					"$ref":"information-source"
 			    },
 			    "_inputex":{
-				    "useButtons":false,	// true doesn't work
+				    "useButtons":false,
 				    "sortable":true
 			    }
 			}

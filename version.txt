@@ -19,6 +19,9 @@ not released yet
 	
 	- Added Widget 
 		* FastTable for fast editing
+		
+	- JSON-Schema
+		* Started implementing inputEx.JsonSchema.inputExToSchema (beta)
 
 	- Bug fixes
 		* fixing examples (YUI element is not beta anymore)

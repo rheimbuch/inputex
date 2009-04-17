@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
  <head>
-  <title>Json schema example</title>
+  <title>inputEx - Conversion to Json schema example</title>
 
 
 	<!-- YUI CSS -->
@@ -71,13 +71,31 @@ YAHOO.inputEx.spacerUrl = "../images/space.gif";
 
 YAHOO.util.Event.addListener(window, "load", function() {
 	
+	// Convert the community json-schema to inputEx json
 	var builder = new YAHOO.inputEx.JsonSchema.Builder({
 		'schemaIdentifierMap':base_schema_map,
 	  'defaultOptions':{
 	     'showMsg':true
 	  }
   });
-	var m = builder.schemaToInputEx(base_schema_map.community);
+	var inputExJson = builder.schemaToInputEx(base_schema_map["community"]);
+	
+	// Convert it back to json-schema using inputExToSchema
+	var communitySchema = inputEx.JsonSchema.inputExToSchema(inputExJson);
+	//console.log(inputExJson);
+	//console.log( communitySchema );
+	
+	
+	// Converting it a last time to inputEx and build the form
+	var builder2 = new YAHOO.inputEx.JsonSchema.Builder({
+		'schemaIdentifierMap': {
+			"community": communitySchema
+		},
+	  'defaultOptions':{
+	     'showMsg':true
+	  }
+  });
+	var m = builder2.schemaToInputEx(communitySchema);
 	m.inputParams.parentEl = 'formContainer';
 	var f = YAHOO.inputEx(m);
 	
