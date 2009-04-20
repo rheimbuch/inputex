@@ -259,7 +259,7 @@ inputEx.JsonSchema.Builder.prototype = {
 	      	  }
 	        }
 	    }
-	    if(p.type) {	       
+	    if(!p.type) p.type = 'object';
 	       var type = p.type;
 	       
 	       // If type is a "Union type definition", we'll use the first type for the field
@@ -370,7 +370,6 @@ inputEx.JsonSchema.Builder.prototype = {
     	          }
 	          }
 	       }
-	    }
 	    
 	    // Add the defaultOptions
 	    for(var kk in this.defaultOptions) {
